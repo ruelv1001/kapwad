@@ -16,5 +16,5 @@ dependencyResolutionManagement {
         maven { url "https://jitpack.io" }
     }
 }
-rootProject.name = "Android Boilerplate"
+rootProject.name = "Lions Care Beneficiary App"
 include ':app'

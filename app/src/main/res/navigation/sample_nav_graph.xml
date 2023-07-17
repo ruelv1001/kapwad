@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.android.boilerplate.ui.sample.fragment.HomeFragment"
+        android:name="com.lionscare.app.ui.sample.fragment.HomeFragment"
         android:label=""
         tools:layout="@layout/fragment_home"/>
 
     <fragment
         android:id="@+id/navigation_article"
-        android:name="com.android.boilerplate.ui.sample.fragment.ArticleFragment"
+        android:name="com.lionscare.app.ui.sample.fragment.ArticleFragment"
         android:label=""
         tools:layout="@layout/fragment_article" />
 

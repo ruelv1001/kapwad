@@ -10,17 +10,25 @@ plugins {
 
 android {
     signingConfigs {
+        Properties properties = new Properties()
+        InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+        properties.load( inputStream )
+        def keystoreFile = properties.getProperty('storeFile')
+        def keystorePass = properties.getProperty('storePassword')
+        def keystoreAlias = properties.getProperty('keyAlias')
+        def keystoreAliasPass = properties.getProperty('keyPassword')
+
         debug {
-            storeFile file('/Users/leojangelicomacario/ZiaplexProjects/Keystore/Untitled')
-            storePassword 'ziaplex123@'
-            keyAlias 'boilerplate'
-            keyPassword 'ziaplex123@'
+            storeFile file(keystoreFile)
+            storePassword keystorePass
+            keyAlias keystoreAlias
+            keyPassword keystoreAliasPass
         }
         release {
-            storeFile file('/Users/leojangelicomacario/ZiaplexProjects/Keystore/Untitled')
-            storePassword 'ziaplex123@'
-            keyAlias 'boilerplate'
-            keyPassword 'ziaplex123@'
+            storeFile file(keystoreFile)
+            storePassword keystorePass
+            keyAlias keystoreAlias
+            keyPassword keystoreAliasPass
         }
     }
 
@@ -28,11 +36,11 @@ android {
     flavorDimensions "default"
 
     defaultConfig {
-        applicationId "com.android.boilerplate"
+        applicationId "com.lionscare.app"
         minSdk 23
-        targetSdk 32
-        versionCode 2
-        versionName "0.0.2"
+        targetSdk 33
+        versionCode 1
+        versionName "0.0.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,7 +83,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            def appName = "BoilerPlate"
+            def appName = "Lions Care Beneficiary"
             def flavorName = variant.flavorName
             def versionCode = variant.versionCode
             def versionName = variant.versionName

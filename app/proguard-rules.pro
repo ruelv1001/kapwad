@@ -46,10 +46,10 @@
   <fields>;
 }
 
--keep class com.android.boilerplate.data.model.* { *; }
+-keep class com.lionscare.app.data.model.* { *; }
 
--keep class com.android.boilerplate.data.repositories.article.request.* { *; }
--keep class com.android.boilerplate.data.repositories.article.response.* { *; }
+-keep class com.lionscare.app.data.repositories.article.request.* { *; }
+-keep class com.lionscare.app.data.repositories.article.response.* { *; }
 
--keep class com.android.boilerplate.data.repositories.auth.request.* { *; }
--keep class com.android.boilerplate.data.repositories.auth.response.* { *; }
+-keep class com.lionscare.app.data.repositories.auth.request.* { *; }
+-keep class com.lionscare.app.data.repositories.auth.response.* { *; }
