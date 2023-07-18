@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,44 +38,13 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
-        observeUserInfo()
-        viewModel.getUserInfo()
 
-    }
-
-    private fun observeUserInfo(){
-        lifecycleScope.launch {
-            viewModel.loginSharedFlow.collect{
-                handleViewState(it)
-            }
-        }
-    }
-
-    private fun handleViewState(viewState: LoginViewState){
-        when(viewState){
-            is LoginViewState.Loading -> Unit
-            is LoginViewState.SuccessGetUserInfo -> {
-                Toast.makeText(requireActivity(), viewState.userLocalData.getFullName(), Toast.LENGTH_SHORT).show()
-            }
-            is LoginViewState.PopupError -> {
-                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
-            }
-            else -> Unit
-        }
     }
 
     private fun setClickListeners() = binding.run {
-        loadWebViewDialogButton.setOnSingleClickListener {
-            openWebViewDialog()
-        }
+
     }
 
-    private fun openWebViewDialog(){
-        WebviewDialog.openDialog(
-            childFragmentManager,
-            "https://www.pmti.biz/"
-        )
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
