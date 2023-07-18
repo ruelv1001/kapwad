@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.sample.adapter
+package com.lionscare.app.ui.main.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

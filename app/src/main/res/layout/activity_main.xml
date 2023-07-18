@@ -14,7 +14,6 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/sample_nav_graph" />
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tabBottomNavigationView"
         android:layout_width="match_parent"
@@ -23,7 +22,8 @@
         app:itemTextColor="@drawable/bottom_navigation_selector"
         app:labelVisibilityMode="labeled"
         android:paddingHorizontal="@dimen/dimen_15"
-        app:menu="@menu/menu_navigation"/>
+        app:menu="@menu/menu_navigation"
+        android:translationZ="@dimen/dimen_10"/>
 
 
 </LinearLayout>

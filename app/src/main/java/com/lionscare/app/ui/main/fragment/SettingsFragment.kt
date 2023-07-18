@@ -1,15 +1,15 @@
-package com.lionscare.app.ui.sample.fragment
+package com.lionscare.app.ui.main.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.lionscare.app.databinding.FragmentHistoryBinding
+import com.lionscare.app.databinding.FragmentSettingsBinding
 
-class HistoryFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
-    private var _binding: FragmentHistoryBinding? = null
+    private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +17,7 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentHistoryBinding.inflate(
+        _binding = FragmentSettingsBinding.inflate(
             inflater,
             container,
             false

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.lionscare.app.ui.sample.fragment.HomeFragment"
+        android:name="com.lionscare.app.ui.main.fragment.HomeFragment"
         android:label=""
         tools:layout="@layout/fragment_home">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_wallet"
-        android:name="com.lionscare.app.ui.sample.fragment.WalletFragment"
+        android:name="com.lionscare.app.ui.main.fragment.WalletFragment"
         android:label=""
         tools:layout="@layout/fragment_wallet" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_groups"
-        android:name="com.lionscare.app.ui.sample.fragment.GroupsFragment"
+        android:name="com.lionscare.app.ui.main.fragment.GroupsFragment"
         android:label=""
         tools:layout="@layout/fragment_groups" >
         <action
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.lionscare.app.ui.sample.fragment.HistoryFragment"
+        android:name="com.lionscare.app.ui.main.fragment.HistoryFragment"
         android:label=""
         tools:layout="@layout/fragment_history" >
         <action
@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.lionscare.app.ui.sample.fragment.SettingsFragment"
+        android:name="com.lionscare.app.ui.main.fragment.SettingsFragment"
         android:label=""
         tools:layout="@layout/fragment_settings" />
 

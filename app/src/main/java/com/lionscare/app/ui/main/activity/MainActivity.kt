@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.sample.activity
+package com.lionscare.app.ui.main.activity
 
 import android.app.AlertDialog
 import android.content.Context
@@ -10,7 +10,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityMainBinding
-import com.lionscare.app.utils.setOnSingleClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,9 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setClickListener() = binding.run {
-        logoutImageView.setOnSingleClickListener {
-            openLogoutConfirmation()
-        }
+
     }
 
     private fun openLogoutConfirmation() {
