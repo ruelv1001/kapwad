@@ -13,4 +13,8 @@
     <color name="color_accent">#FF3700B3</color>
     <color name="commons_text_hint">#979797</color>
 
+    <color name="green">#1D8A5F</color>
+    <color name="red">#F85757</color>
+    <color name="light_green">#E0F5ED</color>
+
 </resources>
