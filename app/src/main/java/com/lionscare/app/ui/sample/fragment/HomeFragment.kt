@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.lionscare.app.databinding.FragmentHomeBinding
-import com.lionscare.app.ui.sample.viewmodel.LoginViewModel
-import com.lionscare.app.ui.sample.viewmodel.LoginViewState
+import com.lionscare.app.ui.onboarding.viewmodel.LoginViewModel
+import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.utils.dialog.WebviewDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError

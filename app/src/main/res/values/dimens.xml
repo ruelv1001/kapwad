@@ -95,4 +95,5 @@
     <dimen name="dimen_120">120dp</dimen>
     <dimen name="dimen_n10">-10dp</dimen>
     <dimen name="dimen_n20">-20dp</dimen>
+    <dimen name="dimen_3">3dp</dimen>
 </resources>

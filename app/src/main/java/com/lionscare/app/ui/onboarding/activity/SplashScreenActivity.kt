@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.sample.activity
+package com.lionscare.app.ui.onboarding.activity
 
 import android.content.Context
 import android.content.Intent
@@ -9,8 +9,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.databinding.ActivitySplashscreenBinding
-import com.lionscare.app.ui.sample.viewmodel.SplashViewModel
-import com.lionscare.app.ui.sample.viewmodel.SplashViewState
+import com.lionscare.app.ui.sample.activity.MainActivity
+import com.lionscare.app.ui.onboarding.viewmodel.SplashViewModel
+import com.lionscare.app.ui.onboarding.viewmodel.SplashViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

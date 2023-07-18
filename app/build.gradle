@@ -47,7 +47,7 @@ android {
 
     buildTypes {
         release {
-            debuggable false
+            debuggable true
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
@@ -89,7 +89,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            def appName = "Lions Care"
+            def appName = "Lions Care Beneficiary"
             def flavorName = variant.flavorName
             def versionCode = variant.versionCode
             def versionName = variant.versionName

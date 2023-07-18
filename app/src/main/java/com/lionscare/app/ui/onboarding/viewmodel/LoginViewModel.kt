@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.sample.viewmodel
+package com.lionscare.app.ui.onboarding.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

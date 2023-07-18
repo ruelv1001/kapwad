@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.sample.activity
+package com.lionscare.app.ui.onboarding.activity
 
 import android.content.Context
 import android.content.Intent
@@ -9,14 +9,15 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.lionscare.app.R
+import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.ActivityLoginBinding
-import com.lionscare.app.ui.sample.viewmodel.LoginViewModel
-import com.lionscare.app.ui.sample.viewmodel.LoginViewState
+import com.lionscare.app.ui.sample.activity.MainActivity
+import com.lionscare.app.ui.onboarding.viewmodel.LoginViewModel
+import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -68,15 +69,15 @@ class LoginActivity : AppCompatActivity() {
             }
             is LoginViewState.InputError -> {
                 hideLoadingDialog()
-                handleInputError(viewState.errorData?: com.lionscare.app.data.model.ErrorsData())
+                handleInputError(viewState.errorData?: ErrorsData())
             }
             else -> Unit
         }
     }
 
     private fun handleInputError(errorsData: com.lionscare.app.data.model.ErrorsData){
-        if (errorsData.email?.get(0)?.isNotEmpty() == true) binding.emailEditText.error = errorsData.email?.get(0)
-        if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.passwordEditText.error = errorsData.password?.get(0)
+        if (errorsData.email?.get(0)?.isNotEmpty() == true) binding.emailTextInputLayout.error = errorsData.email?.get(0)
+        if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.passwordTextInputLayout.error = errorsData.password?.get(0)
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
