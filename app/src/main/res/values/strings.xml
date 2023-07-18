@@ -38,5 +38,17 @@
     <string name="home_id_no_hint">LC-000123</string>
     <string name="home_date_issued_text">Date Issued</string>
     <string name="home_date_issued_hint">07-18-2023</string>
+    <string name="my_wallet_title">My Wallet</string>
+    <string name="wallet_points_hint">1,000</string>
+    <string name="wallet_pts_text">pts</string>
+    <string name="wallet_available_balance_text">Available Balance</string>
+    <string name="wallet_cash_in_text">Cash In</string>
+    <string name="wallet_send_text">Send</string>
+    <string name="wallet_points_text">Points</string>
+    <string name="wallet_scan_text">Scan</string>
+    <string name="wallet_2_pay_text">2 Pay</string>
+    <string name="wallet_post_text">Post</string>
+    <string name="wallet_request_text">Request</string>
+    <string name="wallet_recent_activity_text">RECENT ACTIVITY</string>
 
 </resources>

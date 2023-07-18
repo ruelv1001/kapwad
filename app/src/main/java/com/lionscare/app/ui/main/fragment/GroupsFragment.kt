@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.sample.fragment
+package com.lionscare.app.ui.main.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

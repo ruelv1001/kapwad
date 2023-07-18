@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:gravity="center">
 
         <ImageView
             android:layout_width="@dimen/dimen_30"
@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_color"/>
-    </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"

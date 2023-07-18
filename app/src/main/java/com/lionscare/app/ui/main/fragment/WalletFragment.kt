@@ -1,15 +1,16 @@
-package com.lionscare.app.ui.sample.fragment
+package com.lionscare.app.ui.main.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
-import com.lionscare.app.databinding.FragmentSettingsBinding
+import com.lionscare.app.databinding.FragmentWalletBinding
 
-class SettingsFragment : Fragment() {
+class WalletFragment : Fragment() {
 
-    private var _binding: FragmentSettingsBinding? = null
+    private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +18,7 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentSettingsBinding.inflate(
+        _binding = FragmentWalletBinding.inflate(
             inflater,
             container,
             false
