@@ -27,5 +27,16 @@
     <string name="lbl_forgot_pass">Forgot your password?</string>
     <string name="lbl_password_reset">Password reset</string>
     <string name="lbl_register">Register</string>
+    <string name="home_membership_card_text">Membership Card</string>
+    <string name="home_name_text">Name</string>
+    <string name="home_name_hint">Juan Dela Cruz</string>
+    <string name="home_date_of_birth_text">Date of Birth</string>
+    <string name="home_date_of_birth_hint">01-01-2023</string>
+    <string name="home_address_text">Address</string>
+    <string name="home_id_no_text">ID No.</string>
+    <string name="home_address_hint">29D San Isidro, Kapitolyo, Pasig City</string>
+    <string name="home_id_no_hint">LC-000123</string>
+    <string name="home_date_issued_text">Date Issued</string>
+    <string name="home_date_issued_hint">07-18-2023</string>
 
 </resources>

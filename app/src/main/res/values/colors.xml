@@ -14,9 +14,8 @@
     <color name="commons_text_hint">#BBBBBB</color>
     <color name="commons_lbl">#757575</color>
 
-    <color name="green">#1D8A5F</color>
     <color name="red">#F85757</color>
-    <color name="light_green">#E0F5ED</color>
+    <color name="text_color">#212121</color>
 
     <color name="bg_edittext">#F5F5F5</color>
     <color name="transparent">#00F5F5F5</color>
