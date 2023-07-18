@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lions Care Beneficiary</string>
+    <string name="app_name">Lions Care</string>
 
     <string name="commons_error_title">We hit a bump</string>
     <string name="commons_error_message">Something went wrong.Please try again.</string>
