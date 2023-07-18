@@ -5,7 +5,7 @@ data class ErrorModel(
     val status: Boolean? = false,
     val status_code: String? = null,
     val has_requirements: Boolean? = false,
-    var errors: com.lionscare.app.data.model.ErrorsData? = null
+    var errors: ErrorsData? = null
 )
 
 data class ErrorsData(

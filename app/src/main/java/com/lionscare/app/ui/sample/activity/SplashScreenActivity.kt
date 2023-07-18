@@ -11,8 +11,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.databinding.ActivitySplashscreenBinding
 import com.lionscare.app.ui.sample.viewmodel.SplashViewModel
 import com.lionscare.app.ui.sample.viewmodel.SplashViewState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashscreenBinding
