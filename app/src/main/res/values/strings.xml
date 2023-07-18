@@ -27,5 +27,31 @@
     <string name="lbl_forgot_pass">Forgot your password?</string>
     <string name="lbl_password_reset">Password reset</string>
     <string name="lbl_register">Register</string>
+    <string name="lbl_first_name">First Name</string>
+    <string name="lbl_middle_name">Middle Name</string>
+    <string name="lbl_last_name">Last Name</string>
+    <string name="lbl_contact_number">Contact Number</string>
+    <string name="lbl_9xx_xxx_xxxx">9XX XXX XXXX</string>
+    <string name="lbl_63">+63</string>
+    <string name="lbl_nominate_password">Nominate Password</string>
+    <string name="lbl_confirm_password">Confirm Password</string>
+    <string name="lbl_continue">Continue</string>
+    <string name="lbl_0">0</string>
+    <string name="lbl_code_has_been_sent_to_your_phone_number">Code has been sent to your phone number</string>
+    <string name="lbl_second_s">second/s</string>
+    <string name="lbl_resend_code_in">Resend code in</string>
+    <string name="lbl_resend_code">Resend Code</string>
+    <string name="lbl_confirm">Confirm</string>
+    <string name="lbl_primary_info">Primary Info</string>
+    <string name="lbl_reg_otp">Confirm OTP</string>
+    <string name="lbl_reg_complete_profile">Complete Profile</string>
+    <string name="lbl_email_address">Email Address</string>
+    <string name="lbl_province">Province</string>
+    <string name="lbl_city_municipality">City/Municipality</string>
+    <string name="lbl_barangay">Barangay</string>
+    <string name="lbl_street">Street</string>
+    <string name="account_created">Account Created!</string>
+    <string name="lbl_my_account">My Account</string>
+    <string name="lbl_zipcode">Zipcode</string>
 
 </resources>
