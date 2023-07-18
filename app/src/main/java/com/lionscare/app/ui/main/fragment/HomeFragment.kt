@@ -1,15 +1,16 @@
-package com.lionscare.app.ui.sample.fragment
+package com.lionscare.app.ui.main.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.lionscare.app.databinding.FragmentHistoryBinding
+import com.lionscare.app.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class HistoryFragment : Fragment() {
-
-    private var _binding: FragmentHistoryBinding? = null
+@AndroidEntryPoint
+class HomeFragment: Fragment() {
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,7 +18,7 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentHistoryBinding.inflate(
+        _binding = FragmentHomeBinding.inflate(
             inflater,
             container,
             false
@@ -28,15 +29,16 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
+
     }
 
     private fun setClickListeners() = binding.run {
 
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

@@ -1,0 +1,43 @@
+package com.lionscare.app.ui.main.fragment
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.fragment.app.Fragment
+import com.lionscare.app.databinding.FragmentWalletBinding
+
+class WalletFragment : Fragment() {
+
+    private var _binding: FragmentWalletBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentWalletBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setClickListeners()
+    }
+
+    private fun setClickListeners() = binding.run {
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+}

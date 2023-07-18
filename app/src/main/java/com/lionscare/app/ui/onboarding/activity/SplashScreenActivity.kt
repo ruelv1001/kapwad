@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.databinding.ActivitySplashscreenBinding
-import com.lionscare.app.ui.sample.activity.MainActivity
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.onboarding.viewmodel.SplashViewModel
 import com.lionscare.app.ui.onboarding.viewmodel.SplashViewState
 import dagger.hilt.android.AndroidEntryPoint
