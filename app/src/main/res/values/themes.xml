@@ -26,4 +26,21 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeWidth">@dimen/dimen_1</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/dimen_6</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/dimen_6</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/dimen_6</item>
+        <item name="boxCornerRadiusTopStart">@dimen/dimen_6</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.Button.Rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/dimen_30</item>
+    </style>
+
 </resources>

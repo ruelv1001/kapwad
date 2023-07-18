@@ -1,42 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dimen_20"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
-    <ImageView
-        android:layout_width="@dimen/dimen_150"
-        android:layout_height="@dimen/dimen_150"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_gravity="center"/>
-
-    <EditText
-        android:id="@+id/emailEditText"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/login_email_hint"
-        android:inputType="textEmailAddress"
-        android:fontFamily="@font/fira_sans_regular"
-        android:layout_marginTop="@dimen/dimen_50"/>
-
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
-        android:fontFamily="@font/fira_sans_regular"
-        android:layout_marginTop="@dimen/dimen_20"/>
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_30"
-        android:fontFamily="@font/fira_sans_bold"
-        android:text="@string/login_txt"/>
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dimen_20"
+        android:orientation="vertical">
 
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="@dimen/dimen_130"
+            android:layout_height="@dimen/dimen_130"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_50"
+            android:src="@drawable/logo_lion_club" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/login_to_your_account_lbl"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_22" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_selector"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/login_email_hint"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false"
+            app:passwordToggleDrawable="@drawable/ic_show_pass"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_selector"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/login_password_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/lbl_forgot_pass"
+                android:textAlignment="center"
+                android:textColor="@color/commons_lbl"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="@dimen/dimen_10"
+                android:layout_height="@dimen/dimen_1" />
+
+            <TextView
+                android:id="@+id/resetPassTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_password_reset"
+                android:textAlignment="center"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="@string/login_txt"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_14" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/registerButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_50"
+            android:backgroundTint="@color/color_accent"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="@string/lbl_register"
+            android:textAllCaps="false"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/font_14" />
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

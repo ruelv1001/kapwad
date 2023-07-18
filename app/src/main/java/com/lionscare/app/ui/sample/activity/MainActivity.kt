@@ -12,6 +12,7 @@ import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityMainBinding
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
