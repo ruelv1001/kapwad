@@ -60,6 +60,7 @@
         app:itemIconTint="@drawable/bottom_navigation_selector"
         app:itemTextColor="@drawable/bottom_navigation_selector"
         app:labelVisibilityMode="labeled"
+        android:paddingHorizontal="@dimen/dimen_15"
         app:menu="@menu/menu_navigation"/>
 
 
