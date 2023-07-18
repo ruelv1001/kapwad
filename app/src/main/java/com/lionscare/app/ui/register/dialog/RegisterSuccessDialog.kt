@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogRegisterSuccessBinding
-import com.lionscare.app.ui.sample.activity.MainActivity
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 

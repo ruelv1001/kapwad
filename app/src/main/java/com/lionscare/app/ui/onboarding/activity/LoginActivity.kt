@@ -11,10 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.ActivityLoginBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewModel
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.ui.register.activity.RegisterActivity
-import com.lionscare.app.ui.sample.activity.MainActivity
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
