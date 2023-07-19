@@ -76,5 +76,9 @@
     <string name="wallet_post_text">Post</string>
     <string name="wallet_request_text">Request</string>
     <string name="wallet_recent_activity_text">RECENT ACTIVITY</string>
+    <string name="request_posted_title">Request Posted</string>
+    <string name="request_posted_requested_points_text">Requested Points</string>
+    <string name="scanner_scan_2_pay_title">Scan 2 Pay</string>
+    <string name="scanner_desc">Align the QR code to scan</string>
 
 </resources>
