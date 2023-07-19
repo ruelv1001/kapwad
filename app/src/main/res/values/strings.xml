@@ -93,5 +93,8 @@
     <string name="post_request_title">Post Request</string>
     <string name="confirm_request_malasakit_family_text">Malasakit Family</string>
     <string name="confirm_request_to_text">To: </string>
+    <string name="cash_in_title">Cash In</string>
+    <string name="payment_method_title">Payment Method</string>
+    <string name="payment_method_ziapay_text">ZiaPay</string>
 
 </resources>
