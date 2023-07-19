@@ -24,4 +24,6 @@
     <color name="transparent">#00F5F5F5</color>
     <color name="line">#ECECEC</color>
     <color name="light_gray">#79747E</color>
+    <color name="super_light_gray">#9E9E9E</color>
+    <color name="light_gray_line">#EDEDED</color>
 </resources>
