@@ -86,5 +86,8 @@
     <string name="request_posted_refid_text">Refid</string>
     <string name="request_posted_reason_text">Reason</string>
     <string name="request_points_title">Request Points</string>
+    <string name="post_request_title">Post Request</string>
+    <string name="confirm_request_malasakit_family_text">Malasakit Family</string>
+    <string name="confirm_request_to_text">To: </string>
 
 </resources>
