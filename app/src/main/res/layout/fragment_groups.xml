@@ -2,13 +2,168 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true">
+    android:layout_marginStart="@dimen/dimen_20"
+    android:layout_marginEnd="@dimen/dimen_20"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_groups_title"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/menu_groups_title"
+            android:textAlignment="textStart"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_22" />
+
+
+        <ImageButton
+            style="@style/MyButtonStyle"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:src="@drawable/baseline_add_24" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dimen_2"
+            android:background="@color/light_gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/yourGroupRelativeLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/lbl_your_groups"
+                    android:textColor="@color/super_light_gray"
+                    android:textSize="@dimen/font_16" />
+
+                <TextView
+                    android:id="@+id/yourGroupTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/lbl_your_groups"
+                    android:textColor="@color/color_primary"
+                    android:textSize="@dimen/font_16" />
+
+                <View
+                    android:id="@+id/yourGroupView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:backgroundTint="@color/color_primary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/groupRelativeLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/menu_groups_title"
+                    android:textColor="@color/super_light_gray"
+                    android:textSize="@dimen/font_16" />
+
+                <TextView
+                    android:id="@+id/groupsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/menu_groups_title"
+                    android:textColor="@color/color_primary"
+                    android:textSize="@dimen/font_16"
+                    android:visibility="gone" />
+
+                <View
+                    android:id="@+id/groupsView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:backgroundTint="@color/color_primary"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/invitesRelativeLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/lbl_invites"
+                    android:textColor="@color/super_light_gray"
+                    android:textSize="@dimen/font_16" />
+
+                <TextView
+                    android:id="@+id/invitesTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/lbl_invites"
+                    android:textColor="@color/color_primary"
+                    android:textSize="@dimen/font_16"
+                    android:visibility="gone" />
+
+                <View
+                    android:id="@+id/invitesView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:backgroundTint="@color/color_primary"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

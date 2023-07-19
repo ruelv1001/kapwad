@@ -27,8 +27,8 @@ class ArticleFragment: Fragment(), ArticleAdapter.ArticleCallback, SwipeRefreshL
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
     private var articleAdapter: ArticleAdapter? = null
-    private val viewModel: ArticleListViewModel by viewModels()
     private var scrollListener: EndlessRecyclerScrollListener? = null
+    private val viewModel: ArticleListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
