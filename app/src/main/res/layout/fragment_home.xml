@@ -170,7 +170,6 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/color_accent"
             android:fontFamily="@font/inter_semibold"
-            android:letterSpacing="0"
             android:layout_marginTop="@dimen/dimen_16"
             android:paddingTop="@dimen/dimen_16"
             android:paddingBottom="@dimen/dimen_16"
