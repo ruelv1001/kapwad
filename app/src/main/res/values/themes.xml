@@ -39,10 +39,12 @@
 
     <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.Button.Rounded</item>
+        <item name="android:letterSpacing">0</item>
     </style>
 
     <style name="MyButtonIconStyle" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.Button.Rounded</item>
+        <item name="android:letterSpacing">0</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.MyApp.Button.Rounded" parent="">

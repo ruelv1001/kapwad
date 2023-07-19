@@ -85,5 +85,6 @@
     <string name="request_posted_amount_text">Amount</string>
     <string name="request_posted_refid_text">Refid</string>
     <string name="request_posted_reason_text">Reason</string>
+    <string name="request_points_title">Request Points</string>
 
 </resources>
