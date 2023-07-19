@@ -80,5 +80,18 @@
     <string name="lbl_invites">Invites</string>
     <string name="lbl__10_members">10 Members</string>
     <string name="lbl_join">Join</string>
+    <string name="request_posted_title">Request Posted</string>
+    <string name="request_posted_requested_points_text">Requested Points</string>
+    <string name="scanner_scan_2_pay_title">Scan 2 Pay</string>
+    <string name="scanner_desc">Align the QR code to scan</string>
+    <string name="request_posted_to_text">To</string>
+    <string name="request_posted_date_text">Date</string>
+    <string name="request_posted_amount_text">Amount</string>
+    <string name="request_posted_refid_text">Refid</string>
+    <string name="request_posted_reason_text">Reason</string>
+    <string name="request_points_title">Request Points</string>
+    <string name="post_request_title">Post Request</string>
+    <string name="confirm_request_malasakit_family_text">Malasakit Family</string>
+    <string name="confirm_request_to_text">To: </string>
 
 </resources>

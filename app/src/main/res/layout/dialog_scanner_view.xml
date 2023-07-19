@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+        android:id="@+id/scannerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:borderColor="@color/color_primary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dimen_14"
+            android:paddingEnd="@dimen/dimen_14">
+
+            <ImageView
+                android:id="@+id/dismissImageView"
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:padding="@dimen/dimen_4"
+                android:src="@drawable/ic_close"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/scannerTitleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/scanner_scan_2_pay_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/qrImageView"
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:padding="3dp"
+                android:visibility="invisible"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/qrVIEW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:gravity="center"
+                android:text="@string/scanner_desc"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
