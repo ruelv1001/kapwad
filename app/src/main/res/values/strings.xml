@@ -80,5 +80,10 @@
     <string name="request_posted_requested_points_text">Requested Points</string>
     <string name="scanner_scan_2_pay_title">Scan 2 Pay</string>
     <string name="scanner_desc">Align the QR code to scan</string>
+    <string name="request_posted_to_text">To</string>
+    <string name="request_posted_date_text">Date</string>
+    <string name="request_posted_amount_text">Amount</string>
+    <string name="request_posted_refid_text">Refid</string>
+    <string name="request_posted_reason_text">Reason</string>
 
 </resources>
