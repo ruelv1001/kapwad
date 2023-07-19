@@ -50,6 +50,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
+            android:name=".ui.wallet.activity.RequestPostedActivity"
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".ui.main.activity.MainActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
