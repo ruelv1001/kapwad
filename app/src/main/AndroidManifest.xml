@@ -72,6 +72,7 @@
         <activity
             android:name=".ui.main.activity.MainActivity"
             android:screenOrientation="userPortrait"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity

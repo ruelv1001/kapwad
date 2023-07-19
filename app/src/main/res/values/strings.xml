@@ -96,5 +96,13 @@
     <string name="cash_in_title">Cash In</string>
     <string name="payment_method_title">Payment Method</string>
     <string name="payment_method_ziapay_text">ZiaPay</string>
+    <string name="inbound_outbound_hint">Received 100 credits - Zyla Valerie REFID: 003254300001 2023-07-04 3:59 PM</string>
+    <string name="received_hint">Received 100 credits - Zyla Valerie</string>
+    <string name="refid_hint">003254300001</string>
+    <string name="date_and_time_hint">2023-07-04 3:59 PM</string>
+    <string name="inbound_title">Inbound</string>
+    <string name="outbound_title">Outbound</string>
+    <string name="inbound_outbound_refid_text">REFID:</string>
+    <string name="menu_search_text">Search</string>
 
 </resources>
