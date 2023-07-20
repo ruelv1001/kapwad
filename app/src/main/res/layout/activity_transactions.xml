@@ -11,10 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:src="@drawable/ic_back_arrow"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/menu_history_title"
+            android:text="@string/wallet_transactions_text"
             android:textSize="@dimen/font_20"
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_color"/>
@@ -22,10 +29,10 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/dimen_20"
-        tools:listitem="@layout/adapter_inbound_outbound"/>
+        tools:listitem="@layout/adapter_notifications"/>
 
 </LinearLayout>

@@ -13,18 +13,17 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
-import com.lionscare.app.data.repositories.article.response.ArticleData
-import com.lionscare.app.databinding.FragmentHistoryBinding
-import com.lionscare.app.ui.history.adapter.InboundOutboundAdapter
-import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
+import com.lionscare.app.databinding.FragmentNotificationsBinding
+import com.lionscare.app.ui.notifications.adapter.NotificationsAdapter
+import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
 
-class HistoryFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback {
+class NotificationsFragment : Fragment(), NotificationsAdapter.NotificationsCallback {
 
-    private var _binding: FragmentHistoryBinding? = null
+    private var _binding: FragmentNotificationsBinding? = null
     private val binding get() = _binding!!
 
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var adapter : InboundOutboundAdapter? = null
+    private var adapter : NotificationsAdapter? = null
     private var searchView: SearchView? = null
     private var dataList: List<SampleData> = emptyList()
 
@@ -33,7 +32,7 @@ class HistoryFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallba
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentHistoryBinding.inflate(
+        _binding = FragmentNotificationsBinding.inflate(
             inflater,
             container,
             false
@@ -52,7 +51,7 @@ class HistoryFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallba
     }
 
     private fun setUpAdapter() = binding.run {
-        adapter = InboundOutboundAdapter(this@HistoryFragment)
+        adapter = NotificationsAdapter(this@NotificationsFragment)
         linearLayoutManager = LinearLayoutManager(context)
         historyRecyclerView.layoutManager = linearLayoutManager
         historyRecyclerView.adapter = adapter
@@ -60,13 +59,15 @@ class HistoryFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallba
         dataList = listOf(
             SampleData(
                 id = 1,
-                title = "Inbound",
-                remarks = getString(R.string.inbound_outbound_hint)
+                title = "You received a badge",
+                remarks = "KYC process completed",
+                date = "2023-07-04 3:59 PM"
             ),
             SampleData(
                 id = 2,
-                title = "Outbound",
-                remarks = getString(R.string.inbound_outbound_hint)
+                title = "You Joined a Group",
+                remarks = "You joined Malasakit Family",
+                date = "2023-07-04 3:59 PM"
             )
         )
         adapter?.submitData(lifecycle,PagingData.from(dataList))
@@ -91,8 +92,8 @@ class HistoryFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallba
 
     private fun filterData(query: String?) {
         val filteredList = dataList.filter { data ->
-            data.title.contains(query ?: "", ignoreCase = true) ||
-                    data.remarks.contains(query ?: "", ignoreCase = true)
+            data.title?.contains(query ?: "", ignoreCase = true) == true ||
+                    data.remarks?.contains(query ?: "", ignoreCase = true) == true
         }
         adapter?.submitData(lifecycle, PagingData.from(filteredList))
     }

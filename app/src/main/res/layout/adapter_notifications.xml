@@ -10,12 +10,11 @@
         android:id="@+id/iconImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_inbound"/>
-    
+        android:src="@drawable/ic_notif_badge"/>
+
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
         android:layout_marginStart="@dimen/dimen_16"
         android:orientation="vertical">
 
@@ -24,44 +23,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="@string/inbound_title"
+            android:text="@string/notif_badge_text"
             android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_16" />
-        
+
         <TextView
-            android:id="@+id/receivedTextView"
+            android:id="@+id/remarksTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/light_gray"
-            android:text="@string/received_hint"
+            android:text="@string/notif_remarks_text"
             android:fontFamily="@font/inter_medium"
             android:textSize="@dimen/font_14"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/light_gray"
-                android:text="@string/inbound_outbound_refid_text"
-                android:fontFamily="@font/inter_medium"
-                android:layout_marginEnd="@dimen/dimen_4"
-                android:textSize="@dimen/font_14"/>
-
-            <TextView
-                android:id="@+id/refidTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_primary"
-                android:text="@string/refid_hint"
-                android:fontFamily="@font/inter_semibold"
-                android:textSize="@dimen/font_14"/>
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/dateTextView"
@@ -73,15 +47,5 @@
             android:textSize="@dimen/font_14"/>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/amountTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_primary"
-        android:layout_weight="1"
-        android:text="@string/lbl_100_00"
-        android:fontFamily="@font/inter_bold"
-        android:textSize="@dimen/font_16"/>
 
 </LinearLayout>

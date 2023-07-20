@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -83,7 +84,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/cashInLinearLayout"
+            android:id="@+id/topUpPointsLinearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -101,6 +102,14 @@
                 android:fontFamily="@font/inter_semibold"
                 android:layout_marginTop="@dimen/dimen_6"
                 android:text="@string/wallet_cash_in_text"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/wallet_points_text"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/font_14" />
         </LinearLayout>
@@ -202,19 +211,40 @@
         android:layout_height="@dimen/dimen_1"
         android:background="@color/line" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_30"
-        android:text="@string/wallet_recent_activity_text"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/font_16" />
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/dimen_20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/wallet_transactions_text"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:id="@+id/viewAllTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/wallet_view_all_text"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/font_14" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recentActivityRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_8"
+        tools:listitem="@layout/adapter_inbound_outbound"/>
 
 </LinearLayout>

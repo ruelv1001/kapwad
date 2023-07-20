@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.lionscare.app.databinding.ActivityRequestPointsBinding
+import com.lionscare.app.utils.setOnSingleClickListener
 
 class RequestPointsActivity : AppCompatActivity()  {
 
@@ -19,7 +20,9 @@ class RequestPointsActivity : AppCompatActivity()  {
     }
 
     private fun setupClickListener() = binding.run{
-
+        backImageView.setOnSingleClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     companion object {
