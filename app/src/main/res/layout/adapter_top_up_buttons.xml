@@ -6,7 +6,7 @@
     style="@style/MyButtonOutlinedStyle"
     android:textAlignment="center"
     android:textColor="@color/color_primary"
-    android:layout_marginHorizontal="@dimen/dimen_4"
+    android:layout_marginHorizontal="@dimen/dimen_6"
     android:textSize="@dimen/font_16" >
 
 </Button>
