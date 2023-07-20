@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -44,7 +45,7 @@
             android:textSize="@dimen/font_16" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/amountTextInputLayout"
+            android:id="@+id/pointsTextInputLayout"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,20 +56,30 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/amountEditText"
+                android:id="@+id/pointsEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext_selector"
                 android:fontFamily="@font/inter_semibold"
                 android:hint="@string/lbl_0"
                 android:imeOptions="actionNext"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textColorHint="@color/commons_text_hint"
                 android:textSize="@dimen/font_14" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            tools:itemCount="8"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/adapter_top_up_buttons"
+            tools:spanCount="4"/>
 
     </LinearLayout>
 
