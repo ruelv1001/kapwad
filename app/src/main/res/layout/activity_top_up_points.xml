@@ -44,7 +44,7 @@
             android:textSize="@dimen/font_16" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/amountTextInputLayout"
+            android:id="@+id/pointsTextInputLayout"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,20 +55,140 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/amountEditText"
+                android:id="@+id/pointsEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext_selector"
                 android:fontFamily="@font/inter_semibold"
                 android:hint="@string/lbl_0"
                 android:imeOptions="actionNext"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textColorHint="@color/commons_text_hint"
                 android:textSize="@dimen/font_14" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/h1Button"
+                style="@style/MyButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/top_up_h1_text"
+                android:textAlignment="center"
+                android:layout_weight="4"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/MyButtonOutlinedStyle"
+                android:id="@+id/h2Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/top_up_h2_text"
+                android:textAlignment="center"
+                android:layout_weight="4"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/MyButtonOutlinedStyle"
+                android:id="@+id/h5Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/top_up_h5_text"
+                android:textAlignment="center"
+                android:layout_weight="4"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/MyButtonOutlinedStyle"
+                android:id="@+id/k1Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/top_up_k1_text"
+                android:textAlignment="center"
+                android:layout_weight="4"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/MyButtonOutlinedStyle"
+                android:id="@+id/k2Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/top_up_k2_text"
+                android:textAlignment="center"
+                android:layout_weight="4"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/MyButtonOutlinedStyle"
+                android:id="@+id/k5Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/top_up_k5_text"
+                android:textAlignment="center"
+                android:layout_weight="4"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/MyButtonOutlinedStyle"
+                android:id="@+id/k10Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/top_up_k10_text"
+                android:textAlignment="center"
+                android:layout_weight="4"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

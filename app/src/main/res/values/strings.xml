@@ -87,14 +87,14 @@
     <string name="scanner_desc">Align the QR code to scan</string>
     <string name="request_posted_to_text">To</string>
     <string name="request_posted_date_text">Date</string>
-    <string name="request_posted_amount_text">Amount</string>
+    <string name="request_posted_amount_text">Number of Points</string>
     <string name="request_posted_refid_text">Refid</string>
     <string name="request_posted_reason_text">Reason</string>
     <string name="request_points_title">Request Points</string>
     <string name="post_request_title">Post Request</string>
     <string name="confirm_request_malasakit_family_text">Malasakit Family</string>
     <string name="confirm_request_to_text">To: </string>
-    <string name="cash_in_title">Cash In</string>
+    <string name="cash_in_title">Top Up Lions Care Points</string>
     <string name="payment_method_title">Payment Method</string>
     <string name="payment_method_ziapay_text">ZiaPay</string>
     <string name="inbound_outbound_hint">Received 100 credits - Zyla Valerie REFID: 003254300001 2023-07-04 3:59 PM</string>
@@ -110,5 +110,12 @@
     <string name="notif_badge_text">You received a badge</string>
     <string name="notif_remarks_text">KYC process completed</string>
     <string name="wallet_view_all_text">View All</string>
+    <string name="top_up_h1_text">100</string>
+    <string name="top_up_h2_text">200</string>
+    <string name="top_up_h5_text">500</string>
+    <string name="top_up_k1_text">1,000</string>
+    <string name="top_up_k2_text">2,000</string>
+    <string name="top_up_k5_text">5,000</string>
+    <string name="top_up_k10_text">10,000</string>
 
 </resources>
