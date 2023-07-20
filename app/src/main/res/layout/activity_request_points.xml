@@ -10,7 +10,7 @@
         android:layout_height="?attr/actionBarSize">
 
         <ImageView
-            android:id="@+id/closeImageView"
+            android:id="@+id/backImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimen_16"

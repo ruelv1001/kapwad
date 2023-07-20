@@ -4,27 +4,30 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.lionscare.app.databinding.ActivityCashInBinding
+import com.lionscare.app.databinding.ActivityTopUpPointsBinding
+import com.lionscare.app.utils.setOnSingleClickListener
 
-class CashInActivity : AppCompatActivity()  {
+class TopUpPointsActivity : AppCompatActivity()  {
 
-    private lateinit var binding: ActivityCashInBinding
+    private lateinit var binding: ActivityTopUpPointsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCashInBinding.inflate(layoutInflater)
+        binding = ActivityTopUpPointsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         setupClickListener()
     }
 
     private fun setupClickListener() = binding.run{
-
+        backImageView.setOnSingleClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     companion object {
         fun getIntent(context: Context): Intent {
-            return Intent(context, CashInActivity::class.java)
+            return Intent(context, TopUpPointsActivity::class.java)
         }
     }
 }

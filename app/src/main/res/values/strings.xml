@@ -21,7 +21,7 @@
     <string name="create_article_loading">Creating Article...</string>
     <string name="menu_wallet_title">Wallet</string>
     <string name="menu_groups_title">Groups</string>
-    <string name="menu_history_title">History</string>
+    <string name="menu_history_title">Notifications</string>
     <string name="menu_settings_title">Settings</string>
     <string name="login_to_your_account_lbl">Login to Your Account</string>
     <string name="lbl_forgot_pass">Forgot your password?</string>
@@ -69,14 +69,14 @@
     <string name="wallet_points_hint">1,000</string>
     <string name="wallet_pts_text">pts</string>
     <string name="wallet_available_balance_text">Available Balance</string>
-    <string name="wallet_cash_in_text">Cash In</string>
+    <string name="wallet_cash_in_text">Top Up</string>
     <string name="wallet_send_text">Send</string>
     <string name="wallet_points_text">Points</string>
     <string name="wallet_scan_text">Scan</string>
     <string name="wallet_2_pay_text">2 Pay</string>
     <string name="wallet_post_text">Post</string>
     <string name="wallet_request_text">Request</string>
-    <string name="wallet_recent_activity_text">RECENT ACTIVITY</string>
+    <string name="wallet_transactions_text">Transactions</string>
     <string name="lbl_your_groups">Your Groups</string>
     <string name="lbl_invites">Invites</string>
     <string name="lbl__10_members">10 Members</string>
@@ -106,5 +106,9 @@
     <string name="inbound_outbound_refid_text">REFID:</string>
     <string name="menu_search_text">Search</string>
     <string name="home_immediate_family_group_text">Immediate Family Group</string>
+    <string name="lbl_100_00">+100.00</string>
+    <string name="notif_badge_text">You received a badge</string>
+    <string name="notif_remarks_text">KYC process completed</string>
+    <string name="wallet_view_all_text">View All</string>
 
 </resources>
