@@ -37,6 +37,7 @@
     <string name="lbl_confirm_password">Confirm Password</string>
     <string name="lbl_continue">Continue</string>
     <string name="lbl_0">0</string>
+    <string name="lbl_2">2</string>
     <string name="lbl_code_has_been_sent_to_your_phone_number">Code has been sent to your phone number</string>
     <string name="lbl_second_s">second/s</string>
     <string name="lbl_resend_code_in">Resend code in</string>
@@ -53,7 +54,7 @@
     <string name="account_created">Account Created!</string>
     <string name="lbl_my_account">My Account</string>
     <string name="lbl_zipcode">Zipcode</string>
-    <string name="home_membership_card_text">Membership Card</string>
+    <string name="home_membership_card_text">Request Verified Badge</string>
     <string name="home_name_text">Name</string>
     <string name="home_name_hint">Juan Dela Cruz</string>
     <string name="home_date_of_birth_text">Date of Birth</string>
@@ -104,5 +105,6 @@
     <string name="outbound_title">Outbound</string>
     <string name="inbound_outbound_refid_text">REFID:</string>
     <string name="menu_search_text">Search</string>
+    <string name="home_immediate_family_group_text">Immediate Family Group</string>
 
 </resources>
