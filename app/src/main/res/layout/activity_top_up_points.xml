@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -70,125 +71,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/h1Button"
-                style="@style/MyButtonOutlinedStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/top_up_h1_text"
-                android:textAlignment="center"
-                android:layout_weight="4"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/MyButtonOutlinedStyle"
-                android:id="@+id/h2Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/top_up_h2_text"
-                android:textAlignment="center"
-                android:layout_weight="4"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/MyButtonOutlinedStyle"
-                android:id="@+id/h5Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/top_up_h5_text"
-                android:textAlignment="center"
-                android:layout_weight="4"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/MyButtonOutlinedStyle"
-                android:id="@+id/k1Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/top_up_k1_text"
-                android:textAlignment="center"
-                android:layout_weight="4"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/MyButtonOutlinedStyle"
-                android:id="@+id/k2Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/top_up_k2_text"
-                android:textAlignment="center"
-                android:layout_weight="4"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/MyButtonOutlinedStyle"
-                android:id="@+id/k5Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/top_up_k5_text"
-                android:textAlignment="center"
-                android:layout_weight="4"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/MyButtonOutlinedStyle"
-                android:id="@+id/k10Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/top_up_k10_text"
-                android:textAlignment="center"
-                android:layout_weight="4"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-
-        </LinearLayout>
+            android:layout_marginTop="@dimen/dimen_10"
+            tools:itemCount="8"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/adapter_top_up_buttons"
+            tools:spanCount="4"/>
 
     </LinearLayout>
 
