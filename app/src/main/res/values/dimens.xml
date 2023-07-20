@@ -50,6 +50,7 @@
     <dimen name="dimen_280">280dp</dimen>
     <dimen name="dimen_300">300dp</dimen>
     <dimen name="dimen_400">400dp</dimen>
+    <dimen name="dimen_480">480dp</dimen>
     <dimen name="dimen_500">500dp</dimen>
     <dimen name="dimen_600">600dp</dimen>
     <dimen name="dimen_26">26dp</dimen>
