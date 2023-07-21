@@ -15,5 +15,7 @@ data class ArticleData(
     val date_created: DateCreatedData? = null,
     val description: String? = null,
     val image: AvatarData? = null,
-    val name: String? = null
+    val name: String? = null,
+    val type: String? = null,
+    val reference: String? = null
 )

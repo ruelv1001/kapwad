@@ -2,6 +2,7 @@ package com.lionscare.app.ui.main.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.article.response.ArticleData
@@ -43,6 +44,14 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
         fun displayData(data: ArticleData) = with(itemView) {
             binding.titleTextView.text = data.name
             binding.membersTextView.text = data.description
+            binding.referenceTextView.text = data.reference
+            if (data.type.equals("FAM")){
+                binding.typeFamTextView.visibility = View.VISIBLE
+                binding.typeOrgTextView.visibility = View.GONE
+            } else {
+                binding.typeFamTextView.visibility = View.GONE
+                binding.typeOrgTextView.visibility = View.VISIBLE
+            }
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data)
