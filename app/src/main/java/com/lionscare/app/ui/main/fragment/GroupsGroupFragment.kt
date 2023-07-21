@@ -51,19 +51,23 @@ class GroupsGroupFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         val model = listOf(
             ArticleData(
                 name = "Group 1",
-                description = "10 Members"
+                description = "10 Members",
+                reference = "CL-000001"
             ),
             ArticleData(
                 name = "Group 2",
-                description = "8 Members"
+                description = "8 Members",
+                reference = "CL-000002"
             ),
             ArticleData(
                 name = "Group 3",
-                description = "6 Members"
+                description = "6 Members",
+                reference = "CL-000003"
             ),
             ArticleData(
                 name = "Group 4",
-                description = "2 Members"
+                description = "2 Members",
+                reference = "CL-000004"
             )
         )
         adapter?.appendData(model)

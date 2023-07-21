@@ -49,12 +49,16 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
         val model = listOf(
             ArticleData(
             name = "Malasakit Family",
-                description = "10 Members"
-                ),
+                description = "10 Members",
+                type = "FAM",
+                reference = "IF-000001"
+            ),
             ArticleData(
                 name = "Quick Response Group",
-                description = "8 Members"
-                )
+                description = "8 Members",
+                type = "ORG",
+                reference = "OR-000001"
+            )
             )
         adapter?.appendData(model)
     }

@@ -43,6 +43,7 @@ class GroupsGroupAdapter (val context: Context, val clickListener: GroupCallback
         fun displayData(data: ArticleData) = with(itemView) {
             binding.titleTextView.text = data.name
             binding.membersTextView.text = data.description
+            binding.referenceTextView.text = data.reference
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data)
