@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_select_account_type"
+    android:id="@+id/select_account_type_nav_graph">
+
+    <fragment
+        android:id="@+id/navigation_select_account_type"
+        android:name="com.lionscare.app.ui.badge.fragment.SelectAccountTypeFragment"
+        tools:layout="@layout/fragment_select_account_type"
+        android:label="">
+
+        <action
+            android:id="@+id/action_navigation_select_account_type_to_navigation_verify_account_type"
+            app:destination="@id/navigation_verify_account_type" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_verify_account_type"
+        android:name="com.lionscare.app.ui.badge.fragment.VerifyAccountTypeFragment"
+        tools:layout="@layout/fragment_verify_account_type"
+        android:label="">
+
+    </fragment>
+
+</navigation>
