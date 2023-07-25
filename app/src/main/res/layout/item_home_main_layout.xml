@@ -198,7 +198,7 @@
             android:textAllCaps="false"
             android:textColor="@color/color_primary"
             android:textSize="@dimen/font_16"
-            app:icon="@drawable/ic_badge"
+            app:icon="@drawable/ic_request_badge"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dimen_6" />
 

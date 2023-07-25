@@ -54,7 +54,7 @@
     <string name="account_created">Account Created!</string>
     <string name="lbl_my_account">My Account</string>
     <string name="lbl_zipcode">Zipcode</string>
-    <string name="home_membership_card_text">Request Verified Badge</string>
+    <string name="home_membership_card_text">Request Badge</string>
     <string name="home_name_text">Name</string>
     <string name="home_name_hint">Juan Dela Cruz</string>
     <string name="home_date_of_birth_text">Date of Birth</string>
@@ -133,5 +133,7 @@
     <string name="verify_select_document_text">Select Document</string>
     <string name="payment_method_bal_text">Bal</string>
     <string name="payment_method_online_text">Online</string>
+    <string name="home_not_verified_message">Your Account \nis not yet verified</string>
+    <string name="home_get_verified_text">Get Verified</string>
 
 </resources>
