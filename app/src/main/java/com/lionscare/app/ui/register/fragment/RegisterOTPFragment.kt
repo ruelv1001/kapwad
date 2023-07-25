@@ -46,7 +46,7 @@ class RegisterOTPFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity.setTitle(R.string.lbl_reg_otp)
+        activity.setTitlee(getString(R.string.lbl_reg_otp))
     }
 
 
