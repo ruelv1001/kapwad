@@ -53,3 +53,6 @@
 
 -keep class com.lionscare.app.data.repositories.auth.request.* { *; }
 -keep class com.lionscare.app.data.repositories.auth.response.* { *; }
+
+-keep class com.lionscare.app.data.repositories.address.request.* { *; }
+-keep class com.lionscare.app.data.repositories.address.response.* { *; }

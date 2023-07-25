@@ -19,40 +19,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/payment_method_title"
+            android:text="@string/select_account_type_title"
             android:textSize="@dimen/font_20"
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_color"/>
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/dimen_20"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RadioButton
-                android:id="@+id/ziapayRadioButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/payment_method_ziapay_text"
-                android:textSize="@dimen/font_16"
-                android:padding="@dimen/dimen_16"
-                android:layoutDirection="rtl"
-                android:fontFamily="@font/inter_semibold"
-                android:buttonTint="@color/color_primary"
-                android:drawableEnd="@drawable/img_ziapay_logo" />
-
-        </RadioGroup>
-
-    </LinearLayout>
+        android:layout_weight="1"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continueButton"

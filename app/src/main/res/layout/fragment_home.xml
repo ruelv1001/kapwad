@@ -24,6 +24,48 @@
                 android:src="@drawable/logo_lion_club" />
 
         </androidx.appcompat.widget.Toolbar>
+        
+        <RelativeLayout
+            android:id="@+id/notVerifiedRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_130">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_login"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/home_not_verified_message"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/font_24" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/getVerifiedButton"
+                style="@style/MyButtonIconStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingVertical="@dimen/dimen_10"
+                android:paddingHorizontal="@dimen/dimen_20"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:text="@string/home_get_verified_text"
+                android:textAllCaps="false"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_16"/>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,11 +94,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/menu_groups_title"
-                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/dimen_16"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/font_16" />
 

@@ -14,6 +14,7 @@ import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.databinding.FragmentWalletBinding
 import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.activity.TransactionsActivity
+import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 
@@ -55,7 +56,14 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             startActivity(intent)
         }
         sendPointsLinearLayout.setOnSingleClickListener {
-            val intent = TopUpPointsActivity.getIntent(requireContext())
+            val intent = WalletActivity.getIntent(requireContext(),"Send Points")
+            startActivity(intent)
+        }
+        scan2PayLinearLayout.setOnSingleClickListener {
+
+        }
+        postRequestLinearLayout.setOnSingleClickListener {
+            val intent = WalletActivity.getIntent(requireContext(),"Post Request")
             startActivity(intent)
         }
     }
