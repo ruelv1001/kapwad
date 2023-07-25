@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wallet_nav_graph"
+    app:startDestination="@id/navigation_wallet_search">
+
+    <fragment
+        android:id="@+id/navigation_wallet_search"
+        android:name="com.lionscare.app.ui.wallet.fragment.WalletSearchFragment"
+        tools:layout="@layout/fragment_wallet_search"
+        android:label="">
+
+        <action
+            android:id="@+id/action_navigation_wallet_search_to_navigation_wallet_input"
+            app:destination="@id/navigation_wallet_input" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_wallet_input"
+        android:name="com.lionscare.app.ui.wallet.fragment.WalletInputFragment"
+        tools:layout="@layout/fragment_wallet_input"
+        android:label="">
+
+        <action
+            android:id="@+id/action_navigation_wallet_input_to_navigation_wallet_summary"
+            app:destination="@id/navigation_wallet_summary" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_wallet_summary"
+        android:name="com.lionscare.app.ui.wallet.fragment.WalletSummaryFragment"
+        tools:layout="@layout/fragment_wallet_summary"
+        android:label="">
+
+        <action
+            android:id="@+id/action_navigation_wallet_summary_to_navigation_wallet_details"
+            app:destination="@id/navigation_wallet_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_wallet_details"
+        android:name="com.lionscare.app.ui.wallet.fragment.WalletDetailsFragment"
+        tools:layout="@layout/fragment_wallet_details"
+        android:label="">
+
+    </fragment>
+</navigation>
