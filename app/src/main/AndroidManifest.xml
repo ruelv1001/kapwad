@@ -63,10 +63,6 @@
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.wallet.activity.PaymentMethodActivity"
-            android:screenOrientation="userPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.wallet.activity.TransactionsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar"

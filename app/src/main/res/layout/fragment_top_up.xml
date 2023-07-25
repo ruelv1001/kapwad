@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -19,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/payment_method_title"
+            android:text="@string/cash_in_title"
             android:textSize="@dimen/font_20"
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_color"/>
@@ -29,28 +31,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/dimen_20"
+        android:orientation="vertical"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:padding="@dimen/dimen_20">
 
-        <RadioGroup
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/request_posted_amount_text"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_16" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pointsTextInputLayout"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_marginTop="@dimen/dimen_10"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
 
-            <RadioButton
-                android:id="@+id/ziapayRadioButton"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/pointsEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/payment_method_ziapay_text"
-                android:textSize="@dimen/font_16"
-                android:padding="@dimen/dimen_16"
-                android:layoutDirection="rtl"
+                android:background="@drawable/bg_edittext_selector"
                 android:fontFamily="@font/inter_semibold"
-                android:buttonTint="@color/color_primary"
-                android:drawableEnd="@drawable/img_ziapay_logo" />
+                android:hint="@string/lbl_0"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
 
-        </RadioGroup>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            tools:itemCount="8"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/adapter_top_up_buttons"
+            tools:spanCount="4"/>
 
     </LinearLayout>
 

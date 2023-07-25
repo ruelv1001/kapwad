@@ -7,96 +7,13 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/tabNavHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/top_up_nav_graph" />
 
-        <ImageView
-            android:id="@+id/backImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_16"
-            android:src="@drawable/ic_back_arrow"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/cash_in_title"
-            android:textSize="@dimen/font_20"
-            android:fontFamily="@font/inter_semibold"
-            android:textColor="@color/text_color"/>
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:padding="@dimen/dimen_20">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/request_posted_amount_text"
-            android:textAlignment="center"
-            android:textColor="@color/black_text"
-            android:textSize="@dimen/font_16" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pointsTextInputLayout"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:fontFamily="@font/inter_regular"
-            app:boxBackgroundColor="@color/white"
-            app:hintAnimationEnabled="true"
-            app:hintEnabled="false">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/pointsEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_edittext_selector"
-                android:fontFamily="@font/inter_semibold"
-                android:hint="@string/lbl_0"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/commons_text_hint"
-                android:textSize="@dimen/font_14" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10"
-            tools:itemCount="8"
-            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/adapter_top_up_buttons"
-            tools:spanCount="4"/>
-
-    </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/continueButton"
-        style="@style/MyButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginBottom="@dimen/dimen_20"
-        android:fontFamily="@font/inter_semibold"
-        android:paddingTop="@dimen/dimen_15"
-        android:paddingBottom="@dimen/dimen_15"
-        android:text="@string/lbl_continue"
-        android:textAllCaps="false"
-        android:textSize="@dimen/font_14" />
 
 </LinearLayout>
