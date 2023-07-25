@@ -87,7 +87,7 @@
     <string name="scanner_desc">Align the QR code to scan</string>
     <string name="request_posted_to_text">To</string>
     <string name="request_posted_date_text">Date</string>
-    <string name="request_posted_amount_text">Number of Points</string>
+    <string name="request_posted_amount_text">Amount</string>
     <string name="request_posted_refid_text">Refid</string>
     <string name="request_posted_reason_text">Reason</string>
     <string name="request_points_title">Request Points</string>
@@ -135,5 +135,16 @@
     <string name="payment_method_online_text">Online</string>
     <string name="home_not_verified_message">Your Account \nis not yet verified</string>
     <string name="home_get_verified_text">Get Verified</string>
+    <string name="wallet_recipient_title">Recipient</string>
+    <string name="wallet_message_title">Message</string>
+    <string name="wallet_enter_your_message_hint">Enter your message</string>
+    <string name="wallet_enter_id_number_hint">Enter ID Number</string>
+    <string name="wallet_send_points_to_title">Send Points to</string>
+    <string name="wallet_request_points_from_title">Request Points from</string>
+    <string name="wallet_send_points_title">Send Points</string>
+    <string name="wallet_request_points_title">Request Points</string>
+    <string name="wallet_points_recipient_title">Points Recipient</string>
+    <string name="wallet_from_title">From</string>
+
 
 </resources>
