@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentHomeBinding
+import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -99,6 +100,11 @@ class HomeFragment: Fragment() {
             backAnim?.setTarget(mainLayout.mainLinearLayout)
             backAnim?.start()
             frontAnim?.start()
+        }
+
+        mainLayout.requestVerifiedBadgeButton.setOnSingleClickListener {
+            val intent = VerifiedBadgeActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
 
     }

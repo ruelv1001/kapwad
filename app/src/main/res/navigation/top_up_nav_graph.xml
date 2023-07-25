@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_top_up"
+    android:id="@+id/top_up_nav_graph">
+
+    <fragment
+        android:id="@+id/navigation_top_up"
+        android:name="com.lionscare.app.ui.wallet.fragment.TopUpFragment"
+        tools:layout="@layout/fragment_top_up"
+        android:label="">
+
+        <action
+            android:id="@+id/action_navigation_top_up_to_navigation_payment_method"
+            app:destination="@id/navigation_payment_method" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_payment_method"
+        android:name="com.lionscare.app.ui.wallet.fragment.PaymentMethodFragment"
+        tools:layout="@layout/fragment_payment_method"
+        android:label="">
+
+    </fragment>
+
+</navigation>
