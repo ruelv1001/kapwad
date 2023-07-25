@@ -8,6 +8,8 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.databinding.FragmentGroupsBinding
+import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.utils.adapter.CustomViewPagerAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,6 +55,11 @@ class GroupsFragment : Fragment() {
         invitesRelativeLayout.setOnSingleClickListener {
             setActiveTab(invitesRelativeLayout)
             viewPager.currentItem = 2
+        }
+
+        createGroupImageButton.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
 
     }

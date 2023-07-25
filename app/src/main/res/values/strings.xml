@@ -120,5 +120,15 @@
     <string name="lbl_if_000001">IF-000001</string>
     <string name="lbl_immediate_family">Immediate Family</string>
     <string name="lbl_organization">Organization</string>
+    <string name="lbl_name">Name</string>
+    <string name="lbl_group_name">Group Name</string>
+    <string name="lbl_type">Type</string>
+    <string name="lbl_privacy">Privacy</string>
+    <string name="lbl_public">Public</string>
+    <string name="lbl_private">Private</string>
+    <string name="lbl_requires_password">Requires Password</string>
+    <string name="lbl_require_approval_to_join">Require Approval to Join</string>
+    <string name="lbl_create_group">Create Group</string>
+    <string name="lbl_password">Password</string>
 
 </resources>
