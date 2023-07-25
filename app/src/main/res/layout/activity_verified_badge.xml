@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.badge.activity.VerifiedBadgeActivity"
+    android:fitsSystemWindows="true">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/tabNavHostFragment"
@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/top_up_nav_graph" />
-
+        app:navGraph="@navigation/select_account_type_nav_graph" />
 
 </LinearLayout>
