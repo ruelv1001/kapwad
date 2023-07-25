@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupCreateBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
@@ -54,7 +55,7 @@ class GroupCreateFragment: Fragment() {
 //            if (firstNameEditText.text.toString().isEmpty()){
 //                firstNameTextInputLayout.error = "Field is required"
 //            }
-//                findNavController().navigate(RegisterPrimaryInfoFragmentDirections.actionNavigationOtp())
+                findNavController().navigate(GroupCreateFragmentDirections.actionNavigationGroupInvite())
         }
 
         publicLinearLayout.setOnSingleClickListener {

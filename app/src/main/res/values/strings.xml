@@ -154,6 +154,9 @@
     <string name="lbl_requires_password">Requires Password</string>
     <string name="lbl_require_approval_to_join">Require Approval to Join</string>
     <string name="lbl_create_group">Create Group</string>
+    <string name="lbl_invite_group">Invite to Group</string>
     <string name="lbl_password">Password</string>
+    <string name="lbl_search">Search</string>
+    <string name="lbl_complete">Complete</string>
 
 </resources>
