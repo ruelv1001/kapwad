@@ -59,10 +59,6 @@
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.wallet.activity.RequestPointsActivity"
-            android:screenOrientation="userPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.wallet.activity.TopUpPointsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -80,6 +76,12 @@
             android:name=".ui.article.activity.CreateArticleActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.group.activity.GroupActivity"
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
