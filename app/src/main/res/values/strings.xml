@@ -158,7 +158,7 @@
     <string name="lbl_password">Password</string>
     <string name="lbl_search">Search</string>
     <string name="lbl_complete">Complete</string>
-    <string name="wallet_confirm_amp_send_points_now_text"><![CDATA[Confirm & Send Points Now]]></string>
+    <string name="wallet_confirm_amp_send_points_now_text">Confirm &amp; Send Points Now</string>
     <string name="wallet_send_points_summary_title">Send Points Summary</string>
     <string name="wallet_request_points_summary_title">Request Points Summary</string>
     <string name="wallet_points_recipient_summary_title">Points Recipient Summary</string>
