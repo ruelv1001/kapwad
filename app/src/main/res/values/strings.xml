@@ -158,5 +158,9 @@
     <string name="lbl_password">Password</string>
     <string name="lbl_search">Search</string>
     <string name="lbl_complete">Complete</string>
+    <string name="lbl_malasakit_family">Malasakit Family</string>
+    <string name="lbl_group_wallet">Group Wallet</string>
+    <string name="lbl_send_points">Send Points</string>
+    <string name="lbl_scan_2_pay">Scan 2 Pay</string>
 
 </resources>
