@@ -41,7 +41,7 @@ class RegisterPrimaryInfoFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity.setTitle(R.string.lbl_primary_info)
+        activity.setTitlee(getString(R.string.lbl_primary_info))
     }
 
     private fun setView() = binding.run{

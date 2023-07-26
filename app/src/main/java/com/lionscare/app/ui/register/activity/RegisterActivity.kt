@@ -64,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
         loadingDialog = null
     }
 
-    fun setTitle(title: String) = binding.run {
+    fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
     }
 

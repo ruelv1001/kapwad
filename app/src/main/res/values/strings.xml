@@ -43,7 +43,7 @@
     <string name="lbl_resend_code_in">Resend code in</string>
     <string name="lbl_resend_code">Resend Code</string>
     <string name="lbl_confirm">Confirm</string>
-    <string name="lbl_primary_info">Primary Info</string>
+    <string name="lbl_primary_info">Primary Information</string>
     <string name="lbl_reg_otp">Confirm OTP</string>
     <string name="lbl_reg_complete_profile">Complete Profile</string>
     <string name="lbl_email_address">Email Address</string>
