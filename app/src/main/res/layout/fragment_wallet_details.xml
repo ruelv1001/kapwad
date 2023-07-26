@@ -184,7 +184,6 @@
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_14" />
 
-
         </LinearLayout>
 
     </LinearLayout>
