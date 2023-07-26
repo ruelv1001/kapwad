@@ -162,5 +162,10 @@
     <string name="lbl_group_wallet">Group Wallet</string>
     <string name="lbl_send_points">Send Points</string>
     <string name="lbl_scan_2_pay">Scan 2 Pay</string>
+    <string name="lbl_members">Members</string>
+    <string name="lbl_co_admin">Co-Admin</string>
+    <string name="lbl_assistance_n_requests">Assistance\nRequests</string>
+    <string name="lbl_recent_activity">RECENT ACTIVITY</string>
+    <string name="lbl_view_all">View All</string>
 
 </resources>
