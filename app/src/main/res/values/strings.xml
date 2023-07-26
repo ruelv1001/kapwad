@@ -145,6 +145,10 @@
     <string name="wallet_request_points_title">Request Points</string>
     <string name="wallet_points_recipient_title">Points Recipient</string>
     <string name="wallet_from_title">From</string>
+    <string name="wallet_confirm_amp_send_points_now_text"><![CDATA[Confirm & Send Points Now]]></string>
+    <string name="wallet_send_points_summary_title">Send Points Summary</string>
+    <string name="wallet_request_points_summary_title">Request Points Summary</string>
+    <string name="wallet_points_recipient_summary_title">Points Recipient Summary</string>
 
 
 </resources>
