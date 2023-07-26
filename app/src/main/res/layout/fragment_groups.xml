@@ -25,6 +25,7 @@
 
 
         <ImageButton
+            android:id="@+id/createGroupImageButton"
             style="@style/MyButtonStyle"
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
