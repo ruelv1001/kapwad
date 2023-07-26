@@ -9,7 +9,16 @@
         android:id="@+id/navigation_group_create"
         android:name="com.lionscare.app.ui.group.fragment.GroupCreateFragment"
         android:label=""
-        tools:layout="@layout/fragment_group_create"/>
+        tools:layout="@layout/fragment_group_create">
+        <action
+            android:id="@+id/action_navigation_group_invite"
+            app:destination="@id/navigation_group_invite" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_group_invite"
+        android:name="com.lionscare.app.ui.group.fragment.GroupInviteFragment"
+        android:label=""
+        tools:layout="@layout/fragment_group_invite"/>
 
 
 </navigation>
