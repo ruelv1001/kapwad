@@ -46,7 +46,7 @@ class RegisterCompleteProfileFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity.setTitle(R.string.lbl_reg_complete_profile)
+        activity.setTitlee(getString(R.string.lbl_reg_complete_profile))
     }
 
     private fun setView() = binding.run{

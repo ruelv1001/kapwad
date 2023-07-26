@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.register.activity
+package com.lionscare.app.ui.group.activity
 
 import android.content.Context
 import android.content.Intent
@@ -9,20 +9,20 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
-import com.lionscare.app.databinding.ActivityRegisterBinding
+import com.lionscare.app.databinding.ActivityGroupBinding
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterActivity : AppCompatActivity() {
+class GroupActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var binding: ActivityGroupBinding
     private var loadingDialog: CommonDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivityGroupBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         setupNavigationComponent()
@@ -40,7 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-        val navGraph = navController.navInflater.inflate(R.navigation.register_nav_graph)
+        val navGraph = navController.navInflater.inflate(R.navigation.group_nav_graph)
         navController.setGraph(navGraph, null)
         val appBarConfig = AppBarConfiguration.Builder(INVALID_ID)
             .setFallbackOnNavigateUpListener {
@@ -64,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
         loadingDialog = null
     }
 
-    fun setTitlee(title: String) = binding.run {
+    fun setTitle(title: String) = binding.run {
         titleTextView.text = title
     }
 
@@ -72,7 +72,7 @@ class RegisterActivity : AppCompatActivity() {
         private const val INVALID_ID = -1
         private const val EXTRA_CODE = "EXTRA_CODE"
         fun getIntent(context: Context): Intent {
-            return Intent(context, RegisterActivity::class.java)
+            return Intent(context, GroupActivity::class.java)
         }
     }
 }
