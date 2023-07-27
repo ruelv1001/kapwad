@@ -19,6 +19,8 @@ class WalletActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     var data = SampleData()
     var mode = ""
+    var amount = ""
+    var message = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

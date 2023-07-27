@@ -14,6 +14,7 @@ import com.lionscare.app.utils.setOnSingleClickListener
 class TopUpPointsActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityTopUpPointsBinding
+    var amount = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

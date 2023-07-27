@@ -57,6 +57,9 @@ class WalletSummaryFragment : Fragment() {
             }
         }
 
+        amountTextView.text = activity.amount
+        messageTextView.text = activity.message
+
     }
 
     private fun setupClickListener() = binding.run{
