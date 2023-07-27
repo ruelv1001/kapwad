@@ -38,17 +38,17 @@ class WalletDetailsFragment : Fragment() {
     private fun setupDetails() = binding.run {
         when(activity.mode){
             "Send Points" -> {
-                titleTextView.text = getString(R.string.wallet_send_points_summary_title)
+                titleTextView.text = getString(R.string.wallet_send_points_details_title)
 
                 activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }
                 recipientLayout.nameTextView.text = activity.data.title
                 recipientLayout.idNoTextView.text = activity.data.amount
             }
             "Scan 2 Pay" -> {
-                titleTextView.text = getString(R.string.wallet_points_recipient_summary_title)
+                titleTextView.text = getString(R.string.wallet_scan2pay_details_title)
             }
             "Post Request" -> {
-                titleTextView.text = getString(R.string.wallet_request_points_summary_title)
+                titleTextView.text = getString(R.string.wallet_request_points_details_title)
                 recipientTitleTextView.text = getString(R.string.wallet_from_title)
 
                 activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }

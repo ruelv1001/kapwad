@@ -53,29 +53,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:textSize="@dimen/font_16"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/payment_method_ziapay_text" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:layout_weight="1"
                 android:textSize="@dimen/font_16"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/payment_method_bal_text" />
 
             <TextView
                 android:id="@+id/balanceTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:layout_weight="1"
                 android:textSize="@dimen/font_16"
+                android:maxLines="1"
+                android:gravity="end"
                 android:fontFamily="@font/inter_regular"
-                android:text="@string/top_up_h5_text" />
+                android:text="@string/wallet_500_peso" />
 
             <RadioButton
                 android:id="@+id/ziaPayRadioButton"

@@ -58,7 +58,13 @@ class WalletInputFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         continueButton.setOnSingleClickListener {
-            findNavController().navigate(WalletInputFragmentDirections.actionNavigationWalletInputToNavigationWalletSummary())
+            if(amountEditText.text.toString().isNotEmpty() && amountEditText.text.toString().replace(",","").toDouble() != 0.0){
+                activity.amount = amountEditText.text.toString()
+                activity.message = messageEditText.text.toString()
+                findNavController().navigate(WalletInputFragmentDirections.actionNavigationWalletInputToNavigationWalletSummary())
+            }else{
+             amountEditText.error = "Enter amount"
+            }
         }
     }
 

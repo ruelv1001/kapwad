@@ -95,7 +95,7 @@
     <string name="confirm_request_malasakit_family_text">Malasakit Family</string>
     <string name="confirm_request_to_text">To: </string>
     <string name="cash_in_title">Top Up Lions Care Points</string>
-    <string name="payment_method_title">Payment Method</string>
+    <string name="payment_method_title">Choose Payment Method</string>
     <string name="payment_method_ziapay_text">ZiaPay</string>
     <string name="inbound_outbound_hint">Received 100 credits - Zyla Valerie REFID: 003254300001 2023-07-04 3:59 PM</string>
     <string name="received_hint">Received 100 credits - Zyla Valerie</string>
@@ -131,7 +131,7 @@
     <string name="verify_supporting_document_2_text">Supporting Document 2</string>
     <string name="account_type_error_message_text">Please select account type</string>
     <string name="verify_select_document_text">Select Document</string>
-    <string name="payment_method_bal_text">Bal</string>
+    <string name="payment_method_bal_text">Bal </string>
     <string name="payment_method_online_text">Online</string>
     <string name="home_not_verified_message">Your Account \nis not yet verified</string>
     <string name="home_get_verified_text">Get Verified</string>
@@ -162,5 +162,9 @@
     <string name="wallet_send_points_summary_title">Send Points Summary</string>
     <string name="wallet_request_points_summary_title">Request Points Summary</string>
     <string name="wallet_points_recipient_summary_title">Points Recipient Summary</string>
+    <string name="wallet_send_points_details_title">Send Points Details</string>
+    <string name="wallet_request_points_details_title">Request Points Details</string>
+    <string name="wallet_scan2pay_details_title">Scan 2 Pay Details</string>
+    <string name="wallet_500_peso">₱500</string>
 
 </resources>
