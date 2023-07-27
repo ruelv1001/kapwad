@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.R
 import com.lionscare.app.data.model.AccountTypeModel
-import com.lionscare.app.databinding.FragmentSelectAccountTypeBinding
+import com.lionscare.app.databinding.FragmentSelectBadgeTypeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.badge.adapter.AccountTypeAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 
-class SelectAccountTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
+class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
 
-    private var _binding: FragmentSelectAccountTypeBinding? = null
+    private var _binding: FragmentSelectBadgeTypeBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter: AccountTypeAdapter? = null
@@ -30,7 +30,7 @@ class SelectAccountTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSelectAccountTypeBinding.inflate(
+        _binding = FragmentSelectBadgeTypeBinding.inflate(
             inflater,
             container,
             false
@@ -45,7 +45,7 @@ class SelectAccountTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback
     }
 
     private fun setupList() {
-        adapter = AccountTypeAdapter(requireContext(), this@SelectAccountTypeFragment)
+        adapter = AccountTypeAdapter(requireContext(), this@SelectBadgeTypeFragment)
         linearLayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = linearLayoutManager
         binding.recyclerView.adapter = adapter
@@ -71,7 +71,7 @@ class SelectAccountTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback
         }
         continueButton.setOnSingleClickListener {
             if(hasSelected){
-                findNavController().navigate(SelectAccountTypeFragmentDirections.actionNavigationSelectAccountTypeToNavigationVerifyAccountType())
+                findNavController().navigate(SelectBadgeTypeFragmentDirections.actionNavigationSelectAccountTypeToNavigationVerifyAccountType())
             }else{
                 Toast.makeText(requireActivity(), getString(R.string.account_type_error_message_text), Toast.LENGTH_SHORT).show()
             }

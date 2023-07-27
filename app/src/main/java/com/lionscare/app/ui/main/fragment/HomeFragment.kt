@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
+import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -107,6 +109,15 @@ class HomeFragment: Fragment() {
             startActivity(intent)
         }
 
+        getVerifiedButton.setOnSingleClickListener {
+            val intent = AccountVerificationActivity.getIntent(requireActivity())
+            startActivity(intent)
+        }
+
+        groupsLinearLayout.setOnSingleClickListener {
+            val action = HomeFragmentDirections.actionNavigationHomeToNavigationGroups()
+            findNavController().navigate(action)
+        }
     }
 
 

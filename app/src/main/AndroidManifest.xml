@@ -13,6 +13,8 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
         android:name=".base.BaseApplication"
@@ -28,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.verify.activity.AccountVerificationActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.wallet.activity.WalletActivity"
             android:exported="false" />
@@ -73,15 +78,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.article.activity.CreateArticleActivity"
-            android:screenOrientation="userPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
             android:name=".ui.group.activity.GroupActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
     </application>
 
 </manifest>

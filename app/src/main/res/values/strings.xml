@@ -123,9 +123,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_type_influencer_text">Influencer</string>
     <string name="account_type_npo_text">Non-Profit Organization</string>
-    <string name="select_account_type_title">Select Account Type</string>
+    <string name="select_account_type_title">Select Badge Type</string>
     <string name="account_type_public_servant_text">Public Servant</string>
-    <string name="verify_account_type_title">Verify Account Type</string>
+    <string name="verify_badge_documents_title">Badge Documents</string>
     <string name="account_type_title">Account Type</string>
     <string name="verify_supporting_document_1_text">Supporting Document 1</string>
     <string name="verify_supporting_document_2_text">Supporting Document 2</string>
@@ -166,5 +166,14 @@
     <string name="wallet_request_points_details_title">Request Points Details</string>
     <string name="wallet_scan2pay_details_title">Scan 2 Pay Details</string>
     <string name="wallet_500_peso">₱500</string>
-
+    <string name="verify_account_title">Verify Account</string>
+    <string name="verify_id_type_text">ID Type</string>
+    <string name="verify_id_number_text">ID Number</string>
+    <string name="verify_id_scan_text">ID Scan</string>
+    <string name="verfiy_click_to_open_camera_text">Click to open camera</string>
+    <string-array name="id_type_items">
+        <item>Phil ID</item>
+        <item>UMID</item>
+        <item>Passport</item>
+    </string-array>
 </resources>

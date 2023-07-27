@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/navigation_select_account_type"
-        android:name="com.lionscare.app.ui.badge.fragment.SelectAccountTypeFragment"
-        tools:layout="@layout/fragment_select_account_type"
+        android:name="com.lionscare.app.ui.badge.fragment.SelectBadgeTypeFragment"
+        tools:layout="@layout/fragment_select_badge_type"
         android:label="">
 
         <action
@@ -18,8 +18,8 @@
 
     <fragment
         android:id="@+id/navigation_verify_account_type"
-        android:name="com.lionscare.app.ui.badge.fragment.VerifyAccountTypeFragment"
-        tools:layout="@layout/fragment_verify_account_type"
+        android:name="com.lionscare.app.ui.badge.fragment.UploadBadgeDocumentsFragment"
+        tools:layout="@layout/fragment_upload_badge_documents"
         android:label="">
 
     </fragment>

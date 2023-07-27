@@ -8,16 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.textfield.TextInputEditText
-import com.lionscare.app.databinding.FragmentVerifyAccountTypeBinding
+import com.lionscare.app.databinding.FragmentUploadBadgeDocumentsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.utils.CommonLogger
-import com.lionscare.app.utils.FilePathHelper
 import com.lionscare.app.utils.setOnSingleClickListener
 
-class VerifyAccountTypeFragment : Fragment() {
+class UploadBadgeDocumentsFragment : Fragment() {
 
-    private var _binding: FragmentVerifyAccountTypeBinding? = null
+    private var _binding: FragmentUploadBadgeDocumentsBinding? = null
     private val binding get() = _binding!!
     private var focusedEditTextId: Int = 0
     private val activity by lazy { requireActivity() as VerifiedBadgeActivity }
@@ -26,7 +25,7 @@ class VerifyAccountTypeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentVerifyAccountTypeBinding.inflate(
+        _binding = FragmentUploadBadgeDocumentsBinding.inflate(
             inflater,
             container,
             false
@@ -73,7 +72,6 @@ class VerifyAccountTypeFragment : Fragment() {
                 val selectedFileName = getFileNameFromUri(uri)
                 val focusedEditText = requireActivity().findViewById<TextInputEditText>(focusedEditTextId)
                 focusedEditText.setText(selectedFileName)
-                CommonLogger.devLog("FILE NAME", selectedFileName)
             }
         }
 
