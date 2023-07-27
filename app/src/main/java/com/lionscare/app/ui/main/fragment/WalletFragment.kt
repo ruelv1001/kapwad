@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
@@ -16,16 +17,21 @@ import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.activity.TransactionsActivity
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
+import com.lionscare.app.ui.wallet.fragment.WalletSearchFragmentDirections
+import com.lionscare.app.utils.currencyFormat
+import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 
-class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback {
+class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback,
+    ScannerDialog.ScannerListener {
 
     private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
 
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var adapter : InboundOutboundAdapter? = null
+    private var adapter: InboundOutboundAdapter? = null
     private var dataList: List<SampleData> = emptyList()
+    private val activity by lazy { requireActivity() as WalletActivity }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +49,12 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAdapter()
+        setDetails()
         setClickListeners()
+    }
+
+    private fun setDetails() = binding.run {
+        pointsTextView.text = currencyFormat(getString(R.string.top_up_k1_text))
     }
 
     private fun setClickListeners() = binding.run {
@@ -56,14 +67,15 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             startActivity(intent)
         }
         sendPointsLinearLayout.setOnSingleClickListener {
-            val intent = WalletActivity.getIntent(requireContext(),"Send Points")
+            val intent = WalletActivity.getIntent(requireContext(), "Send Points")
             startActivity(intent)
         }
         scan2PayLinearLayout.setOnSingleClickListener {
-
+            ScannerDialog.newInstance(this@WalletFragment, "Scan 2 Pay")
+                .show(childFragmentManager, ScannerDialog.TAG)
         }
         postRequestLinearLayout.setOnSingleClickListener {
-            val intent = WalletActivity.getIntent(requireContext(),"Post Request")
+            val intent = WalletActivity.getIntent(requireContext(), "Post Request")
             startActivity(intent)
         }
     }
@@ -98,6 +110,15 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
 
     override fun onItemClicked(data: SampleData) {
 
+    }
+
+    override fun onScannerSuccess(qrValue: String) {
+        activity.data = SampleData(
+            id = R.drawable.img_profile,
+            title = "Romeo Dela Cruz",
+            amount = "LC-000001",
+        )
+        findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
     }
 
 }

@@ -22,7 +22,7 @@ fun currencyFormat(amount: String): String? {
         return "0.00"
     }
     val formatter = DecimalFormat("###,###,###,###,###.00")
-    return formatter.format(amount.toBigDecimal())
+    return formatter.format(amount.replace(",","").toBigDecimal())
 }
 
 

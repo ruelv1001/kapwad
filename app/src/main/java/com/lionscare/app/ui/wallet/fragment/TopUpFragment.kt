@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lionscare.app.data.model.AddFundsModel
 import com.lionscare.app.databinding.FragmentTopUpBinding
+import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.adapter.AddFundsAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 
@@ -18,6 +19,7 @@ class TopUpFragment : Fragment(), AddFundsAdapter.AddFundCallback {
     private val binding get() = _binding!!
     private var gridLayoutManager: GridLayoutManager? = null
     private var adapter: AddFundsAdapter? = null
+    private val activity by lazy { requireActivity() as TopUpPointsActivity }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +39,19 @@ class TopUpFragment : Fragment(), AddFundsAdapter.AddFundCallback {
         setupClickListener()
     }
 
-    private fun setupClickListener() = binding.run{
+    private fun setupClickListener() = binding.run {
         backImageView.setOnSingleClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            activity.onBackPressedDispatcher.onBackPressed()
         }
         continueButton.setOnSingleClickListener {
-            findNavController().navigate(TopUpFragmentDirections.actionNavigationTopUpToNavigationPaymentMethod())
+            if (pointsEditText.text.toString().isNotEmpty() && pointsEditText.text.toString()
+                    .replace(",", "").toDouble() != 0.0
+            ) {
+                activity.amount = pointsEditText.text.toString()
+                findNavController().navigate(TopUpFragmentDirections.actionNavigationTopUpToNavigationPaymentMethod())
+            } else {
+                pointsEditText.error = "Enter Number of Points"
+            }
         }
     }
 
