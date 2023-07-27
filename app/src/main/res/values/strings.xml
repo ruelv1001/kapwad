@@ -167,5 +167,9 @@
     <string name="lbl_assistance_n_requests">Assistance\nRequests</string>
     <string name="lbl_recent_activity">RECENT ACTIVITY</string>
     <string name="lbl_view_all">View All</string>
+    <string name="wallet_confirm_amp_send_points_now_text">Confirm &amp; Send Points Now</string>
+    <string name="wallet_send_points_summary_title">Send Points Summary</string>
+    <string name="wallet_request_points_summary_title">Request Points Summary</string>
+    <string name="wallet_points_recipient_summary_title">Points Recipient Summary</string>
 
 </resources>
