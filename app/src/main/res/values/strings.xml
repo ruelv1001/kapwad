@@ -158,6 +158,15 @@
     <string name="lbl_password">Password</string>
     <string name="lbl_search">Search</string>
     <string name="lbl_complete">Complete</string>
+    <string name="lbl_malasakit_family">Malasakit Family</string>
+    <string name="lbl_group_wallet">Group Wallet</string>
+    <string name="lbl_send_points">Send Points</string>
+    <string name="lbl_scan_2_pay">Scan 2 Pay</string>
+    <string name="lbl_members">Members</string>
+    <string name="lbl_co_admin">Co-Admin</string>
+    <string name="lbl_assistance_n_requests">Assistance\nRequests</string>
+    <string name="lbl_recent_activity">RECENT ACTIVITY</string>
+    <string name="lbl_view_all">View All</string>
     <string name="wallet_confirm_amp_send_points_now_text">Confirm &amp; Send Points Now</string>
     <string name="wallet_send_points_summary_title">Send Points Summary</string>
     <string name="wallet_request_points_summary_title">Request Points Summary</string>
