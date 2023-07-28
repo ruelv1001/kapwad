@@ -13,6 +13,11 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_wallet"
             app:destination="@id/navigation_wallet" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_groups"
+            app:destination="@id/navigation_groups"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -32,7 +37,7 @@
         tools:layout="@layout/fragment_groups" >
         <action
             android:id="@+id/action_navigation_groups_to_navigation_notifications"
-            app:destination="@id/navigation_notifications" />
+            app:destination="@id/navigation_notifications"/>
     </fragment>
 
     <fragment
@@ -50,6 +55,5 @@
         android:name="com.lionscare.app.ui.main.fragment.SettingsFragment"
         android:label=""
         tools:layout="@layout/fragment_settings" />
-
 
 </navigation>
