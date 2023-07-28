@@ -180,6 +180,8 @@
     <string name="verify_id_number_text">ID Number</string>
     <string name="verify_id_scan_text">ID Scan</string>
     <string name="verfiy_click_to_open_camera_text">Click to open camera</string>
+    <string name="settings_request_badge_text">Request Badge</string>
+    <string name="settings_change_password_text">Change Password</string>
     <string-array name="id_type_items">
         <item>Phil ID</item>
         <item>UMID</item>

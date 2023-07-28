@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lionscare.app.databinding.FragmentSettingsBinding
+import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
+import com.lionscare.app.ui.onboarding.activity.LoginActivity
+import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
+import com.lionscare.app.utils.setOnSingleClickListener
 
 class SettingsFragment : Fragment() {
 
@@ -31,7 +35,25 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setClickListeners() = binding.run {
+        requestBadgeLinearLayout.setOnSingleClickListener {
+            val intent = VerifiedBadgeActivity.getIntent(requireActivity())
+            startActivity(intent)
+        }
 
+        verifyAccountLinearLayout.setOnSingleClickListener {
+            val intent = AccountVerificationActivity.getIntent(requireActivity())
+            startActivity(intent)
+        }
+
+        changePasswordLinearLayout.setOnSingleClickListener {
+
+        }
+
+        logoutLinearLayout.setOnSingleClickListener {
+            val intent = LoginActivity.getIntent(requireActivity())
+            startActivity(intent)
+            requireActivity().finishAffinity()
+        }
     }
 
     override fun onDestroyView() {
