@@ -182,6 +182,10 @@
     <string name="verfiy_click_to_open_camera_text">Click to open camera</string>
     <string name="settings_request_badge_text">Request Badge</string>
     <string name="settings_change_password_text">Change Password</string>
+    <string name="update_password_title">Update Password</string>
+    <string name="update_old_password_text">Old Password</string>
+    <string name="update_new_password_text">New Password</string>
+    <string name="required_error_message">Field is required</string>
     <string-array name="id_type_items">
         <item>Phil ID</item>
         <item>UMID</item>
