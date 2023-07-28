@@ -177,7 +177,6 @@
     <string name="wallet_500_peso">₱500</string>
     <string name="lbl_manage_group">Manage Group</string>
     <string name="lbl_pending">PENDING</string>
-
     <string name="verify_account_title">Verify Account</string>
     <string name="verify_id_type_text">ID Type</string>
     <string name="verify_id_number_text">ID Number</string>
@@ -199,6 +198,10 @@
     <string name="lbl__0_00">0.00</string>
     <string name="lbl_requested_by">Requested by:</string>
     <string name="lbl_refid">REFID:</string>
+    <string name="update_password_title">Update Password</string>
+    <string name="update_old_password_text">Old Password</string>
+    <string name="update_new_password_text">New Password</string>
+    <string name="required_error_message">Field is required</string>
     <string-array name="id_type_items">
         <item>Phil ID</item>
         <item>UMID</item>
