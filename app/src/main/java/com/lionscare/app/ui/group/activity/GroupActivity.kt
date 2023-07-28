@@ -20,6 +20,7 @@ class GroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGroupBinding
     private var loadingDialog: CommonDialog? = null
     var start: String = ""
+    private var assistanceDetailsType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +74,13 @@ class GroupActivity : AppCompatActivity() {
 
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
+    }
+    fun setAssistanceDetailsType(type: String) = binding.run {
+        assistanceDetailsType = type
+    }
+
+    fun getAssistanceDetailsType(): String{
+        return assistanceDetailsType
     }
 
     companion object {

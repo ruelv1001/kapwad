@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.databinding.FragmentGroupAssistanceBinding
@@ -19,6 +21,7 @@ class AssistanceDeclineFragment : Fragment(), AssistanceAdapter.GroupCallback {
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter: AssistanceAdapter? = null
+    private var direction: NavDirections? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,11 +69,15 @@ class AssistanceDeclineFragment : Fragment(), AssistanceAdapter.GroupCallback {
     }
 
     companion object {
-        fun newInstance() = AssistanceDeclineFragment()
+        fun newInstance(direction: NavDirections): AssistanceDeclineFragment {
+            val fragment = AssistanceDeclineFragment()
+            fragment.direction = direction
+            return fragment
+        }
     }
 
     override fun onItemClicked(data: ArticleData) {
-//        TODO("Not yet implemented")
+        findNavController().navigate(direction!!)
     }
 
 

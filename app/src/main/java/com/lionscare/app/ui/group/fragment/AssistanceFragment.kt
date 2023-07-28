@@ -71,6 +71,8 @@ class AssistanceFragment : Fragment() {
         when (layout) {
 
             requestRelativeLayout -> {
+                activity.setAssistanceDetailsType(REQUEST)
+
                 requestView.visibility = View.VISIBLE
                 requestTextView.visibility = View.VISIBLE
 
@@ -81,6 +83,8 @@ class AssistanceFragment : Fragment() {
             }
 
             approveRelativeLayout -> {
+                activity.setAssistanceDetailsType(APPROVED)
+
                 approveView.visibility = View.VISIBLE
                 approveTextView.visibility = View.VISIBLE
 
@@ -91,6 +95,8 @@ class AssistanceFragment : Fragment() {
             }
 
             declineRelativeLayout -> {
+                activity.setAssistanceDetailsType(DECLINED)
+
                 declineView.visibility = View.VISIBLE
                 declineTextView.visibility = View.VISIBLE
 
@@ -107,9 +113,12 @@ class AssistanceFragment : Fragment() {
     private fun setUpTabs() = binding.run {
         pagerAdapter = CustomViewPagerAdapter(childFragmentManager, lifecycle)
         pagerAdapter?.apply {
-            addFragment(AssistanceRequestFragment.newInstance())
-            addFragment(AssistanceApproveFragment.newInstance())
-            addFragment(AssistanceDeclineFragment.newInstance())
+            addFragment(AssistanceRequestFragment.newInstance(
+                AssistanceFragmentDirections.actionNavigationGroupAssistanceReqDetails()))
+            addFragment(AssistanceApproveFragment.newInstance(
+                AssistanceFragmentDirections.actionNavigationGroupAssistanceReqDetails()))
+            addFragment(AssistanceDeclineFragment.newInstance(
+                AssistanceFragmentDirections.actionNavigationGroupAssistanceReqDetails()))
         }
 
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -137,7 +146,9 @@ class AssistanceFragment : Fragment() {
     }
 
     companion object {
-        private const val START_CREATE = "START_CREATE"
+        private const val APPROVED = "APPROVED"
+        private const val DECLINED = "DECLINED"
+        private const val REQUEST = "REQUEST"
     }
 
 }
