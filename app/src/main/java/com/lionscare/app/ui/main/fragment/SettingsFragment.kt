@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.lionscare.app.databinding.FragmentSettingsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.onboarding.activity.LoginActivity
+import com.lionscare.app.ui.settings.activity.UpdatePasswordActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 
@@ -46,7 +47,8 @@ class SettingsFragment : Fragment() {
         }
 
         changePasswordLinearLayout.setOnSingleClickListener {
-
+            val intent = UpdatePasswordActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
 
         logoutLinearLayout.setOnSingleClickListener {
