@@ -54,6 +54,9 @@ class GroupManageFragment : Fragment() {
         assistanceLinearLayout.setOnSingleClickListener {
             findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupAssistance())
         }
+        membershipLinearLayout.setOnSingleClickListener {
+            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupMembership())
+        }
     }
 
     override fun onDestroyView() {

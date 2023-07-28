@@ -21,6 +21,7 @@ class GroupActivity : AppCompatActivity() {
     private var loadingDialog: CommonDialog? = null
     var start: String = ""
     private var assistanceDetailsType: String = ""
+    private var memberCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,12 +83,20 @@ class GroupActivity : AppCompatActivity() {
     fun getAssistanceDetailsType(): String{
         return assistanceDetailsType
     }
+    fun setMemberCount(type: Int) = binding.run {
+        memberCount = type
+    }
+
+    fun getMemberCount(): Int{
+        return memberCount
+    }
 
     companion object {
         private const val INVALID_ID = -1
         private const val EXTRA_START = "EXTRA_START"
         private const val START_INVITE = "START_INVITE"
         private const val START_MANAGE = "START_MANAGE"
+        private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         fun getIntent(context: Context, start: String): Intent {
             val intent = Intent(context, GroupActivity::class.java)
             intent.putExtra(EXTRA_START, start)

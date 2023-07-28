@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_navigation_group_assistance"
             app:destination="@id/navigation_group_assistance" />
+        <action
+            android:id="@+id/action_navigation_group_membership"
+            app:destination="@id/navigation_group_membership" />
     </fragment>
     <fragment
         android:id="@+id/navigation_group_assistance"
@@ -43,6 +46,12 @@
         android:name="com.lionscare.app.ui.group.fragment.AssistanceRequestDetailsFragment"
         android:label=""
         tools:layout="@layout/fragment_group_assistance_req_details"/>
+
+    <fragment
+        android:id="@+id/navigation_group_membership"
+        android:name="com.lionscare.app.ui.group.fragment.MembershipFragment"
+        android:label=""
+        tools:layout="@layout/fragment_membership"/>
 
 
 </navigation>
