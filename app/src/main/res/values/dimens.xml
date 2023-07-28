@@ -102,4 +102,5 @@
     <dimen name="dimen_13">13dp</dimen>
     <dimen name="dimen_55">55dp</dimen>
     <dimen name="dimen_270">270dp</dimen>
+    <dimen name="dimen_23">23dp</dimen>
 </resources>

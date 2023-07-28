@@ -19,6 +19,7 @@ class GroupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGroupBinding
     private var loadingDialog: CommonDialog? = null
+    var start: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +37,17 @@ class GroupActivity : AppCompatActivity() {
     }
 
     private fun setupNavigationComponent() {
+        start = intent.getStringExtra(EXTRA_START).orEmpty()
         setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.group_nav_graph)
+        when (start) {
+            START_INVITE -> navGraph.setStartDestination(R.id.navigation_group_invite)
+            START_MANAGE -> navGraph.setStartDestination(R.id.navigation_group_manage)
+            else -> navGraph.setStartDestination(R.id.navigation_group_create)
+        }
         navController.setGraph(navGraph, null)
         val appBarConfig = AppBarConfiguration.Builder(INVALID_ID)
             .setFallbackOnNavigateUpListener {
@@ -64,15 +71,19 @@ class GroupActivity : AppCompatActivity() {
         loadingDialog = null
     }
 
-    fun setTitle(title: String) = binding.run {
+    fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
     }
 
     companion object {
         private const val INVALID_ID = -1
-        private const val EXTRA_CODE = "EXTRA_CODE"
-        fun getIntent(context: Context): Intent {
-            return Intent(context, GroupActivity::class.java)
+        private const val EXTRA_START = "EXTRA_START"
+        private const val START_INVITE = "START_INVITE"
+        private const val START_MANAGE = "START_MANAGE"
+        fun getIntent(context: Context, start: String): Intent {
+            val intent = Intent(context, GroupActivity::class.java)
+            intent.putExtra(EXTRA_START, start)
+            return intent
         }
     }
 }

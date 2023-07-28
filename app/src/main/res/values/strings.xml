@@ -175,6 +175,9 @@
     <string name="wallet_request_points_details_title">Request Points Details</string>
     <string name="wallet_scan2pay_details_title">Scan 2 Pay Details</string>
     <string name="wallet_500_peso">₱500</string>
+    <string name="lbl_manage_group">Manage Group</string>
+    <string name="lbl_pending">PENDING</string>
+
     <string name="verify_account_title">Verify Account</string>
     <string name="verify_id_type_text">ID Type</string>
     <string name="verify_id_number_text">ID Number</string>
@@ -182,6 +185,20 @@
     <string name="verfiy_click_to_open_camera_text">Click to open camera</string>
     <string name="settings_request_badge_text">Request Badge</string>
     <string name="settings_change_password_text">Change Password</string>
+    <string name="lbl_assistance">Assistance</string>
+    <string name="lbl_1">1</string>
+    <string name="lbl_membership">Membership</string>
+    <string name="lbl_statistics">Statistics</string>
+    <string name="lbl_management">MANAGEMENT</string>
+    <string name="lbl_transaction_history">Transaction History</string>
+    <string name="lbl_community_roles">Community Roles</string>
+    <string name="lbl_requests">Requests</string>
+    <string name="lbl_approved">Approved</string>
+    <string name="lbl_declined">Declined</string>
+    <string name="lbl_request">Request</string>
+    <string name="lbl__0_00">0.00</string>
+    <string name="lbl_requested_by">Requested by:</string>
+    <string name="lbl_refid">REFID:</string>
     <string-array name="id_type_items">
         <item>Phil ID</item>
         <item>UMID</item>
