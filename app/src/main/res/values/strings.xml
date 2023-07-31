@@ -158,6 +158,7 @@
     <string name="lbl_password">Password</string>
     <string name="lbl_search">Search</string>
     <string name="lbl_complete">Complete</string>
+    <string name="lbl_invite">Invite</string>
     <string name="lbl_malasakit_family">Malasakit Family</string>
     <string name="lbl_group_wallet">Group Wallet</string>
     <string name="lbl_send_points">Send Points</string>
@@ -175,6 +176,9 @@
     <string name="wallet_request_points_details_title">Request Points Details</string>
     <string name="wallet_scan2pay_details_title">Scan 2 Pay Details</string>
     <string name="wallet_500_peso">₱500</string>
+    <string name="lbl_manage_group">Manage Group</string>
+    <string name="lbl_request_details">Request Details</string>
+    <string name="lbl_pending">PENDING</string>
     <string name="verify_account_title">Verify Account</string>
     <string name="verify_id_type_text">ID Type</string>
     <string name="verify_id_number_text">ID Number</string>
@@ -182,10 +186,30 @@
     <string name="verfiy_click_to_open_camera_text">Click to open camera</string>
     <string name="settings_request_badge_text">Request Badge</string>
     <string name="settings_change_password_text">Change Password</string>
+    <string name="lbl_assistance">Assistance</string>
+    <string name="lbl_1">1</string>
+    <string name="lbl_membership">Membership</string>
+    <string name="lbl_statistics">Statistics</string>
+    <string name="lbl_management">MANAGEMENT</string>
+    <string name="lbl_transaction_history">Transaction History</string>
+    <string name="lbl_community_roles">Community Roles</string>
+    <string name="lbl_requests">Requests</string>
+    <string name="lbl_approved">Approved</string>
+    <string name="lbl_declined">Declined</string>
+    <string name="lbl_request">Request</string>
+    <string name="lbl__0_00">0.00</string>
+    <string name="lbl_requested_by">Requested by:</string>
+    <string name="lbl_refid">REFID:</string>
     <string name="update_password_title">Update Password</string>
     <string name="update_old_password_text">Old Password</string>
     <string name="update_new_password_text">New Password</string>
     <string name="required_error_message">Field is required</string>
+    <string name="lbl__refid">Refid</string>
+    <string name="lbl_time_and_date">Time and Date</string>
+    <string name="lbl_amount">Amount</string>
+    <string name="lbl_approve">Approve</string>
+    <string name="lbl_decline">Decline</string>
+    <string name="lbl_reason">Reason</string>
     <string-array name="id_type_items">
         <item>Phil ID</item>
         <item>UMID</item>

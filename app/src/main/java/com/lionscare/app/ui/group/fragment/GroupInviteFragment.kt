@@ -67,12 +67,17 @@ class GroupInviteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
             )
         )
         adapter?.submitData(lifecycle, PagingData.from(dataList))
+        if (activity.start == START_INVITE){
+            completeButton.text = getText(R.string.lbl_invite)
+        } else {
+            completeButton.text = getText(R.string.lbl_complete)
+        }
     }
 
 
     override fun onResume() {
         super.onResume()
-        activity.setTitle(R.string.lbl_invite_group)
+        activity.setTitlee(getString(R.string.lbl_invite_group))
     }
 
     private fun setView() = binding.run {
@@ -110,5 +115,9 @@ class GroupInviteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
 
     override fun onItemClicked(data: SampleData) {
 //        TODO("Not yet implemented")
+    }
+
+    companion object {
+        private const val START_INVITE = "START_INVITE"
     }
 }

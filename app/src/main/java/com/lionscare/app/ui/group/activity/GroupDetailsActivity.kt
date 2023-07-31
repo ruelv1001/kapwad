@@ -10,8 +10,10 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.databinding.ActivityGroupDetailsBinding
+import com.lionscare.app.ui.main.fragment.GroupsFragment
 import com.lionscare.app.ui.notifications.adapter.NotificationsAdapter
 import com.lionscare.app.utils.dialog.CommonDialog
+import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,10 +58,14 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
     }
 
     private fun setupClickListener() = binding.run{
-//        registerButton.setOnSingleClickListener {
-//            val intent = RegisterActivity.getIntent(this@GroupDetailsActivity)
-//            startActivity(intent)
-//        }
+        addImageView.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_INVITE)
+            startActivity(intent)
+        }
+        settingsImageView.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MANAGE)
+            startActivity(intent)
+        }
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -84,6 +90,8 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
 
 
     companion object {
+        private const val START_INVITE = "START_INVITE"
+        private const val START_MANAGE = "START_MANAGE"
         fun getIntent(context: Context): Intent {
             return Intent(context, GroupDetailsActivity::class.java)
         }

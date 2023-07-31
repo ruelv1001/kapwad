@@ -58,7 +58,7 @@ class GroupsFragment : Fragment() {
         }
 
         createGroupImageButton.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(requireActivity())
+            val intent = GroupActivity.getIntent(requireActivity(),START_CREATE)
             startActivity(intent)
         }
 
@@ -131,6 +131,10 @@ class GroupsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val START_CREATE = "START_CREATE"
     }
 
 }

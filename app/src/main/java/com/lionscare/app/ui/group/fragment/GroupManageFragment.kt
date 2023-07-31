@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
-import com.lionscare.app.databinding.FragmentGroupCreateBinding
+import com.lionscare.app.databinding.FragmentGroupManageBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GroupCreateFragment: Fragment() {
-    private var _binding: FragmentGroupCreateBinding? = null
+class GroupManageFragment : Fragment() {
+    private var _binding: FragmentGroupManageBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
 
@@ -23,7 +23,7 @@ class GroupCreateFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentGroupCreateBinding.inflate(
+        _binding = FragmentGroupManageBinding.inflate(
             inflater,
             container,
             false
@@ -40,10 +40,10 @@ class GroupCreateFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity.setTitlee(getString(R.string.lbl_create_group))
+        activity.setTitlee(getString(R.string.lbl_manage_group))
     }
 
-    private fun setView() = binding.run{
+    private fun setView() = binding.run {
 //        firstNameEditText.doOnTextChanged {
 //                text, start, before, count ->
 //            firstNameTextInputLayout.error = ""
@@ -51,32 +51,20 @@ class GroupCreateFragment: Fragment() {
     }
 
     private fun setClickListeners() = binding.run {
-        continueButton.setOnSingleClickListener {
-//            if (firstNameEditText.text.toString().isEmpty()){
-//                firstNameTextInputLayout.error = "Field is required"
-//            }
-                findNavController().navigate(GroupCreateFragmentDirections.actionNavigationGroupInvite())
+        assistanceLinearLayout.setOnSingleClickListener {
+            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupAssistance())
         }
-
-        publicLinearLayout.setOnSingleClickListener {
-            publicRadioButton.isChecked = true
-            privateRadioButton.isChecked = false
-            publicLinearLayout.isSelected = true
-            privateRelativeLayout.isSelected = false
-            passwordLinearLayout.visibility = View.GONE
-        }
-
-        privateRelativeLayout.setOnSingleClickListener {
-            privateRadioButton.isChecked = true
-            publicRadioButton.isChecked = false
-            privateRelativeLayout.isSelected = true
-            publicLinearLayout.isSelected = false
-            passwordLinearLayout.visibility = View.VISIBLE
+        membershipLinearLayout.setOnSingleClickListener {
+            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupMembership())
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val START_MANAGE = "START_MANAGE"
     }
 }
