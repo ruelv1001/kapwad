@@ -178,6 +178,7 @@
     <string name="wallet_500_peso">₱500</string>
     <string name="lbl_manage_group">Manage Group</string>
     <string name="lbl_request_details">Request Details</string>
+    <string name="lbl_my_profile">My Profile</string>
     <string name="lbl_pending">PENDING</string>
     <string name="verify_account_title">Verify Account</string>
     <string name="verify_id_type_text">ID Type</string>
@@ -211,6 +212,12 @@
     <string name="lbl_decline">Decline</string>
     <string name="lbl_reason">Reason</string>
     <string name="lbl_verified">Verified</string>
+    <string name="lvl_verified">Verified</string>
+    <string name="lvl_verify">Verify</string>
+    <string name="lbl_save">Save</string>
+    <string name="lbl_verification_sent">Verification Sent</string>
+    <string name="lbl_save_changes">Save Changes</string>
+    <string name="lbl_cancel">Cancel</string>
     <string-array name="id_type_items">
         <item>Phil ID</item>
         <item>UMID</item>

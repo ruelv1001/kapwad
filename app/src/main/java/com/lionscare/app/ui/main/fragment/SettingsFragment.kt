@@ -9,6 +9,7 @@ import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentSettingsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.onboarding.activity.LoginActivity
+import com.lionscare.app.ui.settings.activity.ProfileActivity
 import com.lionscare.app.ui.settings.activity.UpdatePasswordActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -59,6 +60,11 @@ class SettingsFragment : Fragment() {
             val intent = LoginActivity.getIntent(requireActivity())
             startActivity(intent)
             requireActivity().finishAffinity()
+        }
+
+        profileLinearLayout.setOnSingleClickListener {
+            val intent = ProfileActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
     }
 
