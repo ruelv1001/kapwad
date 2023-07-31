@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_nav_graph"
+    app:startDestination="@id/navigation_profile_preview">
+
+    <fragment
+        android:id="@+id/navigation_profile_preview"
+        android:name="com.lionscare.app.ui.settings.fragment.ProfilePreviewFragment"
+        tools:layout="@layout/fragment_profile_preview"
+        android:label="">
+        <action
+            android:id="@+id/action_navigation_profile_update"
+            app:destination="@id/navigation_profile_update" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile_update"
+        android:name="com.lionscare.app.ui.settings.fragment.ProfileUpdateFragment"
+        tools:layout="@layout/fragment_profile_update"
+        android:label="">
+
+    </fragment>
+</navigation>

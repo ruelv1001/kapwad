@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:background="@drawable/bg_edittext_normal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/lbl_save_changes"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_20" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:layout_margin="@dimen/dimen_20"
+        android:background="@color/bg_edittext" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="3"
+        android:text="@string/sample_lorem_ipsum"
+        android:textAlignment="textStart"
+        android:textColor="@color/commons_lbl"
+        android:textSize="@dimen/font_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@color/bg_edittext" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelledButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_8"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_weight="1"
+                android:backgroundTint="@color/bg_red"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="@string/lbl_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/red"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirmButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_weight="1"
+                android:backgroundTint="@color/color_primary"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="@string/lbl_confirm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/editImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:src="@drawable/ic_profile_edit" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dimen_20"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_first_name"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/firstNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_vertical"
+                android:text="Juan"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_middle_name"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/middleNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_vertical"
+                android:text="Ponce"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_last_name"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/lastNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_vertical"
+                android:text="Dela Cruz"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_contact_number"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/contactTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center_vertical"
+                    android:text="+63 917 123 4567"
+                    android:textColor="@color/black_text"
+                    android:textSize="@dimen/font_14" />
+
+                <TextView
+                    android:id="@+id/contactVerifyTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dimen_10"
+                    android:paddingEnd="@dimen/dimen_10"
+                    android:text="@string/lvl_verified"
+                    android:textColor="@color/color_primary"
+                    android:textSize="@dimen/font_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_email_address"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/emailTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center_vertical"
+                    android:text="juandelacruz@email.com"
+                    android:textColor="@color/black_text"
+                    android:textSize="@dimen/font_14" />
+
+                <TextView
+                    android:id="@+id/emailVerifyTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dimen_10"
+                    android:paddingEnd="@dimen/dimen_10"
+                    android:text="@string/lvl_verify"
+                    android:textColor="@color/color_primary"
+                    android:textSize="@dimen/font_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_60"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_province"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/provinceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_vertical"
+                android:text="Province 1"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_city_municipality"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/cityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_vertical"
+                android:text="City 1"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_city_municipality"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/barangayTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_vertical"
+                android:text="Barangay 1"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/light_gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_street"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/streetTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_vertical"
+                android:text="1st Street, 1st Road"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:layout_marginBottom="@dimen/dimen_100"
+                android:background="@color/light_gray_line" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
