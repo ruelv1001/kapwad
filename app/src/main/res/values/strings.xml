@@ -210,6 +210,7 @@
     <string name="lbl_approve">Approve</string>
     <string name="lbl_decline">Decline</string>
     <string name="lbl_reason">Reason</string>
+    <string name="lbl_verified">Verified</string>
     <string-array name="id_type_items">
         <item>Phil ID</item>
         <item>UMID</item>

@@ -52,7 +52,7 @@
                 android:layout_width="@dimen/dimen_30"
                 android:layout_height="@dimen/dimen_30"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_thumbs_up"
+                android:src="@drawable/ic_verified"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:padding="@dimen/dimen_6"
