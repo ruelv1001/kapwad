@@ -10,6 +10,7 @@ import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupCommunityRolesUpdateBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
+import com.lionscare.app.ui.group.dialog.SaveSuccessDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,6 +64,9 @@ class CommunityRolesUpdateFragment: Fragment() {
 
         addLinearLayout.setOnSingleClickListener {
             findNavController().navigate(CommunityRolesUpdateFragmentDirections.actionNavigationGroupRolesPromote())
+        }
+        saveButton.setOnSingleClickListener {
+            SaveSuccessDialog.newInstance().show(childFragmentManager, SaveSuccessDialog.TAG)
         }
 
     }

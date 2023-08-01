@@ -234,4 +234,6 @@
     <string name="lbl_admin">ADMIN</string>
     <string name="lbl_add">Add</string>
     <string name="lbl_remove_selected_user">Remove Selected User?</string>
+    <string name="lbl_changes_saved">Changes Saved</string>
+    <string name="lbl_done">Done</string>
 </resources>
