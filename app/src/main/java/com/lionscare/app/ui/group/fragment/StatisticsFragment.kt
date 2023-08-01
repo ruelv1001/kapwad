@@ -5,16 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
-import com.lionscare.app.databinding.FragmentGroupManageBinding
+import com.lionscare.app.databinding.FragmentGroupStatisticsBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
-import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GroupManageFragment : Fragment() {
-    private var _binding: FragmentGroupManageBinding? = null
+class StatisticsFragment: Fragment() {
+    private var _binding: FragmentGroupStatisticsBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
 
@@ -23,7 +21,7 @@ class GroupManageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentGroupManageBinding.inflate(
+        _binding = FragmentGroupStatisticsBinding.inflate(
             inflater,
             container,
             false
@@ -40,10 +38,10 @@ class GroupManageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity.setTitlee(getString(R.string.lbl_manage_group))
+        activity.setTitlee(getString(R.string.lbl_group_statistics))
     }
 
-    private fun setView() = binding.run {
+    private fun setView() = binding.run{
 //        firstNameEditText.doOnTextChanged {
 //                text, start, before, count ->
 //            firstNameTextInputLayout.error = ""
@@ -51,26 +49,11 @@ class GroupManageFragment : Fragment() {
     }
 
     private fun setClickListeners() = binding.run {
-        assistanceLinearLayout.setOnSingleClickListener {
-            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupAssistance())
-        }
-        membershipLinearLayout.setOnSingleClickListener {
-            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupMembership())
-        }
-        statisticsLinearLayout.setOnSingleClickListener {
-            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupStatistics())
-        }
-        transactionLinearLayout.setOnSingleClickListener {
-            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupTransaction())
-        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val START_MANAGE = "START_MANAGE"
     }
 }

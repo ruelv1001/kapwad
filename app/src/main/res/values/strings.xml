@@ -154,6 +154,7 @@
     <string name="lbl_requires_password">Requires Password</string>
     <string name="lbl_require_approval_to_join">Require Approval to Join</string>
     <string name="lbl_create_group">Create Group</string>
+    <string name="lbl_group_statistics">Statistics</string>
     <string name="lbl_invite_group">Invite to Group</string>
     <string name="lbl_password">Password</string>
     <string name="lbl_search">Search</string>
@@ -193,6 +194,7 @@
     <string name="lbl_statistics">Statistics</string>
     <string name="lbl_management">MANAGEMENT</string>
     <string name="lbl_transaction_history">Transaction History</string>
+    <string name="lbl_transactions">Transactions</string>
     <string name="lbl_community_roles">Community Roles</string>
     <string name="lbl_requests">Requests</string>
     <string name="lbl_approved">Approved</string>
@@ -224,4 +226,6 @@
         <item>Passport</item>
     </string-array>
     <string name="wallet_sent_points_text">Sent Points</string>
+    <string name="lbl_total_requests_naccepted">Total Requests\nAccepted</string>
+    <string name="lbl_total_requests_ndeclined">Total Requests\nDeclined</string>
 </resources>

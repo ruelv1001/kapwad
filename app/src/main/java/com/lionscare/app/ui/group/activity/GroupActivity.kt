@@ -3,6 +3,7 @@ package com.lionscare.app.ui.group.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -75,6 +76,11 @@ class GroupActivity : AppCompatActivity() {
 
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
+        if (title == getString(R.string.lbl_transactions)){
+            searchImageView.visibility = View.VISIBLE
+        }else{
+            searchImageView.visibility = View.INVISIBLE
+        }
     }
     fun setAssistanceDetailsType(type: String) = binding.run {
         assistanceDetailsType = type
