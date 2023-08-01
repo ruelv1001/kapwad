@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_navigation_group_transaction"
             app:destination="@id/navigation_group_transaction" />
+        <action
+            android:id="@+id/action_navigation_group_roles"
+            app:destination="@id/navigation_group_roles" />
     </fragment>
     <fragment
         android:id="@+id/navigation_group_assistance"
@@ -70,6 +73,32 @@
         android:name="com.lionscare.app.ui.group.fragment.HistoryTransactionFragment"
         android:label=""
         tools:layout="@layout/fragment_history_transaction"/>
+
+    <fragment
+        android:id="@+id/navigation_group_roles"
+        android:name="com.lionscare.app.ui.group.fragment.CommunityRolesFragment"
+        android:label=""
+        tools:layout="@layout/fragment_group_community_roles">
+        <action
+            android:id="@+id/action_navigation_roles_update"
+            app:destination="@id/navigation_group_roles_update" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_group_roles_update"
+        android:name="com.lionscare.app.ui.group.fragment.CommunityRolesUpdateFragment"
+        android:label=""
+        tools:layout="@layout/fragment_group_community_roles_update">
+        <action
+            android:id="@+id/action_navigation_group_roles_promote"
+            app:destination="@id/navigation_group_roles_promote" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_group_roles_promote"
+        android:name="com.lionscare.app.ui.group.fragment.GroupPromoteFragment"
+        android:label=""
+        tools:layout="@layout/fragment_group_invite"/>
 
 
 </navigation>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -74,12 +75,25 @@ class GroupActivity : AppCompatActivity() {
         loadingDialog = null
     }
 
+    fun getRolesView() : ImageView{
+        return binding.rolesImageView
+    }
+
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
-        if (title == getString(R.string.lbl_transactions)){
-            searchImageView.visibility = View.VISIBLE
-        }else{
-            searchImageView.visibility = View.INVISIBLE
+        when(title){
+            getString(R.string.lbl_transactions) ->{
+                rolesImageView.visibility = View.GONE
+                searchImageView.visibility = View.VISIBLE
+            }
+            getString(R.string.lbl_group_community_roles) ->{
+                rolesImageView.visibility = View.VISIBLE
+                searchImageView.visibility = View.GONE
+            }
+            else -> {
+                rolesImageView.visibility = View.GONE
+                searchImageView.visibility = View.GONE
+            }
         }
     }
     fun setAssistanceDetailsType(type: String) = binding.run {
