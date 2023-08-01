@@ -32,7 +32,8 @@
 
         <TextView
             android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:paddingStart="@dimen/dimen_25"
@@ -40,6 +41,21 @@
             android:text="@string/lbl_create_group"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_22" />
+
+        <ImageView
+            android:id="@+id/searchImageView"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:visibility="gone"
+            android:src="@drawable/ic_search" />
+
+        <ImageView
+            android:id="@+id/rolesImageView"
+            android:layout_width="@dimen/dimen_30"
+            android:padding="@dimen/dimen_5"
+            android:visibility="gone"
+            android:layout_height="@dimen/dimen_30"
+            android:src="@drawable/ic_edit_roles" />
 
     </LinearLayout>
 
