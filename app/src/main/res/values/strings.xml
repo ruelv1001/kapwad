@@ -223,4 +223,5 @@
         <item>UMID</item>
         <item>Passport</item>
     </string-array>
+    <string name="wallet_sent_points_text">Sent Points</string>
 </resources>

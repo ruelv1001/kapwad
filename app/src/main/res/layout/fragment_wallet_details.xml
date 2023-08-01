@@ -70,6 +70,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/requestedPointsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10"
@@ -144,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/request_posted_date_text"
+                android:text="@string/lbl_time_and_date"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:textAlignment="center"
                 android:textColor="@color/black_text"

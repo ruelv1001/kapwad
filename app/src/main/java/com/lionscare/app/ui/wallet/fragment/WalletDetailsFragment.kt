@@ -39,6 +39,7 @@ class WalletDetailsFragment : Fragment() {
         when(activity.mode){
             "Send Points" -> {
                 titleTextView.text = getString(R.string.wallet_send_points_details_title)
+                requestedPointsTextView.text = getString(R.string.wallet_sent_points_text)
 
                 activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }
                 recipientLayout.nameTextView.text = activity.data.title
@@ -46,10 +47,12 @@ class WalletDetailsFragment : Fragment() {
             }
             "Scan 2 Pay" -> {
                 titleTextView.text = getString(R.string.wallet_scan2pay_details_title)
+                requestedPointsTextView.text = getString(R.string.wallet_sent_points_text)
             }
             "Post Request" -> {
                 titleTextView.text = getString(R.string.wallet_request_points_details_title)
                 recipientTitleTextView.text = getString(R.string.wallet_from_title)
+                requestedPointsTextView.text = getString(R.string.request_posted_requested_points_text)
 
                 activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }
                 recipientLayout.nameTextView.text = activity.data.title
