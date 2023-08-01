@@ -7,6 +7,8 @@
     android:textAlignment="center"
     android:textColor="@color/color_primary"
     android:layout_marginHorizontal="@dimen/dimen_6"
-    android:textSize="@dimen/font_16" >
+    android:autoSizeTextType="uniform"
+    android:autoSizeMaxTextSize="@dimen/font_16"
+    android:autoSizeMinTextSize="@dimen/font_14">
 
 </Button>
