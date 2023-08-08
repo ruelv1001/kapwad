@@ -55,8 +55,7 @@
                 android:textColor="@color/black"
                 android:layout_weight="1"
                 android:textSize="@dimen/font_16"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/payment_method_ziapay_text" />
+                android:fontFamily="@font/inter_semibold"/>
 
             <TextView
                 android:layout_width="wrap_content"
