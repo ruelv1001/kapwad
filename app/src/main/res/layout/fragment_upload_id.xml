@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_40"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/upload_id_front_id_card_text"
                 android:textColor="@color/black_text"
@@ -60,7 +60,7 @@
                 android:textSize="@dimen/font_16" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_regular"
                 android:layout_marginTop="@dimen/dimen_6"
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_40"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/upload_id_back_id_card_text"
                 android:textColor="@color/black_text"
@@ -100,7 +100,7 @@
                 android:textSize="@dimen/font_16" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_regular"
                 android:layout_marginTop="@dimen/dimen_6"
@@ -133,7 +133,7 @@
         android:fontFamily="@font/inter_semibold"
         android:paddingTop="@dimen/dimen_15"
         android:paddingBottom="@dimen/dimen_15"
-        android:text="@string/lbl_continue"
+        android:text="@string/lbl_submit"
         android:textAllCaps="false"
         android:textSize="@dimen/font_14" />
 </LinearLayout>

@@ -247,4 +247,5 @@
     <string name="upload_id_front_note_text">Please provide us with a clear portrait picture of front side of your ID card.</string>
     <string name="upload_id_back_id_card_text">Upload Back ID Card</string>
     <string name="upload_id_back_note_text">Please provide us with a clear portrait picture of back side of your ID card.</string>
+    <string name="lbl_submit">Submit</string>
 </resources>

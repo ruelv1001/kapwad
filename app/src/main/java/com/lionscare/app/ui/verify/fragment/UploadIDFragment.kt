@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentUploadIdBinding
 import com.lionscare.app.utils.getFileFromUri
+import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
 import java.io.File
 import java.util.Calendar
@@ -116,14 +117,10 @@ class UploadIDFragment : Fragment() {
         if (isSaved)
         {
             if (isBackImage){
-                Glide.with(this)
-                    .load(uriFilePath)
-                    .into(binding.backIdImageView)
+                binding.backIdImageView.loadImage(uriFilePath.toString(),requireActivity())
                // viewModel.backIdFile = getFileFromUri(requireActivity(), uriFilePath)
             }else {
-                Glide.with(this)
-                    .load(uriFilePath)
-                    .into(binding.frontIdImageView)
+                binding.frontIdImageView.loadImage(uriFilePath.toString(),requireActivity())
                // viewModel.frontIdFile = getFileFromUri(requireActivity(), uriFilePath)
             }
         }
@@ -132,14 +129,10 @@ class UploadIDFragment : Fragment() {
     private val singlePhotoPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri: Uri? ->
         imageUri?.let { uri ->
             if (isBackImage){
-                Glide.with(this)
-                    .load(uri)
-                    .into(binding.backIdImageView)
+                binding.backIdImageView.loadImage(uriFilePath.toString(),requireActivity())
                // viewModel.backIdFile = getFileFromUri(requireActivity(), uri)
             }else{
-                Glide.with(this)
-                    .load(uri)
-                    .into(binding.frontIdImageView)
+                binding.frontIdImageView.loadImage(uriFilePath.toString(),requireActivity())
                // viewModel.frontIdFile = getFileFromUri(requireActivity(), uri)
             }
 
