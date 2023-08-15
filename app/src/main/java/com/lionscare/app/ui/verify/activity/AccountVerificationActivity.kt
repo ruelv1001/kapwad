@@ -36,45 +36,9 @@ class AccountVerificationActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         setClickListener()
-        setSpinner()
-    }
-
-    private fun setSpinner() = binding.run {
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            this@AccountVerificationActivity,
-            R.array.id_type_items,
-            android.R.layout.simple_spinner_item
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        idTypeSpinner.adapter = adapter
-
-        idTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
     }
 
     private fun setClickListener() = binding.run {
-        idScanEditText.setOnSingleClickListener {
-            openCamera(idScanEditText)
-        }
-
-        selfieEditText.setOnSingleClickListener {
-            openCamera(selfieEditText)
-        }
-
-        continueButton.isEnabled = idNoEditText.text?.isNotEmpty() == true && idScanEditText.text?.isNotEmpty() == true &&
-                selfieEditText.text?.isNotEmpty() == true
-
         backImageView.setOnSingleClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
