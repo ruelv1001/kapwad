@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.verify.fragment.ProofOfAddressFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:padding="@dimen/dimen_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/proof_of_address_note_text"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/proof_of_address_select_document_type_title"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_16" />
+
+        <Spinner
+            android:id="@+id/proofOfAddressTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@drawable/bg_edittext_selector"
+            android:padding="@dimen/dimen_16" />
+
+        <RelativeLayout
+            android:id="@+id/proofOfAddressRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_250"
+            android:background="@drawable/bg_rounded_dash_outline"
+            android:padding="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_16">
+
+            <TextView
+                android:id="@+id/proofOfAddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dimen_80"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/upload_proof_of_address_text"
+                android:textColor="@color/black_text"
+                android:layout_marginHorizontal="@dimen/dimen_10"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:text="@string/upload_proof_of_address_note_text"
+                android:textColor="@color/light_gray"
+                android:textAlignment="center"
+                android:layout_below="@id/proofOfAddressTextView"
+                android:layout_marginHorizontal="@dimen/dimen_10"
+                android:textSize="@dimen/font_12" />
+
+            <ImageView
+                android:id="@+id/proofOfAddressImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continueButton"
+        style="@style/MyButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginBottom="@dimen/dimen_20"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingTop="@dimen/dimen_15"
+        android:paddingBottom="@dimen/dimen_15"
+        android:text="@string/lbl_submit"
+        android:textAllCaps="false"
+        android:textSize="@dimen/font_14" />
+
+</LinearLayout>

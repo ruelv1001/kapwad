@@ -185,7 +185,7 @@
     <string name="lbl_my_profile">My Profile</string>
     <string name="lbl_pending">PENDING</string>
     <string name="verify_account_title">Verify Account</string>
-    <string name="verify_id_type_text">ID Type</string>
+    <string name="verify_id_type_text">Select ID Type</string>
     <string name="verify_id_number_text">ID Number</string>
     <string name="verify_id_scan_text">ID Scan</string>
     <string name="verfiy_click_to_open_camera_text">Click to open camera</string>
@@ -241,4 +241,15 @@
     <string name="account_verification_upload_identification_title">Upload Identification</string>
     <string name="account_verification_valid_id_text">Valid ID</string>
     <string name="account_verification_proof_of_address_title">Proof of Address</string>
+    <string name="upload_id_note_text">We kindly ask for a photograph of a government-issued ID to proceed with the identity verification process.</string>
+    <string name="id_readable_label">Make sure to upload a bright photo where all text is clearly readable.</string>
+    <string name="upload_id_front_id_card_text">Upload Front ID Card</string>
+    <string name="upload_id_front_note_text">Please provide us with a clear portrait picture of front side of your ID card.</string>
+    <string name="upload_id_back_id_card_text">Upload Back ID Card</string>
+    <string name="upload_id_back_note_text">Please provide us with a clear portrait picture of back side of your ID card.</string>
+    <string name="lbl_submit">Submit</string>
+    <string name="upload_proof_of_address_text">Upload Proof of Address</string>
+    <string name="upload_proof_of_address_note_text">Please make sure that every detail in the document uploaded is clearly visible.</string>
+    <string name="proof_of_address_select_document_type_title">Select Document Type</string>
+    <string name="proof_of_address_note_text">We kindly request a photograph of an official document as proof of your address to proceed with the identity verification process.</string>
 </resources>

@@ -7,20 +7,17 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.textfield.TextInputEditText
 import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityAccountVerificationBinding
-import com.lionscare.app.utils.setOnSingleClickListener
 
 class AccountVerificationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAccountVerificationBinding
-    private var isIdVerified : Boolean? = false
-    private var isAddressVerified : Boolean? = false
     private var focusedEditTextId: Int = 0
     private var imageCaptureLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -37,32 +34,32 @@ class AccountVerificationActivity : AppCompatActivity() {
         binding = ActivityAccountVerificationBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        setupNavigationComponent()
         setClickListener()
-        setUpDetails()
     }
 
-    private fun setUpDetails() = binding.run{
-        if(isIdVerified == true){
-            idArrowImageView.visibility = View.GONE
-            idCheckImageView.visibility = View.VISIBLE
-        }
-        if(isAddressVerified == true){
-            addressArrowImageView.visibility = View.GONE
-            addressCheckImageView.visibility = View.VISIBLE
-        }
-    }
+
     private fun setClickListener() = binding.run {
-        validIdLinearLayout.setOnSingleClickListener {
 
-        }
+    }
 
-        addressLinearLayout.setOnSingleClickListener {
+    private fun setupNavigationComponent() {
+        setSupportActionBar(binding.toolbar)
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.navFragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+        val navGraph = navController.navInflater.inflate(R.navigation.kyc_nav_graph)
+        navController.setGraph(navGraph, null)
+        val appBarConfig = AppBarConfiguration.Builder(INVALID_ID)
+            .setFallbackOnNavigateUpListener {
+                onBackPressed()
+                true
+            }.build()
+        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfig)
+    }
 
-        }
-
-        backImageView.setOnSingleClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+    fun setTitle(title: String) = binding.run {
+        titleTextView.text = title
     }
 
     private fun openCamera(editText: TextInputEditText) {
@@ -86,6 +83,7 @@ class AccountVerificationActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val INVALID_ID = -1
         fun getIntent(context: Context): Intent {
             return Intent(context, AccountVerificationActivity::class.java)
         }

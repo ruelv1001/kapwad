@@ -9,18 +9,13 @@
     tools:context=".ui.verify.activity.AccountVerificationActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-
-        <ImageView
-            android:id="@+id/backImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_16"
-            android:padding="@dimen/dimen_10"
-            android:src="@drawable/ic_back_arrow"/>
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ToolbarTheme">
 
         <TextView
+            android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/verify_account_title"
@@ -30,132 +25,12 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navFragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/dimen_20"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/account_verification_upload_identification_title"
-            android:textAlignment="center"
-            android:textColor="@color/black_text"
-            android:textSize="@dimen/font_16" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_regular"
-            android:text="@string/account_verification_note_text"
-            android:textColor="@color/black_text"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:textSize="@dimen/font_16" />
-
-        <LinearLayout
-            android:id="@+id/validIdLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:layout_marginHorizontal="@dimen/dimen_4"
-            android:background="@drawable/bg_rounded"
-            android:backgroundTint="@color/white"
-            android:elevation="@dimen/dimen_4"
-            android:padding="@dimen/dimen_16"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/account_verification_valid_id_text"
-                android:textColor="@color/black_text"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_account_box"
-                android:textSize="@dimen/font_16"
-                android:drawablePadding="@dimen/dimen_16"
-                android:drawableTint="@color/color_primary"
-                tools:ignore="UseCompatTextViewDrawableXml" />
-
-            <ImageView
-                android:id="@+id/idArrowImageView"
-                android:layout_width="@dimen/dimen_18"
-                android:layout_height="@dimen/dimen_18"
-                android:src="@drawable/ic_forward_arrow"
-                app:tint="@color/color_primary" />
-
-            <ImageView
-                android:id="@+id/idCheckImageView"
-                android:layout_width="@dimen/dimen_24"
-                android:layout_height="@dimen/dimen_24"
-                android:src="@drawable/ic_check"
-                android:visibility="gone"
-                app:tint="@color/color_primary" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/addressLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:layout_marginHorizontal="@dimen/dimen_4"
-            android:background="@drawable/bg_rounded"
-            android:backgroundTint="@color/white"
-            android:elevation="@dimen/dimen_4"
-            android:padding="@dimen/dimen_16"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/account_verification_proof_of_address_title"
-                android:textColor="@color/black_text"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_proof_of_address"
-                android:textSize="@dimen/font_16"
-                android:drawablePadding="@dimen/dimen_16"
-                android:drawableTint="@color/color_primary"
-                tools:ignore="UseCompatTextViewDrawableXml" />
-
-            <ImageView
-                android:id="@+id/addressArrowImageView"
-                android:layout_width="@dimen/dimen_18"
-                android:layout_height="@dimen/dimen_18"
-                android:src="@drawable/ic_forward_arrow"
-                app:tint="@color/color_primary" />
-
-            <ImageView
-                android:id="@+id/addressCheckImageView"
-                android:layout_width="@dimen/dimen_24"
-                android:layout_height="@dimen/dimen_24"
-                android:src="@drawable/ic_check"
-                android:visibility="gone"
-                app:tint="@color/color_primary" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/continueButton"
-        style="@style/MyButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginBottom="@dimen/dimen_20"
-        android:fontFamily="@font/inter_semibold"
-        android:paddingTop="@dimen/dimen_15"
-        android:paddingBottom="@dimen/dimen_15"
-        android:text="@string/lbl_continue"
-        android:textAllCaps="false"
-        android:textSize="@dimen/font_14" />
+        app:navGraph="@navigation/kyc_nav_graph"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true" />
 
 </LinearLayout>
