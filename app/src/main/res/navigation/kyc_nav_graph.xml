@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_choose_kyc"
+    android:id="@+id/kyc_nav_graph">
+
+    <fragment
+        android:id="@+id/navigation_choose_kyc"
+        android:name="com.lionscare.app.ui.verify.fragment.ChooseKYCProcessFragment"
+        android:label=""
+        tools:layout="@layout/fragment_choose_kyc_process">
+        <action
+            android:id="@+id/action_navigation_choose_kyc_to_navigation_upload_id"
+            app:destination="@id/navigation_upload_id" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_upload_id"
+        android:name="com.lionscare.app.ui.verify.fragment.UploadIDFragment"
+        android:label=""
+        tools:layout="@layout/fragment_upload_id">
+    </fragment>
+
+</navigation>
