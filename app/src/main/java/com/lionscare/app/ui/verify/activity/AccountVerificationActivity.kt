@@ -19,6 +19,8 @@ import com.lionscare.app.utils.setOnSingleClickListener
 class AccountVerificationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAccountVerificationBinding
+    private var isIdVerified : Boolean? = false
+    private var isAddressVerified : Boolean? = false
     private var focusedEditTextId: Int = 0
     private var imageCaptureLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -36,9 +38,28 @@ class AccountVerificationActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         setClickListener()
+        setUpDetails()
     }
 
+    private fun setUpDetails() = binding.run{
+        if(isIdVerified == true){
+            idArrowImageView.visibility = View.GONE
+            idCheckImageView.visibility = View.VISIBLE
+        }
+        if(isAddressVerified == true){
+            addressArrowImageView.visibility = View.GONE
+            addressCheckImageView.visibility = View.VISIBLE
+        }
+    }
     private fun setClickListener() = binding.run {
+        validIdLinearLayout.setOnSingleClickListener {
+
+        }
+
+        addressLinearLayout.setOnSingleClickListener {
+
+        }
+
         backImageView.setOnSingleClickListener {
             onBackPressedDispatcher.onBackPressed()
         }

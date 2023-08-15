@@ -86,7 +86,6 @@
                 android:layout_width="@dimen/dimen_18"
                 android:layout_height="@dimen/dimen_18"
                 android:src="@drawable/ic_forward_arrow"
-                android:visibility="gone"
                 app:tint="@color/color_primary" />
 
             <ImageView
@@ -94,6 +93,7 @@
                 android:layout_width="@dimen/dimen_24"
                 android:layout_height="@dimen/dimen_24"
                 android:src="@drawable/ic_check"
+                android:visibility="gone"
                 app:tint="@color/color_primary" />
         </LinearLayout>
 
