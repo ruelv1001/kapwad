@@ -11,13 +11,14 @@ import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentRegistrationOtpBinding
 import com.lionscare.app.ui.register.activity.RegisterActivity
+import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
 import com.lionscare.app.utils.GenericKeyEvent
 import com.lionscare.app.utils.GenericTextWatcher
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterOTPFragment: Fragment() {
+class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCallBack {
     private var _binding: FragmentRegistrationOtpBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as RegisterActivity }
@@ -68,7 +69,7 @@ class RegisterOTPFragment: Fragment() {
 
     private fun setClickListeners() = binding.run {
         confirmButton.setOnSingleClickListener {
-            findNavController().navigate(RegisterOTPFragmentDirections.actionNavigationCompleteProfile())
+            RegisterSuccessDialog.newInstance(callback = this@RegisterOTPFragment).show(childFragmentManager, RegisterSuccessDialog.TAG)
         }
         resendTextView.setOnSingleClickListener {
             startCountdown()
@@ -100,5 +101,9 @@ class RegisterOTPFragment: Fragment() {
     companion object {
         private const val MILLI_SEC = 150000L
         private const val COUNTDOWN_INTERVAL = 1000L
+    }
+
+    override fun onMyAccountClicked(cityName: String, citySku: String, zipCode: String) {
+        findNavController().navigate(RegisterOTPFragmentDirections.actionNavigationCompleteProfile())
     }
 }

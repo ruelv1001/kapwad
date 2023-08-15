@@ -8,6 +8,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentRegistrationCompleteProfileBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
@@ -150,7 +151,11 @@ class RegisterCompleteProfileFragment: Fragment() {
                 cityEditText.text.toString().isNotEmpty() &&
                 barangayEditText.text.toString().isNotEmpty() &&
                 streetEditText.text.toString().isNotEmpty()){
-                RegisterSuccessDialog.newInstance().show(childFragmentManager, RegisterSuccessDialog.TAG)
+
+                //TODO: update profile api here
+                val intent = MainActivity.getIntent(requireActivity())
+                startActivity(intent)
+                requireActivity().finishAffinity()
             }
         }
     }

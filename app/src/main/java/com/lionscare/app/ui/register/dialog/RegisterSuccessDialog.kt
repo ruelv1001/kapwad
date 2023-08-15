@@ -44,8 +44,7 @@ class RegisterSuccessDialog : BottomSheetDialogFragment(){
     private fun setClickListener() {
         viewBinding?.myAcctButton?.setOnSingleClickListener {
             dismiss()
-            val intent = MainActivity.getIntent(requireActivity())
-            startActivity(intent)
+            callback?.onMyAccountClicked("","","")
         }
     }
 

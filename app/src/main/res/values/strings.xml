@@ -236,4 +236,5 @@
     <string name="lbl_remove_selected_user">Remove Selected User?</string>
     <string name="lbl_changes_saved">Changes Saved</string>
     <string name="lbl_done">Done</string>
+    <string name="lbl_complete_my_profile">Complete My Profile</string>
 </resources>

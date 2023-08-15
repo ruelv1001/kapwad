@@ -161,7 +161,7 @@
                         android:hint="@string/lbl_9xx_xxx_xxxx"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:maxLength="13"
+                        android:maxLength="10"
                         android:paddingStart="@dimen/dimen_50"
                         android:paddingEnd="@dimen/dimen_0"
                         android:singleLine="true"
