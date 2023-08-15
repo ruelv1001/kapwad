@@ -237,4 +237,8 @@
     <string name="lbl_changes_saved">Changes Saved</string>
     <string name="lbl_done">Done</string>
     <string name="lbl_complete_my_profile">Complete My Profile</string>
+    <string name="account_verification_note_text">Please complete the account verification process by providing a photo of your valid ID and a proof of address. This step is essential for LionsCare App to authenticate your identity successfully.</string>
+    <string name="account_verification_upload_identification_title">Upload Identification</string>
+    <string name="account_verification_valid_id_text">Valid ID</string>
+    <string name="account_verification_proof_of_address_title">Proof of Address</string>
 </resources>
