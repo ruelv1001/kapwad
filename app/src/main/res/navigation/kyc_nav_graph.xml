@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_choose_kyc_to_navigation_upload_id"
             app:destination="@id/navigation_upload_id" />
+        <action
+            android:id="@+id/action_navigation_choose_kyc_to_navigation_proof_of_address"
+            app:destination="@id/navigation_proof_of_address" />
     </fragment>
 
     <fragment
@@ -20,6 +23,19 @@
         android:name="com.lionscare.app.ui.verify.fragment.UploadIDFragment"
         android:label=""
         tools:layout="@layout/fragment_upload_id">
+        <action
+            android:id="@+id/action_navigation_upload_id_to_navigation_choose_kyc"
+            app:destination="@id/navigation_choose_kyc" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_proof_of_address"
+        android:name="com.lionscare.app.ui.verify.fragment.ProofOfAddressFragment"
+        android:label=""
+        tools:layout="@layout/fragment_proof_of_address">
+        <action
+            android:id="@+id/action_navigation_proof_of_address_to_navigation_choose_kyc"
+            app:destination="@id/navigation_choose_kyc" />
     </fragment>
 
 </navigation>

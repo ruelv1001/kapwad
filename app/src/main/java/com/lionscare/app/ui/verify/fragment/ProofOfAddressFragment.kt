@@ -20,24 +20,23 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.lionscare.app.R
-import com.lionscare.app.databinding.FragmentUploadIdBinding
+import com.lionscare.app.databinding.FragmentProofOfAddressBinding
 import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
 import java.io.File
 import java.util.Calendar
 
-class UploadIDFragment : Fragment() {
+class ProofOfAddressFragment : Fragment() {
 
-    private var _binding: FragmentUploadIdBinding? = null
+    private var _binding: FragmentProofOfAddressBinding? = null
     private val binding get() = _binding!!
     private var uriFilePath: Uri? = null
-    private var isBackImage = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUploadIdBinding.inflate(
+        _binding = FragmentProofOfAddressBinding.inflate(
             inflater,
             container,
             false
@@ -58,8 +57,8 @@ class UploadIDFragment : Fragment() {
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        idTypeSpinner.adapter = adapter
-        idTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        proofOfAddressTypeSpinner.adapter = adapter
+        proofOfAddressTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?,
@@ -74,12 +73,7 @@ class UploadIDFragment : Fragment() {
     }
 
     private fun setupClickListener() = binding.run {
-        frontIdRelativeLayout.setOnSingleClickListener {
-            isBackImage = false
-            openMediaOptionPicker()
-        }
-        backIdRelativeLayout.setOnSingleClickListener {
-            isBackImage = true
+        proofOfAddressRelativeLayout.setOnSingleClickListener {
             openMediaOptionPicker()
         }
         continueButton.setOnSingleClickListener {
@@ -113,26 +107,15 @@ class UploadIDFragment : Fragment() {
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
         if (isSaved)
         {
-            if (isBackImage){
-                binding.backIdImageView.loadImage(uriFilePath.toString(),requireActivity())
-               // viewModel.backIdFile = getFileFromUri(requireActivity(), uriFilePath)
-            }else {
-                binding.frontIdImageView.loadImage(uriFilePath.toString(),requireActivity())
-               // viewModel.frontIdFile = getFileFromUri(requireActivity(), uriFilePath)
-            }
+            binding.proofOfAddressImageView.loadImage(uriFilePath.toString(),requireActivity())
+            // viewModel.frontIdFile = getFileFromUri(requireActivity(), uriFilePath)
         }
     }
 
     private val singlePhotoPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri: Uri? ->
         imageUri?.let { uri ->
-            if (isBackImage){
-                binding.backIdImageView.loadImage(uriFilePath.toString(),requireActivity())
-               // viewModel.backIdFile = getFileFromUri(requireActivity(), uri)
-            }else{
-                binding.frontIdImageView.loadImage(uriFilePath.toString(),requireActivity())
-               // viewModel.frontIdFile = getFileFromUri(requireActivity(), uri)
-            }
-
+            binding.proofOfAddressImageView.loadImage(uriFilePath.toString(),requireActivity())
+            // viewModel.frontIdFile = getFileFromUri(requireActivity(), uriFilePath)
         }
     }
 

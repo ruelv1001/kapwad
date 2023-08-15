@@ -248,4 +248,8 @@
     <string name="upload_id_back_id_card_text">Upload Back ID Card</string>
     <string name="upload_id_back_note_text">Please provide us with a clear portrait picture of back side of your ID card.</string>
     <string name="lbl_submit">Submit</string>
+    <string name="upload_proof_of_address_text">Upload Proof of Address</string>
+    <string name="upload_proof_of_address_note_text">Please make sure that every detail in the document uploaded is clearly visible.</string>
+    <string name="proof_of_address_select_document_type_title">Select Document Type</string>
+    <string name="proof_of_address_note_text">We kindly request a photograph of an official document as proof of your address to proceed with the identity verification process.</string>
 </resources>
