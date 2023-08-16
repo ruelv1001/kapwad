@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentChooseKycProcessBinding
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
@@ -51,11 +52,11 @@ class ChooseKYCProcessFragment : Fragment() {
 
     private fun setupClickListener() = binding.run {
         validIdLinearLayout.setOnSingleClickListener {
-
+            findNavController().navigate(ChooseKYCProcessFragmentDirections.actionNavigationChooseKycToNavigationUploadId())
         }
 
         addressLinearLayout.setOnSingleClickListener {
-
+            findNavController().navigate(ChooseKYCProcessFragmentDirections.actionNavigationChooseKycToNavigationProofOfAddress())
         }
     }
 
