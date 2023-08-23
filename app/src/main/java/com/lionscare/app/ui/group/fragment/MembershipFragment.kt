@@ -49,13 +49,13 @@ class MembershipFragment : Fragment() {
 
     private fun setClickListeners() = binding.run {
 
-        requestRelativeLayout.setOnSingleClickListener {
-            setActiveTab(requestRelativeLayout)
+        membersRelativeLayout.setOnSingleClickListener {
+            setActiveTab(membersRelativeLayout)
             viewPager.currentItem = 0
         }
 
-        membersRelativeLayout.setOnSingleClickListener {
-            setActiveTab(membersRelativeLayout)
+        requestRelativeLayout.setOnSingleClickListener {
+            setActiveTab(requestRelativeLayout)
             viewPager.currentItem = 1
         }
 
@@ -86,8 +86,8 @@ class MembershipFragment : Fragment() {
     private fun setUpTabs() = binding.run {
         pagerAdapter = CustomViewPagerAdapter(childFragmentManager, lifecycle)
         pagerAdapter?.apply {
-            addFragment(MembershipRequestFragment.newInstance())
             addFragment(MembershipMembersFragment.newInstance())
+            addFragment(MembershipRequestFragment.newInstance())
         }
 
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -101,8 +101,8 @@ class MembershipFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 when(position){
-                    0-> setActiveTab(binding.requestRelativeLayout)
-                    1-> setActiveTab(binding.membersRelativeLayout)
+                    0-> setActiveTab(binding.membersRelativeLayout)
+                    1-> setActiveTab(binding.requestRelativeLayout)
                 }
             }
         }

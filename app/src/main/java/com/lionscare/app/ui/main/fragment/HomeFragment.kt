@@ -8,20 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
+import com.lionscare.app.ui.group.activity.GroupDetailsActivity
+import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment: Fragment() {
+class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     var frontAnim: AnimatorSet? = null
     var backAnim: AnimatorSet? = null
+
+    private var linearLayoutManager: LinearLayoutManager? = null
+    private var adapter: GroupsYourGroupAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +47,7 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
         setUpAnimation()
+        setupAdapter()
     }
 
     private fun setUpAnimation() {
@@ -120,9 +128,31 @@ class HomeFragment: Fragment() {
         }
     }
 
+    private fun setupAdapter() = binding.run {
+        adapter = GroupsYourGroupAdapter(requireActivity(), this@HomeFragment)
+        linearLayoutManager = LinearLayoutManager(context)
+        immediateFamilyGroupRecyclerView.layoutManager = linearLayoutManager
+        immediateFamilyGroupRecyclerView.adapter = adapter
+
+        val model = listOf(
+            ArticleData(
+                name = "Malasakit Family",
+                description = "10 Members",
+                type = "FAM",
+                reference = "IF-000001"
+            )
+        )
+        adapter?.appendData(model)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClicked(data: ArticleData) {
+        val intent = GroupDetailsActivity.getIntent(requireActivity())
+        startActivity(intent)
     }
 }

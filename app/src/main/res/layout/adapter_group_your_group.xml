@@ -5,13 +5,13 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="@dimen/dimen_8">
+    android:padding="@dimen/dimen_16">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="@dimen/dimen_55"
         android:layout_height="@dimen/dimen_55"
-        android:src="@color/bg_edittext" />
+        android:src="@color/color_accent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:background="@drawable/bg_round"
+                android:visibility="gone"
                 android:backgroundTint="@color/light_purple"
                 android:ellipsize="end"
                 android:fontFamily="@font/inter_regular"

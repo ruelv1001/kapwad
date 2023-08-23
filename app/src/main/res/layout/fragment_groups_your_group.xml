@@ -6,8 +6,37 @@
     android:layout_marginEnd="@dimen/dimen_20"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="@string/home_immediate_family_group_text"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/font_16" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/immediateFamilyGroupRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/lbl_organization"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/font_16" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/OrganizationRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_weight="1"/>
+
 </LinearLayout>

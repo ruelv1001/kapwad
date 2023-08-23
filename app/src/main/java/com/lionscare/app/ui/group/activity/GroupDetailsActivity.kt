@@ -66,6 +66,14 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
             val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MANAGE)
             startActivity(intent)
         }
+        assistanceRequestsLinearLayout.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_ASSISTANCE)
+            startActivity(intent)
+        }
+        membersLinearLayout.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP)
+            startActivity(intent)
+        }
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -92,6 +100,8 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
     companion object {
         private const val START_INVITE = "START_INVITE"
         private const val START_MANAGE = "START_MANAGE"
+        private const val START_ASSISTANCE = "START_ASSISTANCE"
+        private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         fun getIntent(context: Context): Intent {
             return Intent(context, GroupDetailsActivity::class.java)
         }
