@@ -2,7 +2,7 @@ package com.lionscare.app.data.repositories.auth
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
-import com.lionscare.app.data.repositories.auth.response.UserData
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ import javax.inject.Inject
 //    fun doLogin(email: String, password: String): Flow<LoginResponse> {
 //        return flow {
 //            val response = authRemoteDataSource.doLogin(email, password)
-//            val userInfo = response.data?: UserData()
+//            val userInfo = response.data?: UserModel()
 //            val token = response.token.orEmpty()
 //            encryptedDataManager.setAccessToken(token)
 //            encryptedDataManager.setUserBasicInfo(userInfo)
@@ -39,7 +39,7 @@ class AuthRepository @Inject constructor(
     fun doLogin(email : String, password : String) : Flow<LoginResponse> {
         return flow{
             val response = authRemoteDataSource.doLogin(email, password)
-            val userInfo = response.data?: UserData()
+            val userInfo = response.data?: UserModel()
             val token = response.token.orEmpty()
             encryptedDataManager.setAccessToken(token)
             authLocalDataSource.login(setUpUserLocalData(userInfo, token))
@@ -50,24 +50,21 @@ class AuthRepository @Inject constructor(
     fun doRefreshToken() : Flow<LoginResponse> {
         return flow{
             val response = authRemoteDataSource.doRefreshToken()
-            val userInfo = response.data?: UserData()
+            val userInfo = response.data?: UserModel()
             val token = response.token.orEmpty()
             encryptedDataManager.setAccessToken(token)
-            authLocalDataSource.updateToken(userInfo.user_id?:0, token)
+//            authLocalDataSource.updateToken(userInfo.id?, token)
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
-    private fun setUpUserLocalData(user : UserData, token : String) : com.lionscare.app.data.local.UserLocalData {
+    private fun setUpUserLocalData(user : UserModel, token : String) : com.lionscare.app.data.local.UserLocalData {
         return com.lionscare.app.data.local.UserLocalData(
-            avatar = user.avatar?.thumb_path,
             email = user.email,
             firstname = user.firstname,
             lastname = user.lastname,
             middlename = user.middlename,
-            name = user.name,
-            user_id = user.user_id,
-            username = user.username,
+            user_id = user.id,
             access_token = token
         )
     }

@@ -13,7 +13,7 @@ data class UserLocalData(
     val lastname: String? = null,
     val middlename: String? = null,
     val name: String? = null,
-    val user_id: Int? = null,
+    val user_id: String? = null,
     val username: String? = null,
     val access_token: String? = null
 ){
