@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="@dimen/dimen_20"
     android:layout_marginEnd="@dimen/dimen_20"
     android:fitsSystemWindows="true"
@@ -61,7 +62,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/approveRelativeLayout"
+                android:id="@+id/allRequestRelativeLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -71,23 +72,23 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/inter_bold"
-                    android:text="@string/lbl_approved"
+                    android:text="@string/lbl_all_requests"
                     android:textColor="@color/super_light_gray"
                     android:textSize="@dimen/font_16" />
 
                 <TextView
-                    android:id="@+id/approveTextView"
+                    android:id="@+id/allRequestTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/inter_bold"
-                    android:text="@string/lbl_approved"
+                    android:text="@string/lbl_all_requests"
                     android:textColor="@color/blue_text"
                     android:textSize="@dimen/font_16"
                     android:visibility="gone" />
 
                 <View
-                    android:id="@+id/approveView"
+                    android:id="@+id/allRequestView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_5"
                     android:layout_alignParentBottom="true"
@@ -101,6 +102,7 @@
                 android:id="@+id/declineRelativeLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:layout_weight="1">
 
                 <TextView
@@ -137,9 +139,29 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createAssistanceFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/baseline_add_24"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:backgroundTint="@color/color_primary"
+            app:fabSize="auto"
+            app:tint="@color/white"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

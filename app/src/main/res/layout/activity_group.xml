@@ -57,6 +57,14 @@
             android:layout_height="@dimen/dimen_30"
             android:src="@drawable/ic_edit_roles" />
 
+        <ImageView
+            android:id="@+id/filterImageView"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:visibility="gone"
+            android:src="@drawable/ic_filter"
+            app:tint="@color/color_primary" />
+
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView

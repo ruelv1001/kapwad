@@ -81,16 +81,27 @@ class GroupActivity : AppCompatActivity() {
         return binding.rolesImageView
     }
 
+    fun getFilterImageView() : ImageView{
+        return binding.filterImageView
+    }
+
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
         when(title){
             getString(R.string.lbl_transactions) ->{
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.VISIBLE
+                filterImageView.visibility = View.GONE
             }
             getString(R.string.lbl_group_community_roles) ->{
                 rolesImageView.visibility = View.VISIBLE
                 searchImageView.visibility = View.GONE
+                filterImageView.visibility = View.GONE
+            }
+            getString(R.string.lbl_assistance) -> {
+                rolesImageView.visibility = View.GONE
+                searchImageView.visibility = View.GONE
+                filterImageView.visibility = View.VISIBLE
             }
             else -> {
                 rolesImageView.visibility = View.GONE

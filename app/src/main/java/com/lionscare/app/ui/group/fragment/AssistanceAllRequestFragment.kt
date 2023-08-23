@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class AssistanceApproveFragment : Fragment(), AssistanceAdapter.GroupCallback {
+class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback {
 
     private var _binding: FragmentGroupAssistanceBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +44,7 @@ class AssistanceApproveFragment : Fragment(), AssistanceAdapter.GroupCallback {
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = AssistanceAdapter( requireActivity(),this@AssistanceApproveFragment)
+        adapter = AssistanceAdapter( requireActivity(),this@AssistanceAllRequestFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
@@ -70,8 +70,8 @@ class AssistanceApproveFragment : Fragment(), AssistanceAdapter.GroupCallback {
     }
 
     companion object {
-        fun newInstance(direction: NavDirections): AssistanceApproveFragment {
-            val fragment = AssistanceApproveFragment()
+        fun newInstance(direction: NavDirections): AssistanceAllRequestFragment {
+            val fragment = AssistanceAllRequestFragment()
             fragment.direction = direction
             return fragment
         }
