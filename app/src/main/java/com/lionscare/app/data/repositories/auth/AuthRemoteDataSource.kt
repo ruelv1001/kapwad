@@ -1,5 +1,6 @@
 package com.lionscare.app.data.repositories.auth
 
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.auth.request.LoginRequest
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import retrofit2.HttpException
@@ -32,6 +33,14 @@ class AuthRemoteDataSource @Inject constructor(private val authService: AuthServ
 
         //Will automatically throw a NullPointerException when response.body() is Null
 
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doLogout(): GeneralResponse {
+        val response = authService.doLogout()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 

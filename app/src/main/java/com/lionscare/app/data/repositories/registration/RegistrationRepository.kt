@@ -1,6 +1,8 @@
 package com.lionscare.app.data.repositories.registration
 
-import com.lionscare.app.data.repositories.GeneralResponse
+import com.lionscare.app.data.repositories.auth.response.LoginResponse
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import com.lionscare.app.security.AuthEncryptedDataManager
@@ -31,13 +33,9 @@ class RegistrationRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doRegisterAccount(registrationRequest: RegistrationRequest): Flow<GeneralResponse> {
+    fun doRegister(request: RegistrationRequest): Flow<LoginResponse> {
         return flow {
-            val response = registerRemoteDataSource.doRegisterAccount(registrationRequest)
-            /*val userInfo = response.data?: UserModel()
-            encryptedDataManager.setUserBasicInfo(userInfo)
-            val accessToken = response.token.orEmpty()
-            encryptedDataManager.setAccessToken(accessToken)*/
+            val response = registerRemoteDataSource.doRegisterAccount(request)
             emit(response)
         }.flowOn(ioDispatcher)
     }

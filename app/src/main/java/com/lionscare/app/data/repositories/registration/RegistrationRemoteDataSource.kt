@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.registration
 
-import com.lionscare.app.data.repositories.GeneralResponse
+import com.lionscare.app.data.repositories.auth.response.LoginResponse
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import retrofit2.HttpException
@@ -25,9 +26,9 @@ class RegistrationRemoteDataSource @Inject constructor(private val registrationS
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doRegisterAccount(registrationRequest: RegistrationRequest): GeneralResponse {
+    suspend fun doRegisterAccount(registrationRequest: RegistrationRequest): LoginResponse {
         val response = registrationService.doRegisterAccount(registrationRequest)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")
