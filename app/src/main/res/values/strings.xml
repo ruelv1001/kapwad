@@ -78,7 +78,7 @@
     <string name="wallet_request_text">Request</string>
     <string name="wallet_transactions_text">Transactions</string>
     <string name="lbl_your_groups">Your Groups</string>
-    <string name="lbl_invites">Invites</string>
+    <string name="lbl_invites">Pending Invitation</string>
     <string name="lbl__10_members">10 Members</string>
     <string name="lbl_join">Join</string>
     <string name="request_posted_title">Request Posted</string>
@@ -105,7 +105,7 @@
     <string name="outbound_title">Outbound</string>
     <string name="inbound_outbound_refid_text">REFID:</string>
     <string name="menu_search_text">Search</string>
-    <string name="home_immediate_family_group_text">Immediate Family Group</string>
+    <string name="home_immediate_family_group_text">Immediate Family</string>
     <string name="lbl_100_00">+100.00</string>
     <string name="notif_badge_text">You received a badge</string>
     <string name="notif_remarks_text">KYC process completed</string>
@@ -151,14 +151,14 @@
     <string name="lbl_privacy">Privacy</string>
     <string name="lbl_public">Public</string>
     <string name="lbl_private">Private</string>
-    <string name="lbl_requires_password">Requires Password</string>
+    <string name="lbl_requires_password">Requires Passcode</string>
     <string name="lbl_require_approval_to_join">Require Approval to Join</string>
-    <string name="lbl_create_group">Create Group</string>
+    <string name="lbl_create_group">Create New Group</string>
     <string name="lbl_group_statistics">Statistics</string>
     <string name="lbl_group_community_roles">Community Roles</string>
     <string name="lbl_group_community_roles_update">Edit Community Roles</string>
     <string name="lbl_invite_group">Invite to Group</string>
-    <string name="lbl_password">Password</string>
+    <string name="lbl_password">Passcode</string>
     <string name="lbl_search">Search</string>
     <string name="lbl_complete">Complete</string>
     <string name="lbl_invite">Invite</string>
@@ -193,7 +193,7 @@
     <string name="settings_change_password_text">Change Password</string>
     <string name="lbl_assistance">Assistance</string>
     <string name="lbl_1">1</string>
-    <string name="lbl_membership">Membership</string>
+    <string name="lbl_membership">Members</string>
     <string name="lbl_statistics">Statistics</string>
     <string name="lbl_management">MANAGEMENT</string>
     <string name="lbl_transaction_history">Transaction History</string>
@@ -252,4 +252,5 @@
     <string name="upload_proof_of_address_note_text">Please make sure that every detail in the document uploaded is clearly visible.</string>
     <string name="proof_of_address_select_document_type_title">Select Document Type</string>
     <string name="proof_of_address_note_text">We kindly request a photograph of an official document as proof of your address to proceed with the identity verification process.</string>
+    <string name="lbl_pending_request">Pending Request</string>
 </resources>

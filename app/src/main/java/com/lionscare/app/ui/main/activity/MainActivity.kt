@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
                 .findFragmentById(R.id.tabNavHostFragment) as NavHostFragment
             navController = navHostFragment.navController
             navView.setupWithNavController(navController)
+            // code for adding badge
+            //navView.getOrCreateBadge(R.id.navigation_groups).number = number_of_badge
         }
     }
 
