@@ -114,9 +114,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_20"
             android:fontFamily="@font/inter_bold"
-            android:text="@string/lbl_pending"
+            android:text="@string/lbl_management"
             android:textSize="@dimen/font_16" />
 
         <LinearLayout
@@ -233,14 +233,6 @@
                 android:textSize="@dimen/font_16" />
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:fontFamily="@font/inter_bold"
-            android:text="@string/lbl_management"
-            android:textSize="@dimen/font_16" />
 
         <LinearLayout
             android:id="@+id/transactionLinearLayout"

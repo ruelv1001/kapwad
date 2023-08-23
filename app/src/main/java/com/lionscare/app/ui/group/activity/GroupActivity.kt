@@ -50,6 +50,8 @@ class GroupActivity : AppCompatActivity() {
         when (start) {
             START_INVITE -> navGraph.setStartDestination(R.id.navigation_group_invite)
             START_MANAGE -> navGraph.setStartDestination(R.id.navigation_group_manage)
+            START_ASSISTANCE -> navGraph.setStartDestination(R.id.navigation_group_assistance)
+            START_MEMBERSHIP -> navGraph.setStartDestination(R.id.navigation_group_membership)
             else -> navGraph.setStartDestination(R.id.navigation_group_create)
         }
         navController.setGraph(navGraph, null)
@@ -117,6 +119,7 @@ class GroupActivity : AppCompatActivity() {
         private const val START_INVITE = "START_INVITE"
         private const val START_MANAGE = "START_MANAGE"
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
+        private const val START_ASSISTANCE = "START_ASSISTANCE"
         fun getIntent(context: Context, start: String): Intent {
             val intent = Intent(context, GroupActivity::class.java)
             intent.putExtra(EXTRA_START, start)
