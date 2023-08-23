@@ -1,4 +1,4 @@
-package com.lionscare.app.data.repositories
+package com.lionscare.app.data.repositories.baseresponse
 
 data class GeneralResponse(
     val msg: String?,
