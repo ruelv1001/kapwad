@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.article.response.ArticleData
-import com.lionscare.app.databinding.AdapterGroupInvitesBinding
+import com.lionscare.app.databinding.AdapterGroupPendingRequestBinding
 
 class GroupsInvitesAdapter (val context: Context, val clickListener: GroupCallback) :
     RecyclerView.Adapter<GroupsInvitesAdapter.AdapterViewHolder>() {
@@ -28,7 +28,7 @@ class GroupsInvitesAdapter (val context: Context, val clickListener: GroupCallba
     fun getData(): MutableList<ArticleData> = adapterData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        val binding = AdapterGroupInvitesBinding
+        val binding = AdapterGroupPendingRequestBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return AdapterViewHolder(binding)
 
@@ -38,7 +38,7 @@ class GroupsInvitesAdapter (val context: Context, val clickListener: GroupCallba
         holder.displayData(adapterData[position])
     }
 
-    inner class AdapterViewHolder(val binding: AdapterGroupInvitesBinding) :
+    inner class AdapterViewHolder(val binding: AdapterGroupPendingRequestBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun displayData(data: ArticleData) = with(itemView) {
@@ -46,16 +46,29 @@ class GroupsInvitesAdapter (val context: Context, val clickListener: GroupCallba
             binding.membersTextView.text = data.description
             binding.referenceTextView.visibility = View.GONE
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
+
+            /*if(type == "invite"){
+              binding.acceptTextView.visibility = View.VISIBLE
+              binding.declineTextView.visibility = View.VISIBLE
+              binding.cancelTextView.visibility = View.GONE
+          }else{
+              binding.acceptTextView.visibility = View.GONE
+              binding.declineTextView.visibility = View.GONE
+              binding.cancelTextView.visibility = View.VISIBLE
+          }*/
+
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data)
             }
-            binding.acceptImageButton.setOnClickListener {
+            binding.acceptTextView.setOnClickListener {
                 clickListener.onAcceptClicked(data)
             }
-            binding.declineImageButton.setOnClickListener {
+            binding.declineTextView.setOnClickListener {
                 clickListener.onDeclineClicked(data)
             }
-
+            binding.cancelTextView.setOnClickListener {
+                clickListener.onCancelClicked(data)
+            }
         }
     }
 
@@ -63,6 +76,7 @@ class GroupsInvitesAdapter (val context: Context, val clickListener: GroupCallba
         fun onItemClicked(data: ArticleData)
         fun onAcceptClicked(data: ArticleData)
         fun onDeclineClicked(data: ArticleData)
+        fun onCancelClicked(data: ArticleData)
     }
 
     override fun getItemCount(): Int = adapterData.size

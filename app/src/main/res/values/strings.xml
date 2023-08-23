@@ -78,7 +78,7 @@
     <string name="wallet_request_text">Request</string>
     <string name="wallet_transactions_text">Transactions</string>
     <string name="lbl_your_groups">Your Groups</string>
-    <string name="lbl_invites">Pending Invitation</string>
+    <string name="lbl_invites">Pending Requests</string>
     <string name="lbl__10_members">10 Members</string>
     <string name="lbl_join">Join</string>
     <string name="request_posted_title">Request Posted</string>
@@ -199,7 +199,8 @@
     <string name="lbl_transaction_history">Transaction History</string>
     <string name="lbl_transactions">Transactions</string>
     <string name="lbl_community_roles">Community Roles</string>
-    <string name="lbl_requests">Requests</string>
+    <string name="lbl_requests">My Requests</string>
+    <string name="lbl_all_requests">All Requests</string>
     <string name="lbl_approved">Approved</string>
     <string name="lbl_declined">Declined</string>
     <string name="lbl_request">Request</string>
@@ -254,4 +255,13 @@
     <string name="proof_of_address_note_text">We kindly request a photograph of an official document as proof of your address to proceed with the identity verification process.</string>
     <string name="lbl_pending_request">Pending Request</string>
     <string name="lbl_nominate_passcode">Nominate Passcode</string>
+    <string name="lbl_filter_by">Filter By:</string>
+    <string name="filter_approved_text">Approved</string>
+    <string name="filter_cancelled_text">Cancelled</string>
+    <string name="filter_declined_text">Declined</string>
+    <string name="filter_pending_text">Pending</string>
+    <string name="lbl_ok">OK</string>
+    <string name="pending_accept_text">Accept</string>
+    <string name="pending_decline_text">Decline</string>
+    <string name="pending_cancel_text">Cancel</string>
 </resources>
