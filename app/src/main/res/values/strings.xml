@@ -78,7 +78,7 @@
     <string name="wallet_request_text">Request</string>
     <string name="wallet_transactions_text">Transactions</string>
     <string name="lbl_your_groups">Your Groups</string>
-    <string name="lbl_invites">Pending Invitation</string>
+    <string name="lbl_invites">Pending Requests</string>
     <string name="lbl__10_members">10 Members</string>
     <string name="lbl_join">Join</string>
     <string name="request_posted_title">Request Posted</string>
@@ -261,4 +261,7 @@
     <string name="filter_declined_text">Declined</string>
     <string name="filter_pending_text">Pending</string>
     <string name="lbl_ok">OK</string>
+    <string name="pending_accept_text">Accept</string>
+    <string name="pending_decline_text">Decline</string>
+    <string name="pending_cancel_text">Cancel</string>
 </resources>

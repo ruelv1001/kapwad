@@ -14,22 +14,37 @@
         android:gravity="center"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/closeImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginBottom="@dimen/dimen_10"
-            android:src="@drawable/ic_close"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/lbl_filter_by"
-            android:layout_marginBottom="@dimen/dimen_10"
-            android:textColor="@color/black_text"
-            android:textSize="@dimen/font_16" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_filter_by"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/closeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:src="@drawable/ic_close"/>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/pendingCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/color_primary"
+            android:text="@string/filter_pending_text"/>
 
         <CheckBox
             android:id="@+id/approvedCheckBox"
@@ -52,12 +67,6 @@
             android:buttonTint="@color/color_primary"
             android:text="@string/filter_declined_text"/>
 
-        <CheckBox
-            android:id="@+id/pendingCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/color_primary"
-            android:text="@string/filter_pending_text"/>
 
         <Button
             android:id="@+id/okButton"

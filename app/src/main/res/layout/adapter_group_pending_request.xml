@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/adapterLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/dimen_55"
+            android:layout_height="@dimen/dimen_55"
+            android:src="@color/bg_edittext" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/referenceTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_regular"
+                android:maxLines="3"
+                android:text="@string/lbl_if_000001"
+                android:textSize="@dimen/font_12" />
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_password_reset"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/membersTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/inter_regular"
+                    android:maxLines="1"
+                    android:text="@string/lbl__10_members"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:gravity="start"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/spaceView"
+            android:layout_width="@dimen/dimen_55"
+            android:layout_height="@dimen/dimen_1"/>
+
+        <TextView
+            android:id="@+id/acceptTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded"
+            android:paddingVertical="@dimen/dimen_10"
+            android:layout_weight="1"
+            android:backgroundTint="@color/color_accent"
+            android:textAlignment="center"
+            android:layout_marginEnd="@dimen/dimen_4"
+            android:textColor="@color/color_primary"
+            android:text="@string/pending_accept_text"/>
+
+        <TextView
+            android:id="@+id/declineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded"
+            android:paddingVertical="@dimen/dimen_10"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_marginStart="@dimen/dimen_4"
+            android:textColor="@color/black"
+            android:text="@string/pending_decline_text"/>
+
+        <TextView
+            android:id="@+id/cancelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded"
+            android:paddingVertical="@dimen/dimen_10"
+            android:paddingHorizontal="@dimen/dimen_44"
+            android:backgroundTint="@color/lighter_red"
+            android:layout_marginEnd="@dimen/dimen_4"
+            android:layout_gravity="center"
+            android:textColor="@color/strong_red"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:text="@string/pending_cancel_text"/>
+
+    </LinearLayout>
+
+</LinearLayout>
