@@ -218,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_edittext_selector"
                         android:fontFamily="@font/inter_semibold"
-                        android:hint="@string/lbl_nominate_password"
+                        android:hint="@string/lbl_nominate_passcode"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:singleLine="true"
