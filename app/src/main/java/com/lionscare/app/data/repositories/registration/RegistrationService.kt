@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.registration
 
-import com.lionscare.app.data.repositories.GeneralResponse
+import com.lionscare.app.data.repositories.auth.response.LoginResponse
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import retrofit2.Response
@@ -16,5 +17,5 @@ interface RegistrationService {
     suspend fun doRequestOTP(@Body otpRequest: OTPRequest): Response<GeneralResponse>
 
     @POST("api/auth/register")
-    suspend fun doRegisterAccount(@Body registrationRequest: RegistrationRequest): Response<GeneralResponse>
+    suspend fun doRegisterAccount(@Body registrationRequest: RegistrationRequest): Response<LoginResponse>
 }

@@ -6,10 +6,8 @@ import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.lionscare.app.data.repositories.auth.response.AvatarData
-import com.lionscare.app.data.repositories.auth.response.DateCreatedData
-import com.lionscare.app.data.repositories.auth.response.UserData
-
+import com.lionscare.app.data.repositories.baseresponse.DateModel
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 
 class AuthEncryptedDataManager {
 
@@ -47,104 +45,90 @@ class AuthEncryptedDataManager {
      */
     fun getAccessToken() = sharedPreferences.getString(ACCESS_TOKEN, "") ?: ""
 
-    private var inMemoryUserData: UserData? = null
-    private var inMemoryAvatarData: AvatarData? = null
-    private var inMemoryDateCreatedData: DateCreatedData? = null
+    private var inMemoryUserData: UserModel? = null
+    private var inMemoryDateRegisteredData: DateModel? = null
 
     /**
      * Function to set user's basic info
      */
-    fun setUserBasicInfo(userInfo: UserData) {
+    fun setUserBasicInfo(userInfo: UserModel) {
         inMemoryUserData = userInfo
 
-        setUserAvatarInfo(userInfo.avatar?: AvatarData())
-        setUserDateInfo(userInfo.date_created?: DateCreatedData())
+        setUserDateInfo(userInfo.date_registered?: DateModel())
 
         sharedPreferences.edit(true) {
-            putInt(USER_INFO_ID, userInfo.user_id?: 0)
-            putString(USER_NAME, userInfo.name)
+            putString(USER_INFO_ID, userInfo.id)
             putString(USER_FIRST_NAME, userInfo.firstname)
+            putString(USER_MIDDLE_NAME, userInfo.middlename)
             putString(USER_LAST_NAME, userInfo.lastname)
             putString(USER_EMAIL, userInfo.email)
-            putString(USER_USERNAME, userInfo.username)
-            putString(USER_MIDDLE_NAME, userInfo.middlename)
+            putString(USER_PHONE_NUMBER, userInfo.phone_number)
+            putString(USER_ADDRESS, userInfo.address)
+            putString(USER_PROVINCE_NAME, userInfo.province_name)
+            putString(USER_PROVINCE_SKU, userInfo.province_sku)
+            putString(USER_CITY_NAME, userInfo.city_name)
+            putString(USER_CITY_CODE, userInfo.city_code)
+            putString(USER_BRGY_NAME, userInfo.brgy_name)
+            putString(USER_BRGY_CODE, userInfo.brgy_code)
+            putString(USER_ZIPCODE, userInfo.zipcode)
         }
     }
 
     /**
      * Function used to get user's basic info
      */
-    fun getUserBasicInfo(): UserData {
+    fun getUserBasicInfo(): UserModel {
         if (inMemoryUserData == null) {
-            inMemoryUserData = UserData().apply {
-                user_id = sharedPreferences.getInt(USER_INFO_ID, 0)
+            inMemoryUserData = UserModel().apply {
+                id = sharedPreferences.getString(USER_INFO_ID, "")
                 firstname = sharedPreferences.getString(USER_FIRST_NAME, "")
-                email = sharedPreferences.getString(USER_EMAIL, "")
-                name = sharedPreferences.getString(USER_NAME, "0")
-                lastname = sharedPreferences.getString(USER_LAST_NAME, "0")
                 middlename = sharedPreferences.getString(USER_MIDDLE_NAME, "0")
-                username = sharedPreferences.getString(USER_USERNAME, "0")
+                lastname = sharedPreferences.getString(USER_LAST_NAME, "0")
+                email = sharedPreferences.getString(USER_EMAIL, "")
+                phone_number = sharedPreferences.getString(USER_PHONE_NUMBER, "")
+                address = sharedPreferences.getString(USER_ADDRESS, "")
+                province_name = sharedPreferences.getString(USER_PROVINCE_NAME, "")
+                province_sku = sharedPreferences.getString(USER_PROVINCE_SKU, "")
+                city_name = sharedPreferences.getString(USER_CITY_NAME, "")
+                city_code = sharedPreferences.getString(USER_CITY_CODE, "")
+                brgy_name = sharedPreferences.getString(USER_BRGY_NAME, "")
+                brgy_code = sharedPreferences.getString(USER_BRGY_CODE, "")
+                zipcode = sharedPreferences.getString(USER_ZIPCODE, "")
             }
         }
-        return inMemoryUserData ?: UserData()
-    }
-
-    /**
-     * Function to set user's avatar info
-     */
-    fun setUserAvatarInfo(avatarInfo: AvatarData) {
-        inMemoryAvatarData = avatarInfo
-        sharedPreferences.edit(true) {
-            putString(USER_AVATAR_DIRECTORY, avatarInfo.directory)
-            putString(USER_AVATAR_FILENAME, avatarInfo.filename)
-            putString(USER_AVATAR_FULL_PATH, avatarInfo.full_path)
-            putString(USER_AVATAR_PATH, avatarInfo.path)
-            putString(USER_AVATAR_THUMB_PATH, avatarInfo.thumb_path)
-        }
-    }
-
-    /**
-     * Function used to get user's avatar info
-     */
-    fun getUserAvatarInfo(): AvatarData {
-        if (inMemoryAvatarData == null) {
-            inMemoryAvatarData = AvatarData().apply {
-                directory = sharedPreferences.getString(USER_AVATAR_DIRECTORY, "")
-                filename = sharedPreferences.getString(USER_AVATAR_FILENAME, "")
-                full_path = sharedPreferences.getString(USER_AVATAR_FULL_PATH, "")
-                path = sharedPreferences.getString(USER_AVATAR_PATH, "")
-                thumb_path = sharedPreferences.getString(USER_AVATAR_THUMB_PATH, "")
-            }
-        }
-        return inMemoryAvatarData ?: AvatarData()
+        return inMemoryUserData ?: UserModel()
     }
 
     /**
      * Function to set user's date created info
      */
-    fun setUserDateInfo(dateInfo: DateCreatedData) {
-        inMemoryDateCreatedData = dateInfo
+    fun setUserDateInfo(dateInfo: DateModel) {
+        inMemoryDateRegisteredData = dateInfo
         sharedPreferences.edit(true) {
             putString(USER_DATE_DB, dateInfo.date_db)
-            putString(USER_DATE_MONTH_YEAR, dateInfo.month_year)
+            putString(USER_DATE_ONLY, dateInfo.date_only)
             putString(USER_DATE_TIME_PASSED, dateInfo.time_passed)
             putString(USER_DATE_TIMESTAMP, dateInfo.timestamp)
+            putString(USER_DATE_ISO_FORMAT, dateInfo.iso_format)
+            putString(USER_DATE_MONTH_YEAR, dateInfo.month_year)
         }
     }
 
     /**
      * Function used to get user's date created info
      */
-    fun getUserDateInfo(): DateCreatedData {
-        if (inMemoryDateCreatedData == null) {
-            inMemoryDateCreatedData = DateCreatedData().apply {
+    fun getUserDateInfo(): DateModel {
+        if (inMemoryDateRegisteredData == null) {
+            inMemoryDateRegisteredData = DateModel().apply {
                 date_db = sharedPreferences.getString(USER_DATE_DB, "")
-                month_year = sharedPreferences.getString(USER_DATE_MONTH_YEAR, "")
+                date_only = sharedPreferences.getString(USER_DATE_ONLY, "")
                 time_passed = sharedPreferences.getString(USER_DATE_TIME_PASSED, "")
                 timestamp = sharedPreferences.getString(USER_DATE_TIMESTAMP, "")
+                iso_format = sharedPreferences.getString(USER_DATE_ISO_FORMAT, "")
+                month_year = sharedPreferences.getString(USER_DATE_MONTH_YEAR, "")
             }
         }
-        return inMemoryDateCreatedData ?: DateCreatedData()
+        return inMemoryDateRegisteredData ?: DateModel()
     }
 
     fun isLoggedIn(): Boolean {
@@ -156,8 +140,8 @@ class AuthEncryptedDataManager {
      * commonly used after success logout
      */
     fun clearUserInfo(){
-        inMemoryUserData = UserData()
-        inMemoryDateCreatedData = DateCreatedData()
+        inMemoryUserData = UserModel()
+        inMemoryDateRegisteredData = DateModel()
         setAccessToken("")
     }
 
@@ -186,18 +170,21 @@ class AuthEncryptedDataManager {
         private const val USER_FIRST_NAME = "USER_FIRST_NAME"
         private const val USER_LAST_NAME = "USER_LAST_NAME"
         private const val USER_MIDDLE_NAME = "USER_MIDDLE_NAME"
-        private const val USER_NAME = "USER_NAME"
         private const val USER_EMAIL = "USER_EMAIL"
-        private const val USER_USERNAME = "USER_USERNAME"
-
-        private const val USER_AVATAR_DIRECTORY = "USER_AVATAR_DIRECTORY"
-        private const val USER_AVATAR_FILENAME = "USER_AVATAR_FILENAME"
-        private const val USER_AVATAR_FULL_PATH = "USER_AVATAR_FULL_PATH"
-        private const val USER_AVATAR_PATH = "USER_AVATAR_PATH"
-        private const val USER_AVATAR_THUMB_PATH = "USER_AVATAR_THUMB_PATH"
+        private const val USER_PHONE_NUMBER = "USER_PHONE_NUMBER"
+        private const val USER_ADDRESS = "USER_ADDRESS"
+        private const val USER_PROVINCE_SKU = "USER_PROVINCE_SKU"
+        private const val USER_PROVINCE_NAME = "USER_PROVINCE_NAME"
+        private const val USER_CITY_CODE = "USER_CITY_CODE"
+        private const val USER_CITY_NAME = "USER_CITY_NAME"
+        private const val USER_BRGY_CODE = "USER_BRGY_CODE"
+        private const val USER_BRGY_NAME = "USER_BRGY_NAME"
+        private const val USER_ZIPCODE = "USER_ZIPCODE"
 
         private const val USER_DATE_DB = "USER_DATE_DB"
         private const val USER_DATE_MONTH_YEAR = "USER_DATE_MONTH_YEAR"
+        private const val USER_DATE_ONLY = "USER_DATE_ONLY"
+        private const val USER_DATE_ISO_FORMAT = "USER_DATE_ISO_FORMAT"
         private const val USER_DATE_TIME_PASSED = "USER_DATE_TIME_PASSED"
         private const val USER_DATE_TIMESTAMP = "USER_DATE_TIMESTAMP"
 

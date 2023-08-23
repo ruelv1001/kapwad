@@ -1,8 +1,6 @@
 package com.lionscare.app.data.repositories.address
 
 import com.lionscare.app.data.repositories.address.request.MunicipalityListRequest
-import com.lionscare.app.data.repositories.GeneralResponse
-import com.lionscare.app.data.repositories.address.request.RegistrationRequest
 import com.lionscare.app.data.repositories.address.response.AddressResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection

@@ -1,5 +1,6 @@
 package com.lionscare.app.data.repositories.auth
 
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.auth.response.UserData
 import com.lionscare.app.security.AuthEncryptedDataManager
@@ -78,7 +79,11 @@ class AuthRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    suspend fun doLogout(){
-        authLocalDataSource.logout(encryptedDataManager.getAccessToken())
+    fun doLogout(): Flow<GeneralResponse> {
+        return flow {
+            val response = authRemoteDataSource.doLogout()
+            encryptedDataManager.clearUserInfo()
+            emit(response)
+        }.flowOn(ioDispatcher)
     }
 }

@@ -68,20 +68,20 @@ android {
             isDefault true
             applicationIdSuffix ".dev"
             manifestPlaceholders = [appName: 'Dev - ' + rootProject.name]
-            buildConfigField "String", "BASE_URL", "\"http://androidtest.ziademo.com/\""
+            buildConfigField "String", "BASE_URL", "\"https://lionscare.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziapay.ph/\""
             buildConfigField "String", "PSGC_AUTH", "\"HkCrJxGa5M8udwHYbDyMF2kscmzhSVtDwBxjXNPxLETScLAFf5P87zLUxqWTKQ3bRcvLCNd4e9n3xpNCwGxsrfgj6fMRtCsUuxWr6gRAj2kRcVwxKfH5TDx8YWF4r2cP\""
         }
         alpha {
             applicationIdSuffix ".alpha"
             manifestPlaceholders = [appName: 'Alpha - ' + rootProject.name]
-            buildConfigField "String", "BASE_URL", "\"http://androidtest.ziademo.com/\""
+            buildConfigField "String", "BASE_URL", "\"https://lionscare.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziapay.ph/\""
             buildConfigField "String", "PSGC_AUTH", "\"HkCrJxGa5M8udwHYbDyMF2kscmzhSVtDwBxjXNPxLETScLAFf5P87zLUxqWTKQ3bRcvLCNd4e9n3xpNCwGxsrfgj6fMRtCsUuxWr6gRAj2kRcVwxKfH5TDx8YWF4r2cP\""
         }
         prod {
             manifestPlaceholders = [appName: rootProject.name + '-v' + versionName]
-            buildConfigField "String", "BASE_URL", "\"http://androidtest.ziademo.com/\""
+            buildConfigField "String", "BASE_URL", "\"https://lionscare.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziapay.ph/\""
             buildConfigField "String", "PSGC_AUTH", "\"HkCrJxGa5M8udwHYbDyMF2kscmzhSVtDwBxjXNPxLETScLAFf5P87zLUxqWTKQ3bRcvLCNd4e9n3xpNCwGxsrfgj6fMRtCsUuxWr6gRAj2kRcVwxKfH5TDx8YWF4r2cP\""
         }
