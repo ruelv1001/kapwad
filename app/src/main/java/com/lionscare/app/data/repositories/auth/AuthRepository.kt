@@ -53,7 +53,7 @@ class AuthRepository @Inject constructor(
             val userInfo = response.data?: UserModel()
             val token = response.token.orEmpty()
             encryptedDataManager.setAccessToken(token)
-//            authLocalDataSource.updateToken(userInfo.id?, token)
+            authLocalDataSource.updateToken(userInfo.id.toString(), token)
             emit(response)
         }.flowOn(ioDispatcher)
     }
