@@ -39,12 +39,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupClickListener() = binding.run{
         loginButton.setOnSingleClickListener {
-            /*viewModel.doLoginAccount(
+            viewModel.doLoginAccount(
                 emailEditText.text.toString(),
                 passwordEditText.text.toString()
-            )*/
-            val intent = MainActivity.getIntent(this@LoginActivity)
-            startActivity(intent)
+            )
         }
         registerButton.setOnSingleClickListener {
             val intent = RegisterActivity.getIntent(this@LoginActivity)

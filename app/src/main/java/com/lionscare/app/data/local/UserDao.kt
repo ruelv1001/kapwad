@@ -9,7 +9,7 @@ interface UserDao {
     suspend fun login(user : com.lionscare.app.data.local.UserLocalData): Long
 
     @Query("UPDATE users SET access_token = :token WHERE user_id =:userId")
-    suspend fun updateToken(userId : Int, token: String)
+    suspend fun updateToken(userId : String, token: String)
 
     @Query("SELECT * FROM users WHERE access_token = :access_token")
     suspend fun getUserInfo(access_token: String): com.lionscare.app.data.local.UserLocalData

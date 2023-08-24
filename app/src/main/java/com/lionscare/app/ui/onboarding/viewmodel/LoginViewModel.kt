@@ -33,6 +33,7 @@ class LoginViewModel @Inject constructor(
                     _loginSharedFlow.emit(LoginViewState.Loading)
                 }
                 .catch { exception ->
+                    CommonLogger.devLog("lagggii","ex : "+exception.message)
                     onError(exception)
 
                 }
