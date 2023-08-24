@@ -1,6 +1,9 @@
 package com.lionscare.app.di
 
 import com.lionscare.app.BuildConfig
+import com.lionscare.app.data.local.BoilerPlateDatabase
+import com.lionscare.app.data.local.UserDao
+import com.lionscare.app.data.repositories.AppRetrofitService
 import com.lionscare.app.data.repositories.auth.AuthLocalDataSource
 import com.lionscare.app.data.repositories.auth.AuthRemoteDataSource
 import com.lionscare.app.data.repositories.auth.AuthRepository
@@ -17,14 +20,14 @@ class AuthModule {
 
     @Provides
     fun providesAuthService(): AuthService {
-        return com.lionscare.app.data.repositories.AppRetrofitService.Builder().build(
+        return AppRetrofitService.Builder().build(
             BuildConfig.BASE_URL,
             AuthService::class.java
         )
     }
 
     @Provides
-    fun providesUserDao(db: com.lionscare.app.data.local.BoilerPlateDatabase): com.lionscare.app.data.local.UserDao {
+    fun providesUserDao(db: BoilerPlateDatabase): UserDao {
         return db.userDao
     }
 
@@ -34,7 +37,7 @@ class AuthModule {
     }
 
     @Provides
-    fun providesAuthLocalDataSource(userDao: com.lionscare.app.data.local.UserDao): AuthLocalDataSource {
+    fun providesAuthLocalDataSource(userDao: UserDao): AuthLocalDataSource {
         return AuthLocalDataSource(userDao)
     }
 

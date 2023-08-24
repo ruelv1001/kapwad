@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.onboarding.viewmodel
+package com.lionscare.app.ui.main.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,21 +16,19 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class SettingsViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _loginSharedFlow = MutableSharedFlow<LoginViewState>()
+    private val _loginSharedFlow = MutableSharedFlow<SettingsViewState>()
 
-    val loginSharedFlow: SharedFlow<LoginViewState> =
-        _loginSharedFlow.asSharedFlow()
+    val loginSharedFlow = _loginSharedFlow.asSharedFlow()
 
-
-    fun doLoginAccount(email: String, password: String) {
+    fun doLogoutAccount() {
         viewModelScope.launch {
-            authRepository.doLogin(email, password)
+            authRepository.doLogout()
                 .onStart {
-                    _loginSharedFlow.emit(LoginViewState.Loading)
+                    _loginSharedFlow.emit(SettingsViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
@@ -38,7 +36,7 @@ class LoginViewModel @Inject constructor(
                 }
                 .collect {
                     _loginSharedFlow.emit(
-                        LoginViewState.Success(it.msg.orEmpty())
+                        SettingsViewState.Success(it.msg.orEmpty())
                     )
                 }
         }
@@ -48,15 +46,19 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             authRepository.getUserInfo()
                 .onStart {
-                    _loginSharedFlow.emit(LoginViewState.Loading)
+                    _loginSharedFlow.emit(SettingsViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
-                    CommonLogger.instance.sysLogE("LoginViewModel", exception.localizedMessage, exception)
+                    CommonLogger.instance.sysLogE(
+                        "LoginViewModel",
+                        exception.localizedMessage,
+                        exception
+                    )
                 }
                 .collect {
                     _loginSharedFlow.emit(
-                        LoginViewState.SuccessGetUserInfo(it)
+                        SettingsViewState.SuccessGetUserInfo(it)
                     )
                 }
         }
@@ -69,29 +71,32 @@ class LoginViewModel @Inject constructor(
             is TimeoutException,
             -> {
                 _loginSharedFlow.emit(
-                    LoginViewState.PopupError(
+                    SettingsViewState.PopupError(
                         PopupErrorState.NetworkError
                     )
                 )
             }
+
             is HttpException -> {
                 val errorBody = exception.response()?.errorBody()
                 val gson = Gson()
                 val type = object : TypeToken<com.lionscare.app.data.model.ErrorModel>() {}.type
-                var errorResponse: com.lionscare.app.data.model.ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
+                var errorResponse: com.lionscare.app.data.model.ErrorModel? =
+                    gson.fromJson(errorBody?.charStream(), type)
                 if (errorResponse?.has_requirements == true) {
-                    _loginSharedFlow.emit(LoginViewState.InputError(errorResponse.errors))
+                    _loginSharedFlow.emit(SettingsViewState.InputError(errorResponse.errors))
                 } else {
                     _loginSharedFlow.emit(
-                        LoginViewState.PopupError(
+                        SettingsViewState.PopupError(
                             PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
                         )
                     )
                 }
 
             }
+
             else -> _loginSharedFlow.emit(
-                LoginViewState.PopupError(
+                SettingsViewState.PopupError(
                     PopupErrorState.UnknownError
                 )
             )

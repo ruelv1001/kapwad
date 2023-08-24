@@ -1,25 +1,41 @@
 package com.lionscare.app.ui.main.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentSettingsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
-import com.lionscare.app.ui.onboarding.activity.LoginActivity
+import com.lionscare.app.ui.main.activity.MainActivity
+import com.lionscare.app.ui.main.viewmodel.SettingsViewModel
+import com.lionscare.app.ui.main.viewmodel.SettingsViewState
+import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.settings.activity.ProfileActivity
 import com.lionscare.app.ui.settings.activity.UpdatePasswordActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private var isBadgeVerified : Boolean? = false
     private var isAccountVerified : Boolean? = false
+    private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +52,53 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeLogoutAccount()
         setClickListeners()
         setDetails()
+    }
+
+    private fun observeLogoutAccount() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginSharedFlow.collectLatest { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: SettingsViewState) {
+        when (viewState) {
+            is SettingsViewState.Loading -> showLoadingDialog(R.string.logout_loading)
+            is SettingsViewState.Success -> {
+                hideLoadingDialog()
+                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
+                val intent = SplashScreenActivity.getIntent(requireActivity())
+                startActivity(intent)
+                requireActivity().finishAffinity()
+            }
+
+            is SettingsViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+
+            is SettingsViewState.InputError -> Unit
+            else -> Unit
+        }
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        (requireActivity() as MainActivity).showLoadingDialog(strId)
+    }
+
+    private fun hideLoadingDialog() {
+        (requireActivity() as MainActivity).hideLoadingDialog()
     }
 
     private fun setClickListeners() = binding.run {
@@ -57,9 +118,7 @@ class SettingsFragment : Fragment() {
         }
 
         logoutLinearLayout.setOnSingleClickListener {
-            val intent = LoginActivity.getIntent(requireActivity())
-            startActivity(intent)
-            requireActivity().finishAffinity()
+            openLogoutConfirmation()
         }
 
         profileLinearLayout.setOnSingleClickListener {
@@ -93,6 +152,17 @@ class SettingsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun openLogoutConfirmation() {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle(getString(R.string.logout_title_lbl))
+        builder.setMessage(getString(R.string.logout_desc_lbl))
+        builder.setPositiveButton(getString(R.string.logout_btn)) { _, _ ->
+            viewModel.doLogoutAccount()
+        }
+        builder.setNegativeButton(getString(R.string.logout_cancel_btn), null)
+        builder.show()
     }
 
 }

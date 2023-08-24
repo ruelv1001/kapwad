@@ -253,4 +253,5 @@
     <string name="proof_of_address_select_document_type_title">Select Document Type</string>
     <string name="proof_of_address_note_text">We kindly request a photograph of an official document as proof of your address to proceed with the identity verification process.</string>
     <string name="lbl_pending_request">Pending Request</string>
+    <string name="logout_loading">Logging out…</string>
 </resources>
