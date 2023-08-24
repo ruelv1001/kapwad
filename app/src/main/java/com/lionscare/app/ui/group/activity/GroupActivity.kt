@@ -50,6 +50,8 @@ class GroupActivity : AppCompatActivity() {
         when (start) {
             START_INVITE -> navGraph.setStartDestination(R.id.navigation_group_invite)
             START_MANAGE -> navGraph.setStartDestination(R.id.navigation_group_manage)
+            START_ASSISTANCE -> navGraph.setStartDestination(R.id.navigation_group_assistance)
+            START_MEMBERSHIP -> navGraph.setStartDestination(R.id.navigation_group_membership)
             else -> navGraph.setStartDestination(R.id.navigation_group_create)
         }
         navController.setGraph(navGraph, null)
@@ -79,16 +81,27 @@ class GroupActivity : AppCompatActivity() {
         return binding.rolesImageView
     }
 
+    fun getFilterImageView() : ImageView{
+        return binding.filterImageView
+    }
+
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
         when(title){
             getString(R.string.lbl_transactions) ->{
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.VISIBLE
+                filterImageView.visibility = View.GONE
             }
             getString(R.string.lbl_group_community_roles) ->{
                 rolesImageView.visibility = View.VISIBLE
                 searchImageView.visibility = View.GONE
+                filterImageView.visibility = View.GONE
+            }
+            getString(R.string.lbl_assistance) -> {
+                rolesImageView.visibility = View.GONE
+                searchImageView.visibility = View.GONE
+                filterImageView.visibility = View.VISIBLE
             }
             else -> {
                 rolesImageView.visibility = View.GONE
@@ -117,6 +130,7 @@ class GroupActivity : AppCompatActivity() {
         private const val START_INVITE = "START_INVITE"
         private const val START_MANAGE = "START_MANAGE"
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
+        private const val START_ASSISTANCE = "START_ASSISTANCE"
         fun getIntent(context: Context, start: String): Intent {
             val intent = Intent(context, GroupActivity::class.java)
             intent.putExtra(EXTRA_START, start)

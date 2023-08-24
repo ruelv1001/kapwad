@@ -20,7 +20,9 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     private var _binding: FragmentGroupsYourGroupBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var adapter: GroupsYourGroupAdapter? = null
+    private var linearLayoutManager2: LinearLayoutManager? = null
+    private var iFAdapter: GroupsYourGroupAdapter? = null
+    private var orgAdapter: GroupsYourGroupAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,18 +44,27 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupsYourGroupAdapter(requireActivity(), this@GroupsYourGroupFragment)
+        iFAdapter = GroupsYourGroupAdapter(requireActivity(), this@GroupsYourGroupFragment)
         linearLayoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
+        immediateFamilyGroupRecyclerView.layoutManager = linearLayoutManager
+        immediateFamilyGroupRecyclerView.adapter = iFAdapter
 
-        val model = listOf(
+        orgAdapter = GroupsYourGroupAdapter(requireActivity(), this@GroupsYourGroupFragment)
+        linearLayoutManager2 = LinearLayoutManager(context)
+        OrganizationRecyclerView.layoutManager = linearLayoutManager2
+        OrganizationRecyclerView.adapter = orgAdapter
+
+
+        val iFModel = listOf(
             ArticleData(
                 name = "Malasakit Family",
                 description = "10 Members",
                 type = "FAM",
                 reference = "IF-000001"
-            ),
+            )
+        )
+
+        val orgModel = listOf(
             ArticleData(
                 name = "Quick Response Group",
                 description = "8 Members",
@@ -61,7 +72,8 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
                 reference = "OR-000001"
             )
         )
-        adapter?.appendData(model)
+        iFAdapter?.appendData(iFModel)
+        orgAdapter?.appendData(orgModel)
     }
 
     private fun setClickListeners() = binding.run {

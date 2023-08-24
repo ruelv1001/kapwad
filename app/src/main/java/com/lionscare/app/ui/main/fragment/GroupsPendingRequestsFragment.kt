@@ -8,26 +8,25 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.repositories.article.response.ArticleData
-import com.lionscare.app.databinding.FragmentGroupsInvitesBinding
-import com.lionscare.app.ui.main.adapter.GroupsGroupAdapter
-import com.lionscare.app.ui.main.adapter.GroupsInvitesAdapter
+import com.lionscare.app.databinding.FragmentGroupsPendingRequestsBinding
+import com.lionscare.app.ui.main.adapter.GroupsPendingRequestsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class GroupsInvitesFragment : Fragment(), GroupsInvitesAdapter.GroupCallback {
+class GroupsInvitesFragment : Fragment(), GroupsPendingRequestsAdapter.GroupCallback {
 
-    private var _binding: FragmentGroupsInvitesBinding? = null
+    private var _binding: FragmentGroupsPendingRequestsBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var adapter: GroupsInvitesAdapter? = null
+    private var adapter: GroupsPendingRequestsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentGroupsInvitesBinding.inflate(
+        _binding = FragmentGroupsPendingRequestsBinding.inflate(
             inflater,
             container,
             false
@@ -42,7 +41,7 @@ class GroupsInvitesFragment : Fragment(), GroupsInvitesAdapter.GroupCallback {
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupsInvitesAdapter(requireActivity(), this@GroupsInvitesFragment)
+        adapter = GroupsPendingRequestsAdapter(requireActivity(), this@GroupsInvitesFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
@@ -97,6 +96,10 @@ class GroupsInvitesFragment : Fragment(), GroupsInvitesAdapter.GroupCallback {
 
     override fun onDeclineClicked(data: ArticleData) {
         Toast.makeText(requireActivity(),"Decline Title : ${data.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCancelClicked(data: ArticleData) {
+
     }
 
 }

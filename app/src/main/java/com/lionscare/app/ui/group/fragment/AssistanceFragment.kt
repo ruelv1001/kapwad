@@ -10,6 +10,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentAssistanceBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.group.dialog.FilterDialog
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.adapter.CustomViewPagerAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,15 +56,32 @@ class AssistanceFragment : Fragment() {
             viewPager.currentItem = 0
         }
 
-        approveRelativeLayout.setOnSingleClickListener {
-            setActiveTab(approveRelativeLayout)
+        allRequestRelativeLayout.setOnSingleClickListener {
+            setActiveTab(allRequestRelativeLayout)
             viewPager.currentItem = 1
         }
 
-        declineRelativeLayout.setOnSingleClickListener {
+        createAssistanceFloatingActionButton.setOnSingleClickListener {
+
+        }
+
+        activity.getFilterImageView().setOnSingleClickListener {
+            FilterDialog.newInstance(object : FilterDialog.FilterDialogListener {
+                override fun onFilter(filter: ArrayList<String>) {
+                    CommonLogger.devLog("FILTERS", filter)
+                }
+
+                override fun onCancel() {
+                    // set filter to all
+                }
+
+            }).show(childFragmentManager, FilterDialog.TAG)
+        }
+
+        /*declineRelativeLayout.setOnSingleClickListener {
             setActiveTab(declineRelativeLayout)
             viewPager.currentItem = 2
-        }
+        }*/
 
 
     }
@@ -76,17 +95,17 @@ class AssistanceFragment : Fragment() {
                 requestView.visibility = View.VISIBLE
                 requestTextView.visibility = View.VISIBLE
 
-                approveView.visibility = View.GONE
-                approveTextView.visibility = View.GONE
+                allRequestView.visibility = View.GONE
+                allRequestTextView.visibility = View.GONE
                 declineView.visibility = View.GONE
                 declineTextView.visibility = View.GONE
             }
 
-            approveRelativeLayout -> {
-                activity.setAssistanceDetailsType(APPROVED)
+            allRequestRelativeLayout -> {
+                activity.setAssistanceDetailsType(ALL_REQUEST)
 
-                approveView.visibility = View.VISIBLE
-                approveTextView.visibility = View.VISIBLE
+                allRequestView.visibility = View.VISIBLE
+                allRequestTextView.visibility = View.VISIBLE
 
                 requestView.visibility = View.GONE
                 requestTextView.visibility = View.GONE
@@ -94,7 +113,7 @@ class AssistanceFragment : Fragment() {
                 declineTextView.visibility = View.GONE
             }
 
-            declineRelativeLayout -> {
+            /*declineRelativeLayout -> {
                 activity.setAssistanceDetailsType(DECLINED)
 
                 declineView.visibility = View.VISIBLE
@@ -104,7 +123,7 @@ class AssistanceFragment : Fragment() {
                 requestTextView.visibility = View.GONE
                 approveView.visibility = View.GONE
                 approveTextView.visibility = View.GONE
-            }
+            }*/
 
             else -> Unit
         }
@@ -115,14 +134,14 @@ class AssistanceFragment : Fragment() {
         pagerAdapter?.apply {
             addFragment(AssistanceRequestFragment.newInstance(
                 AssistanceFragmentDirections.actionNavigationGroupAssistanceReqDetails()))
-            addFragment(AssistanceApproveFragment.newInstance(
+            addFragment(AssistanceAllRequestFragment.newInstance(
                 AssistanceFragmentDirections.actionNavigationGroupAssistanceReqDetails()))
-            addFragment(AssistanceDeclineFragment.newInstance(
-                AssistanceFragmentDirections.actionNavigationGroupAssistanceReqDetails()))
+            /*addFragment(AssistanceDeclineFragment.newInstance(
+                AssistanceFragmentDirections.actionNavigationGroupAssistanceReqDetails()))*/
         }
 
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewPager.offscreenPageLimit = 3
+        viewPager.offscreenPageLimit = 2
         viewPager.adapter = pagerAdapter
         viewPager.registerOnPageChangeCallback(viewPager2PageCallback())
 
@@ -133,8 +152,8 @@ class AssistanceFragment : Fragment() {
                 super.onPageSelected(position)
                 when(position){
                     0-> setActiveTab(binding.requestRelativeLayout)
-                    1-> setActiveTab(binding.approveRelativeLayout)
-                    2-> setActiveTab(binding.declineRelativeLayout)
+                    1-> setActiveTab(binding.allRequestRelativeLayout)
+                    //2-> setActiveTab(binding.declineRelativeLayout)
                 }
             }
         }
@@ -146,7 +165,7 @@ class AssistanceFragment : Fragment() {
     }
 
     companion object {
-        private const val APPROVED = "APPROVED"
+        private const val ALL_REQUEST = "ALL_REQUEST"
         private const val DECLINED = "DECLINED"
         private const val REQUEST = "REQUEST"
     }

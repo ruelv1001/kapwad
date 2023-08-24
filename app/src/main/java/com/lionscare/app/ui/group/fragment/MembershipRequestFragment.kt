@@ -84,5 +84,9 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
         Toast.makeText(requireActivity(),"Declined : ${data.name}", Toast.LENGTH_SHORT).show()
     }
 
+    override fun onCancelClicked(data: ArticleData) {
+
+    }
+
 
 }
