@@ -3,10 +3,10 @@ package com.lionscare.app.ui.main.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lionscare.app.data.repositories.auth.AuthRepository
-import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lionscare.app.data.repositories.profile.ProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val profileRepository: ProfileRepository
 ) : ViewModel() {
 
     private val _loginSharedFlow = MutableSharedFlow<SettingsViewState>()
@@ -42,23 +43,19 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun getUserInfo() {
+    fun getProfileDetails() {
         viewModelScope.launch {
-            authRepository.getUserInfo()
+            profileRepository.getProfileInfo()
                 .onStart {
                     _loginSharedFlow.emit(SettingsViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
-                    CommonLogger.instance.sysLogE(
-                        "LoginViewModel",
-                        exception.localizedMessage,
-                        exception
-                    )
+
                 }
                 .collect {
                     _loginSharedFlow.emit(
-                        SettingsViewState.SuccessGetUserInfo(it)
+                        SettingsViewState.SuccessGetUserInfo(it.msg.orEmpty(),it.data)
                     )
                 }
         }

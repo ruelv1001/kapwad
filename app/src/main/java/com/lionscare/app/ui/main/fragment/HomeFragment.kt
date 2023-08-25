@@ -6,18 +6,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
+import com.lionscare.app.ui.main.viewmodel.SettingsViewModel
+import com.lionscare.app.ui.main.viewmodel.SettingsViewState
+import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
@@ -29,6 +43,8 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter: GroupsYourGroupAdapter? = null
+
+    private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,9 +61,60 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeAccount()
         setClickListeners()
         setUpAnimation()
         setupAdapter()
+        onResume()
+        viewModel.getProfileDetails()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideLoadingDialog()
+    }
+
+    private fun observeAccount() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginSharedFlow.collectLatest { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: SettingsViewState) {
+        when (viewState) {
+            is SettingsViewState.Loading -> showLoadingDialog(R.string.loading)
+            is SettingsViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+            is SettingsViewState.InputError -> Unit
+            is SettingsViewState.SuccessGetUserInfo -> {
+                hideLoadingDialog()
+                setView(viewState.userModel)
+            }
+            else -> hideLoadingDialog()
+        }
+    }
+
+    private fun setView(userModel: UserModel?)=binding.run {
+
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        (requireActivity() as MainActivity).showLoadingDialog(strId)
+    }
+
+    private fun hideLoadingDialog() {
+        (requireActivity() as MainActivity).hideLoadingDialog()
     }
 
     private fun setUpAnimation() {

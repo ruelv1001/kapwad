@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/home_name_hint"
+                android:hint="@string/loading"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/font_16" />
 
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/home_address_hint"
+                android:text="@string/n_a"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/font_16" />
 

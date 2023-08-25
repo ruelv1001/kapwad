@@ -22,4 +22,5 @@ data class UserModel(
     var date_registered: DateModel? = null
 ){
     fun getFullName() = "$firstname $lastname"
+    fun getAddress() = "$street_name, $brgy_name, $city_name, $province_name"
 }
