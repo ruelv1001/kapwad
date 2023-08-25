@@ -22,6 +22,11 @@ data class ErrorsData(
     var province_name: List<String>? = null,
     var city_name: List<String>? = null,
     var brgy_name: List<String>? = null,
+    var desc: List<String>? = null,
     var street_name: List<String>? = null,
-    var desc: List<String>? = null
+    var group_name: List<String>? = null,
+    var group_type: List<String>? = null,
+    var group_privacy: List<String>? = null,
+    var group_approval: List<String>? = null,
+    var group_passcode: List<String>? = null
 )
