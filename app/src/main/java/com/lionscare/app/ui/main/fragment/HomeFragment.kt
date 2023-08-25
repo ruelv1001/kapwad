@@ -106,7 +106,10 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
     }
 
     private fun setView(userModel: UserModel?)=binding.run {
-
+        mainLayout.nameTextView.text = userModel?.getFullName()
+        if (userModel?.street_name?.isNotEmpty() == true){
+            mainLayout.addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+        }
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
