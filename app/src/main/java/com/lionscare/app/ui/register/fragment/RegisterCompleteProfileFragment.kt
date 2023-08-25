@@ -4,9 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
+import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.FragmentRegistrationCompleteProfileBinding
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.register.activity.RegisterActivity
@@ -14,8 +20,12 @@ import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
 import com.lionscare.app.ui.register.dialog.ProvinceDialog
 import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
+import com.lionscare.app.ui.register.viewmodel.RegisterViewModel
+import com.lionscare.app.ui.register.viewmodel.RegisterViewState
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterCompleteProfileFragment: Fragment() {
@@ -24,6 +34,9 @@ class RegisterCompleteProfileFragment: Fragment() {
     private val activity by lazy { requireActivity() as RegisterActivity }
     private var reference:String = ""
     private var cityCode:String = ""
+    private var brgyCode:String = ""
+    private val viewModel: RegisterViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,9 +53,51 @@ class RegisterCompleteProfileFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeRegisterAccount()
         setClickListeners()
         setView()
         onResume()
+    }
+
+    private fun observeRegisterAccount() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.registerSharedFlow.collect { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+    private fun handleViewState(viewState: RegisterViewState) {
+        when (viewState) {
+            is RegisterViewState.Loading -> showLoadingDialog(R.string.loading)
+            is RegisterViewState.SuccessProfileUpdate -> {
+                hideLoadingDialog()
+                Toast.makeText(requireActivity(),viewState.message, Toast.LENGTH_SHORT).show()
+                val intent = MainActivity.getIntent(requireActivity())
+                startActivity(intent)
+                requireActivity().finishAffinity()
+            }
+            is RegisterViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message)
+            }
+            is RegisterViewState.InputError -> {
+                hideLoadingDialog()
+                handleInputError(viewState.errorData?: ErrorsData())
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun handleInputError(errorsData: ErrorsData) = binding.run {
+        if (errorsData.email?.get(0)?.isNotEmpty() == true) binding.emailTextInputLayout.error = errorsData.email?.get(0)
+        if (errorsData.province_name?.get(0)?.isNotEmpty() == true) binding.provinceTextInputLayout.error = errorsData.province_name?.get(0)
+        if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error = errorsData.city_name?.get(0)
+        if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
+        if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
     }
 
     override fun onResume() {
@@ -121,6 +176,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                     citySku: String,
                     zipCode: String
                 ) {
+                    brgyCode = citySku
                     barangayEditText.setText(cityName)
                     zipcodeEditText.setText(zipCode)
                     setClickable()
@@ -129,35 +185,28 @@ class RegisterCompleteProfileFragment: Fragment() {
         }
 
         continueButton.setOnSingleClickListener {
-
-            if (emailEditText.text.toString().isEmpty()){
-                emailTextInputLayout.error = "Field is required"
-            }
-            if (provinceEditText.text.toString().isEmpty()){
-                provinceTextInputLayout.error = "Field is required"
-            }
-            if (cityEditText.text.toString().isEmpty()){
-                cityTextInputLayout.error = "Field is required"
-            }
-            if (barangayEditText.text.toString().isEmpty()){
-                barangayTextInputLayout.error = "Field is required"
-            }
-            if (streetEditText.text.toString().isEmpty()){
-                streetTextInputLayout.error = "Field is required"
-            }
-
-            if (emailEditText.text.toString().isNotEmpty() &&
-                provinceEditText.text.toString().isNotEmpty() &&
-                cityEditText.text.toString().isNotEmpty() &&
-                barangayEditText.text.toString().isNotEmpty() &&
-                streetEditText.text.toString().isNotEmpty()){
-
-                //TODO: update profile api here
-                val intent = MainActivity.getIntent(requireActivity())
-                startActivity(intent)
-                requireActivity().finishAffinity()
-            }
+            viewModel.doUpdateProfile(
+                reference,
+                provinceEditText.text.toString(),
+                cityCode,
+                cityEditText.text.toString(),
+                brgyCode,
+                barangayEditText.text.toString(),
+                streetEditText.text.toString(),
+                zipcodeEditText.text.toString(),
+                viewModel.regRequest?.firstname.orEmpty(),
+                viewModel.regRequest?.lastname.orEmpty(),
+                viewModel.regRequest?.middlename.orEmpty()
+            )
         }
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        (requireActivity() as RegisterActivity).showLoadingDialog(strId)
+    }
+
+    private fun hideLoadingDialog() {
+        (requireActivity() as RegisterActivity).hideLoadingDialog()
     }
 
     private fun setClickable() = binding.run {
