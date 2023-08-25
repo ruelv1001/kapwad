@@ -4,27 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.lionscare.app.R
+import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.databinding.FragmentProfileUpdateBinding
-import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
 import com.lionscare.app.ui.register.dialog.ProvinceDialog
 import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
 import com.lionscare.app.ui.settings.activity.ProfileActivity
 import com.lionscare.app.ui.settings.dialog.ProfileConfirmationDialog
+import com.lionscare.app.ui.settings.viewmodel.ProfileViewModel
+import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ProfileUpdateFragment: Fragment() {
+class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDialogCallBack {
     private var _binding: FragmentProfileUpdateBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as ProfileActivity }
     private var reference:String = ""
     private var cityCode:String = ""
+    private var brgyCode:String = ""
+    private var zipCode:String = ""
+    private val viewModel: ProfileViewModel by viewModels()
+    private var userModelz:UserModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,17 +54,72 @@ class ProfileUpdateFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeProfile()
         setClickListeners()
-        setView()
         onResume()
+        viewModel.getProfileDetails()
     }
+
+    private fun observeProfile() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.profileSharedFlow.collect { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: ProfileViewState) {
+        when (viewState){
+            is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
+            is ProfileViewState.Success -> {
+                hideLoadingDialog()
+                Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
+                activity.onBackPressed()
+            }
+            is ProfileViewState.SuccessGetUserInfo -> {
+                hideLoadingDialog()
+                setView(viewState.userModel)
+            }
+            is ProfileViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message)
+            }
+            is ProfileViewState.InputError -> {
+                hideLoadingDialog()
+                handleInputError(viewState.errorData?: ErrorsData())
+            }
+
+            else -> hideLoadingDialog()
+        }
+    }
+
+    private fun handleInputError(errorsData: ErrorsData) = binding.run {
+        if (errorsData.province_name?.get(0)?.isNotEmpty() == true) binding.provinceTextInputLayout.error = errorsData.province_name?.get(0)
+        if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error = errorsData.city_name?.get(0)
+        if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
+        if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
+    }
+
 
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_reg_complete_profile))
+        hideLoadingDialog()
     }
 
-    private fun setView() = binding.run{
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        (requireActivity() as ProfileActivity).showLoadingDialog(strId)
+    }
+
+    private fun hideLoadingDialog() {
+        (requireActivity() as ProfileActivity).hideLoadingDialog()
+    }
+
+    private fun setView(userModel: UserModel?) = binding.run{
+        userModelz = userModel
         provinceEditText.doOnTextChanged {
                 text, start, before, count ->
             provinceTextInputLayout.error = ""
@@ -69,8 +137,19 @@ class ProfileUpdateFragment: Fragment() {
             streetTextInputLayout.error = ""
         }
 
-        cityEditText.isClickable= false
-        barangayEditText.isClickable= false
+        firstNameEditText.setText(userModel?.firstname)
+        middleNameEditText.setText(userModel?.middlename)
+        lastNameEditText.setText(userModel?.lastname)
+        provinceEditText.setText(userModel?.province_name)
+        cityEditText.setText(userModel?.city_name)
+        barangayEditText.setText(userModel?.brgy_name)
+        streetEditText.setText(userModel?.street_name)
+
+        reference = userModel?.province_sku.toString()
+        cityCode = userModel?.city_code.toString()
+        brgyCode = userModel?.brgy_code.toString()
+
+        setClickable()
     }
 
     private fun setClickListeners() = binding.run {
@@ -114,8 +193,11 @@ class ProfileUpdateFragment: Fragment() {
                 override fun onAddressClicked(
                     cityName: String,
                     citySku: String,
-                    zipCode: String
+                    zipCodes: String
                 ) {
+
+                    brgyCode = citySku
+                    zipCode = zipCodes
                     barangayEditText.setText(cityName)
                     setClickable()
                 }
@@ -123,26 +205,8 @@ class ProfileUpdateFragment: Fragment() {
         }
 
         saveButton.setOnSingleClickListener {
-
-            if (provinceEditText.text.toString().isEmpty()){
-                provinceTextInputLayout.error = "Field is required"
-            }
-            if (cityEditText.text.toString().isEmpty()){
-                cityTextInputLayout.error = "Field is required"
-            }
-            if (barangayEditText.text.toString().isEmpty()){
-                barangayTextInputLayout.error = "Field is required"
-            }
-            if (streetEditText.text.toString().isEmpty()){
-                streetTextInputLayout.error = "Field is required"
-            }
-
-            if ( provinceEditText.text.toString().isNotEmpty() &&
-                cityEditText.text.toString().isNotEmpty() &&
-                barangayEditText.text.toString().isNotEmpty() &&
-                streetEditText.text.toString().isNotEmpty()){
-                ProfileConfirmationDialog.newInstance().show(childFragmentManager, RegisterSuccessDialog.TAG)
-            }
+                ProfileConfirmationDialog.newInstance(this@ProfileUpdateFragment)
+                    .show(childFragmentManager, RegisterSuccessDialog.TAG)
         }
     }
 
@@ -154,5 +218,22 @@ class ProfileUpdateFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onMyAccountClicked(dialog: ProfileConfirmationDialog)=binding.run {
+        dialog.dismiss()
+        viewModel.doUpdateProfile(
+            reference,
+            provinceEditText.text.toString(),
+            cityCode,
+            cityEditText.text.toString(),
+            brgyCode,
+            barangayEditText.text.toString(),
+            streetEditText.text.toString(),
+            zipCode,
+            firstNameEditText.text.toString(),
+            lastNameEditText.text.toString(),
+            middleNameEditText.text.toString()
+        )
     }
 }
