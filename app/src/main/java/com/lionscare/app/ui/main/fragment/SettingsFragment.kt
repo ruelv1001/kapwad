@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.databinding.FragmentSettingsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.main.activity.MainActivity
@@ -21,6 +22,7 @@ import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.settings.activity.ProfileActivity
 import com.lionscare.app.ui.settings.activity.UpdatePasswordActivity
+import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -55,6 +57,7 @@ class SettingsFragment : Fragment() {
         observeLogoutAccount()
         setClickListeners()
         setDetails()
+        viewModel.getProfileDetails()
     }
 
     private fun observeLogoutAccount() {
@@ -89,8 +92,16 @@ class SettingsFragment : Fragment() {
             }
 
             is SettingsViewState.InputError -> Unit
+            is SettingsViewState.SuccessGetUserInfo -> {
+                hideLoadingDialog()
+                setView(viewState.userModel)
+            }
             else -> Unit
         }
+    }
+
+    private fun setView(userModel: UserModel?)=binding.run {
+        nameTextView.text = userModel?.getFullName()
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {

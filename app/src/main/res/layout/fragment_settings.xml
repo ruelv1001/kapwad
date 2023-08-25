@@ -53,8 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="@string/home_name_hint"
                     android:textAlignment="center"
+                    android:hint="@string/loading"
                     android:textColor="@color/black_text"
                     android:textSize="@dimen/font_16" />
 

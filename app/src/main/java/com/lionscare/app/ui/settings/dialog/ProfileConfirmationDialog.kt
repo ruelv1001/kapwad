@@ -8,13 +8,14 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogProfileConfirmationBinding
+import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileConfirmationDialog : BottomSheetDialogFragment(){
 
     private var viewBinding: DialogProfileConfirmationBinding? = null
-    private var callback: RegisterSuccessCallBack? = null
+    private var callback: ProfileSaveDialogCallBack? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,9 +46,12 @@ class ProfileConfirmationDialog : BottomSheetDialogFragment(){
     }
 
     private fun setClickListener() {
-//        viewBinding?.myAcctButton?.setOnSingleClickListener {
-//            dismiss()
-//        }
+        viewBinding?.cancelledButton?.setOnSingleClickListener {
+            dismiss()
+        }
+        viewBinding?.confirmButton?.setOnSingleClickListener {
+            callback?.onMyAccountClicked(this)
+        }
     }
 
     override fun onDestroyView() {
@@ -55,12 +59,12 @@ class ProfileConfirmationDialog : BottomSheetDialogFragment(){
         viewBinding = null
     }
 
-    interface RegisterSuccessCallBack {
-        fun onMyAccountClicked(cityName: String, citySku: String, zipCode: String)
+    interface ProfileSaveDialogCallBack {
+        fun onMyAccountClicked(dialog: ProfileConfirmationDialog)
     }
 
     companion object {
-        fun newInstance(callback: RegisterSuccessCallBack? = null) = ProfileConfirmationDialog()
+        fun newInstance(callback: ProfileSaveDialogCallBack? = null) = ProfileConfirmationDialog()
             .apply {
                 this.callback = callback
             }
