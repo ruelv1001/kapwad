@@ -64,37 +64,14 @@
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/typeTextInputLayout"
-                style="@style/TextInputLayoutStyle"
+            <Spinner
+                android:id="@+id/groupTypeSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                app:boxBackgroundColor="@color/white"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/typeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edittext_selector"
-                    android:clickable="true"
-                    android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:focusable="false"
-                    android:fontFamily="@font/inter_semibold"
-                    android:hint="@string/lbl_type"
-                    android:imeOptions="actionDone"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:text="@string/lbl_immediate_family"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/commons_text_hint"
-                    android:textSize="@dimen/font_14" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:fontFamily="@font/inter_semibold"
+                android:background="@drawable/bg_edittext_selector"
+                android:padding="@dimen/dimen_16" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -230,6 +207,7 @@
             </LinearLayout>
 
             <Switch
+                android:id="@+id/approvalSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_15"

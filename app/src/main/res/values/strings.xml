@@ -268,4 +268,9 @@
     <string name="loading">Loading . . .</string>
     <string name="_63_999_000_000">+63 999 000 000</string>
     <string name="n_a">N/A</string>
+    <string-array name="group_type_items">
+        <item>Immediate Family</item>
+        <item>Organization</item>
+        <item>Clan</item>
+    </string-array>
 </resources>
