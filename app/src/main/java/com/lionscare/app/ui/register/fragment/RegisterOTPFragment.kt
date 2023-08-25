@@ -5,17 +5,28 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
+import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.registration.request.OTPRequest
+import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import com.lionscare.app.databinding.FragmentRegistrationOtpBinding
 import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
+import com.lionscare.app.ui.register.viewmodel.RegisterViewModel
+import com.lionscare.app.ui.register.viewmodel.RegisterViewState
 import com.lionscare.app.utils.GenericKeyEvent
 import com.lionscare.app.utils.GenericTextWatcher
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCallBack {
@@ -23,6 +34,7 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as RegisterActivity }
     private var countDownTimer: CountDownTimer? = null
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,10 +51,67 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeOTP()
         setClickListeners()
-        startCountdown()
         setView()
         onResume()
+        startCountdown()
+    }
+
+    private fun setDoReqOTP() {
+        val otpRequest = OTPRequest()
+        otpRequest.phone_number = viewModel.regRequest?.phone_number
+        viewModel.doRequestOTP(otpRequest)
+    }
+
+    private fun observeOTP() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.registerSharedFlow.collect { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: RegisterViewState) = binding.run{
+        when (viewState) {
+            is RegisterViewState.Loading -> showLoadingDialog(R.string.loading)
+            is RegisterViewState.Success -> {
+                hideLoadingDialog()
+                Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
+            }
+            is RegisterViewState.SuccessReg -> {
+                hideLoadingDialog()
+                RegisterSuccessDialog.newInstance(callback = this@RegisterOTPFragment)
+                    .show(childFragmentManager, RegisterSuccessDialog.TAG)
+            }
+            is RegisterViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message)
+            }
+            is RegisterViewState.InputError -> {
+                hideLoadingDialog()
+                handleInputError(viewState.errorData?: ErrorsData())
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun handleInputError(errorsData: ErrorsData) = binding.run {
+        if (errorsData.otp?.get(0)?.isNotEmpty() == true){
+            Toast.makeText(requireActivity(),errorsData.otp?.get(0),Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        (requireActivity() as RegisterActivity).showLoadingDialog(strId)
+    }
+
+    private fun hideLoadingDialog() {
+        (requireActivity() as RegisterActivity).hideLoadingDialog()
     }
 
     override fun onResume() {
@@ -69,7 +138,9 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
 
     private fun setClickListeners() = binding.run {
         confirmButton.setOnSingleClickListener {
-            RegisterSuccessDialog.newInstance(callback = this@RegisterOTPFragment).show(childFragmentManager, RegisterSuccessDialog.TAG)
+            val modelReg = viewModel.regRequest
+            modelReg?.otp = "$otpFirstEdittext$otpSecondEdittext$otpThirdEdittext$otpFourthEdittext"
+            modelReg?.let { viewModel.doReg(it) }
         }
         resendTextView.setOnSingleClickListener {
             startCountdown()
@@ -77,6 +148,7 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
     }
 
     private fun startCountdown() = binding.run {
+        setDoReqOTP()
         resendTextView.visibility = View.GONE
         resendTimeLinearLayout.visibility = View.VISIBLE
         countDownTimer = object : CountDownTimer(MILLI_SEC, COUNTDOWN_INTERVAL) {

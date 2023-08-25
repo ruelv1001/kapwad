@@ -36,6 +36,10 @@ class RegistrationRepository @Inject constructor(
     fun doRegister(request: RegistrationRequest): Flow<LoginResponse> {
         return flow {
             val response = registerRemoteDataSource.doRegisterAccount(request)
+            val token = response.token.orEmpty()
+            val userInfo = response.data ?: UserModel()
+            encryptedDataManager.setAccessToken(token)
+            encryptedDataManager.setUserBasicInfo(userInfo)
             emit(response)
         }.flowOn(ioDispatcher)
     }
