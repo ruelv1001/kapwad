@@ -1,7 +1,9 @@
 package com.lionscare.app.data.repositories.auth.response
 
+import androidx.annotation.Keep
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 
+@Keep
 data class LoginResponse(
     val data: UserModel? = null,
     val msg: String? = null,
