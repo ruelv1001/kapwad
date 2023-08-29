@@ -12,16 +12,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentGroupsYourGroupBinding
 import com.lionscare.app.ui.main.viewmodel.GroupListViewModel
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
-import com.lionscare.app.ui.main.adapter.ImmediateFamilyAdapter
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewModel
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
-import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -30,13 +30,11 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
-    SwipeRefreshLayout.OnRefreshListener, ImmediateFamilyAdapter.ImmediateFamilyCallback {
+    SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentGroupsYourGroupBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var linearLayoutManager2: LinearLayoutManager? = null
-    private var iFAdapter: ImmediateFamilyAdapter? = null
     private var orgAdapter: GroupsYourGroupAdapter? = null
     private val viewModel: GroupListViewModel by viewModels()
     private val iFViewModel: ImmediateFamilyViewModel by viewModels()
@@ -65,31 +63,25 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     }
 
     private fun setupAdapter() = binding.run {
-        iFAdapter = ImmediateFamilyAdapter(requireActivity(), this@GroupsYourGroupFragment)
-        iFSwipeRefreshLayout.setOnRefreshListener(this@GroupsYourGroupFragment)
-        linearLayoutManager = LinearLayoutManager(context)
-        immediateFamilyGroupRecyclerView.layoutManager = linearLayoutManager
-        immediateFamilyGroupRecyclerView.adapter = iFAdapter
-
         orgAdapter = GroupsYourGroupAdapter(requireActivity(), this@GroupsYourGroupFragment)
         orgSwipeRefreshLayout.setOnRefreshListener(this@GroupsYourGroupFragment)
-        linearLayoutManager2 = LinearLayoutManager(context)
-        organizationRecyclerView.layoutManager = linearLayoutManager2
+        linearLayoutManager = LinearLayoutManager(context)
+        organizationRecyclerView.layoutManager = linearLayoutManager
         organizationRecyclerView.adapter = orgAdapter
 
     }
 
-    private fun observeGroupList(){
+    private fun observeGroupList() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getGroupSharedFlow.collectLatest {viewState ->
+            viewModel.getGroupSharedFlow.collectLatest { viewState ->
                 handleViewState(viewState)
             }
         }
     }
 
-    private fun observeImmediateFamily(){
+    private fun observeImmediateFamily() {
         viewLifecycleOwner.lifecycleScope.launch {
-            iFViewModel.immediateFamilySharedFlow.collectLatest {viewState ->
+            iFViewModel.immediateFamilySharedFlow.collectLatest { viewState ->
                 iFHandleViewState(viewState)
             }
         }
@@ -100,30 +92,30 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
             is GroupListViewState.Loading -> binding.orgSwipeRefreshLayout.isRefreshing = true
             is GroupListViewState.Success -> showGroup(viewState.pagingData)
             is GroupListViewState.PopupError -> {
-                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
             }
         }
     }
 
     private fun iFHandleViewState(viewState: ImmediateFamilyViewState) {
         when (viewState) {
-            ImmediateFamilyViewState.Loading ->  binding.iFSwipeRefreshLayout.isRefreshing = true
+            ImmediateFamilyViewState.Loading -> Unit
             is ImmediateFamilyViewState.PopupError -> {
-                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+                //showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+                binding.placeHolderTextView.isVisible = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
             }
+
             is ImmediateFamilyViewState.Success -> {
-                binding.iFSwipeRefreshLayout.isRefreshing = false
-                val family = viewState.immediateFamilyResponse?.data
-                val familyList: List<GroupListData> = family?.let { listOf(it) } ?: emptyList()
-                iFAdapter?.clear()
-                iFAdapter?.appendData(familyList)
-                if(familyList.isEmpty()){
-                    binding.placeHolderTextView.isVisible = true
-                    binding.immediateFamilyGroupRecyclerView.isGone = true
-                }else{
-                    binding.placeHolderTextView.isGone = true
-                    binding.immediateFamilyGroupRecyclerView.isVisible = true
-                }
+                binding.placeHolderTextView.isGone = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
+                binding.immediateFamilyLayout.titleTextView.text =
+                    viewState.immediateFamilyResponse?.data?.group_name
             }
         }
     }
@@ -134,7 +126,9 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     }
 
     private fun setClickListeners() = binding.run {
-
+        binding.immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
+            // clicked immediate family
+        }
     }
 
     override fun onDestroyView() {
@@ -148,7 +142,6 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
 
     override fun onRefresh() {
         binding.orgSwipeRefreshLayout.isRefreshing = true
-        binding.iFSwipeRefreshLayout.isRefreshing = true
         viewModel.refreshAll()
         iFViewModel.getImmediateFamily()
     }
@@ -157,10 +150,5 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
         val intent = GroupDetailsActivity.getIntent(requireActivity())
         startActivity(intent)
     }
-
-    override fun onImmediateFamilyItemClicked(data: GroupListData) {
-
-    }
-
 
 }

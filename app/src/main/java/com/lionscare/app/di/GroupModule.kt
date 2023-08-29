@@ -29,6 +29,11 @@ class GroupModule {
     }
 
     @Provides
+    fun providesGetGroupPagingSource(groupRemoteDataSource: GroupRemoteDataSource): GetGroupPagingSource {
+        return GetGroupPagingSource(groupRemoteDataSource)
+    }
+
+    @Provides
     fun providesGroupRepository(
         groupRemoteDataSource: GroupRemoteDataSource,
         getGroupPagingSource: GetGroupPagingSource
