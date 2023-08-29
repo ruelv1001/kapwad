@@ -96,6 +96,40 @@
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
                 android:textColorHint="@color/commons_text_hint" />
+            <View
+                android:layout_width="@dimen/dimen_10"
+                android:layout_height="@dimen/dimen_1" />
+
+            <EditText
+                android:id="@+id/otpFifthEdittext"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edittext_otp_selector"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/lbl_0"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textColorHint="@color/commons_text_hint" />
+            <View
+                android:layout_width="@dimen/dimen_10"
+                android:layout_height="@dimen/dimen_1" />
+
+            <EditText
+                android:id="@+id/otpSixthEdittext"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edittext_otp_selector"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/lbl_0"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textColorHint="@color/commons_text_hint" />
 
         </LinearLayout>
 

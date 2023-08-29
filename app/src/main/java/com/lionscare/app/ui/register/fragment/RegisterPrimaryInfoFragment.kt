@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import com.lionscare.app.databinding.FragmentRegistrationPrimaryInfoBinding
 import com.lionscare.app.ui.register.activity.RegisterActivity
@@ -141,7 +142,10 @@ class RegisterPrimaryInfoFragment: Fragment() {
             data.phone_number = contactEditText.text.toString()
             data.password = passwordEditText.text.toString()
             data.password_confirmation = confirmPasswordEditText.text.toString()
-            viewModel.regRequest = data
+            activity.requestModel = data
+            val otpRequest = OTPRequest()
+            otpRequest.phone_number = contactEditText.text.toString()
+            activity.otpModel = otpRequest
             viewModel.doPreReg(data)
         }
     }

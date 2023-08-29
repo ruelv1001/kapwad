@@ -30,6 +30,8 @@ class GenericTextWatcher internal constructor(private val currentView: View, pri
             R.id.otpFirstEdittext -> if (text.length == 1) nextView!!.requestFocus()
             R.id.otpSecondEdittext -> if (text.length == 1) nextView!!.requestFocus()
             R.id.otpThirdEdittext -> if (text.length == 1) nextView!!.requestFocus()
+            R.id.otpFourthEdittext -> if (text.length == 1) nextView!!.requestFocus()
+            R.id.otpFifthEdittext -> if (text.length == 1) nextView!!.requestFocus()
             //You can use EditText4 same as above to hide the keyboard
         }
     }

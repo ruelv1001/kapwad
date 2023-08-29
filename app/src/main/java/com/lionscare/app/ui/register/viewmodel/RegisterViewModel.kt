@@ -30,8 +30,6 @@ class RegisterViewModel @Inject constructor(
     val registerSharedFlow: SharedFlow<RegisterViewState> =
         _registerSharedFlow.asSharedFlow()
 
-    var regRequest : RegistrationRequest? = null
-
     fun doPreReg(preRegRequest : RegistrationRequest) {
         viewModelScope.launch {
             regRepository.doValidateFields(preRegRequest)
@@ -70,7 +68,7 @@ class RegisterViewModel @Inject constructor(
 
     fun doReg(preRegRequest : RegistrationRequest) {
         viewModelScope.launch {
-            regRepository.doValidateFields(preRegRequest)
+            regRepository.doRegister(preRegRequest)
                 .onStart {
                     _registerSharedFlow.emit(RegisterViewState.Loading)
                 }
