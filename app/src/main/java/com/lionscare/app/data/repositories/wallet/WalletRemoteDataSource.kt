@@ -1,8 +1,6 @@
 package com.lionscare.app.data.repositories.wallet
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
-import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
-import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.wallet.request.TopupRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionDetailsRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionListRequest
