@@ -9,6 +9,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.registration.request.OTPRequest
+import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import com.lionscare.app.databinding.ActivityRegisterBinding
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -19,6 +21,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private var loadingDialog: CommonDialog? = null
+
+    var requestModel = RegistrationRequest()
+    var otpModel = OTPRequest()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

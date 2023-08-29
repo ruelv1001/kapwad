@@ -14,13 +14,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
-import com.lionscare.app.data.repositories.registration.request.OTPRequest
-import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import com.lionscare.app.databinding.FragmentRegistrationOtpBinding
 import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
 import com.lionscare.app.ui.register.viewmodel.RegisterViewModel
 import com.lionscare.app.ui.register.viewmodel.RegisterViewState
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.GenericKeyEvent
 import com.lionscare.app.utils.GenericTextWatcher
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -59,9 +58,7 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
     }
 
     private fun setDoReqOTP() {
-        val otpRequest = OTPRequest()
-        otpRequest.phone_number = viewModel.regRequest?.phone_number
-        viewModel.doRequestOTP(otpRequest)
+        viewModel.doRequestOTP(activity.otpModel)
     }
 
     private fun observeOTP() {
@@ -126,7 +123,9 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
         otpFirstEdittext.addTextChangedListener(GenericTextWatcher(otpFirstEdittext, otpSecondEdittext))
         otpSecondEdittext.addTextChangedListener(GenericTextWatcher(otpSecondEdittext, otpThirdEdittext))
         otpThirdEdittext.addTextChangedListener(GenericTextWatcher(otpThirdEdittext, otpFourthEdittext))
-        otpFourthEdittext.addTextChangedListener(GenericTextWatcher(otpFourthEdittext, null))
+        otpFourthEdittext.addTextChangedListener(GenericTextWatcher(otpFourthEdittext, otpFifthEdittext))
+        otpFifthEdittext.addTextChangedListener(GenericTextWatcher(otpFifthEdittext, otpSixthEdittext))
+        otpSixthEdittext.addTextChangedListener(GenericTextWatcher(otpSixthEdittext, null))
 
         //GenericKeyEvent here works for deleting the element and to switch back to previous EditText
 //first parameter is the current EditText and second parameter is previous EditText
@@ -134,13 +133,15 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
         otpSecondEdittext.setOnKeyListener(GenericKeyEvent(otpSecondEdittext, otpFirstEdittext))
         otpThirdEdittext.setOnKeyListener(GenericKeyEvent(otpThirdEdittext, otpSecondEdittext))
         otpFourthEdittext.setOnKeyListener(GenericKeyEvent(otpFourthEdittext,otpThirdEdittext))
+        otpFifthEdittext.setOnKeyListener(GenericKeyEvent(otpFifthEdittext,otpFourthEdittext))
+        otpSixthEdittext.setOnKeyListener(GenericKeyEvent(otpSixthEdittext,otpFifthEdittext))
     }
 
     private fun setClickListeners() = binding.run {
         confirmButton.setOnSingleClickListener {
-            val modelReg = viewModel.regRequest
-            modelReg?.otp = "$otpFirstEdittext$otpSecondEdittext$otpThirdEdittext$otpFourthEdittext"
-            modelReg?.let { viewModel.doReg(it) }
+            val modelReg = activity.requestModel
+            modelReg.otp = "${otpFirstEdittext.text}${otpSecondEdittext.text}${otpThirdEdittext.text}${otpFourthEdittext.text}${otpFifthEdittext.text}${otpSixthEdittext.text}"
+            viewModel.doReg(modelReg)
         }
         resendTextView.setOnSingleClickListener {
             startCountdown()
