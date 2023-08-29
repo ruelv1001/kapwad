@@ -5,5 +5,5 @@ import androidx.annotation.Keep
 
 @Keep
 data class TopupRequest(
-    val amount: String?
+    val amount: String
 )

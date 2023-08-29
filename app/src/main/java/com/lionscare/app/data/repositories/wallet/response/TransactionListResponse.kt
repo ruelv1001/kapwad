@@ -7,7 +7,7 @@ import com.lionscare.app.data.repositories.baseresponse.DateModel
 @Keep
 data class TransactionListResponse(
     val data: List<TransactionData>? = null,
-    val has_morepages: Boolean? = null,
+    val has_morepages: Boolean? = false,
     val msg: String? = null,
     val status: Boolean? = false,
     val status_code: String? = null,

@@ -5,5 +5,5 @@ import androidx.annotation.Keep
 
 @Keep
 data class TransactionDetailsRequest(
-    val transaction_id: String?
+    val transaction_id: String
 )

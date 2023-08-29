@@ -7,6 +7,6 @@ import androidx.annotation.Keep
 data class TransactionDetailsResponse(
     val data: TransactionData? = null,
     val msg: String? = null,
-    val status: Boolean? = null,
+    val status: Boolean? = false,
     val status_code: String? = null
 )
