@@ -2,10 +2,10 @@ package com.lionscare.app.di
 
 import com.lionscare.app.BuildConfig
 import com.lionscare.app.data.repositories.AppRetrofitService
+import com.lionscare.app.data.repositories.group.GetGroupPagingSource
 import com.lionscare.app.data.repositories.group.GroupRemoteDataSource
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.GroupService
-import com.lionscare.app.security.AuthEncryptedDataManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,11 +29,16 @@ class GroupModule {
     }
 
     @Provides
+    fun providesGetGroupPagingSource(groupRemoteDataSource: GroupRemoteDataSource): GetGroupPagingSource {
+        return GetGroupPagingSource(groupRemoteDataSource)
+    }
+
+    @Provides
     fun providesGroupRepository(
         groupRemoteDataSource: GroupRemoteDataSource,
-        authEncryptedDataManager: AuthEncryptedDataManager
+        getGroupPagingSource: GetGroupPagingSource
     ): GroupRepository {
-        return GroupRepository(groupRemoteDataSource, authEncryptedDataManager)
+        return GroupRepository(groupRemoteDataSource ,getGroupPagingSource)
     }
 
 }

@@ -273,4 +273,6 @@
         <item>Organization</item>
         <item>Clan</item>
     </string-array>
+    <string name="lbl_nothing_to_show_txt">Nothing to show</string>
+
 </resources>

@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -18,11 +20,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
+import com.lionscare.app.ui.main.viewmodel.GroupListViewState
+import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewModel
+import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
 import com.lionscare.app.ui.main.viewmodel.SettingsViewModel
 import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
@@ -41,9 +47,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
     var frontAnim: AnimatorSet? = null
     var backAnim: AnimatorSet? = null
 
-    private var linearLayoutManager: LinearLayoutManager? = null
-    private var adapter: GroupsYourGroupAdapter? = null
-
+    private val iFViewModel: ImmediateFamilyViewModel by viewModels()
     private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreateView(
@@ -62,11 +66,12 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeAccount()
+        observeImmediateFamily()
         setClickListeners()
         setUpAnimation()
-        setupAdapter()
         onResume()
         viewModel.getProfileDetails()
+        iFViewModel.getImmediateFamily()
     }
 
     override fun onResume() {
@@ -102,6 +107,32 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 setView(viewState.userModel)
             }
             else -> hideLoadingDialog()
+        }
+    }
+
+    private fun observeImmediateFamily() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            iFViewModel.immediateFamilySharedFlow.collectLatest { viewState ->
+                iFHandleViewState(viewState)
+            }
+        }
+    }
+
+    private fun iFHandleViewState(viewState: ImmediateFamilyViewState) {
+        when (viewState) {
+            ImmediateFamilyViewState.Loading -> Unit
+            is ImmediateFamilyViewState.PopupError -> {
+                //showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+                binding.placeHolderTextView.isVisible = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
+            }
+
+            is ImmediateFamilyViewState.Success -> {
+                binding.placeHolderTextView.isGone = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
+                binding.immediateFamilyLayout.titleTextView.text =
+                    viewState.immediateFamilyResponse?.data?.group_name
+            }
         }
     }
 
@@ -196,23 +227,10 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
             val action = HomeFragmentDirections.actionNavigationHomeToNavigationGroups()
             findNavController().navigate(action)
         }
-    }
 
-    private fun setupAdapter() = binding.run {
-        adapter = GroupsYourGroupAdapter(requireActivity(), this@HomeFragment)
-        linearLayoutManager = LinearLayoutManager(context)
-        immediateFamilyGroupRecyclerView.layoutManager = linearLayoutManager
-        immediateFamilyGroupRecyclerView.adapter = adapter
-
-        val model = listOf(
-            ArticleData(
-                name = "Malasakit Family",
-                description = "10 Members",
-                type = "FAM",
-                reference = "IF-000001"
-            )
-        )
-        adapter?.appendData(model)
+        binding.immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
+            // clicked immediate family
+        }
     }
 
 
@@ -221,7 +239,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
         _binding = null
     }
 
-    override fun onItemClicked(data: ArticleData) {
+    override fun onItemClicked(data: GroupListData) {
         val intent = GroupDetailsActivity.getIntent(requireActivity())
         startActivity(intent)
     }

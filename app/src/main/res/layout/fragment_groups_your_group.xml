@@ -16,12 +16,22 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/font_16" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/immediateFamilyGroupRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <include android:id="@+id/immediateFamilyLayout"
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_weight="3"/>
+        layout="@layout/adapter_group_your_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/placeHolderTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/lbl_nothing_to_show_txt"
+        android:textColor="@color/light_gray"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:textSize="@dimen/font_12"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,11 +42,19 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/font_16" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/OrganizationRecyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:id="@+id/orgSwipeRefreshLayout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/organizationRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_10" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
