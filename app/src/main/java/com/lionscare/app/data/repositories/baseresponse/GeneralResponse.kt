@@ -6,7 +6,8 @@ import androidx.annotation.Keep
 data class GeneralResponse(
     val msg: String? = null,
     val status: Boolean? = false,
-    val status_code: String? = null
+    val status_code: String? = null,
+    val web_checkout: String? = null
 )
 
 
