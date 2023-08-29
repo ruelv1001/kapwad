@@ -21,7 +21,7 @@ class WalletRemoteDataSource @Inject constructor(private val walletService: Wall
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun getArticleList(page: String, perPage: String): TransactionListResponse{
+    suspend fun getWalletTransaction(page: String, perPage: String): TransactionListResponse{
         val request = TransactionListRequest(perPage, page)
         val response = walletService.getWalletTransactions(request)
 
