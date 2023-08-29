@@ -194,9 +194,9 @@ class RegisterCompleteProfileFragment: Fragment() {
                 barangayEditText.text.toString(),
                 streetEditText.text.toString(),
                 zipcodeEditText.text.toString(),
-                viewModel.regRequest?.firstname.orEmpty(),
-                viewModel.regRequest?.lastname.orEmpty(),
-                viewModel.regRequest?.middlename.orEmpty()
+                activity.requestModel.firstname.orEmpty(),
+                activity.requestModel.lastname.orEmpty(),
+                activity.requestModel.middlename.orEmpty()
             )
         }
     }
