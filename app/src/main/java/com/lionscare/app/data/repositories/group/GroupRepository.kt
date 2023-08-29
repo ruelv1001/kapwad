@@ -1,7 +1,14 @@
 package com.lionscare.app.data.repositories.group
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
+import com.lionscare.app.data.repositories.group.request.GetGroupListRequest
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
+import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
+import com.lionscare.app.data.repositories.group.response.GroupListData
+import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +19,7 @@ import javax.inject.Inject
 
 class GroupRepository @Inject constructor(
     private val groupRemoteDataSource: GroupRemoteDataSource,
-    private val encryptedDataManager: AuthEncryptedDataManager,
+    private val getGroupPagingSource: GetGroupPagingSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 )   {
 
@@ -35,5 +42,24 @@ class GroupRepository @Inject constructor(
             val response = groupRemoteDataSource.doShowGroup(createGroupRequest)
             emit(response)
         }.flowOn(ioDispatcher)
+    }
+
+    fun doGetImmediateFamily(): Flow<ImmediateFamilyResponse> {
+        return flow {
+            val response = groupRemoteDataSource.doGetImmediateFamily()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doGetGroupList(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<GroupListData>>{
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getGroupPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
+    private fun getDefaultPageConfig(): PagingConfig {
+        return PagingConfig(pageSize = 20,enablePlaceholders = false)
     }
 }

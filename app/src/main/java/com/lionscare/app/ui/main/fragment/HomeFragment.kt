@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
@@ -204,7 +205,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
         immediateFamilyGroupRecyclerView.layoutManager = linearLayoutManager
         immediateFamilyGroupRecyclerView.adapter = adapter
 
-        val model = listOf(
+        /*val model = listOf(
             ArticleData(
                 name = "Malasakit Family",
                 description = "10 Members",
@@ -212,7 +213,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 reference = "IF-000001"
             )
         )
-        adapter?.appendData(model)
+        adapter?.appendData(model)*/
     }
 
 
@@ -221,7 +222,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
         _binding = null
     }
 
-    override fun onItemClicked(data: ArticleData) {
+    override fun onItemClicked(data: GroupListData) {
         val intent = GroupDetailsActivity.getIntent(requireActivity())
         startActivity(intent)
     }

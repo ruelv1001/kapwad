@@ -6,90 +6,74 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.lionscare.app.data.model.SampleData
-import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
 
 class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCallback) :
-    PagingDataAdapter<ArticleData, GroupsYourGroupAdapter.AdapterViewHolder>(
+    PagingDataAdapter<GroupListData, GroupsYourGroupAdapter.AdapterViewHolder>(
         DIFF_CALLBACK
     ) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ArticleData>() {
-            override fun areItemsTheSame(oldItem: ArticleData, newItem: ArticleData): Boolean {
-                return oldItem.article_id == newItem.article_id
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<GroupListData>() {
+            override fun areItemsTheSame(oldItem: GroupListData, newItem: GroupListData): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: ArticleData, newItem: ArticleData): Boolean {
+            override fun areContentsTheSame(oldItem: GroupListData, newItem: GroupListData): Boolean {
                 return oldItem == newItem
             }
         }
     }
 
-    private val adapterData = mutableListOf<ArticleData>()
-
-    fun clear(){
-        adapterData.clear()
-        notifyDataSetChanged()
-    }
-
-    fun appendData(newData: List<ArticleData>) {
-        val startAt = adapterData.size
-        adapterData.addAll(newData)
-        notifyItemRangeInserted(startAt, newData.size)
-    }
-
-
-    fun getData(): MutableList<ArticleData> = adapterData
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        val binding = AdapterGroupYourGroupBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = AdapterGroupYourGroupBinding.inflate(inflater, parent, false)
         return AdapterViewHolder(binding)
 
     }
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
-        holder.displayData(adapterData[position])
+        val data = getItem(position)
+        holder.bind(data)
     }
 
     inner class AdapterViewHolder(val binding: AdapterGroupYourGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun displayData(data: ArticleData) = with(itemView) {
-            binding.titleTextView.text = data.name
-            binding.membersTextView.text = data.description
-            binding.referenceTextView.text = data.reference
+        fun bind(data: GroupListData?){
+            data?.let {
+                binding.titleTextView.text = data.group_name
+                //  binding.membersTextView.text = data.description
+                //  binding.referenceTextView.text = data.reference
 
-            /*if (data.type.equals("FAM")){
-                binding.typeFamTextView.visibility = View.VISIBLE
-                binding.typeOrgTextView.visibility = View.GONE
-            } else {
-                binding.typeFamTextView.visibility = View.GONE
-                binding.typeOrgTextView.visibility = View.VISIBLE
-            }*/
+                /*if (data.type.equals("FAM")){
+                    binding.typeFamTextView.visibility = View.VISIBLE
+                    binding.typeOrgTextView.visibility = View.GONE
+                } else {
+                    binding.typeFamTextView.visibility = View.GONE
+                    binding.typeOrgTextView.visibility = View.VISIBLE
+                }*/
 
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
-            binding.adapterLinearLayout.setOnClickListener {
-                clickListener.onItemClicked(data)
+                binding.adapterLinearLayout.setOnClickListener {
+                    clickListener.onItemClicked(data)
+                }
             }
         }
     }
 
     interface GroupCallback{
-        fun onItemClicked(data: ArticleData)
+        fun onItemClicked(data: GroupListData)
     }
 
-    override fun getItemCount(): Int = adapterData.size
-
     fun filterData(query: String?) {
-        val filteredList = adapterData.filter { data ->
-            data.name?.contains(query ?: "", ignoreCase = true) == true ||
-                    data.reference?.contains(query ?: "", ignoreCase = true) == true
-        }
-        appendData(filteredList)
+        /*val filteredList = adapterData.filter { data ->
+            data.group_name?.contains(query ?: "", ignoreCase = true) == true ||
+                    data.group_privacy?.contains(query ?: "", ignoreCase = true) == true
+        }*/
+       // appendData(filteredList)
         notifyDataSetChanged()
-        // adapter.submitData(lifecycle, PagingData.from(filteredList))
+        //adapter.submitData(lifecycle, PagingData.from(filteredList))
     }
 }
