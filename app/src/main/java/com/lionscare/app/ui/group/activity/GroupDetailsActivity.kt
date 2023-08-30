@@ -41,7 +41,6 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         setContentView(view)
         observeShowGroup()
         groupId = intent.getIntExtra(GROUP_ID, 0)
-        viewModel.showGroup(groupId)
         setupClickListener()
         setUpAdapter()
     }
@@ -141,6 +140,11 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         hideLoadingDialog()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.showGroup(groupId)
+    }
+
     companion object {
         private const val START_INVITE = "START_INVITE"
         private const val START_MANAGE = "START_MANAGE"
@@ -155,6 +159,6 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
     }
 
     override fun onItemClicked(data: SampleData) {
-//        TODO("Not yet implemented")
+
     }
 }

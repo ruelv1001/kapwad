@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupManageBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.group.viewmodel.GroupViewModel
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +20,7 @@ class GroupManageFragment : Fragment() {
     private var _binding: FragmentGroupManageBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
+    private val viewModel : GroupViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +64,8 @@ class GroupManageFragment : Fragment() {
             typeFamTextView.isVisible = true
             typeOrgTextView.isVisible = false
         }
+
+        editGroupLinearLayout.isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
     }
 
     private fun setClickListeners() = binding.run {
@@ -76,8 +81,8 @@ class GroupManageFragment : Fragment() {
         transactionLinearLayout.setOnSingleClickListener {
             findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupTransaction())
         }
-        rolesLinearLayout.setOnSingleClickListener {
-            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupRoles())
+        editGroupLinearLayout.setOnSingleClickListener {
+            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupUpdate())
         }
     }
 
