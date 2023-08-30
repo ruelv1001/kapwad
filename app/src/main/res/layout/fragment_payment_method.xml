@@ -40,6 +40,7 @@
             android:orientation="horizontal"
             android:paddingVertical="@dimen/dimen_10"
             android:paddingStart="@dimen/dimen_10"
+            android:visibility="gone"
             android:background="@drawable/bg_outline_selector"
             android:gravity="center_vertical">
 
@@ -116,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/color_primary"
+                android:checked="true"
                 android:enabled="false"/>
 
         </LinearLayout>

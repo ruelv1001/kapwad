@@ -84,7 +84,7 @@ class WalletViewModel @Inject constructor(
     }
 
     private suspend fun getTransactionList(perPage: Int) {
-        val pageConfig = PagingConfig(pageSize = perPage,enablePlaceholders = false)
+        val pageConfig = PagingConfig(pageSize = perPage, initialLoadSize = perPage,enablePlaceholders = false)
         walletRepository.getTransactionList(pageConfig)
             .cachedIn(viewModelScope)
             .onStart {
