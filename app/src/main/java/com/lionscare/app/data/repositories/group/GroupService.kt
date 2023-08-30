@@ -17,7 +17,7 @@ interface GroupService {
     @POST("api/group/update")
     suspend fun doUpdateGroup(@Body createGroupRequest: CreateGroupRequest): Response<CreateGroupResponse>
 
-    @POST("api/group/show")
+    @POST("api/group/info")
     suspend fun doShowGroup(@Body createGroupRequest: CreateGroupRequest): Response<CreateGroupResponse>
 
     @POST("api/group/family")

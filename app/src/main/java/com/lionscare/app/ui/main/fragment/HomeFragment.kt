@@ -47,6 +47,8 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
     var frontAnim: AnimatorSet? = null
     var backAnim: AnimatorSet? = null
 
+    private var immediateFamilyId = 0
+
     private val iFViewModel: ImmediateFamilyViewModel by viewModels()
     private val viewModel: SettingsViewModel by viewModels()
 
@@ -132,6 +134,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
                 binding.immediateFamilyLayout.titleTextView.text =
                     viewState.immediateFamilyResponse?.data?.group_name
+                immediateFamilyId = viewState.immediateFamilyResponse?.data?.id ?: 0
             }
         }
     }
@@ -229,7 +232,8 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
         }
 
         binding.immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
-            // clicked immediate family
+            val intent = GroupDetailsActivity.getIntent(requireActivity(), immediateFamilyId)
+            startActivity(intent)
         }
     }
 

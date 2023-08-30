@@ -48,16 +48,23 @@
 
 -keep class com.lionscare.app.data.model.* { *; }
 
--keep class com.lionscare.app.data.repositories.article.request.* { *; }
--keep class com.lionscare.app.data.repositories.article.response.* { *; }
+-keep class com.lionscare.app.data.repositories.address.request.* { *; }
+-keep class com.lionscare.app.data.repositories.address.response.* { *; }
 
 -keep class com.lionscare.app.data.repositories.auth.request.* { *; }
 -keep class com.lionscare.app.data.repositories.auth.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.address.request.* { *; }
--keep class com.lionscare.app.data.repositories.address.response.* { *; }
-
--keep class com.lionscare.app.data.repositories.registration.request.* { *; }
+-keep class com.lionscare.app.data.repositories.baseresponse.* { *; }
 
 -keep class com.lionscare.app.data.repositories.group.request.* { *; }
 -keep class com.lionscare.app.data.repositories.group.response.* { *; }
+
+-keep class com.lionscare.app.data.repositories.member.request.* { *; }
+-keep class com.lionscare.app.data.repositories.member.response.* { *; }
+
+-keep class com.lionscare.app.data.repositories.profile.request.* { *; }
+
+-keep class com.lionscare.app.data.repositories.registration.request.* { *; }
+
+-keep class com.lionscare.app.data.repositories.wallet.request.* { *; }
+-keep class com.lionscare.app.data.repositories.wallet.response.* { *; }

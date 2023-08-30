@@ -6,7 +6,7 @@ import com.lionscare.app.data.repositories.baseresponse.Meta
 
 @Keep
 data class CreateGroupResponse(
-    var data: Data? = null,
+    var data: GroupData? = null,
     var meta: Meta? = null,
     var msg: String? = null,
     var status: Boolean? = false,
@@ -14,7 +14,7 @@ data class CreateGroupResponse(
 )
 
 @Keep
-data class Data(
+data class GroupData(
     var date_created: DateModel? = null,
     var group_approval: Boolean? = false,
     var group_name: String? = null,
