@@ -60,6 +60,6 @@ class GroupRepository @Inject constructor(
     }
 
     private fun getDefaultPageConfig(): PagingConfig {
-        return PagingConfig(pageSize = 20,enablePlaceholders = false)
+        return PagingConfig(pageSize = 20, initialLoadSize = 5, enablePlaceholders = false)
     }
 }

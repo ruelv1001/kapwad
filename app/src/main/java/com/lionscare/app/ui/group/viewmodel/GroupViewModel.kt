@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,9 +23,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupViewModel @Inject constructor(
-    private val groupRepository: GroupRepository
+    private val groupRepository: GroupRepository,
+    encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
+    val user = encryptedDataManager.getUserBasicInfo()
     private val _groupSharedFlow = MutableSharedFlow<GroupViewState>()
 
     val groupSharedFlow: SharedFlow<GroupViewState> =
