@@ -130,7 +130,7 @@ class GroupsFragment : Fragment() {
         pagerAdapter?.apply {
             addFragment(GroupsYourGroupFragment.newInstance())
             //addFragment(GroupsGroupFragment.newInstance())
-            addFragment(GroupsInvitesFragment.newInstance())
+            addFragment(GroupsPendingRequestsFragment.newInstance())
         }
 
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL

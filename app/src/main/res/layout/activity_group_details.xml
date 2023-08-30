@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_bold"
                 android:maxLines="1"
-                android:text="@string/lbl_malasakit_family"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_22" />
 

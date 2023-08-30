@@ -170,6 +170,7 @@ class GroupCreateFragment : Fragment() {
                     viewState.message)
             }
             is GroupViewState.SuccessUpdateGroup -> Unit
+            else -> Unit
         }
     }
 

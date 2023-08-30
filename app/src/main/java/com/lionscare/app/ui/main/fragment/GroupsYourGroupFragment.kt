@@ -38,6 +38,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     private var orgAdapter: GroupsYourGroupAdapter? = null
     private val viewModel: GroupListViewModel by viewModels()
     private val iFViewModel: ImmediateFamilyViewModel by viewModels()
+    private var immediateFamilyId = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +70,15 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
         organizationRecyclerView.layoutManager = linearLayoutManager
         organizationRecyclerView.adapter = orgAdapter
 
+        orgAdapter?.addLoadStateListener {
+            if(orgAdapter?.hasData() == true){
+                orgPlaceHolderTextView.isVisible = false
+                organizationRecyclerView.isVisible = true
+            }else{
+                orgPlaceHolderTextView.isVisible = true
+                organizationRecyclerView.isVisible = false
+            }
+        }
     }
 
     private fun observeGroupList() {
@@ -90,7 +100,9 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     private fun handleViewState(viewState: GroupListViewState) {
         when (viewState) {
             is GroupListViewState.Loading -> binding.orgSwipeRefreshLayout.isRefreshing = true
-            is GroupListViewState.Success -> showGroup(viewState.pagingData)
+            is GroupListViewState.Success -> {
+                showGroup(viewState.pagingData)
+            }
             is GroupListViewState.PopupError -> {
                 showPopupError(
                     requireActivity(),
@@ -116,6 +128,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
                 binding.immediateFamilyLayout.titleTextView.text =
                     viewState.immediateFamilyResponse?.data?.group_name
+                immediateFamilyId = viewState.immediateFamilyResponse?.data?.id ?: 0
             }
         }
     }
@@ -127,12 +140,14 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
 
     private fun setClickListeners() = binding.run {
         binding.immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
-            // clicked immediate family
+            val intent = GroupDetailsActivity.getIntent(requireActivity(), immediateFamilyId)
+            startActivity(intent)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        orgAdapter?.removeLoadStateListener { this@GroupsYourGroupFragment }
         _binding = null
     }
 
@@ -147,7 +162,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     }
 
     override fun onItemClicked(data: GroupListData) {
-        val intent = GroupDetailsActivity.getIntent(requireActivity())
+        val intent = GroupDetailsActivity.getIntent(requireActivity(), data.id)
         startActivity(intent)
     }
 
