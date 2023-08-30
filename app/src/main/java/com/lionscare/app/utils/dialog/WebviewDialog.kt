@@ -2,6 +2,7 @@ package com.lionscare.app.utils.dialog
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
 import android.webkit.SslErrorHandler
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -30,10 +32,14 @@ class WebviewDialog private constructor() : BottomSheetDialogFragment() {
     private var viewBinding: DialogWebviewBinding? = null
     private val url by lazy { arguments?.getString(EXTRA_URL).orEmpty() }
     private var currentWebScrollY = 0
+    private var listener: WebViewListener? = null
+    private var javaScriptInterface: JavaScriptInterface? = null
+
 
     override fun onStart() {
         super.onStart()
-        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val bottomSheet =
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         val height = (resources.displayMetrics.heightPixels * .95).toInt()
         bottomSheet?.layoutParams?.height = height
     }
@@ -41,7 +47,7 @@ class WebviewDialog private constructor() : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(
             R.layout.dialog_webview,
@@ -80,6 +86,9 @@ class WebviewDialog private constructor() : BottomSheetDialogFragment() {
         }
     }
 
+    interface WebViewListener {
+        fun onDissmiss()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         viewBinding = null
@@ -93,13 +102,17 @@ class WebviewDialog private constructor() : BottomSheetDialogFragment() {
             webView.settings.loadWithOverviewMode = true
             webView.settings.useWideViewPort = true
             webView.settings.domStorageEnabled = true
+            javaScriptInterface = JavaScriptInterface(requireActivity())
+            javaScriptInterface?.let {
+                webView.addJavascriptInterface(it, "JSInterface")
+            }
             webView.webViewClient = object : WebViewClient() {
                 @SuppressLint("WebViewClientOnReceivedSslError")
                 override
                 fun onReceivedSslError(
                     view: WebView?,
                     handler: SslErrorHandler?,
-                    error: SslError?
+                    error: SslError?,
                 ) {
                     handleOnReceiveErrorSsl(handler)
                 }
@@ -164,18 +177,26 @@ class WebviewDialog private constructor() : BottomSheetDialogFragment() {
 
     }
 
+    inner class JavaScriptInterface(internal var context: Context) {
+        @JavascriptInterface
+        fun closeWindow() {
+            listener?.onDissmiss()
+            dismiss()
+        }
+    }
+
     companion object {
         private val TAG = WebviewDialog::class.java.simpleName
         private const val EXTRA_URL = "EXTRA_URL"
 
         fun openDialog(
             fragmentManager: FragmentManager,
-            url: String
+            url: String,
+            listener: WebViewListener? = null,
         ) {
             WebviewDialog().apply {
-                arguments = bundleOf(
-                    EXTRA_URL to url
-                )
+                arguments = bundleOf(EXTRA_URL to url)
+                this
             }
                 .show(fragmentManager, TAG)
         }
