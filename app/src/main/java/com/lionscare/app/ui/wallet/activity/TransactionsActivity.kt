@@ -5,24 +5,38 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.ActivityTransactionsBinding
 import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class TransactionsActivity : AppCompatActivity(), InboundOutboundAdapter.InboundOutboundCallback {
+@AndroidEntryPoint
+class TransactionsActivity : AppCompatActivity(),
+    InboundOutboundAdapter.InboundOutboundCallback, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivityTransactionsBinding
 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter : InboundOutboundAdapter? = null
     private var searchView: SearchView? = null
-    private var dataList: List<SampleData> = emptyList()
+    private val viewModel: WalletViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +47,12 @@ class TransactionsActivity : AppCompatActivity(), InboundOutboundAdapter.Inbound
         setContentView(view)
         setUpAdapter()
         setupClickListener()
+        observeWallet()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
     }
 
     private fun setupClickListener() = binding.run{
@@ -42,26 +62,37 @@ class TransactionsActivity : AppCompatActivity(), InboundOutboundAdapter.Inbound
     }
 
     private fun setUpAdapter() = binding.run {
+        swipeRefreshLayout.setOnRefreshListener(this@TransactionsActivity)
         adapter = InboundOutboundAdapter(this@TransactionsActivity)
         linearLayoutManager = LinearLayoutManager(this@TransactionsActivity)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-        dataList = listOf(
-            SampleData(
-                id = 1,
-                title = "Inbound",
-                amount = "100.00",
-                remarks = getString(R.string.inbound_outbound_hint)
-            ),
-            SampleData(
-                id = 2,
-                title = "Outbound",
-                amount = "100.00",
-                remarks = getString(R.string.inbound_outbound_hint)
-            )
-        )
-        adapter?.submitData(lifecycle, PagingData.from(dataList))
+    }
+
+    private fun observeWallet() {
+        lifecycleScope.launch{
+            viewModel.walletSharedFlow.collectLatest { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: WalletViewState) {
+        when (viewState) {
+            is WalletViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is WalletViewState.SuccessTransactionList -> showTransactionList(viewState.pagingData)
+            is WalletViewState.PopupError -> {
+                showPopupError(this, supportFragmentManager, viewState.errorCode, viewState.message)
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun showTransactionList(transactions: PagingData<TransactionData>) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        adapter?.submitData(lifecycle, transactions)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -83,20 +114,23 @@ class TransactionsActivity : AppCompatActivity(), InboundOutboundAdapter.Inbound
     }
 
     private fun filterData(query: String?) {
-        val filteredList = dataList.filter { data ->
-            data.title?.contains(query ?: "", ignoreCase = true) == true ||
-                    data.remarks?.contains(query ?: "", ignoreCase = true) == true
-        }
-        adapter?.submitData(lifecycle, PagingData.from(filteredList))
+//        val filteredList = dataList.filter { data ->
+//            data.title?.contains(query ?: "", ignoreCase = true) == true ||
+//                    data.remarks?.contains(query ?: "", ignoreCase = true) == true
+//        }
+//        adapter?.submitData(lifecycle, PagingData.from(filteredList))
     }
 
+    override fun onItemClicked(data: TransactionData) {
+
+    }
+
+    override fun onRefresh() {
+        viewModel.loadTransactionList()
+    }
     companion object {
         fun getIntent(context: Context): Intent {
             return Intent(context, TransactionsActivity::class.java)
         }
-    }
-
-    override fun onItemClicked(data: SampleData) {
-
     }
 }

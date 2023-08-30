@@ -7,31 +7,43 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.FragmentWalletBinding
 import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.activity.TransactionsActivity
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
 import com.lionscare.app.ui.wallet.fragment.WalletSearchFragmentDirections
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.currencyFormat
 import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback,
-    ScannerDialog.ScannerListener {
+    ScannerDialog.ScannerListener, SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter: InboundOutboundAdapter? = null
-    private var dataList: List<SampleData> = emptyList()
     private val activity by lazy { requireActivity() as WalletActivity }
+    private val viewModel: WalletViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +63,12 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
         setUpAdapter()
         setDetails()
         setClickListeners()
+        observeWallet()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
     }
 
     private fun setDetails() = binding.run {
@@ -81,26 +99,37 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
     }
 
     private fun setUpAdapter() = binding.run {
+        swipeRefreshLayout.setOnRefreshListener(this@WalletFragment)
         adapter = InboundOutboundAdapter(this@WalletFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
+    }
 
-        dataList = listOf(
-            SampleData(
-                id = 1,
-                title = "Inbound",
-                amount = "100.00",
-                remarks = getString(R.string.inbound_outbound_hint)
-            ),
-            SampleData(
-                id = 2,
-                title = "Outbound",
-                amount = "100.00",
-                remarks = getString(R.string.inbound_outbound_hint)
-            )
-        )
-        adapter?.submitData(lifecycle, PagingData.from(dataList))
+    private fun observeWallet() {
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewModel.walletSharedFlow.collectLatest { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: WalletViewState) {
+        when (viewState) {
+            is WalletViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is WalletViewState.SuccessTransactionList -> showTransactionList(viewState.pagingData)
+            is WalletViewState.SuccessGetBalance -> binding.pointsTextView.text = viewState.balanceData?.value
+            is WalletViewState.PopupError -> {
+                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun showTransactionList(transactions: PagingData<TransactionData>) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        adapter?.submitData(viewLifecycleOwner.lifecycle, transactions)
     }
 
     override fun onDestroyView() {
@@ -108,7 +137,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
         _binding = null
     }
 
-    override fun onItemClicked(data: SampleData) {
+    override fun onItemClicked(data: TransactionData) {
 
     }
 
@@ -119,6 +148,11 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             amount = "LC-000001",
         )
         findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
+    }
+
+    override fun onRefresh() {
+        viewModel.loadTransactionList(5)
+        viewModel.getWalletBalance()
     }
 
 }

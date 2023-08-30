@@ -66,7 +66,7 @@
     <string name="home_date_issued_text">Date Issued</string>
     <string name="home_date_issued_hint">07-18-2023</string>
     <string name="my_wallet_title">My Wallet</string>
-    <string name="wallet_points_hint">1,000</string>
+    <string name="wallet_points_hint">Loading…</string>
     <string name="wallet_pts_text">pts</string>
     <string name="wallet_available_balance_text">Available Balance</string>
     <string name="wallet_cash_in_text">Top Up</string>
