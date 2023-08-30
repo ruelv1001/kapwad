@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -72,7 +73,6 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
     }
 
     private fun setDetails() = binding.run {
-        pointsTextView.text = currencyFormat(getString(R.string.top_up_k1_text))
     }
 
     private fun setClickListeners() = binding.run {
@@ -104,6 +104,16 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
+
+        adapter?.addLoadStateListener {
+            if(adapter?.hasData() == true){
+                placeHolderTextView.isVisible = false
+                recyclerView.isVisible = true
+            }else{
+                placeHolderTextView.isVisible = true
+                recyclerView.isVisible = false
+            }
+        }
     }
 
     private fun observeWallet() {

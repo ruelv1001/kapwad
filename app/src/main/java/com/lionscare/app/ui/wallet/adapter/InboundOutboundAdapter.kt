@@ -34,6 +34,10 @@ class InboundOutboundAdapter(val clickListener: InboundOutboundCallback) :
         return InboundOutboundViewHolder(binding)
     }
 
+    fun hasData() : Boolean{
+        return itemCount != 0
+    }
+
     override fun onBindViewHolder(holder: InboundOutboundViewHolder, position: Int) {
         val article = getItem(position)
         holder.bind(article)

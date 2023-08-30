@@ -86,7 +86,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_20"
+            android:paddingHorizontal="@dimen/dimen_16"
+            android:paddingVertical="@dimen/dimen_20"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -223,7 +224,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/dimen_10"
             android:gravity="center"
-            android:layout_marginHorizontal="@dimen/dimen_20">
+            android:layout_marginHorizontal="@dimen/dimen_16">
 
             <TextView
                 android:layout_width="0dp"
@@ -249,9 +250,20 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_20"
+            android:layout_marginHorizontal="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_8"
+            android:layout_marginBottom="@dimen/dimen_16"
             tools:listitem="@layout/adapter_inbound_outbound"/>
+
+        <TextView
+            android:id="@+id/placeHolderTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center"
+            android:text="@string/lbl_nothing_to_show_txt"
+            android:textSize="@dimen/font_14"
+            android:visibility="gone" />
 
     </LinearLayout>
 

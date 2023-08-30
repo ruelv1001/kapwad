@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
@@ -68,6 +69,15 @@ class TransactionsActivity : AppCompatActivity(),
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
+        adapter?.addLoadStateListener {
+            if(adapter?.hasData() == true){
+                placeHolderTextView.isVisible = false
+                recyclerView.isVisible = true
+            }else{
+                placeHolderTextView.isVisible = true
+                recyclerView.isVisible = false
+            }
+        }
     }
 
     private fun observeWallet() {

@@ -45,6 +45,16 @@
                 android:padding="@dimen/dimen_20"
                 tools:listitem="@layout/adapter_inbound_outbound"/>
 
+            <TextView
+                android:id="@+id/placeHolderTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:text="@string/lbl_nothing_to_show_txt"
+                android:textSize="@dimen/font_14"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
