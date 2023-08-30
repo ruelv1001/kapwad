@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -264,24 +265,27 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/rolesLinearLayout"
+            android:id="@+id/editGroupLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_16"
-            android:visibility="gone"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="@dimen/dimen_60"
                 android:layout_height="@dimen/dimen_60"
-                android:src="@drawable/ic_roles" />
+                android:src="@drawable/ic_edit"
+                android:padding="@dimen/dimen_12"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/color_accent"
+                app:tint="@color/color_primary" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_community_roles"
+                android:text="@string/lbl_edit_group"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/dimen_16"
                 android:textColor="@color/black_text"

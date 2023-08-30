@@ -37,8 +37,8 @@
             android:id="@+id/action_navigation_group_transaction"
             app:destination="@id/navigation_group_transaction" />
         <action
-            android:id="@+id/action_navigation_group_roles"
-            app:destination="@id/navigation_group_roles" />
+            android:id="@+id/action_navigation_group_update"
+            app:destination="@id/navigation_group_update"/>
     </fragment>
     <fragment
         android:id="@+id/navigation_group_assistance"
@@ -100,5 +100,10 @@
         android:label=""
         tools:layout="@layout/fragment_group_invite"/>
 
+    <fragment
+        android:id="@+id/navigation_group_update"
+        android:name="com.lionscare.app.ui.group.fragment.GroupUpdateFragment"
+        android:label=""
+        tools:layout="@layout/fragment_group_create"/>
 
 </navigation>

@@ -147,7 +147,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
 
     override fun onDestroyView() {
         super.onDestroyView()
-        orgAdapter?.removeLoadStateListener { this@GroupsYourGroupFragment }
+        orgAdapter?.removeLoadStateListener { requireActivity() }
         _binding = null
     }
 

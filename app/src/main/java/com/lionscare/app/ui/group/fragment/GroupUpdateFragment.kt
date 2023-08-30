@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,22 +18,28 @@ import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.FragmentGroupCreateBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.group.activity.GroupDetailsActivity
 import com.lionscare.app.ui.group.viewmodel.GroupViewModel
 import com.lionscare.app.ui.group.viewmodel.GroupViewState
+import com.lionscare.app.ui.main.activity.MainActivity
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GroupCreateFragment : Fragment() {
+class GroupUpdateFragment : Fragment() {
+
     private var _binding: FragmentGroupCreateBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModel: GroupViewModel by viewModels()
     private var groupType = ""
+    private var groupId = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,22 +57,15 @@ class GroupCreateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
-        setView()
         setUpSpinner()
         onResume()
         observerGroup()
+        activity.groupDetails?.id?.let { viewModel.showGroup(it) }
     }
 
     override fun onResume() {
         super.onResume()
-        activity.setTitlee(getString(R.string.lbl_create_group))
-    }
-
-    private fun setView() = binding.run {
-//        firstNameEditText.doOnTextChanged {
-//                text, start, before, count ->
-//            firstNameTextInputLayout.error = ""
-//        }
+        activity.setTitlee(getString(R.string.lbl_update_group))
     }
 
     private fun setUpSpinner() = binding.run {
@@ -99,7 +99,6 @@ class GroupCreateFragment : Fragment() {
 
     private fun setClickListeners() = binding.run {
         continueButton.setOnSingleClickListener {
-
             val groupPrivacy = if (publicRadioButton.isChecked) {
                 "public"
             } else {
@@ -113,14 +112,14 @@ class GroupCreateFragment : Fragment() {
             }
 
             val createGroupRequest = CreateGroupRequest(
+                group_id = groupId,
                 group_name = nameEditText.text.toString(),
                 group_type = groupType,
                 group_privacy = groupPrivacy,
                 group_passcode = passwordEditText.text.toString(),
                 group_approval = approval
             )
-
-            viewModel.createGroup(createGroupRequest)
+            viewModel.updateGroup(createGroupRequest)
         }
 
         publicLinearLayout.setOnSingleClickListener {
@@ -155,23 +154,61 @@ class GroupCreateFragment : Fragment() {
             is GroupViewState.Loading -> showLoadingDialog(R.string.loading)
             is GroupViewState.InputError -> {
                 hideLoadingDialog()
-                handleInputError(viewState.errorData?: ErrorsData())
+                handleInputError(viewState.errorData ?: ErrorsData())
             }
+
             is GroupViewState.SuccessCreateGroup -> {
                 hideLoadingDialog()
-                Toast.makeText(requireActivity(),viewState.createGroupResponse?.msg, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(GroupCreateFragmentDirections.actionNavigationGroupInvite())
+                Toast.makeText(
+                    requireActivity(),
+                    viewState.createGroupResponse?.msg,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             is GroupViewState.PopupError -> {
                 hideLoadingDialog()
-                showPopupError(requireActivity(),
+                showPopupError(
+                    requireActivity(),
                     childFragmentManager,
                     viewState.errorCode,
-                    viewState.message)
+                    viewState.message
+                )
             }
-            is GroupViewState.SuccessUpdateGroup -> Unit
-            else -> Unit
+
+            is GroupViewState.SuccessUpdateGroup -> {
+                hideLoadingDialog()
+                Toast.makeText(
+                    requireActivity(),
+                    viewState.createGroupResponse?.msg,
+                    Toast.LENGTH_LONG
+                ).show()
+                requireActivity().finish()
+            }
+
+            is GroupViewState.SuccessShowGroup -> {
+                hideLoadingDialog()
+                viewState.createGroupResponse?.data?.let { setDetails(it) }
+                groupId = viewState.createGroupResponse?.data?.id ?: 0
+            }
         }
+    }
+
+    private fun setDetails(data: GroupData) = binding.run {
+        nameEditText.setText(data.group_name)
+        groupTypeSpinner.setSelection(
+            when (data.group_type) {
+                "organization" -> 1
+                "clan" -> 2
+                else -> 0
+            }
+        )
+        publicRadioButton.isChecked = data.group_privacy == "public"
+        privateRadioButton.isChecked = data.group_privacy == "private"
+        if (data.group_privacy == "private") {
+            passwordLinearLayout.isVisible = true
+        }
+        approvalSwitch.isChecked = data.group_approval == true
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -183,12 +220,15 @@ class GroupCreateFragment : Fragment() {
     }
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
-        if (errorsData.group_name?.get(0)?.isNotEmpty() == true) nameTextInputLayout.error = errorsData.group_name?.get(0)
-        if (errorsData.group_passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error = errorsData.group_passcode?.get(0)
+        if (errorsData.group_name?.get(0)?.isNotEmpty() == true) nameTextInputLayout.error =
+            errorsData.group_name?.get(0)
+        if (errorsData.group_passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error =
+            errorsData.group_passcode?.get(0)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }
