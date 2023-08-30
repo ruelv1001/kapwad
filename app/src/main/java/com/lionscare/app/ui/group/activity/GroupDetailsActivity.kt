@@ -11,6 +11,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.ActivityGroupDetailsBinding
 import com.lionscare.app.ui.group.viewmodel.GroupViewModel
@@ -31,6 +32,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
     private var dataList: List<SampleData> = emptyList()
     private var groupId = 0
     private val viewModel: GroupViewModel by viewModels()
+    private var groupDetails: GroupData ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +79,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
             startActivity(intent)
         }
         settingsImageView.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MANAGE)
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MANAGE, groupDetails)
             startActivity(intent)
         }
         assistanceRequestsLinearLayout.setOnSingleClickListener {
@@ -113,7 +115,8 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
             }
             is GroupViewState.SuccessShowGroup -> {
                 hideLoadingDialog()
-                viewState.createGroupResponse?.data?.let { setDetails(it) }
+                groupDetails = viewState.createGroupResponse?.data
+                groupDetails?.let { setDetails(it) }
             }
             else -> Unit
         }

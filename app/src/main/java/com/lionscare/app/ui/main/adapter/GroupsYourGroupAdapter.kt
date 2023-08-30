@@ -63,6 +63,10 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
         }
     }
 
+    fun hasData() : Boolean{
+        return itemCount != 0
+    }
+
     interface GroupCallback{
         fun onItemClicked(data: GroupListData)
     }

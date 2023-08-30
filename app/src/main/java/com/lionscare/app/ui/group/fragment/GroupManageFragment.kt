@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
@@ -35,6 +36,7 @@ class GroupManageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
         setView()
+        setDetails()
         onResume()
     }
 
@@ -48,6 +50,17 @@ class GroupManageFragment : Fragment() {
 //                text, start, before, count ->
 //            firstNameTextInputLayout.error = ""
 //        }
+    }
+
+    private fun setDetails() = binding.run {
+        titleTextView.text = activity.groupDetails?.group_name
+        if(activity.groupDetails?.group_type.equals("organization")){
+            typeFamTextView.isVisible = false
+            typeOrgTextView.isVisible = true
+        }else{
+            typeFamTextView.isVisible = true
+            typeOrgTextView.isVisible = false
+        }
     }
 
     private fun setClickListeners() = binding.run {

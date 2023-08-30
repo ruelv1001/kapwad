@@ -3,6 +3,7 @@ package com.lionscare.app.data.repositories.baseresponse
 import android.os.Parcelable
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Keep
 @Parcelize
@@ -13,4 +14,4 @@ data class DateModel(
     var timestamp: String? = null,
     var iso_format: String? = null,
     var month_year: String? = null
-) : Parcelable
+) : Serializable, Parcelable
