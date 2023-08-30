@@ -12,7 +12,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.databinding.ActivityWalletBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WalletActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWalletBinding

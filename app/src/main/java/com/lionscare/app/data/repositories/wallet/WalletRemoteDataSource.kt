@@ -22,7 +22,7 @@ class WalletRemoteDataSource @Inject constructor(private val walletService: Wall
     }
 
     suspend fun getWalletTransaction(page: String, perPage: String): TransactionListResponse{
-        val request = TransactionListRequest(perPage, page)
+        val request = TransactionListRequest(per_page = perPage, page = page)
         val response = walletService.getWalletTransactions(request)
 
         if (response.code() != HttpURLConnection.HTTP_OK) {
