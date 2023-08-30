@@ -17,15 +17,15 @@ class WalletPagingSource @Inject constructor(private val walletRemoteDataSource:
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TransactionData> {
-        val page = params.key ?: 1
+        val page = params.key ?: STARTING_PAGE_INDEX
 
         return try {
             val response = walletRemoteDataSource.getWalletTransaction(page.toString(), params.loadSize.toString())
             if(response.data?.isNotEmpty() == true){
                 LoadResult.Page(
                     data = response.data,
-                    prevKey = if (page > 1) page - 1 else null,
-                    nextKey = if ((response.total ?: 0) > page) page + 1 else null
+                    prevKey = if (page == STARTING_PAGE_INDEX) null else page.minus(1),
+                    nextKey = if (response.data.isEmpty()) null else page.plus(1)
                 )
             }else{
                 LoadResult.Error(NoSuchElementException("No more data available"))
@@ -33,5 +33,9 @@ class WalletPagingSource @Inject constructor(private val walletRemoteDataSource:
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
+    }
+
+    companion object {
+        private const val STARTING_PAGE_INDEX = 1
     }
 }

@@ -8,21 +8,21 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.R
-import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.AdapterInboundOutboundBinding
 
 class InboundOutboundAdapter(val clickListener: InboundOutboundCallback) :
-    PagingDataAdapter<SampleData, InboundOutboundAdapter.InboundOutboundViewHolder>(
+    PagingDataAdapter<TransactionData, InboundOutboundAdapter.InboundOutboundViewHolder>(
         DIFF_CALLBACK
     ) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SampleData>() {
-            override fun areItemsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TransactionData>() {
+            override fun areItemsTheSame(oldItem: TransactionData, newItem: TransactionData): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+            override fun areContentsTheSame(oldItem: TransactionData, newItem: TransactionData): Boolean {
                 return oldItem == newItem
             }
         }
@@ -34,6 +34,10 @@ class InboundOutboundAdapter(val clickListener: InboundOutboundCallback) :
         return InboundOutboundViewHolder(binding)
     }
 
+    fun hasData() : Boolean{
+        return itemCount != 0
+    }
+
     override fun onBindViewHolder(holder: InboundOutboundViewHolder, position: Int) {
         val article = getItem(position)
         holder.bind(article)
@@ -43,27 +47,26 @@ class InboundOutboundAdapter(val clickListener: InboundOutboundCallback) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: SampleData?) {
+        fun bind(data: TransactionData?) {
             data?.let {
 
                 if (data.title == "Inbound") {
                     binding.iconImageView.setImageResource(R.drawable.ic_inbound)
                     binding.amountTextView.setTextColor(ContextCompat.getColor(itemView.context,R.color.color_primary))
-                    binding.amountTextView.text = "+${data.amount}"
+                    binding.amountTextView.text = "+${data.value}"
                 } else {
                     binding.iconImageView.setImageResource(R.drawable.ic_outbound)
                     binding.amountTextView.setTextColor(ContextCompat.getColor(itemView.context,R.color.red))
-                    binding.amountTextView.text = "-${data.amount}"
+                    binding.amountTextView.text = "-${data.value}"
                 }
 
                 binding.titleTextView.text = data.title
 
-                val received = data.remarks?.substringBefore("REFID: ")?.trim()
-                val refId = data.remarks?.substringAfter("REFID: ")?.substringBefore(" ")?.trim()
-                val date = data.remarks?.substringAfter(refId.toString())?.trim()
+                val received = data.remarks?.substringBefore("Refid : ")?.trim()
+                val refId = data.remarks?.substringAfter("Refid : ")?.substringBefore(" ")?.trim()
                 binding.receivedTextView.text = received
                 binding.refidTextView.text = refId
-                binding.dateTextView.text = date
+                binding.dateTextView.text = data.date_registered?.time_passed
 
                 binding.inboundOutboundLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)
@@ -73,6 +76,6 @@ class InboundOutboundAdapter(val clickListener: InboundOutboundCallback) :
     }
 
     interface InboundOutboundCallback {
-        fun onItemClicked(data: SampleData)
+        fun onItemClicked(data: TransactionData)
     }
 }
