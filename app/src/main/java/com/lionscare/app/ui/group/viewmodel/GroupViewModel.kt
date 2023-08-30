@@ -64,6 +64,22 @@ class GroupViewModel @Inject constructor(
         }
     }
 
+    fun showGroup(group_id: Int){
+        val createGroupRequest = CreateGroupRequest(group_id = group_id)
+        viewModelScope.launch {
+            groupRepository.doShowGroup(createGroupRequest)
+                .onStart {
+                    _groupSharedFlow.emit(GroupViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect{
+                    _groupSharedFlow.emit(GroupViewState.SuccessShowGroup(it))
+                }
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,

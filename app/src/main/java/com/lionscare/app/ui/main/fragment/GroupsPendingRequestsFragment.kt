@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class GroupsInvitesFragment : Fragment(), GroupsPendingRequestsAdapter.GroupCallback {
+class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.GroupCallback {
 
     private var _binding: FragmentGroupsPendingRequestsBinding? = null
     private val binding get() = _binding!!
@@ -41,7 +41,7 @@ class GroupsInvitesFragment : Fragment(), GroupsPendingRequestsAdapter.GroupCall
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupsPendingRequestsAdapter(requireActivity(), this@GroupsInvitesFragment)
+        adapter = GroupsPendingRequestsAdapter(requireActivity(), this@GroupsPendingRequestsFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
@@ -83,7 +83,7 @@ class GroupsInvitesFragment : Fragment(), GroupsPendingRequestsAdapter.GroupCall
 
 
     companion object {
-        fun newInstance() = GroupsInvitesFragment()
+        fun newInstance() = GroupsPendingRequestsFragment()
     }
 
     override fun onItemClicked(data: ArticleData) {
