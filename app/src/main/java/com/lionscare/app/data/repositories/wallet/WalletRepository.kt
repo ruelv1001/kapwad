@@ -44,6 +44,20 @@ class WalletRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    fun doScanQr(userId: String): Flow<GeneralResponse> {
+        return flow {
+            val response = walletRemoteDataSource.doScanQR(userId)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doSendPoints(amount: String, userId: String): Flow<GeneralResponse> {
+        return flow {
+            val response = walletRemoteDataSource.doSendPoints(amount, userId)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
     fun getTransactionList(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<TransactionData>> {
         return Pager(
             config = pagingConfig,

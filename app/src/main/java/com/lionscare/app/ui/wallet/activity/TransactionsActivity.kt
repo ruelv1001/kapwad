@@ -35,7 +35,6 @@ class TransactionsActivity : AppCompatActivity(),
 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter : InboundOutboundAdapter? = null
-    private var searchView: SearchView? = null
     private val viewModel: WalletViewModel by viewModels()
 
 
@@ -104,33 +103,6 @@ class TransactionsActivity : AppCompatActivity(),
         binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(lifecycle, transactions)
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_search, menu)
-
-        val searchItem = menu?.findItem(R.id.search)
-        searchView = searchItem?.actionView as? SearchView
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterData(newText)
-                return true
-            }
-        })
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    private fun filterData(query: String?) {
-//        val filteredList = dataList.filter { data ->
-//            data.title?.contains(query ?: "", ignoreCase = true) == true ||
-//                    data.remarks?.contains(query ?: "", ignoreCase = true) == true
-//        }
-//        adapter?.submitData(lifecycle, PagingData.from(filteredList))
-    }
-
     override fun onItemClicked(data: TransactionData) {
 
     }

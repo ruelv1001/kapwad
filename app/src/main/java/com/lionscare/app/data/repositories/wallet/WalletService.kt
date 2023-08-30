@@ -1,6 +1,8 @@
 package com.lionscare.app.data.repositories.wallet
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.wallet.request.ScanQRRequest
+import com.lionscare.app.data.repositories.wallet.request.SendPointsToUserRequest
 import com.lionscare.app.data.repositories.wallet.request.TopupRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionDetailsRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionListRequest
@@ -24,4 +26,10 @@ interface WalletService {
 
     @POST("api/wallet/user/purchase")
     suspend fun doTopupPoints(@Body request: TopupRequest): Response<GeneralResponse>
+
+    @POST("/api/wallet/user/send")
+    suspend fun doSendPoints(@Body request: SendPointsToUserRequest): Response<GeneralResponse>
+
+    @POST("api/wallet/user/scan")
+    suspend fun doScanQr(@Body request: ScanQRRequest): Response<GeneralResponse>
 }
