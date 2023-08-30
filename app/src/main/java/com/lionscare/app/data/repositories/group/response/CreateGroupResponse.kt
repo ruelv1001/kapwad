@@ -3,6 +3,8 @@ package com.lionscare.app.data.repositories.group.response
 import androidx.annotation.Keep
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.Meta
+import com.lionscare.app.data.repositories.baseresponse.UserModel
+import java.io.Serializable
 
 @Keep
 data class CreateGroupResponse(
@@ -21,5 +23,6 @@ data class GroupData(
     var group_privacy: String? = null,
     var group_type: String? = null,
     var id: Int? = 0,
+    var owner: UserModel? = null,
     var owner_user_id: String? = null
-)
+) : Serializable

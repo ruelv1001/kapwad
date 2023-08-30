@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.baseresponse
 
 import androidx.annotation.Keep
+import java.io.Serializable
 
 @Keep
 data class UserModel(
@@ -20,6 +21,6 @@ data class UserModel(
     var street_name: String? = null,
     var zipcode: String? = null,
     var date_registered: DateModel? = null
-){
+): Serializable {
     fun getFullName() = "$firstname $lastname"
 }

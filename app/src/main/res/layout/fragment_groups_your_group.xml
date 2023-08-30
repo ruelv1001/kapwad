@@ -19,6 +19,7 @@
     <include android:id="@+id/immediateFamilyLayout"
         android:layout_marginTop="@dimen/dimen_10"
         layout="@layout/adapter_group_your_group"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -49,11 +50,30 @@
         android:layout_weight="1"
         android:id="@+id/orgSwipeRefreshLayout">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/organizationRecyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen_10" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/organizationRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dimen_10" />
+
+            <TextView
+                android:id="@+id/orgPlaceHolderTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/lbl_nothing_to_show_txt"
+                android:textColor="@color/light_gray"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:textSize="@dimen/font_12"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

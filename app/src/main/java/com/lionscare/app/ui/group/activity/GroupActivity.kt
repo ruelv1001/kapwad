@@ -11,8 +11,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.ActivityGroupBinding
 import com.lionscare.app.utils.dialog.CommonDialog
+import com.lionscare.app.utils.getSerializable
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +27,7 @@ class GroupActivity : AppCompatActivity() {
     var start: String = ""
     private var assistanceDetailsType: String = ""
     private var memberCount: Int = 0
+    var groupDetails: GroupData ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,7 @@ class GroupActivity : AppCompatActivity() {
         setContentView(view)
         setupNavigationComponent()
         setOnClickListener()
+        groupDetails = getSerializable(intent, GROUP_DATA, GroupData::class.java)
     }
 
     private fun setOnClickListener() = binding.run {
@@ -131,8 +136,10 @@ class GroupActivity : AppCompatActivity() {
         private const val START_MANAGE = "START_MANAGE"
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         private const val START_ASSISTANCE = "START_ASSISTANCE"
-        fun getIntent(context: Context, start: String): Intent {
+        private const val GROUP_DATA = "GROUP_DATA"
+        fun getIntent(context: Context, start: String, groupData: GroupData? = null): Intent {
             val intent = Intent(context, GroupActivity::class.java)
+            intent.putExtra(GROUP_DATA, groupData)
             intent.putExtra(EXTRA_START, start)
             return intent
         }
