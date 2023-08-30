@@ -88,7 +88,7 @@ class PaymentMethodFragment : Fragment() {
             webUrl,
             object : WebviewDialog.WebViewListener {
                 override fun onDissmiss() {
-                    activity.onBackPressedDispatcher.onBackPressed()
+                    activity.finish()
                 }
             }
         )
