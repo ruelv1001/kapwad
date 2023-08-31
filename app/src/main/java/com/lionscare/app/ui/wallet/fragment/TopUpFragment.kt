@@ -5,14 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.lionscare.app.R
 import com.lionscare.app.data.model.AddFundsModel
 import com.lionscare.app.databinding.FragmentTopUpBinding
 import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.adapter.AddFundsAdapter
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
+import com.lionscare.app.utils.dialog.WebviewDialog
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TopUpFragment : Fragment(), AddFundsAdapter.AddFundCallback {
 
     private var _binding: FragmentTopUpBinding? = null
@@ -54,6 +65,9 @@ class TopUpFragment : Fragment(), AddFundsAdapter.AddFundCallback {
             }
         }
     }
+
+
+
 
     private fun setupAddFundsList() = binding.run {
         adapter = AddFundsAdapter(requireActivity(), this@TopUpFragment)
