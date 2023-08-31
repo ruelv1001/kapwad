@@ -38,7 +38,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     private var orgAdapter: GroupsYourGroupAdapter? = null
     private val viewModel: GroupListViewModel by viewModels()
     private val iFViewModel: ImmediateFamilyViewModel by viewModels()
-    private var immediateFamilyId = 0
+    private var immediateFamilyId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -128,7 +128,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
                 binding.immediateFamilyLayout.titleTextView.text =
                     viewState.immediateFamilyResponse?.data?.group_name
-                immediateFamilyId = viewState.immediateFamilyResponse?.data?.id ?: 0
+                immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }
         }
     }

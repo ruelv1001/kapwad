@@ -5,7 +5,7 @@ import androidx.annotation.Keep
 
 @Keep
 data class CreateGroupRequest(
-    var group_id: Int? = null,
+    var group_id: String? = null,
     var group_approval: Int? = null,
     var group_name: String? = null,
     var group_passcode: String? = null,

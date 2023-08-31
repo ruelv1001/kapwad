@@ -24,7 +24,7 @@ data class GroupListData(
     var group_name: String? = null,
     var group_privacy: String? = null,
     var group_type: String? = null,
-    var id: Int? = null,
+    var id: String? = null,
     var owner: UserModel? = null,
     var owner_user_id: String? = null
 )

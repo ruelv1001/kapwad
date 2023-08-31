@@ -92,6 +92,10 @@ class RegisterPrimaryInfoFragment: Fragment() {
         if (errorsData.phone_number?.get(0)?.isNotEmpty() == true) binding.contactTextInputLayout.error = errorsData.phone_number?.get(0)
     }
 
+    private fun isPasswordValid(password: String): Boolean {
+        val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$")
+        return regex.matches(password)
+    }
 
     override fun onResume() {
         super.onResume()
@@ -135,18 +139,22 @@ class RegisterPrimaryInfoFragment: Fragment() {
 
     private fun setClickListeners() = binding.run {
         continueButton.setOnSingleClickListener {
-            val data = RegistrationRequest()
-            data.firstname = firstNameEditText.text.toString()
-            data.middlename = middleNameEditText.text.toString()
-            data.lastname = lastNameEditText.text.toString()
-            data.phone_number = contactEditText.text.toString()
-            data.password = passwordEditText.text.toString()
-            data.password_confirmation = confirmPasswordEditText.text.toString()
-            activity.requestModel = data
-            val otpRequest = OTPRequest()
-            otpRequest.phone_number = contactEditText.text.toString()
-            activity.otpModel = otpRequest
-            viewModel.doPreReg(data)
+            if (isPasswordValid(passwordEditText.text.toString())){
+                val data = RegistrationRequest()
+                data.firstname = firstNameEditText.text.toString()
+                data.middlename = middleNameEditText.text.toString()
+                data.lastname = lastNameEditText.text.toString()
+                data.phone_number = contactEditText.text.toString()
+                data.password = passwordEditText.text.toString()
+                data.password_confirmation = confirmPasswordEditText.text.toString()
+                activity.requestModel = data
+                val otpRequest = OTPRequest()
+                otpRequest.phone_number = contactEditText.text.toString()
+                activity.otpModel = otpRequest
+                viewModel.doPreReg(data)
+            }else{
+                binding.passwordTextInputLayout.error = getString(R.string.strong_password_required)
+            }
         }
     }
 

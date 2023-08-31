@@ -126,13 +126,13 @@ class UploadIDFragment : Fragment() {
     private val singlePhotoPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri: Uri? ->
         imageUri?.let { uri ->
             if (isBackImage){
-                binding.backIdImageView.loadImage(uriFilePath.toString(),requireActivity())
+                binding.backIdImageView.loadImage(uri.toString(),requireActivity())
                // viewModel.backIdFile = getFileFromUri(requireActivity(), uri)
             }else{
-                binding.frontIdImageView.loadImage(uriFilePath.toString(),requireActivity())
+                binding.frontIdImageView.loadImage(uri.toString(),requireActivity())
                // viewModel.frontIdFile = getFileFromUri(requireActivity(), uri)
             }
-
+            uriFilePath = uri
         }
     }
 
