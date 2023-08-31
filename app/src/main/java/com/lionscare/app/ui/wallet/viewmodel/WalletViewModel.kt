@@ -83,6 +83,40 @@ class WalletViewModel @Inject constructor(
         }
     }
 
+    fun doScanQr(userId: String) {
+        viewModelScope.launch {
+            walletRepository.doScanQr(userId)
+                .onStart {
+                    _walletSharedFlow.emit(WalletViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _walletSharedFlow.emit(
+                        WalletViewState.SuccessScanQR(it.data)
+                    )
+                }
+        }
+    }
+
+    fun doSendPoints(userId: String, amount: String) {
+        viewModelScope.launch {
+            walletRepository.doSendPoints(amount, userId)
+                .onStart {
+                    _walletSharedFlow.emit(WalletViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _walletSharedFlow.emit(
+                        WalletViewState.SuccessSendPoint(it.msg)
+                    )
+                }
+        }
+    }
+
     private suspend fun getTransactionList(perPage: Int) {
         val pageConfig = PagingConfig(pageSize = perPage, initialLoadSize = perPage,enablePlaceholders = false)
         walletRepository.getTransactionList(pageConfig)

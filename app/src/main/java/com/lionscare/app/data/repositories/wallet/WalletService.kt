@@ -7,6 +7,7 @@ import com.lionscare.app.data.repositories.wallet.request.TopupRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionDetailsRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionListRequest
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
+import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionListResponse
 import retrofit2.Response
@@ -31,5 +32,5 @@ interface WalletService {
     suspend fun doSendPoints(@Body request: SendPointsToUserRequest): Response<GeneralResponse>
 
     @POST("api/wallet/user/scan")
-    suspend fun doScanQr(@Body request: ScanQRRequest): Response<GeneralResponse>
+    suspend fun doScanQr(@Body request: ScanQRRequest): Response<ScanQRResponse>
 }

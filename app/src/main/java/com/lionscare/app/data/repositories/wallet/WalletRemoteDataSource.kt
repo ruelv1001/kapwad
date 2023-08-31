@@ -7,6 +7,7 @@ import com.lionscare.app.data.repositories.wallet.request.TopupRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionDetailsRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionListRequest
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
+import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionListResponse
 import retrofit2.HttpException
@@ -51,7 +52,7 @@ class WalletRemoteDataSource @Inject constructor(private val walletService: Wall
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doScanQR(userId: String): GeneralResponse {
+    suspend fun doScanQR(userId: String): ScanQRResponse {
         val request = ScanQRRequest(userId)
         val response = walletService.doScanQr(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
