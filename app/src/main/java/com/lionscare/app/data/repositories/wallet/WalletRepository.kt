@@ -7,6 +7,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
+import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
@@ -40,6 +41,20 @@ class WalletRepository @Inject constructor(
     fun doTopupPoints(amount: String): Flow<GeneralResponse> {
         return flow {
             val response = walletRemoteDataSource.doTopupPoints(amount)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doScanQr(userId: String): Flow<ScanQRResponse> {
+        return flow {
+            val response = walletRemoteDataSource.doScanQR(userId)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doSendPoints(amount: String, userId: String): Flow<GeneralResponse> {
+        return flow {
+            val response = walletRemoteDataSource.doSendPoints(amount, userId)
             emit(response)
         }.flowOn(ioDispatcher)
     }

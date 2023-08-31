@@ -5,6 +5,7 @@ import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.BalanceData
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
+import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.utils.PopupErrorState
 
@@ -14,6 +15,10 @@ sealed class WalletViewState{
     data class SuccessGetBalance(val balanceData: BalanceData? = null) : WalletViewState()
 
     data class SuccessTopup(val webUrl: String? = null) : WalletViewState()
+
+    data class SuccessSendPoint(val msg: String? = null) : WalletViewState()
+
+    data class SuccessScanQR(val scanQRData: QRData? = null) : WalletViewState()
 
     data class SuccessTransactionDetail(val details: TransactionData? = null) : WalletViewState()
 

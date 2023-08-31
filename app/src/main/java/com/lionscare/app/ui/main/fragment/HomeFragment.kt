@@ -34,6 +34,7 @@ import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -141,6 +142,8 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     private fun setView(userModel: UserModel?)=binding.run {
         mainLayout.nameTextView.text = userModel?.getFullName()
+        qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.id))
+
         if (userModel?.street_name?.isNotEmpty() == true){
             mainLayout.addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
         }

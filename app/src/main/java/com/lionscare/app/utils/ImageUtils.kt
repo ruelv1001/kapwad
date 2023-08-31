@@ -3,11 +3,15 @@ package com.lionscare.app.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Point
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.WindowManager
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -124,4 +128,29 @@ fun getRealPathFromURI(uri: Uri, context: Context): String {
         Log.e("Exception", e.message!!)
     }
     return file.path
+}
+
+fun setQR(context: Context, code: String?): Bitmap? {
+    val bitmap: Bitmap
+    val manager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+    // initializing a variable for default display.
+    val display = manager.defaultDisplay
+
+    // creating a variable for point which
+    // is to be displayed in QR Code.
+    val point = Point()
+    display.getSize(point)
+
+    // getting width and
+    // height of a point
+    val width = point.x
+    val height = point.y
+
+    // generating dimension from width and height.
+    var dimen = if (width < height) width else height
+    dimen = dimen
+    val qrgEncoder = QRGEncoder(code, null, QRGContents.Type.TEXT, dimen)
+    bitmap = qrgEncoder.bitmap
+    return bitmap
 }
