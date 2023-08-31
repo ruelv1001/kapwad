@@ -277,5 +277,7 @@
     <string name="lbl_edit_group">Edit Group</string>
     <string name="lbl_update_group">Update Group</string>
     <string name="strong_password_required">Password must contain of at least 8 characters long with the combination of uppercase letters, lowercase letters, numbers, and symbols</string>
+    <string name="lbl_username">Username</string>
+    <string name="password_visiblity_toggle">Password Visiblity Toggle</string>
 
 </resources>
