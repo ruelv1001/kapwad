@@ -54,7 +54,7 @@
                 android:layout_width="@dimen/dimen_30"
                 android:layout_height="@dimen/dimen_30"
                 android:layout_marginEnd="@dimen/dimen_16"
-                android:src="@drawable/logo_lion_club" />
+                android:src="@drawable/img_lions_care_logo" />
 
             <TextView
                 android:layout_width="wrap_content"

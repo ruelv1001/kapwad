@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_500"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen_20"
         android:background="@drawable/bg_rounded_outline"
@@ -192,8 +192,7 @@
             android:layout_marginTop="@dimen/dimen_16"
             android:backgroundTint="@color/color_accent"
             android:fontFamily="@font/inter_semibold"
-            android:paddingTop="@dimen/dimen_16"
-            android:paddingBottom="@dimen/dimen_16"
+            android:paddingVertical="@dimen/dimen_12"
             android:text="@string/home_membership_card_text"
             android:textAllCaps="false"
             android:textColor="@color/color_primary"
