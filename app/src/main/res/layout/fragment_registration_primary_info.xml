@@ -137,20 +137,20 @@
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_14" />
 
-            <RelativeLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contactTextInputLayout"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_15">
+                app:prefixText="+63"
+                app:prefixTextColor="@color/commons_lbl_highlight"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:expandedHintEnabled="false"
+                app:hintEnabled="false">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/contactTextInputLayout"
-                    style="@style/TextInputLayoutStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_regular"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintAnimationEnabled="true"
-                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/contactEditText"
@@ -162,33 +162,91 @@
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:paddingStart="@dimen/dimen_50"
-                        android:paddingEnd="@dimen/dimen_0"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textColorHint="@color/commons_text_hint"
                         android:textSize="@dimen/font_14" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_alignParentStart="true"
-                    android:fontFamily="@font/inter_semibold"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/dimen_15"
-                    android:paddingEnd="@dimen/dimen_15"
-                    android:text="@string/lbl_63"
-                    android:textColor="@color/commons_lbl_highlight"
-                    android:textSize="@dimen/font_14" />
-
-            </RelativeLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_60"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_email_address"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTextInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="@string/lbl_email_address"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_username"
+                android:textAlignment="center"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usernameTextInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usernameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="@string/lbl_username"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_nominate_password"
                 android:textAlignment="center"
@@ -205,9 +263,7 @@
                 app:boxBackgroundColor="@color/white"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="false"
-                app:passwordToggleDrawable="@drawable/ic_show_pass"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/commons_text_hint">
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
@@ -246,9 +302,7 @@
                 app:boxBackgroundColor="@color/white"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="false"
-                app:passwordToggleDrawable="@drawable/ic_show_pass"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/commons_text_hint">
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirmPasswordEditText"
