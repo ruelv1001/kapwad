@@ -18,7 +18,7 @@
             android:layout_height="@dimen/dimen_130"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dimen_50"
-            android:src="@drawable/logo_lion_club" />
+            android:src="@drawable/img_lions_care_logo" />
 
         <TextView
             android:layout_width="match_parent"

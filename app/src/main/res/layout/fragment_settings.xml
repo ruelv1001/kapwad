@@ -67,6 +67,7 @@
                     android:drawablePadding="@dimen/dimen_2"
                     android:fontFamily="@font/inter_medium"
                     android:text="@string/account_type_influencer_text"
+                    android:visibility="gone"
                     android:textAlignment="center"
                     android:textColor="@color/bg_blue_text"
                     android:textSize="@dimen/font_16" />

@@ -8,6 +8,7 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
 import com.lionscare.app.security.AuthEncryptedDataManager
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -41,6 +42,7 @@ class GroupViewModel @Inject constructor(
                 }
                 .catch { exception ->
                     onError(exception)
+                    CommonLogger.sysLogE("CREATE ERROR", exception)
                 }
                 .collect {
                     _groupSharedFlow.emit(
@@ -67,7 +69,7 @@ class GroupViewModel @Inject constructor(
         }
     }
 
-    fun showGroup(group_id: Int){
+    fun showGroup(group_id: String){
         val createGroupRequest = CreateGroupRequest(group_id = group_id)
         viewModelScope.launch {
             groupRepository.doShowGroup(createGroupRequest)

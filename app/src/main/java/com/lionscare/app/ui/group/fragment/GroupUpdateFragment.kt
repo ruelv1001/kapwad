@@ -14,18 +14,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.FragmentGroupCreateBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
-import com.lionscare.app.ui.group.activity.GroupDetailsActivity
 import com.lionscare.app.ui.group.viewmodel.GroupViewModel
 import com.lionscare.app.ui.group.viewmodel.GroupViewState
-import com.lionscare.app.ui.main.activity.MainActivity
-import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +35,7 @@ class GroupUpdateFragment : Fragment() {
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModel: GroupViewModel by viewModels()
     private var groupType = ""
-    private var groupId = 0
+    private var groupId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -189,7 +185,7 @@ class GroupUpdateFragment : Fragment() {
             is GroupViewState.SuccessShowGroup -> {
                 hideLoadingDialog()
                 viewState.createGroupResponse?.data?.let { setDetails(it) }
-                groupId = viewState.createGroupResponse?.data?.id ?: 0
+                groupId = viewState.createGroupResponse?.data?.id.toString()
             }
         }
     }

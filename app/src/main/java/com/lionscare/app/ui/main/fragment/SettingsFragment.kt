@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -102,6 +103,7 @@ class SettingsFragment : Fragment() {
 
     private fun setView(userModel: UserModel?)=binding.run {
         nameTextView.text = userModel?.getFullName()
+        badgeTextView.isVisible = false
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {

@@ -30,7 +30,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter : NotificationsAdapter? = null
     private var dataList: List<SampleData> = emptyList()
-    private var groupId = 0
+    private var groupId = ""
     private val viewModel: GroupViewModel by viewModels()
     private var groupDetails: GroupData ?= null
 
@@ -40,7 +40,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         val view = binding.root
         setContentView(view)
         observeShowGroup()
-        groupId = intent.getIntExtra(GROUP_ID, 0)
+        groupId = intent.getStringExtra(GROUP_ID).toString()
         setupClickListener()
         setUpAdapter()
     }
@@ -151,7 +151,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         private const val START_ASSISTANCE = "START_ASSISTANCE"
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         private const val GROUP_ID = "GROUP_ID"
-        fun getIntent(context: Context, group_id: Int? = 0): Intent {
+        fun getIntent(context: Context, group_id: String? = null): Intent {
             val intent = Intent(context, GroupDetailsActivity::class.java)
             intent.putExtra(GROUP_ID,group_id)
             return intent
