@@ -1,11 +1,14 @@
 package com.lionscare.app.ui.register.fragment
 
 import android.os.Bundle
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -90,6 +93,8 @@ class RegisterPrimaryInfoFragment: Fragment() {
         if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.passwordTextInputLayout.error = errorsData.password?.get(0)
         if (errorsData.password_confirmation?.get(0)?.isNotEmpty() == true) binding.confirmPasswordTextInputLayout.error = errorsData.password_confirmation?.get(0)
         if (errorsData.phone_number?.get(0)?.isNotEmpty() == true) binding.contactTextInputLayout.error = errorsData.phone_number?.get(0)
+        if (errorsData.email?.get(0)?.isNotEmpty() == true) binding.emailTextInputLayout.error = errorsData.email?.get(0)
+        if (errorsData.username?.get(0)?.isNotEmpty() == true) binding.usernameTextInputLayout.error = errorsData.username?.get(0)
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -141,6 +146,8 @@ class RegisterPrimaryInfoFragment: Fragment() {
         continueButton.setOnSingleClickListener {
             if (isPasswordValid(passwordEditText.text.toString())){
                 val data = RegistrationRequest()
+                data.email = emailEditText.text.toString()
+                data.username = usernameEditText.text.toString()
                 data.firstname = firstNameEditText.text.toString()
                 data.middlename = middleNameEditText.text.toString()
                 data.lastname = lastNameEditText.text.toString()
@@ -155,6 +162,28 @@ class RegisterPrimaryInfoFragment: Fragment() {
             }else{
                 binding.passwordTextInputLayout.error = getString(R.string.strong_password_required)
             }
+        }
+
+        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // remove the error  on focus so toggle password visibility would show
+                passwordTextInputLayout.error = null
+            }
+        }
+        passwordEditText.setOnSingleClickListener {
+            // remove the error  on click so toggle password visibility would show
+            passwordTextInputLayout.error = null
+        }
+
+        confirmPasswordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // remove the error  on focus so toggle password visibility would show
+                confirmPasswordTextInputLayout.error = null
+            }
+        }
+        confirmPasswordEditText.setOnSingleClickListener {
+            // remove the error  on click so toggle password visibility would show
+            confirmPasswordTextInputLayout.error = null
         }
     }
 
