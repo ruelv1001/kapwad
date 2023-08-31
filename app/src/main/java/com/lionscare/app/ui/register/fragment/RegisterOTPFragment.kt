@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.FragmentRegistrationOtpBinding
@@ -74,7 +75,10 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
             is RegisterViewState.Loading -> showLoadingDialog(R.string.loading)
             is RegisterViewState.Success -> {
                 hideLoadingDialog()
-                Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
+                val snackbar = Snackbar.make(binding.root, viewState.message, Snackbar.LENGTH_LONG)
+                snackbar.setTextMaxLines(3)
+                snackbar.view.translationY = -(binding.confirmButton.height + snackbar.view.height).toFloat()
+                snackbar.show()
             }
             is RegisterViewState.SuccessReg -> {
                 hideLoadingDialog()
@@ -172,7 +176,7 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
     }
 
     companion object {
-        private const val MILLI_SEC = 150000L
+        private const val MILLI_SEC = 60000L
         private const val COUNTDOWN_INTERVAL = 1000L
     }
 
