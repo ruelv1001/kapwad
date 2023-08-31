@@ -58,10 +58,12 @@
         <activity
             android:name=".ui.onboarding.activity.LoginActivity"
             android:screenOrientation="userPortrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.register.activity.RegisterActivity"
             android:screenOrientation="userPortrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.wallet.activity.RequestPostedActivity"
