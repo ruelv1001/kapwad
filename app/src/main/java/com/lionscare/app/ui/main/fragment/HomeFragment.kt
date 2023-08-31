@@ -219,7 +219,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
             frontAnim?.start()
         }
 
-        mainLayout.requestVerifiedBadgeButton.setOnSingleClickListener {
+        mainLayout.requestVerifiedBadgeLinearLayout.setOnSingleClickListener {
             val intent = VerifiedBadgeActivity.getIntent(requireActivity())
             startActivity(intent)
         }

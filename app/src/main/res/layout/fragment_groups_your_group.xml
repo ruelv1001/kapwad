@@ -38,12 +38,12 @@
             <TextView
                 android:id="@+id/placeHolderTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_height="@dimen/dimen_80"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:gravity="center"
                 android:text="@string/lbl_nothing_to_show_txt"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/font_12"
+                android:textSize="@dimen/font_14"
                 android:visibility="gone" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:text="@string/lbl_nothing_to_show_txt"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/font_12"
+                android:textSize="@dimen/font_14"
                 android:visibility="gone" />
 
         </LinearLayout>
