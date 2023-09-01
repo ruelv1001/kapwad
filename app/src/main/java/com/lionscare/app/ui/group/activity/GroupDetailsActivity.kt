@@ -3,6 +3,7 @@ package com.lionscare.app.ui.group.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -88,6 +89,9 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         membersLinearLayout.setOnSingleClickListener {
             val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP)
             startActivity(intent)
+        }
+        backImageView.setOnSingleClickListener {
+          finish()
         }
     }
 
