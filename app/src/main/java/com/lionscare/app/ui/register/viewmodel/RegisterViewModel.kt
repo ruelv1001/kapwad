@@ -94,7 +94,8 @@ class RegisterViewModel @Inject constructor(
                         zipcode: String,
                         firstname: String,
                         lastname: String,
-                        middlename: String
+                        middlename: String,
+                        email : String,
     ) {
         viewModelScope.launch {
             profileRepository.doUpdateInfo(
@@ -108,7 +109,8 @@ class RegisterViewModel @Inject constructor(
                 zipcode,
                 firstname,
                 lastname,
-                middlename)
+                middlename,
+                email)
                 .onStart {
                     _registerSharedFlow.emit(RegisterViewState.Loading)
                 }
