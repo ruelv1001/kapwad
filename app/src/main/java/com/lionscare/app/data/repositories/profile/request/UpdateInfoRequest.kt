@@ -14,5 +14,6 @@ data class UpdateInfoRequest(
     var zipcode: String,
     var firstname: String,
     var lastname: String,
-    var middlename: String
+    var middlename: String,
+    var email : String
 )

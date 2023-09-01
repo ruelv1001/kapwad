@@ -37,7 +37,8 @@ class ProfileRemoteDataSource @Inject constructor(
         zipcode: String,
         firstname: String,
         lastname: String,
-        middlename: String
+        middlename: String,
+        email: String
     ): Flow<LoginResponse> {
         return flow {
             val request = UpdateInfoRequest(
@@ -51,7 +52,8 @@ class ProfileRemoteDataSource @Inject constructor(
                 zipcode,
                 firstname,
                 lastname,
-                middlename
+                middlename,
+                email
             )
             val response = profileService.doUpdateInfo(request)
             if (response.code() != HttpURLConnection.HTTP_OK) {

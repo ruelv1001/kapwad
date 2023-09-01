@@ -140,6 +140,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         firstNameEditText.setText(userModel?.firstname)
         middleNameEditText.setText(userModel?.middlename)
         lastNameEditText.setText(userModel?.lastname)
+        emailEditText.setText(userModel?.email)
         provinceEditText.setText(userModel?.province_name)
         cityEditText.setText(userModel?.city_name)
         barangayEditText.setText(userModel?.brgy_name)
@@ -233,7 +234,8 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             zipCode,
             firstNameEditText.text.toString(),
             lastNameEditText.text.toString(),
-            middleNameEditText.text.toString()
+            middleNameEditText.text.toString(),
+            emailEditText.text.toString()
         )
     }
 }
