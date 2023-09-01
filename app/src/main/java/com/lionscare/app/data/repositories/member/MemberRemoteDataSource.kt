@@ -4,6 +4,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -50,8 +51,26 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doGetAllPendingMember(listOfMembersRequest: ListOfMembersRequest): GeneralResponse {
-        val response = memberService.doGetAllPendingMember(listOfMembersRequest)
+    suspend fun doGetAllPendingInviteAndRequest(groupId: String? = null, page: String?= null): PendingMemberResponse {
+        val request = ListOfMembersRequest(group_id = groupId, page = page)
+        val response = memberService.doGetAllPendingInviteAndRequest(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+    suspend fun doGetAllPendingRequest(groupId: String? = null, page: String?= null): PendingMemberResponse {
+        val request = ListOfMembersRequest(group_id = groupId, page = page)
+        val response = memberService.doGetAllPendingRequest(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doGetAllPendingInvitation(groupId: String? = null, page: String?= null): PendingMemberResponse {
+        val request = ListOfMembersRequest(group_id = groupId, page = page)
+        val response = memberService.doGetAllPendingInvitation(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

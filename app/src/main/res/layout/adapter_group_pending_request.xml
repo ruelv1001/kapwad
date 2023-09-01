@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded"
             android:paddingVertical="@dimen/dimen_10"
-            android:paddingHorizontal="@dimen/dimen_44"
+            android:layout_weight="1"
             android:backgroundTint="@color/lighter_red"
             android:layout_marginEnd="@dimen/dimen_4"
             android:layout_gravity="center"
