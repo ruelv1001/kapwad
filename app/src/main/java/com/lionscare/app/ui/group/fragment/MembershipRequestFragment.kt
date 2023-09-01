@@ -121,7 +121,7 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     }
 
     override fun onItemClicked(data: PendingMemberData) {
-        Toast.makeText(requireActivity(),"Clicked : ${data.user?.name}", Toast.LENGTH_SHORT).show()
+       // Toast.makeText(requireActivity(),"Clicked : ${data.user?.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAcceptClicked(data: PendingMemberData) {
