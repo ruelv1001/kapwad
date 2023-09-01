@@ -90,6 +90,10 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
             val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP, groupDetails)
             startActivity(intent)
         }
+        adminLinearLayout.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_ADMIN, groupDetails)
+            startActivity(intent)
+        }
         backImageView.setOnSingleClickListener {
           finish()
         }
@@ -154,6 +158,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         private const val START_MANAGE = "START_MANAGE"
         private const val START_ASSISTANCE = "START_ASSISTANCE"
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
+        private const val START_ADMIN = "START_ADMIN"
         private const val GROUP_ID = "GROUP_ID"
         private const val GROUP_NAME = "GROUP_NAME"
         fun getIntent(context: Context, group_id: String? = null): Intent {
