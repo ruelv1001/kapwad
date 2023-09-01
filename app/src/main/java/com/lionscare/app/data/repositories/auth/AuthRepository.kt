@@ -63,9 +63,9 @@ class AuthRepository @Inject constructor(
         return UserLocalData(
             user_id = user.id,
             qrcode = user.qrcode,
-            qr_value_type = user.qrValue?.type,
-            qr_value_value = user.qrValue?.value,
-            qr_value_signature = user.qrValue?.signature,
+            qr_value_type = user.qr_value?.type,
+            qr_value_value = user.qr_value?.value,
+            qr_value_signature = user.qr_value?.signature,
             qrcode_value = user.qrcode_value,
             name = user.name,
             firstname = user.firstname,

@@ -7,7 +7,7 @@ import java.io.Serializable
 data class UserModel(
     var id: String? = null,
     var qrcode : String? = null,
-    var qrValue : QrValue? = null,
+    var qr_value : QrValue? = null,
     var qrcode_value : String ? = null,
     var name : String? = null,
     var avatar : Avatar? = null,
@@ -25,7 +25,8 @@ data class UserModel(
     var brgy_code: String? = null,
     var street_name: String? = null,
     var zipcode: String? = null,
-    var date_registered: DateModel? = null
+    var date_registered: DateModel? = null,
+    //var qr_value: String? = null
 ): Serializable {
     fun getFullName() = "$firstname $lastname"
 }
