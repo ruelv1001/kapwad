@@ -49,6 +49,23 @@ class WalletViewModel @Inject constructor(
         }
     }
 
+    fun doSearchUser(keyword: String) {
+        viewModelScope.launch {
+            walletRepository.doSearchUser(keyword)
+                .onStart {
+                    _walletSharedFlow.emit(WalletViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _walletSharedFlow.emit(
+                        WalletViewState.SuccessSearchUser(it.data.orEmpty())
+                    )
+                }
+        }
+    }
+
     fun getTransactionDetails(transactionId: String) {
         viewModelScope.launch {
             walletRepository.getTransactionDetails(transactionId)
@@ -137,28 +154,6 @@ class WalletViewModel @Inject constructor(
     fun loadTransactionList(perPage: Int = 10) {
         viewModelScope.launch {
             getTransactionList(perPage)
-        }
-    }
-
-    private suspend fun doSearchUser(keyword: String) {
-        walletRepository.doSearchUser(keyword)
-            .cachedIn(viewModelScope)
-            .onStart {
-                _walletSharedFlow.emit(WalletViewState.Loading)
-            }
-            .catch { exception ->
-                onError(exception)
-                CommonLogger.sysLogE("error",exception.localizedMessage, exception)
-            }
-            .collect { pagingData ->
-                _walletSharedFlow.emit(
-                    WalletViewState.SuccessSearchUser(pagingData))
-            }
-    }
-
-    fun loadSearchUser(keyword: String) {
-        viewModelScope.launch {
-            doSearchUser(keyword)
         }
     }
 
