@@ -24,6 +24,8 @@ sealed class WalletViewState{
 
     data class SuccessTransactionList(val pagingData: PagingData<TransactionData>) : WalletViewState()
 
+    data class SuccessSearchUser(val pagingData: PagingData<QRData>) : WalletViewState()
+
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : WalletViewState()
 
     data class InputError(val errorData: ErrorsData? = null) : WalletViewState()
