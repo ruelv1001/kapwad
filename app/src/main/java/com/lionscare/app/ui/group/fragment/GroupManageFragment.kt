@@ -65,7 +65,7 @@ class GroupManageFragment : Fragment() {
             typeOrgTextView.isVisible = false
         }
 
-        editGroupLinearLayout.isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
+        editGroupImageView.isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
     }
 
     private fun setClickListeners() = binding.run {
@@ -81,7 +81,7 @@ class GroupManageFragment : Fragment() {
         transactionLinearLayout.setOnSingleClickListener {
             findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupTransaction())
         }
-        editGroupLinearLayout.setOnSingleClickListener {
+        editGroupImageView.setOnSingleClickListener {
             findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupUpdate())
         }
     }
