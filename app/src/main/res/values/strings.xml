@@ -280,6 +280,7 @@
     <string name="lbl_username">Username</string>
     <string name="password_visiblity_toggle">Password Visiblity Toggle</string>
     <string name="request_points_people_lbl">People</string>
+    <string name="lbl_notifications">Notifications</string>
     <string name="send_points_message_lbl">Message</string>
 
 </resources>

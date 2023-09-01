@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.main.fragment
+package com.lionscare.app.ui.settings.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,6 @@ import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.databinding.FragmentNotificationsBinding
 import com.lionscare.app.ui.notifications.adapter.NotificationsAdapter
-import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
 
 class NotificationsFragment : Fragment(), NotificationsAdapter.NotificationsCallback {
 
@@ -37,10 +36,6 @@ class NotificationsFragment : Fragment(), NotificationsAdapter.NotificationsCall
             container,
             false
         )
-
-        val toolbar = binding.toolbar
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        setHasOptionsMenu(true)
         return binding.root
     }
 

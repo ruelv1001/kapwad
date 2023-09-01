@@ -21,6 +21,7 @@ import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.viewmodel.SettingsViewModel
 import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
+import com.lionscare.app.ui.settings.activity.NotificationsActivity
 import com.lionscare.app.ui.settings.activity.ProfileActivity
 import com.lionscare.app.ui.settings.activity.UpdatePasswordActivity
 import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
@@ -136,6 +137,11 @@ class SettingsFragment : Fragment() {
 
         profileLinearLayout.setOnSingleClickListener {
             val intent = ProfileActivity.getIntent(requireActivity())
+            startActivity(intent)
+        }
+
+        notifLinearLayout.setOnSingleClickListener {
+            val intent = NotificationsActivity.getIntent(requireActivity())
             startActivity(intent)
         }
     }
