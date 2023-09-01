@@ -9,6 +9,7 @@ import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
+import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
@@ -75,6 +76,13 @@ class WalletRepository @Inject constructor(
             pagingSourceFactory = { searchUserPagingSource }
         ).flow
             .flowOn(ioDispatcher)
+    }
+
+    fun doSearchUser(keyword: String): Flow<SearchUserResponse> {
+        return flow {
+            val response = walletRemoteDataSource.doSearchUser(keyword)
+            emit(response)
+        }.flowOn(ioDispatcher)
     }
 
     private fun getDefaultPageConfig(): PagingConfig {

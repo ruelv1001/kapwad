@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
@@ -19,7 +20,6 @@ import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.adapter.MembersAdapter
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
-import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
+class WalletSearchFragment : Fragment(), MembersAdapter.OnClickCallback {
 
     private var _binding: FragmentWalletSearchBinding? = null
     private val binding get() = _binding!!
@@ -74,6 +74,18 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
                 activity.qrData = viewState.scanQRData?: QRData()
                 findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
             }
+            is WalletViewState.SuccessSearchUser -> {
+                activity.hideLoadingDialog()
+                adapter?.clear()
+                adapter?.appendData(viewState.listData)
+                if (adapter?.getData()?.size == 0) {
+                    binding.placeHolderTextView.isVisible = true
+                    binding.recyclerView.isGone = true
+                } else {
+                    binding.placeHolderTextView.isGone = true
+                    binding.recyclerView.isVisible = true
+                }
+            }
             is WalletViewState.PopupError -> {
                 activity.hideLoadingDialog()
                 showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
@@ -96,28 +108,18 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = MembersAdapter(this@WalletSearchFragment)
+        adapter = MembersAdapter(requireActivity(), this@WalletSearchFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-
-        dataList = listOf(
-            SampleData(
-                id = R.drawable.img_profile,
-                title = "Raquel Castro",
-                amount = "LC-000004",
-            ),
-            SampleData(
-                id = R.drawable.img_profile,
-                title = "Romeo Dela Cruz",
-                amount = "LC-000001",
-            )
-        )
-        adapter?.submitData(lifecycle, PagingData.from(dataList))
-
     }
 
     private fun setupClickListener() = binding.run{
+
+        searchEditText.doAfterTextChanged {
+            applyTextView.isVisible = it.toString().isNotEmpty()
+        }
+
         backImageView.setOnSingleClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -130,6 +132,10 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
             }, "Scan QR")
                 .show(childFragmentManager, ScannerDialog.TAG)
         }
+
+        applyTextView.setOnSingleClickListener {
+            viewModel.doSearchUser(searchEditText.text.toString())
+        }
     }
 
     override fun onDestroyView() {
@@ -137,8 +143,9 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
         _binding = null
     }
 
-    override fun onItemClicked(data: SampleData) {
-        activity.data = data
+
+    override fun onItemClickListener(data: QRData) {
+        activity.qrData = data
         findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
     }
 

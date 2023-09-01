@@ -1,62 +1,60 @@
 package com.lionscare.app.ui.wallet.adapter
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.AdapterMembersBinding
 
-class MembersAdapter(val clickListener: MembersCallback) :
-    PagingDataAdapter<SampleData, MembersAdapter.MembersViewHolder>(
-        DIFF_CALLBACK
-    ) {
+class MembersAdapter(val context: Context, val clickListener: OnClickCallback) :
+    RecyclerView.Adapter<MembersAdapter.AdapterViewHolder>() {
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SampleData>() {
-            override fun areItemsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
-                return oldItem.id == newItem.id
-            }
+    private val adapterData = mutableListOf<QRData>()
 
-            override fun areContentsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
-                return oldItem == newItem
-            }
-        }
+    fun clear() {
+        adapterData.clear()
+        notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MembersViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = AdapterMembersBinding.inflate(inflater, parent, false)
-        return MembersViewHolder(binding)
+    fun appendData(newData: List<QRData>) {
+        val startAt = adapterData.size
+        adapterData.addAll(newData)
+        notifyItemRangeInserted(startAt, newData.size)
     }
 
-    override fun onBindViewHolder(holder: MembersViewHolder, position: Int) {
-        val article = getItem(position)
-        holder.bind(article)
+
+    fun getData(): MutableList<QRData> = adapterData
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
+        val binding = AdapterMembersBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return AdapterViewHolder(binding)
+
     }
 
-    inner class MembersViewHolder(private val binding: AdapterMembersBinding) :
+    override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
+        holder.displayData(adapterData[position])
+    }
+
+    inner class AdapterViewHolder(val binding: AdapterMembersBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
-        fun bind(data: SampleData?) {
-            data?.let {
+        fun displayData(data: QRData) = with(itemView) {
 
-                binding.profileImageView.setImageResource(data.id?:0)
-                binding.nameTextView.text = data.title
-                binding.idNoTextView.text = data.amount
+            binding.nameTextView.text = data.name
+            //idNoTextView.text = data.amount
 
-                binding.membersLinearLayout.setOnClickListener {
-                    clickListener.onItemClicked(data)
-                }
+            binding.membersLinearLayout.setOnClickListener {
+                clickListener.onItemClickListener(data)
             }
+
         }
     }
 
-    interface MembersCallback {
-        fun onItemClicked(data: SampleData)
+    interface OnClickCallback {
+        fun onItemClickListener(data: QRData)
     }
 
+    override fun getItemCount(): Int = adapterData.size
 }
