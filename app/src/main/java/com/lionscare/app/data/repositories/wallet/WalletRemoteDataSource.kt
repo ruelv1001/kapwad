@@ -9,6 +9,7 @@ import com.lionscare.app.data.repositories.wallet.request.TransactionDetailsRequ
 import com.lionscare.app.data.repositories.wallet.request.TransactionListRequest
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
 import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
+import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionListResponse
@@ -80,6 +81,16 @@ class WalletRemoteDataSource @Inject constructor(private val walletService: Wall
     suspend fun doSearchUser(keyword: String): SearchUserResponse{
         val request = SearchUserRequest(keyword)
         val response = walletService.doSearchUser(request)
+
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doSearchGroup(keyword: String): SearchGroupResponse{
+        val request = SearchUserRequest(keyword)
+        val response = walletService.doSearchGroup(request)
 
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)

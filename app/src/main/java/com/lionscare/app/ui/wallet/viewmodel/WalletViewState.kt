@@ -3,6 +3,7 @@ package com.lionscare.app.ui.wallet.viewmodel
 import androidx.paging.PagingData
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.data.repositories.wallet.response.BalanceData
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
 import com.lionscare.app.data.repositories.wallet.response.QRData
@@ -26,6 +27,8 @@ sealed class WalletViewState{
     data class SuccessTransactionList(val pagingData: PagingData<TransactionData>) : WalletViewState()
 
     data class SuccessSearchUser(val listData: List<QRData>) : WalletViewState()
+
+    data class SuccessSearchGroup(val listData: List<GroupData>) : WalletViewState()
 
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : WalletViewState()
 
