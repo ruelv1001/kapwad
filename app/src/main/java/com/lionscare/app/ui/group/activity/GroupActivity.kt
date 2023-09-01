@@ -113,6 +113,7 @@ class GroupActivity : AppCompatActivity() {
             else -> {
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.GONE
+                filterImageView.visibility = View.GONE
             }
         }
     }

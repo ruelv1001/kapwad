@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentAssistanceBinding
@@ -62,7 +63,7 @@ class AssistanceFragment : Fragment() {
         }
 
         createAssistanceFloatingActionButton.setOnSingleClickListener {
-
+            findNavController().navigate(AssistanceFragmentDirections.actionNavigationGroupAssistanceCreate())
         }
 
         activity.getFilterImageView().setOnSingleClickListener {
