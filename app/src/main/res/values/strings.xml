@@ -292,6 +292,7 @@
     <string name="search_user_send_txt">Send</string>
     <string name="search_user_apply_btn">Apply</string>
     <string name="lbl_list_of_admin">Admins</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>
