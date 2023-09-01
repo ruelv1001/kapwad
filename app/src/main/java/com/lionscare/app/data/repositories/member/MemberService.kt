@@ -4,6 +4,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -29,6 +30,12 @@ interface MemberService {
 
 
     //Pending member folder
-    @POST("api/group/member/pending/invite")
-    suspend fun doGetAllPendingMember(@Body listOfMembersRequest: ListOfMembersRequest): Response<GeneralResponse>
+    @POST("api/group/member/pending/all")
+    suspend fun doGetAllPendingInviteAndRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<PendingMemberResponse>
+
+    @POST("api/group/member/pending/request")
+    suspend fun doGetAllPendingRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<PendingMemberResponse>
+
+    @POST("api/group/member/pending/invitation")
+    suspend fun doGetAllPendingInvitation(@Body listOfMembersRequest: ListOfMembersRequest): Response<PendingMemberResponse>
 }

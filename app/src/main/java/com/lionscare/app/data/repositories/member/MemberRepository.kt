@@ -1,9 +1,15 @@
 package com.lionscare.app.data.repositories.member
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.PendingMemberData
+import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -51,10 +57,17 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doGetAllPendingMember(listOfMembersRequest: ListOfMembersRequest): Flow<GeneralResponse> {
-        return flow {
-            val response = memberRemoteDataSource.doGetAllPendingMember(listOfMembersRequest)
-            emit(response)
-        }.flowOn(ioDispatcher)
+
+    fun doGetAllPendingRequest(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String): Flow<PagingData<PendingMemberData>> {
+        val getAllPendingRequestPagingSource = GetAllPendingRequestPagingSource(memberRemoteDataSource, groupId)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getAllPendingRequestPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
+    private fun getDefaultPageConfig(): PagingConfig {
+        return PagingConfig(pageSize = 10, initialLoadSize = 5, enablePlaceholders = false)
     }
 }

@@ -5,5 +5,6 @@ import androidx.annotation.Keep
 
 @Keep
 data class ListOfMembersRequest(
-    var group_id: String
+    var group_id: String? = null,
+    var page: String? = null
 )
