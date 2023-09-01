@@ -113,11 +113,11 @@ class GroupCreateFragment : Fragment() {
             }
 
             val createGroupRequest = CreateGroupRequest(
-                group_name = nameEditText.text.toString(),
-                group_type = groupType,
-                group_privacy = groupPrivacy,
-                group_passcode = passwordEditText.text.toString(),
-                group_approval = approval
+                name = nameEditText.text.toString(),
+                type = groupType,
+                privacy = groupPrivacy,
+                passcode = passwordEditText.text.toString(),
+                with_approval = approval
             )
 
             viewModel.createGroup(createGroupRequest)

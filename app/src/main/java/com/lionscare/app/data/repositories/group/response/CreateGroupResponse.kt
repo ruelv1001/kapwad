@@ -17,12 +17,12 @@ data class CreateGroupResponse(
 
 @Keep
 data class GroupData(
-    var date_created: DateModel? = null,
-    var group_approval: Boolean? = false,
-    var group_name: String? = null,
-    var group_privacy: String? = null,
-    var group_type: String? = null,
     var id: String? = null,
+    var name: String? = null,
+    var type: String? = null,
+    var privacy: String? = null,
+    var with_approval: Boolean? = false,
+    var owner_user_id: String? = null,
+    var date_created: DateModel? = null,
     var owner: UserModel? = null,
-    var owner_user_id: String? = null
 ) : Serializable

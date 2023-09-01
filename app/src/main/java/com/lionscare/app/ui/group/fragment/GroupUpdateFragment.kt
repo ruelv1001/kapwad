@@ -109,11 +109,11 @@ class GroupUpdateFragment : Fragment() {
 
             val createGroupRequest = CreateGroupRequest(
                 group_id = groupId,
-                group_name = nameEditText.text.toString(),
-                group_type = groupType,
-                group_privacy = groupPrivacy,
-                group_passcode = passwordEditText.text.toString(),
-                group_approval = approval
+                name = nameEditText.text.toString(),
+                type = groupType,
+                privacy = groupPrivacy,
+                passcode = passwordEditText.text.toString(),
+                with_approval = approval
             )
             viewModel.updateGroup(createGroupRequest)
         }
@@ -191,20 +191,20 @@ class GroupUpdateFragment : Fragment() {
     }
 
     private fun setDetails(data: GroupData) = binding.run {
-        nameEditText.setText(data.group_name)
+        nameEditText.setText(data.name)
         groupTypeSpinner.setSelection(
-            when (data.group_type) {
+            when (data.type) {
                 "organization" -> 1
                 "clan" -> 2
                 else -> 0
             }
         )
-        publicRadioButton.isChecked = data.group_privacy == "public"
-        privateRadioButton.isChecked = data.group_privacy == "private"
-        if (data.group_privacy == "private") {
+        publicRadioButton.isChecked = data.privacy == "public"
+        privateRadioButton.isChecked = data.privacy == "private"
+        if (data.privacy == "private") {
             passwordLinearLayout.isVisible = true
         }
-        approvalSwitch.isChecked = data.group_approval == true
+        approvalSwitch.isChecked = data.with_approval == true
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {

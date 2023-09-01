@@ -56,8 +56,8 @@ class GroupManageFragment : Fragment() {
     }
 
     private fun setDetails() = binding.run {
-        titleTextView.text = activity.groupDetails?.group_name
-        if(activity.groupDetails?.group_type.equals("organization")){
+        titleTextView.text = activity.groupDetails?.name
+        if(activity.groupDetails?.type.equals("organization")){
             typeFamTextView.isVisible = false
             typeOrgTextView.isVisible = true
         }else{
