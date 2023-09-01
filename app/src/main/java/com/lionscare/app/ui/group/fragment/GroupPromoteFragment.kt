@@ -67,7 +67,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
             )
         )
         adapter?.submitData(lifecycle, PagingData.from(dataList))
-            completeButton.text = getText(R.string.lbl_invite2)
+//            completeButton.text = getText(R.string.lbl_invite2)
     }
 
 
@@ -94,12 +94,12 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
     }
 
     private fun setClickListeners() = binding.run {
-        completeButton.setOnSingleClickListener {
+//        completeButton.setOnSingleClickListener {
 //            if (firstNameEditText.text.toString().isEmpty()){
 //                firstNameTextInputLayout.error = "Field is required"
 //            }
 //                findNavController().navigate(GroupInviteFragmentDirection.actionNavigationOtp())
-        }
+//        }
 
     }
 

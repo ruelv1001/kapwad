@@ -288,6 +288,7 @@
     <string name="lbl_add_assistance">Add Assistance</string>
     <string name="lbl_proceed">Proceed</string>
     <string name="assistance_create_please_indicate_your_purpose_text">Please indicate your purpose</string>
+    <string name="lbl_invite_to_group">Invite to Group</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>
