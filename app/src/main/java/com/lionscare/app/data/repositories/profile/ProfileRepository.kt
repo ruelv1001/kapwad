@@ -38,7 +38,8 @@ class ProfileRepository @Inject constructor(
         zipcode: String,
         firstname: String,
         lastname: String,
-        middlename: String
+        middlename: String,
+        email : String
     ): Flow<LoginResponse> {
         return channelFlow {
             profileRemoteDataSource.doUpdateInfo(
@@ -52,7 +53,8 @@ class ProfileRepository @Inject constructor(
                 zipcode,
                 firstname,
                 lastname,
-                middlename
+                middlename,
+                email
             ).collectLatest { response ->
                 val userInfo = response.data ?: UserModel()
                 encryptedDataManager.setUserBasicInfo(userInfo)

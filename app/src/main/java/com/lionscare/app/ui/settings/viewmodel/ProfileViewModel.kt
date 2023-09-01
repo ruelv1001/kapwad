@@ -55,7 +55,8 @@ class ProfileViewModel @Inject constructor(
                         zipcode: String,
                         firstname: String,
                         lastname: String,
-                        middlename: String
+                        middlename: String,
+                        email:String
     ) {
         viewModelScope.launch {
             profileRepository.doUpdateInfo(
@@ -69,7 +70,8 @@ class ProfileViewModel @Inject constructor(
                 zipcode,
                 firstname,
                 lastname,
-                middlename)
+                middlename,
+                email)
                 .onStart {
                     _profileSharedFlow.emit(ProfileViewState.Loading)
                 }

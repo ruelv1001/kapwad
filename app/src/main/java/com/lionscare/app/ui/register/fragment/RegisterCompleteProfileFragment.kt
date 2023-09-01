@@ -196,7 +196,8 @@ class RegisterCompleteProfileFragment: Fragment() {
                 zipcodeEditText.text.toString(),
                 activity.requestModel.firstname.orEmpty(),
                 activity.requestModel.lastname.orEmpty(),
-                activity.requestModel.middlename.orEmpty()
+                activity.requestModel.middlename.orEmpty(),
+                emailEditText.text.toString()
             )
         }
     }
