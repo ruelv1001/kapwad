@@ -283,4 +283,14 @@
     <string name="lbl_notifications">Notifications</string>
     <string name="send_points_message_lbl">Message</string>
 
+    <string name="assistance_create_purpose_text">Purpose</string>
+    <string name="lbl_others">Others</string>
+    <string name="lbl_add_assistance">Add Assistance</string>
+    <string name="lbl_proceed">Proceed</string>
+    <string name="assistance_create_please_indicate_your_purpose_text">Please indicate your purpose</string>
+    <string-array name="assistance_purpose_items">
+        <item>Scholarship</item>
+        <item>Medical bill</item>
+        <item>Others</item>
+    </string-array>
 </resources>

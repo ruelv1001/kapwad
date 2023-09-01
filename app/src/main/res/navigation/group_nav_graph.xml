@@ -19,7 +19,7 @@
         android:name="com.lionscare.app.ui.group.fragment.GroupInviteFragment"
         android:label=""
         tools:layout="@layout/fragment_group_invite"/>
-    <fragment
+      <fragment
         android:id="@+id/navigation_group_manage"
         android:name="com.lionscare.app.ui.group.fragment.GroupManageFragment"
         android:label=""
@@ -48,6 +48,18 @@
         <action
             android:id="@+id/action_navigation_group_assistance_req_details"
             app:destination="@id/navigation_group_assistance_req_details" />
+        <action
+            android:id="@+id/action_navigation_group_assistance_create"
+            app:destination="@id/navigation_group_assistance_create" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_group_assistance_create"
+        android:name="com.lionscare.app.ui.group.fragment.AssistanceCreateFragment"
+        android:label=""
+        tools:layout="@layout/fragment_assistance_create">
+
     </fragment>
 
     <fragment
