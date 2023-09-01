@@ -11,7 +11,9 @@ import com.lionscare.app.databinding.FragmentTopUpBinding
 import com.lionscare.app.databinding.FragmentWalletInputBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.utils.setOnSingleClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WalletInputFragment : Fragment() {
 
     private var _binding: FragmentWalletInputBinding? = null
@@ -40,7 +42,7 @@ class WalletInputFragment : Fragment() {
         when(activity.mode){
             "Send Points" -> {
                 titleTextView.text = getString(R.string.wallet_send_points_title)
-                recipientEditText.setText(activity.data.title)
+                recipientEditText.setText(activity.qrData.name)
             }
             "Scan 2 Pay" -> {
                 titleTextView.text = getString(R.string.wallet_points_recipient_title)

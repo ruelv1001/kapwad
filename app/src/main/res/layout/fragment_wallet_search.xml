@@ -34,6 +34,14 @@
                 android:fontFamily="@font/inter_semibold"
                 android:textColor="@color/text_color"/>
 
+            <ImageView
+                android:id="@+id/qrImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:src="@drawable/ic_qr"/>
+
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -45,12 +53,49 @@
         android:layout_weight="1"
         android:padding="@dimen/dimen_20">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_edittext_selector"
-            app:queryHint="@string/wallet_enter_id_number_hint"/>
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/locationTextInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55"
+                android:fontFamily="@font/inter_regular"
+                android:hint="Search People"
+                app:boxBackgroundColor="@color/light_gray_line"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:fontFamily="@font/inter_medium"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/request_points_people_lbl"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:textSize="@dimen/font_16"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/text_color"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
