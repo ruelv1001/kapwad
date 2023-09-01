@@ -12,6 +12,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupInviteBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
@@ -66,7 +67,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
                 amount = "LC-000001",
             )
         )
-        adapter?.submitData(lifecycle, PagingData.from(dataList))
+        //adapter?.submitData(lifecycle, PagingData.from(dataList))
 //            completeButton.text = getText(R.string.lbl_invite2)
     }
 
@@ -108,7 +109,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
         _binding = null
     }
 
-    override fun onItemClicked(data: SampleData) {
+    override fun onItemClicked(data: MemberListData) {
 //        TODO("Not yet implemented")
     }
 

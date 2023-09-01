@@ -70,9 +70,9 @@
 
     <fragment
         android:id="@+id/navigation_group_membership"
-        android:name="com.lionscare.app.ui.group.fragment.MembershipFragment"
+        android:name="com.lionscare.app.ui.group.fragment.MembersFragment"
         android:label=""
-        tools:layout="@layout/fragment_membership"/>
+        tools:layout="@layout/fragment_members"/>
 
     <fragment
         android:id="@+id/navigation_group_statistics"

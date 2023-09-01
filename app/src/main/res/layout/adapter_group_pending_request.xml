@@ -68,7 +68,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
         android:gravity="start"
         android:orientation="horizontal">
 
@@ -76,6 +75,20 @@
             android:id="@+id/spaceView"
             android:layout_width="@dimen/dimen_55"
             android:layout_height="@dimen/dimen_1"/>
+
+        <TextView
+            android:id="@+id/cancelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded"
+            android:paddingVertical="@dimen/dimen_10"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/dimen_4"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:text="@string/pending_cancel_text"/>
 
         <TextView
             android:id="@+id/acceptTextView"
@@ -95,27 +108,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded"
+            android:backgroundTint="@color/lighter_red"
             android:paddingVertical="@dimen/dimen_10"
             android:layout_weight="1"
             android:textAlignment="center"
             android:layout_marginStart="@dimen/dimen_4"
-            android:textColor="@color/black"
-            android:text="@string/pending_decline_text"/>
-
-        <TextView
-            android:id="@+id/cancelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded"
-            android:paddingVertical="@dimen/dimen_10"
-            android:layout_weight="1"
-            android:backgroundTint="@color/lighter_red"
-            android:layout_marginEnd="@dimen/dimen_4"
-            android:layout_gravity="center"
             android:textColor="@color/strong_red"
-            android:textAlignment="center"
-            android:visibility="gone"
-            android:text="@string/pending_cancel_text"/>
+            android:text="@string/pending_decline_text"/>
 
     </LinearLayout>
 

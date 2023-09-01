@@ -4,6 +4,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.ListOfMembersResponse
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
@@ -11,8 +12,9 @@ import javax.inject.Inject
 
 class MemberRemoteDataSource @Inject constructor(private val memberService: MemberService) {
 
-    suspend fun doGetListOfMembers(listOfMembersRequest: ListOfMembersRequest): GeneralResponse {
-        val response = memberService.doGetListOfMembers(listOfMembersRequest)
+    suspend fun doGetListOfMembers(groupId: String? = null, page: String?= null): ListOfMembersResponse {
+        val request = ListOfMembersRequest(group_id = groupId, page = page)
+        val response = memberService.doGetListOfMembers(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

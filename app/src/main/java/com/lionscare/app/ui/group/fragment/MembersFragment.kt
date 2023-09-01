@@ -8,16 +8,16 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.R
-import com.lionscare.app.databinding.FragmentMembershipBinding
+import com.lionscare.app.databinding.FragmentMembersBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.utils.adapter.CustomViewPagerAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MembershipFragment : Fragment() {
+class MembersFragment : Fragment() {
 
-    private var _binding: FragmentMembershipBinding? = null
+    private var _binding: FragmentMembersBinding? = null
     private val binding get() = _binding!!
     private var pagerAdapter: CustomViewPagerAdapter? = null
     private val activity by lazy { requireActivity() as GroupActivity }
@@ -27,7 +27,7 @@ class MembershipFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentMembershipBinding.inflate(
+        _binding = FragmentMembersBinding.inflate(
             inflater,
             container,
             false
@@ -86,7 +86,7 @@ class MembershipFragment : Fragment() {
     private fun setUpTabs() = binding.run {
         pagerAdapter = CustomViewPagerAdapter(childFragmentManager, lifecycle)
         pagerAdapter?.apply {
-            addFragment(MembershipMembersFragment.newInstance())
+            addFragment(MemberListFragment.newInstance())
             addFragment(MembershipRequestFragment.newInstance())
         }
 

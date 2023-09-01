@@ -64,7 +64,7 @@ class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallbac
                   binding.declineTextView.visibility = View.VISIBLE
                   binding.cancelTextView.visibility = View.GONE
               }else{
-                  binding.acceptTextView.visibility = View.INVISIBLE
+                  binding.acceptTextView.visibility = View.GONE
                   binding.declineTextView.visibility = View.GONE
                   binding.cancelTextView.visibility = View.VISIBLE
               }
