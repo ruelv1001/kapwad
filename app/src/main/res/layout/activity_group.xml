@@ -32,8 +32,11 @@
 
         <TextView
             android:id="@+id/titleTextView"
+            android:autoSizeTextType="uniform"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:paddingStart="@dimen/dimen_25"
@@ -63,6 +66,15 @@
             android:layout_height="@dimen/dimen_30"
             android:visibility="gone"
             android:src="@drawable/ic_filter"
+            app:tint="@color/color_primary" />
+
+
+        <ImageView
+            android:id="@+id/scanImageView"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:visibility="visible"
+            android:src="@drawable/baseline_qr_code_scanner_24"
             app:tint="@color/color_primary" />
 
     </LinearLayout>
