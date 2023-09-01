@@ -6,7 +6,9 @@ import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.lionscare.app.data.repositories.baseresponse.Avatar
 import com.lionscare.app.data.repositories.baseresponse.DateModel
+import com.lionscare.app.data.repositories.baseresponse.QrValue
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 
 class AuthEncryptedDataManager {
@@ -47,6 +49,8 @@ class AuthEncryptedDataManager {
 
     private var inMemoryUserData: UserModel? = null
     private var inMemoryDateRegisteredData: DateModel? = null
+    private var inMemoryQRValueData: QrValue? = null
+    private var inMemoryAvatarData: Avatar? = null
 
     /**
      * Function to set user's basic info
@@ -55,9 +59,13 @@ class AuthEncryptedDataManager {
         inMemoryUserData = userInfo
 
         setUserDateInfo(userInfo.date_registered?: DateModel())
+        setUserQRValue(userInfo.qrValue?: QrValue())
+        setUserAvatar(userInfo.avatar?: Avatar())
 
         sharedPreferences.edit(true) {
             putString(USER_INFO_ID, userInfo.id)
+            putString(USER_QRCODE_VALUE, userInfo.qrcode_value)
+            putString(USER_NAME, userInfo.name)
             putString(USER_FIRST_NAME, userInfo.firstname)
             putString(USER_MIDDLE_NAME, userInfo.middlename)
             putString(USER_LAST_NAME, userInfo.lastname)
@@ -75,15 +83,52 @@ class AuthEncryptedDataManager {
     }
 
     /**
+     * Function to set user's date created info
+     */
+    fun setUserDateInfo(dateInfo: DateModel) {
+        inMemoryDateRegisteredData = dateInfo
+        sharedPreferences.edit(true) {
+            putString(USER_DATE_DB, dateInfo.date_db)
+            putString(USER_DATE_ONLY, dateInfo.date_only)
+            putString(USER_DATE_TIME_PASSED, dateInfo.time_passed)
+            putString(USER_DATE_TIMESTAMP, dateInfo.timestamp)
+            putString(USER_DATE_ISO_FORMAT, dateInfo.iso_format)
+            putString(USER_DATE_MONTH_YEAR, dateInfo.month_year)
+        }
+    }
+
+    fun setUserQRValue(dataValue: QrValue) {
+        inMemoryQRValueData = dataValue
+        sharedPreferences.edit(true) {
+            putString(USER_QR_VAL_TYPE, dataValue.type)
+            putString(USER_QR_VAL_VALUE, dataValue.value)
+            putString(USER_QR_VAL_SIGNATURE, dataValue.signature)
+        }
+    }
+
+    fun setUserAvatar(dataValue: Avatar) {
+        inMemoryAvatarData = dataValue
+        sharedPreferences.edit(true) {
+            putString(USER_AVATAR_FILENAME, dataValue.filename)
+            putString(USER_AVATAR_PATH, dataValue.path)
+            putString(USER_AVATAR_DIRECTORY, dataValue.directory)
+            putString(USER_AVATAR_FULL_PATH, dataValue.full_path)
+            putString(USER_AVATAR_THUMB_PATH, dataValue.thumb_path)
+        }
+    }
+
+    /**
      * Function used to get user's basic info
      */
     fun getUserBasicInfo(): UserModel {
         if (inMemoryUserData == null) {
             inMemoryUserData = UserModel().apply {
                 id = sharedPreferences.getString(USER_INFO_ID, "")
+                qrcode_value = sharedPreferences.getString(USER_QRCODE_VALUE, "")
+                name = sharedPreferences.getString(USER_NAME, "")
                 firstname = sharedPreferences.getString(USER_FIRST_NAME, "")
-                middlename = sharedPreferences.getString(USER_MIDDLE_NAME, "0")
-                lastname = sharedPreferences.getString(USER_LAST_NAME, "0")
+                middlename = sharedPreferences.getString(USER_MIDDLE_NAME, "")
+                lastname = sharedPreferences.getString(USER_LAST_NAME, "")
                 email = sharedPreferences.getString(USER_EMAIL, "")
                 phone_number = sharedPreferences.getString(USER_PHONE_NUMBER, "")
                 address = sharedPreferences.getString(USER_ADDRESS, "")
@@ -97,21 +142,6 @@ class AuthEncryptedDataManager {
             }
         }
         return inMemoryUserData ?: UserModel()
-    }
-
-    /**
-     * Function to set user's date created info
-     */
-    fun setUserDateInfo(dateInfo: DateModel) {
-        inMemoryDateRegisteredData = dateInfo
-        sharedPreferences.edit(true) {
-            putString(USER_DATE_DB, dateInfo.date_db)
-            putString(USER_DATE_ONLY, dateInfo.date_only)
-            putString(USER_DATE_TIME_PASSED, dateInfo.time_passed)
-            putString(USER_DATE_TIMESTAMP, dateInfo.timestamp)
-            putString(USER_DATE_ISO_FORMAT, dateInfo.iso_format)
-            putString(USER_DATE_MONTH_YEAR, dateInfo.month_year)
-        }
     }
 
     /**
@@ -130,6 +160,28 @@ class AuthEncryptedDataManager {
         }
         return inMemoryDateRegisteredData ?: DateModel()
     }
+    fun getUserQRValue(): QrValue {
+        if (inMemoryQRValueData == null) {
+            inMemoryQRValueData = QrValue().apply {
+                type = sharedPreferences.getString(USER_QR_VAL_TYPE, "")
+                value = sharedPreferences.getString(USER_QR_VAL_VALUE, "")
+                signature = sharedPreferences.getString(USER_QR_VAL_SIGNATURE, "")
+            }
+        }
+        return inMemoryQRValueData ?: QrValue()
+    }
+    fun getUserAvatar(): Avatar {
+        if (inMemoryAvatarData == null) {
+            inMemoryAvatarData = Avatar().apply {
+                filename = sharedPreferences.getString(USER_AVATAR_FILENAME, "")
+                path = sharedPreferences.getString(USER_AVATAR_PATH, "")
+                directory = sharedPreferences.getString(USER_AVATAR_DIRECTORY, "")
+                full_path = sharedPreferences.getString(USER_AVATAR_FULL_PATH, "")
+                thumb_path = sharedPreferences.getString(USER_AVATAR_THUMB_PATH, "")
+            }
+        }
+        return inMemoryAvatarData ?: Avatar()
+    }
 
     fun isLoggedIn(): Boolean {
         return getAccessToken().isNotEmpty()
@@ -142,6 +194,8 @@ class AuthEncryptedDataManager {
     fun clearUserInfo(){
         inMemoryUserData = UserModel()
         inMemoryDateRegisteredData = DateModel()
+        inMemoryQRValueData = QrValue()
+        inMemoryAvatarData = Avatar()
         setAccessToken("")
     }
 
@@ -166,7 +220,13 @@ class AuthEncryptedDataManager {
         private const val ENCRYPTED_PREFS_NAME = "ENCRYPTED_PREFS_NAME"
         private const val ENCRYPTED_ALIAS_NAME = "ENCRYPTED_ALIAS_NAME"
 
+        private const val USER_QR_VAL_TYPE = "USER_QR_VAL_TYPE"
+        private const val USER_QR_VAL_VALUE = "USER_QR_VAL_VALUE"
+        private const val USER_QR_VAL_SIGNATURE = "USER_QR_VAL_SIGNATURE"
+
         private const val USER_INFO_ID = "USER_INFO_ID"
+        private const val USER_QRCODE_VALUE = "USER_QRCODE_VALUE"
+        private const val USER_NAME = "USER_NAME"
         private const val USER_FIRST_NAME = "USER_FIRST_NAME"
         private const val USER_LAST_NAME = "USER_LAST_NAME"
         private const val USER_MIDDLE_NAME = "USER_MIDDLE_NAME"
@@ -180,6 +240,12 @@ class AuthEncryptedDataManager {
         private const val USER_BRGY_CODE = "USER_BRGY_CODE"
         private const val USER_BRGY_NAME = "USER_BRGY_NAME"
         private const val USER_ZIPCODE = "USER_ZIPCODE"
+
+        private const val USER_AVATAR_FILENAME = "USER_AVATAR_FILENAME"
+        private const val USER_AVATAR_PATH = "USER_AVATAR_PATH"
+        private const val USER_AVATAR_DIRECTORY = "USER_AVATAR_DIRECTORY"
+        private const val USER_AVATAR_FULL_PATH = "USER_AVATAR_FULL_PATH"
+        private const val USER_AVATAR_THUMB_PATH = "USER_AVATAR_THUMB_PATH"
 
         private const val USER_DATE_DB = "USER_DATE_DB"
         private const val USER_DATE_MONTH_YEAR = "USER_DATE_MONTH_YEAR"

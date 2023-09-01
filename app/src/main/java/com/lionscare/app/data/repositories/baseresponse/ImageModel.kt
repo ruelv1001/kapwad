@@ -13,3 +13,12 @@ data class ImageModel(
     var path: String? = null,
     var thumb_path: String? = null,
 ) : Parcelable
+@Keep
+@Parcelize
+data class AvatarModel(
+    var filename: String? = null,
+    var path: String? = null,
+    var directory: String? = null,
+    var full_path: String? = null,
+    var thumb_path: String? = null
+) : Parcelable
