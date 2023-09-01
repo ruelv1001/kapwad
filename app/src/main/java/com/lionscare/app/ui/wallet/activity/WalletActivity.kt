@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.wallet.response.QRData
+import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.ActivityWalletBinding
 import com.lionscare.app.utils.dialog.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,9 +25,11 @@ class WalletActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     var data = SampleData()
     var qrData = QRData()
+    var transactionData = TransactionData()
     var mode = ""
     var amount = ""
     var message = ""
+    var isGroupId = false
     private var loadingDialog: CommonDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

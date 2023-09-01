@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentWalletDetailsBinding
@@ -54,9 +55,9 @@ class WalletDetailsFragment : Fragment() {
                 recipientLayout.idNoTextView.text = "LC-000123"
                 reasonTextView.text = activity.message
                 pointsTextView.text = currencyFormat(activity.amount)
-
-                //TODO to be updated when ref number is already on response
-                refidTextView.text = "SAMPLE-REF-000-123"
+                val valueRefNo = activity.transactionData.remarks?.split(": ")
+                refidTextView.text = valueRefNo?.get(1)
+                dateTextView.text = activity.transactionData.date_registered?.date_db
             }
             "Scan 2 Pay" -> {
                 titleTextView.text = getString(R.string.wallet_scan2pay_details_title)

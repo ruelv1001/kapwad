@@ -117,9 +117,14 @@ class WalletViewModel @Inject constructor(
         }
     }
 
-    fun doSendPoints(userId: String, amount: String) {
+    fun doSendPoints(userId: String = "", groupId: String = "", amount: String, notes: String = "") {
         viewModelScope.launch {
-            walletRepository.doSendPoints(amount, userId)
+            walletRepository.doSendPoints(
+                userId = userId,
+                groupId = groupId,
+                amount = amount,
+                notes = notes
+            )
                 .onStart {
                     _walletSharedFlow.emit(WalletViewState.Loading)
                 }
@@ -128,7 +133,7 @@ class WalletViewModel @Inject constructor(
                 }
                 .collect {
                     _walletSharedFlow.emit(
-                        WalletViewState.SuccessSendPoint(it.msg)
+                        WalletViewState.SuccessSendPoint(it.data)
                     )
                 }
         }

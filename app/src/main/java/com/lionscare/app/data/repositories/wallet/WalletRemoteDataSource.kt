@@ -63,10 +63,15 @@ class WalletRemoteDataSource @Inject constructor(private val walletService: Wall
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doSendPoints(userId: String, amount: String): GeneralResponse {
-        val request = SendPointsToUserRequest(amount, userId)
+    suspend fun doSendPoints(userId: String, groupId: String, amount: String, notes: String): TransactionDetailsResponse {
+        val request = SendPointsToUserRequest(
+            amount = amount,
+            user_id = userId,
+            group_id = groupId,
+            notes = notes
+        )
         val response = walletService.doSendPoints(request)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")

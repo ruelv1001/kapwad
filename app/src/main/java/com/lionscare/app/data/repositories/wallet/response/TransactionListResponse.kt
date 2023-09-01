@@ -22,5 +22,6 @@ data class TransactionData(
     val remarks: String? = null,
     val title: String? = null,
     val type: String? = null,
-    val value: String? = null
+    val value: String? = null,
+    val notes: String? = null
 )

@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.wallet.response.QRData
+import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.FragmentWalletSummaryBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
@@ -88,6 +89,7 @@ class WalletSummaryFragment : Fragment() {
             is WalletViewState.Loading -> activity.showLoadingDialog(R.string.loading)
             is WalletViewState.SuccessSendPoint -> {
                 activity.hideLoadingDialog()
+                activity.transactionData = viewState.data?: TransactionData()
                 findNavController().navigate(WalletSummaryFragmentDirections.actionNavigationWalletSummaryToNavigationWalletDetails())
             }
             is WalletViewState.PopupError -> {
@@ -104,8 +106,11 @@ class WalletSummaryFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         continueButton.setOnSingleClickListener {
-
-            viewModel.doSendPoints(activity.qrData.id.orEmpty(), activity.amount)
+            viewModel.doSendPoints(
+                userId = activity.qrData.id.orEmpty(),
+                amount = activity.amount,
+                notes = activity.message
+            )
         }
     }
 
