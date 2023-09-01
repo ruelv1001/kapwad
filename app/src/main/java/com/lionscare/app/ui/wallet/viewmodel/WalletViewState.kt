@@ -17,7 +17,7 @@ sealed class WalletViewState{
 
     data class SuccessTopup(val webUrl: String? = null) : WalletViewState()
 
-    data class SuccessSendPoint(val msg: String? = null) : WalletViewState()
+    data class SuccessSendPoint(val data: TransactionData? = TransactionData()) : WalletViewState()
 
     data class SuccessScanQR(val scanQRData: QRData? = null) : WalletViewState()
 

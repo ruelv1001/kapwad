@@ -145,7 +145,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_time_and_date"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
@@ -156,11 +155,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="@string/request_posted_date_text"
                 android:layout_marginTop="@dimen/dimen_10"
-                android:paddingVertical="@dimen/dimen_16"
                 android:paddingHorizontal="@dimen/dimen_20"
-                android:visibility="gone"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_14" />
 

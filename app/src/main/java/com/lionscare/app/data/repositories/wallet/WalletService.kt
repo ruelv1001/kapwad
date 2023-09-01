@@ -31,7 +31,7 @@ interface WalletService {
     suspend fun doTopupPoints(@Body request: TopupRequest): Response<GeneralResponse>
 
     @POST("/api/wallet/user/send")
-    suspend fun doSendPoints(@Body request: SendPointsToUserRequest): Response<GeneralResponse>
+    suspend fun doSendPoints(@Body request: SendPointsToUserRequest): Response<TransactionDetailsResponse>
 
     @POST("api/wallet/user/scan")
     suspend fun doScanQr(@Body request: ScanQRRequest): Response<ScanQRResponse>
