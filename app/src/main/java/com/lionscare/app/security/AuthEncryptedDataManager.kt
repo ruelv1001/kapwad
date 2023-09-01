@@ -6,9 +6,9 @@ import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.lionscare.app.data.repositories.baseresponse.AvatarModel
+import com.lionscare.app.data.repositories.baseresponse.Avatar
 import com.lionscare.app.data.repositories.baseresponse.DateModel
-import com.lionscare.app.data.repositories.baseresponse.QRValueModel
+import com.lionscare.app.data.repositories.baseresponse.QrValue
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 
 class AuthEncryptedDataManager {
@@ -49,8 +49,8 @@ class AuthEncryptedDataManager {
 
     private var inMemoryUserData: UserModel? = null
     private var inMemoryDateRegisteredData: DateModel? = null
-    private var inMemoryQRValueData: QRValueModel? = null
-    private var inMemoryAvatarData: AvatarModel? = null
+    private var inMemoryQRValueData: QrValue? = null
+    private var inMemoryAvatarData: Avatar? = null
 
     /**
      * Function to set user's basic info
@@ -59,8 +59,8 @@ class AuthEncryptedDataManager {
         inMemoryUserData = userInfo
 
         setUserDateInfo(userInfo.date_registered?: DateModel())
-        setUserQRValue(userInfo.qr_value?: QRValueModel())
-        setUserAvatar(userInfo.avatar?: AvatarModel())
+        setUserQRValue(userInfo.qrValue?: QrValue())
+        setUserAvatar(userInfo.avatar?: Avatar())
 
         sharedPreferences.edit(true) {
             putString(USER_INFO_ID, userInfo.id)
@@ -97,7 +97,7 @@ class AuthEncryptedDataManager {
         }
     }
 
-    fun setUserQRValue(dataValue: QRValueModel) {
+    fun setUserQRValue(dataValue: QrValue) {
         inMemoryQRValueData = dataValue
         sharedPreferences.edit(true) {
             putString(USER_QR_VAL_TYPE, dataValue.type)
@@ -106,7 +106,7 @@ class AuthEncryptedDataManager {
         }
     }
 
-    fun setUserAvatar(dataValue: AvatarModel) {
+    fun setUserAvatar(dataValue: Avatar) {
         inMemoryAvatarData = dataValue
         sharedPreferences.edit(true) {
             putString(USER_AVATAR_FILENAME, dataValue.filename)
@@ -160,19 +160,19 @@ class AuthEncryptedDataManager {
         }
         return inMemoryDateRegisteredData ?: DateModel()
     }
-    fun getUserQRValue(): QRValueModel {
+    fun getUserQRValue(): QrValue {
         if (inMemoryQRValueData == null) {
-            inMemoryQRValueData = QRValueModel().apply {
+            inMemoryQRValueData = QrValue().apply {
                 type = sharedPreferences.getString(USER_QR_VAL_TYPE, "")
                 value = sharedPreferences.getString(USER_QR_VAL_VALUE, "")
                 signature = sharedPreferences.getString(USER_QR_VAL_SIGNATURE, "")
             }
         }
-        return inMemoryQRValueData ?: QRValueModel()
+        return inMemoryQRValueData ?: QrValue()
     }
-    fun getUserAvatar(): AvatarModel {
+    fun getUserAvatar(): Avatar {
         if (inMemoryAvatarData == null) {
-            inMemoryAvatarData = AvatarModel().apply {
+            inMemoryAvatarData = Avatar().apply {
                 filename = sharedPreferences.getString(USER_AVATAR_FILENAME, "")
                 path = sharedPreferences.getString(USER_AVATAR_PATH, "")
                 directory = sharedPreferences.getString(USER_AVATAR_DIRECTORY, "")
@@ -180,7 +180,7 @@ class AuthEncryptedDataManager {
                 thumb_path = sharedPreferences.getString(USER_AVATAR_THUMB_PATH, "")
             }
         }
-        return inMemoryAvatarData ?: AvatarModel()
+        return inMemoryAvatarData ?: Avatar()
     }
 
     fun isLoggedIn(): Boolean {
@@ -194,8 +194,8 @@ class AuthEncryptedDataManager {
     fun clearUserInfo(){
         inMemoryUserData = UserModel()
         inMemoryDateRegisteredData = DateModel()
-        inMemoryQRValueData = QRValueModel()
-        inMemoryAvatarData = AvatarModel()
+        inMemoryQRValueData = QrValue()
+        inMemoryAvatarData = Avatar()
         setAccessToken("")
     }
 
