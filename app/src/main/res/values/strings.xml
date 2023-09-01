@@ -136,8 +136,8 @@
     <string name="home_not_verified_message">Your Account \nis not yet verified</string>
     <string name="home_get_verified_text">Get Verified</string>
     <string name="wallet_recipient_title">Recipient</string>
-    <string name="wallet_message_title">Message</string>
-    <string name="wallet_enter_your_message_hint">Enter your message</string>
+    <string name="wallet_message_title">Message (Optional)</string>
+    <string name="wallet_enter_your_message_hint">Enter your message \neg. Happy Birthday, Merry Christmas, etc.</string>
     <string name="wallet_enter_id_number_hint">Enter ID Number</string>
     <string name="wallet_send_points_to_title">Send Points</string>
     <string name="wallet_request_points_from_title">Request Points from</string>
@@ -281,5 +281,6 @@
     <string name="password_visiblity_toggle">Password Visiblity Toggle</string>
     <string name="request_points_people_lbl">People</string>
     <string name="lbl_notifications">Notifications</string>
+    <string name="send_points_message_lbl">Message</string>
 
 </resources>

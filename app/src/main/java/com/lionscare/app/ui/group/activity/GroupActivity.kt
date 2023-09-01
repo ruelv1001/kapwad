@@ -2,6 +2,7 @@ package com.lionscare.app.ui.group.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.ActivityGroupBinding
 import com.lionscare.app.utils.dialog.CommonDialog
+import com.lionscare.app.utils.getParcelable
 import com.lionscare.app.utils.getSerializable
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +38,7 @@ class GroupActivity : AppCompatActivity() {
         setContentView(view)
         setupNavigationComponent()
         setOnClickListener()
-        groupDetails = getSerializable(intent, GROUP_DATA, GroupData::class.java)
+        groupDetails = intent.getParcelable(GROUP_DATA)
     }
 
     private fun setOnClickListener() = binding.run {

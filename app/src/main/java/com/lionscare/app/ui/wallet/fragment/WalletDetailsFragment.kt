@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentWalletDetailsBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.utils.copyToClipboard
+import com.lionscare.app.utils.currencyFormat
 import com.lionscare.app.utils.setOnSingleClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WalletDetailsFragment : Fragment() {
 
     private var _binding: FragmentWalletDetailsBinding? = null
@@ -36,14 +40,23 @@ class WalletDetailsFragment : Fragment() {
     }
 
     private fun setupDetails() = binding.run {
+        activity.onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                //DO NOTHING
+            }
+        })
         when(activity.mode){
             "Send Points" -> {
                 titleTextView.text = getString(R.string.wallet_send_points_details_title)
                 requestedPointsTextView.text = getString(R.string.wallet_sent_points_text)
+                recipientLayout.nameTextView.text = activity.qrData.name
+                //TODO to be updated when display id ready
+                recipientLayout.idNoTextView.text = "LC-000123"
+                reasonTextView.text = activity.message
+                pointsTextView.text = currencyFormat(activity.amount)
 
-                activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }
-                recipientLayout.nameTextView.text = activity.data.title
-                recipientLayout.idNoTextView.text = activity.data.amount
+                //TODO to be updated when ref number is already on response
+                refidTextView.text = "SAMPLE-REF-000-123"
             }
             "Scan 2 Pay" -> {
                 titleTextView.text = getString(R.string.wallet_scan2pay_details_title)

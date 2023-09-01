@@ -54,7 +54,7 @@ class WalletRepository @Inject constructor(
 
     fun doSendPoints(amount: String, userId: String): Flow<GeneralResponse> {
         return flow {
-            val response = walletRemoteDataSource.doSendPoints(amount, userId)
+            val response = walletRemoteDataSource.doSendPoints(userId, amount)
             emit(response)
         }.flowOn(ioDispatcher)
     }

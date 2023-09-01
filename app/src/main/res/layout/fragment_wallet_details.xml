@@ -101,7 +101,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dimen_10"
-                android:paddingVertical="@dimen/dimen_16"
                 android:paddingHorizontal="@dimen/dimen_20"
                 android:gravity="center">
 
@@ -146,6 +145,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_time_and_date"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
@@ -160,6 +160,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:paddingVertical="@dimen/dimen_16"
                 android:paddingHorizontal="@dimen/dimen_20"
+                android:visibility="gone"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_14" />
 
@@ -167,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/request_posted_reason_text"
+                android:text="@string/send_points_message_lbl"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
@@ -178,9 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="@string/request_posted_reason_text"
                 android:layout_marginTop="@dimen/dimen_10"
-                android:paddingVertical="@dimen/dimen_16"
                 android:paddingHorizontal="@dimen/dimen_20"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_14" />
