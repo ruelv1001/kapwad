@@ -39,10 +39,9 @@ class WalletSummaryFragment : Fragment() {
         when(activity.mode){
             "Send Points" -> {
                 titleTextView.text = getString(R.string.wallet_send_points_summary_title)
-
-                activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }
-                recipientLayout.nameTextView.text = activity.data.title
-                recipientLayout.idNoTextView.text = activity.data.amount
+                recipientLayout.nameTextView.text = activity.qrData.name
+                //TODO to be updated when display id ready
+                recipientLayout.idNoTextView.text = activity.qrData.id
             }
             "Scan 2 Pay" -> {
                 titleTextView.text = getString(R.string.wallet_points_recipient_summary_title)
