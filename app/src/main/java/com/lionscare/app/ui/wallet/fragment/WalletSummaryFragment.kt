@@ -5,17 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentWalletSummaryBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
+import com.lionscare.app.utils.currencyFormat
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WalletSummaryFragment : Fragment() {
 
     private var _binding: FragmentWalletSummaryBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as WalletActivity }
+    private val viewModel: WalletViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +46,7 @@ class WalletSummaryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDetails()
         setupClickListener()
+        observeWallet()
     }
 
     private fun setupDetails() = binding.run {
@@ -41,7 +55,7 @@ class WalletSummaryFragment : Fragment() {
                 titleTextView.text = getString(R.string.wallet_send_points_summary_title)
                 recipientLayout.nameTextView.text = activity.qrData.name
                 //TODO to be updated when display id ready
-                recipientLayout.idNoTextView.text = activity.qrData.id
+                recipientLayout.idNoTextView.text = "LC-000123"
             }
             "Scan 2 Pay" -> {
                 titleTextView.text = getString(R.string.wallet_points_recipient_summary_title)
@@ -56,9 +70,33 @@ class WalletSummaryFragment : Fragment() {
             }
         }
 
-        amountTextView.text = activity.amount
+        amountTextView.text = currencyFormat(activity.amount)
         messageTextView.text = activity.message
 
+    }
+
+    private fun observeWallet() {
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewModel.walletSharedFlow.collectLatest { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: WalletViewState) {
+        when (viewState) {
+            is WalletViewState.Loading -> activity.showLoadingDialog(R.string.loading)
+            is WalletViewState.SuccessSendPoint -> {
+                activity.hideLoadingDialog()
+                findNavController().navigate(WalletSummaryFragmentDirections.actionNavigationWalletSummaryToNavigationWalletDetails())
+            }
+            is WalletViewState.PopupError -> {
+                activity.hideLoadingDialog()
+                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+            }
+
+            else -> Unit
+        }
     }
 
     private fun setupClickListener() = binding.run{
@@ -66,7 +104,8 @@ class WalletSummaryFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         continueButton.setOnSingleClickListener {
-            findNavController().navigate(WalletSummaryFragmentDirections.actionNavigationWalletSummaryToNavigationWalletDetails())
+
+            viewModel.doSendPoints(activity.qrData.id.orEmpty(), activity.amount)
         }
     }
 

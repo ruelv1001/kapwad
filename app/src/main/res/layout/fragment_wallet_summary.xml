@@ -78,7 +78,6 @@
             android:fontFamily="@font/inter_medium"
             android:text="@string/top_up_h5_text"
             android:layout_marginTop="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_16"
             android:paddingHorizontal="@dimen/dimen_20"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_14" />
@@ -89,7 +88,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:layout_marginTop="@dimen/dimen_16"
-            android:text="@string/wallet_message_title"
+            android:text="@string/send_points_message_lbl"
             android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_16" />
@@ -101,7 +100,6 @@
             android:fontFamily="@font/inter_medium"
             android:text="@string/request_posted_reason_text"
             android:layout_marginTop="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_16"
             android:paddingHorizontal="@dimen/dimen_20"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_14" />
