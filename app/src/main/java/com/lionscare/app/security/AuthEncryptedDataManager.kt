@@ -59,7 +59,7 @@ class AuthEncryptedDataManager {
         inMemoryUserData = userInfo
 
         setUserDateInfo(userInfo.date_registered?: DateModel())
-        setUserQRValue(userInfo.qrValue?: QrValue())
+        setUserQRValue(userInfo.qr_value?: QrValue())
         setUserAvatar(userInfo.avatar?: Avatar())
 
         sharedPreferences.edit(true) {
