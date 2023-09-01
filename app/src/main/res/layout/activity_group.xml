@@ -35,6 +35,8 @@
             android:autoSizeTextType="uniform"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:paddingStart="@dimen/dimen_25"
