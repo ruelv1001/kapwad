@@ -95,6 +95,10 @@
             android:name=".ui.settings.activity.ProfileActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.settings.activity.NotificationsActivity"
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

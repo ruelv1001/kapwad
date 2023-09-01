@@ -17,11 +17,6 @@
         android:title="@string/menu_groups_title" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_list"
-        android:title="@string/menu_history_title" />
-
-    <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/menu_settings_title" />

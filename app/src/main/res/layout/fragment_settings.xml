@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -53,8 +52,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
-                    android:textAlignment="center"
                     android:hint="@string/loading"
+                    android:textAlignment="center"
                     android:textColor="@color/black_text"
                     android:textSize="@dimen/font_16" />
 
@@ -67,10 +66,10 @@
                     android:drawablePadding="@dimen/dimen_2"
                     android:fontFamily="@font/inter_medium"
                     android:text="@string/account_type_influencer_text"
-                    android:visibility="gone"
                     android:textAlignment="center"
                     android:textColor="@color/bg_blue_text"
-                    android:textSize="@dimen/font_16" />
+                    android:textSize="@dimen/font_16"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/idNoTextView"
@@ -91,7 +90,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1"
             android:layout_marginTop="@dimen/dimen_16"
-            android:background="@color/line"/>
+            android:background="@color/line" />
+
 
         <LinearLayout
             android:id="@+id/requestBadgeLinearLayout"
@@ -110,10 +110,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/settings_request_badge_text"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/dimen_16"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -121,13 +121,48 @@
                 android:id="@+id/verifiedRBTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_verified"
                 android:textColor="@color/green"
-                android:visibility="gone"
-                android:fontFamily="@font/inter_semibold"/>
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/arrowRBImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_forward_arrow" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/notifLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_60"
+                android:background="@drawable/bg_group_btn"
+                android:backgroundTint="@color/light_gray_line"
+                android:backgroundTintMode="screen"
+                android:padding="@dimen/dimen_15"
+                android:src="@drawable/baseline_notifications_none_24"
+                app:tint="@color/super_light_gray" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_notifications"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_forward_arrow" />
@@ -151,10 +186,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/verify_account_title"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/dimen_16"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -162,10 +197,10 @@
                 android:id="@+id/verifiedVATextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_verified"
                 android:textColor="@color/green"
-                android:visibility="gone"
-                android:fontFamily="@font/inter_semibold"/>
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/arrowVAImageView"
@@ -191,10 +226,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/settings_change_password_text"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/dimen_16"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -221,10 +256,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/logout_btn"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/dimen_16"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
