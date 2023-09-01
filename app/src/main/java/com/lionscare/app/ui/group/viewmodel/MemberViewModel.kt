@@ -39,7 +39,7 @@ class MemberViewModel @Inject constructor(
             }
             .catch { exception ->
                 onError(exception)
-                CommonLogger.devLog("error",exception)
+                CommonLogger.devLog("error", exception)
             }
             .collect { pagingData ->
                 _memberSharedFlow.emit(
@@ -51,6 +51,29 @@ class MemberViewModel @Inject constructor(
     fun refresh(groupId: String) {
         viewModelScope.launch {
             loadPendingMemberRequest(groupId)
+        }
+    }
+
+    private suspend fun loadListOfMembers(groupId: String) {
+        memberRepository.doGetListOfMember(groupId = groupId)
+            .cachedIn(viewModelScope)
+            .onStart {
+                _memberSharedFlow.emit(MemberViewState.Loading)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.devLog("error", exception)
+            }
+            .collect { pagingData ->
+                _memberSharedFlow.emit(
+                    MemberViewState.SuccessGetListOfMembers(pagingData)
+                )
+            }
+    }
+
+    fun refreshListOfMembers(groupId: String) {
+        viewModelScope.launch {
+            loadListOfMembers(groupId)
         }
     }
 

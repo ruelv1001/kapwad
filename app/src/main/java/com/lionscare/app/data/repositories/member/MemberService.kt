@@ -4,6 +4,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.ListOfMembersResponse
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -12,7 +13,7 @@ import retrofit2.http.POST
 interface MemberService {
 
     @POST("api/group/member/all")
-    suspend fun doGetListOfMembers(@Body listOfMembersRequest: ListOfMembersRequest): Response<GeneralResponse>
+    suspend fun doGetListOfMembers(@Body listOfMembersRequest: ListOfMembersRequest): Response<ListOfMembersResponse>
 
     @POST("api/group/member/leave")
     suspend fun doLeaveGroup(@Body leaveGroupRequest: LeaveGroupRequest): Response<GeneralResponse>

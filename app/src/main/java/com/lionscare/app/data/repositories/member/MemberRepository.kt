@@ -8,6 +8,7 @@ import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,11 +23,13 @@ class MemberRepository @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    fun doGetListOfMember(listOfMembersRequest: ListOfMembersRequest): Flow<GeneralResponse> {
-        return flow {
-            val response = memberRemoteDataSource.doGetListOfMembers(listOfMembersRequest)
-            emit(response)
-        }.flowOn(ioDispatcher)
+    fun doGetListOfMember(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String): Flow<PagingData<MemberListData>> {
+        val getListOfMembersPagingSource = GetListOfMembersPagingSource(memberRemoteDataSource, groupId)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getListOfMembersPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
     }
 
     fun doLeaveGroup(leaveGroupRequest: LeaveGroupRequest): Flow<GeneralResponse> {

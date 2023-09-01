@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.AppRetrofitService
 import com.lionscare.app.data.repositories.group.GetGroupPagingSource
 import com.lionscare.app.data.repositories.group.GroupRemoteDataSource
 import com.lionscare.app.data.repositories.member.GetAllPendingRequestPagingSource
+import com.lionscare.app.data.repositories.member.GetListOfMembersPagingSource
 import com.lionscare.app.data.repositories.member.MemberRemoteDataSource
 import com.lionscare.app.data.repositories.member.MemberRepository
 import com.lionscare.app.data.repositories.member.MemberService
@@ -33,6 +34,11 @@ class MemberModule {
     @Provides
     fun providesGetAllPendingRequestPagingSource(memberRemoteDataSource: MemberRemoteDataSource): GetAllPendingRequestPagingSource {
         return GetAllPendingRequestPagingSource(memberRemoteDataSource)
+    }
+
+    @Provides
+    fun providesGetListOfMembersPagingSource(memberRemoteDataSource: MemberRemoteDataSource): GetListOfMembersPagingSource {
+        return GetListOfMembersPagingSource(memberRemoteDataSource)
     }
 
     @Provides
