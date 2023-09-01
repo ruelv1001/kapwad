@@ -9,6 +9,7 @@ import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
+import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
@@ -81,6 +82,13 @@ class WalletRepository @Inject constructor(
     fun doSearchUser(keyword: String): Flow<SearchUserResponse> {
         return flow {
             val response = walletRemoteDataSource.doSearchUser(keyword)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doSearchGroup(keyword: String): Flow<SearchGroupResponse> {
+        return flow {
+            val response = walletRemoteDataSource.doSearchGroup(keyword)
             emit(response)
         }.flowOn(ioDispatcher)
     }

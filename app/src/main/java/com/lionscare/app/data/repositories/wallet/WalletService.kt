@@ -9,6 +9,7 @@ import com.lionscare.app.data.repositories.wallet.request.TransactionDetailsRequ
 import com.lionscare.app.data.repositories.wallet.request.TransactionListRequest
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
 import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
+import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionListResponse
@@ -36,6 +37,9 @@ interface WalletService {
     @POST("api/wallet/user/scan")
     suspend fun doScanQr(@Body request: ScanQRRequest): Response<ScanQRResponse>
 
-    @POST("api/wallet/user/search")
+    @POST("api/wallet/user/search/user")
     suspend fun doSearchUser(@Body request: SearchUserRequest): Response<SearchUserResponse>
+
+    @POST("api/wallet/user/search/group")
+    suspend fun doSearchGroup(@Body request: SearchUserRequest): Response<SearchGroupResponse>
 }
