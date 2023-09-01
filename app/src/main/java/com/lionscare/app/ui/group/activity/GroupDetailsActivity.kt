@@ -86,7 +86,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
             startActivity(intent)
         }
         membersLinearLayout.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP)
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP, groupDetails)
             startActivity(intent)
         }
     }

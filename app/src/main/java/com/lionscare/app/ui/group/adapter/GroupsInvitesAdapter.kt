@@ -4,80 +4,95 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.member.response.PendingMemberData
+import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import com.lionscare.app.databinding.AdapterGroupPendingRequestBinding
+import com.lionscare.app.databinding.AdapterMembersBinding
+import com.lionscare.app.utils.loadImage
 
-class GroupsInvitesAdapter (val context: Context, val clickListener: GroupCallback) :
-    RecyclerView.Adapter<GroupsInvitesAdapter.AdapterViewHolder>() {
+class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallback) :
+    PagingDataAdapter<PendingMemberData, GroupsInvitesAdapter.AdapterViewHolder>(
+        DIFF_CALLBACK
+    ) {
 
-    private val adapterData = mutableListOf<ArticleData>()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PendingMemberData>() {
+            override fun areItemsTheSame(
+                oldItem: PendingMemberData,
+                newItem: PendingMemberData
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    fun clear(){
-        adapterData.clear()
-        notifyDataSetChanged()
+            override fun areContentsTheSame(
+                oldItem: PendingMemberData,
+                newItem: PendingMemberData
+            ): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
-
-    fun appendData(newData: List<ArticleData>) {
-        val startAt = adapterData.size
-        adapterData.addAll(newData)
-        notifyItemRangeInserted(startAt, newData.size)
-    }
-
-
-    fun getData(): MutableList<ArticleData> = adapterData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        val binding = AdapterGroupPendingRequestBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = AdapterGroupPendingRequestBinding.inflate(inflater, parent, false)
         return AdapterViewHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
-        holder.displayData(adapterData[position])
+        val pendingMemberData = getItem(position)
+        holder.bind(pendingMemberData)
     }
 
     inner class AdapterViewHolder(val binding: AdapterGroupPendingRequestBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun displayData(data: ArticleData) = with(itemView) {
-            binding.titleTextView.text = data.name
-            binding.membersTextView.text = data.description
-            binding.referenceTextView.visibility = View.GONE
-//            binding.articleImageView.loadImage(data.image?.thumb_path, context)
+        fun bind(data: PendingMemberData?) {
+            data?.let {
+                binding.titleTextView.text = data.user?.name
+                binding.membersTextView.text = data.user?.qrcode
+                binding.referenceTextView.visibility = View.GONE
+               // binding.imageView.loadImage(data.user?.avatar?.thumb_path, context)
 
-            /*if(type == "invite"){
-              binding.acceptTextView.visibility = View.VISIBLE
-              binding.declineTextView.visibility = View.VISIBLE
-              binding.cancelTextView.visibility = View.GONE
-          }else{
-              binding.acceptTextView.visibility = View.GONE
-              binding.declineTextView.visibility = View.GONE
-              binding.cancelTextView.visibility = View.VISIBLE
-          }*/
+                if(data.type == "request"){
+                  binding.acceptTextView.visibility = View.VISIBLE
+                  binding.declineTextView.visibility = View.VISIBLE
+                  binding.cancelTextView.visibility = View.GONE
+              }else{
+                  binding.acceptTextView.visibility = View.GONE
+                  binding.declineTextView.visibility = View.GONE
+                  binding.cancelTextView.visibility = View.VISIBLE
+              }
 
-            binding.adapterLinearLayout.setOnClickListener {
-                clickListener.onItemClicked(data)
-            }
-            binding.acceptTextView.setOnClickListener {
-                clickListener.onAcceptClicked(data)
-            }
-            binding.declineTextView.setOnClickListener {
-                clickListener.onDeclineClicked(data)
-            }
-            binding.cancelTextView.setOnClickListener {
-                clickListener.onCancelClicked(data)
+                binding.adapterLinearLayout.setOnClickListener {
+                    clickListener.onItemClicked(data)
+                }
+                binding.acceptTextView.setOnClickListener {
+                    clickListener.onAcceptClicked(data)
+                }
+                binding.declineTextView.setOnClickListener {
+                    clickListener.onDeclineClicked(data)
+                }
+                binding.cancelTextView.setOnClickListener {
+                    clickListener.onCancelClicked(data)
+                }
             }
         }
     }
 
-    interface GroupCallback{
-        fun onItemClicked(data: ArticleData)
-        fun onAcceptClicked(data: ArticleData)
-        fun onDeclineClicked(data: ArticleData)
-        fun onCancelClicked(data: ArticleData)
+    interface GroupCallback {
+        fun onItemClicked(data: PendingMemberData)
+        fun onAcceptClicked(data: PendingMemberData)
+        fun onDeclineClicked(data: PendingMemberData)
+        fun onCancelClicked(data: PendingMemberData)
     }
 
-    override fun getItemCount(): Int = adapterData.size
+    fun hasData() : Boolean{
+        return itemCount != 0
+    }
 }
