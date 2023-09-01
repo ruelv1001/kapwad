@@ -72,6 +72,9 @@ class GroupUpdateFragment : Fragment() {
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupTypeSpinner.adapter = adapter
+        //if coming from update, id should be existing therefore dropdown will not be enabled
+        groupTypeSpinner.isEnabled = activity.groupDetails?.id == null
+
         groupTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
