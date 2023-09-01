@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -74,6 +76,10 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
                 activity.qrData = viewState.scanQRData?: QRData()
                 findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
             }
+            is WalletViewState.SuccessSearchUser -> {
+                activity.hideLoadingDialog()
+                adapter?.submitData(viewLifecycleOwner.lifecycle, viewState.pagingData)
+            }
             is WalletViewState.PopupError -> {
                 activity.hideLoadingDialog()
                 showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
@@ -101,23 +107,23 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-        dataList = listOf(
-            SampleData(
-                id = R.drawable.img_profile,
-                title = "Raquel Castro",
-                amount = "LC-000004",
-            ),
-            SampleData(
-                id = R.drawable.img_profile,
-                title = "Romeo Dela Cruz",
-                amount = "LC-000001",
-            )
-        )
-        adapter?.submitData(lifecycle, PagingData.from(dataList))
-
+        adapter?.addLoadStateListener {
+            if(adapter?.hasData() == true){
+                placeHolderTextView.isVisible = false
+                recyclerView.isVisible = true
+            }else{
+                placeHolderTextView.isVisible = true
+                recyclerView.isVisible = false
+            }
+        }
     }
 
     private fun setupClickListener() = binding.run{
+
+        searchEditText.doAfterTextChanged {
+            applyTextView.isVisible = it.toString().isNotEmpty()
+        }
+
         backImageView.setOnSingleClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -130,15 +136,21 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
             }, "Scan QR")
                 .show(childFragmentManager, ScannerDialog.TAG)
         }
+
+        applyTextView.setOnSingleClickListener {
+            viewModel.loadSearchUser(searchEditText.text.toString())
+            adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter?.removeLoadStateListener { requireActivity() }
         _binding = null
     }
 
-    override fun onItemClicked(data: SampleData) {
-        activity.data = data
+    override fun onItemClicked(data: QRData) {
+        activity.qrData = data
         findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
     }
 

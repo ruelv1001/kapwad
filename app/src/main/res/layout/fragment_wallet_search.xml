@@ -61,6 +61,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/locationTextInputLayout"
                 style="@style/TextInputLayoutStyle"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_55"
                 android:fontFamily="@font/inter_regular"
@@ -84,6 +85,19 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <TextView
+                android:id="@+id/applyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/search_user_apply_btn"
+                android:textSize="@dimen/font_14"
+                android:visibility="gone"
+                android:textColor="@color/color_primary"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:paddingHorizontal="@dimen/dimen_16"
+                android:gravity="center" />
+
+
         </LinearLayout>
 
 
@@ -102,7 +116,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            tools:listitem="@layout/adapter_members" />
+            android:visibility="gone"
+            tools:listitem="@layout/adapter_search_user" />
+
+        <TextView
+            android:id="@+id/placeHolderTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center"
+            android:text="@string/lbl_nothing_to_show_txt"
+            android:textSize="@dimen/font_14"/>
+
 
     </LinearLayout>
 

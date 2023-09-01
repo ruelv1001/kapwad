@@ -6,21 +6,21 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.lionscare.app.data.model.SampleData
-import com.lionscare.app.databinding.AdapterMembersBinding
+import com.lionscare.app.data.repositories.wallet.response.QRData
+import com.lionscare.app.databinding.AdapterSearchUserBinding
 
 class MembersAdapter(val clickListener: MembersCallback) :
-    PagingDataAdapter<SampleData, MembersAdapter.MembersViewHolder>(
+    PagingDataAdapter<QRData, MembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SampleData>() {
-            override fun areItemsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<QRData>() {
+            override fun areItemsTheSame(oldItem: QRData, newItem: QRData): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+            override fun areContentsTheSame(oldItem: QRData, newItem: QRData): Boolean {
                 return oldItem == newItem
             }
         }
@@ -28,8 +28,12 @@ class MembersAdapter(val clickListener: MembersCallback) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MembersViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = AdapterMembersBinding.inflate(inflater, parent, false)
+        val binding = AdapterSearchUserBinding.inflate(inflater, parent, false)
         return MembersViewHolder(binding)
+    }
+
+    fun hasData() : Boolean{
+        return itemCount != 0
     }
 
     override fun onBindViewHolder(holder: MembersViewHolder, position: Int) {
@@ -37,16 +41,14 @@ class MembersAdapter(val clickListener: MembersCallback) :
         holder.bind(article)
     }
 
-    inner class MembersViewHolder(private val binding: AdapterMembersBinding) :
+    inner class MembersViewHolder(private val binding: AdapterSearchUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: SampleData?) {
+        fun bind(data: QRData?) {
             data?.let {
-
-                binding.profileImageView.setImageResource(data.id?:0)
-                binding.nameTextView.text = data.title
-                binding.idNoTextView.text = data.amount
+                binding.nameTextView.text = data.name
+                //binding.idNoTextView.text = data.amount
 
                 binding.membersLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)
@@ -56,7 +58,7 @@ class MembersAdapter(val clickListener: MembersCallback) :
     }
 
     interface MembersCallback {
-        fun onItemClicked(data: SampleData)
+        fun onItemClicked(data: QRData)
     }
 
 }

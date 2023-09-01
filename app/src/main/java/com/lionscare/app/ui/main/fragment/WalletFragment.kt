@@ -144,6 +144,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter?.removeLoadStateListener { requireActivity() }
         _binding = null
     }
 
