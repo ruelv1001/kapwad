@@ -6,13 +6,13 @@ import androidx.room.*
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun login(user : com.lionscare.app.data.local.UserLocalData): Long
+    suspend fun login(user : UserLocalData): Long
 
-    @Query("UPDATE users SET access_token = :token WHERE user_id =:userId")
+    @Query("UPDATE users SET access_token = :token WHERE id =:userId")
     suspend fun updateToken(userId : String, token: String)
 
     @Query("SELECT * FROM users WHERE access_token = :access_token")
-    suspend fun getUserInfo(access_token: String): com.lionscare.app.data.local.UserLocalData
+    suspend fun getUserInfo(access_token: String): UserLocalData
 
     @Query("DELETE FROM users WHERE access_token = :access_token")
     suspend fun logout(access_token: String)

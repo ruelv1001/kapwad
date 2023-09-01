@@ -102,7 +102,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setView(userModel: UserModel?)=binding.run {
-        nameTextView.text = userModel?.getFullName()
+        nameTextView.text = userModel?.name
         badgeTextView.isVisible = false
     }
 

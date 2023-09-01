@@ -141,7 +141,7 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
     }
 
     private fun setView(userModel: UserModel?)=binding.run {
-        mainLayout.nameTextView.text = userModel?.getFullName()
+        mainLayout.nameTextView.text = userModel?.name
         qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.id))
 
         if (userModel?.street_name?.isNotEmpty() == true){
