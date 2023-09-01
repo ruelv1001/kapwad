@@ -2,26 +2,26 @@ package com.lionscare.app.data.repositories.member
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.lionscare.app.data.repositories.member.response.PendingMemberData
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import javax.inject.Inject
 
-class GetAllPendingRequestPagingSource @Inject constructor(
+class GetListOfMembersPagingSource @Inject constructor(
     private val memberRemoteDataSource: MemberRemoteDataSource,
     private val groupId: String? = null
 ) :
-    PagingSource<Int, PendingMemberData>() {
-    override fun getRefreshKey(state: PagingState<Int, PendingMemberData>): Int? {
+    PagingSource<Int, MemberListData>() {
+    override fun getRefreshKey(state: PagingState<Int, MemberListData>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PendingMemberData> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MemberListData> {
         val page = params.key ?: 1
 
         return try {
-            val response = memberRemoteDataSource.doGetAllPendingInviteAndRequest(
+            val response = memberRemoteDataSource.doGetListOfMembers(
                 groupId = groupId,
                 page = page.toString()
             )

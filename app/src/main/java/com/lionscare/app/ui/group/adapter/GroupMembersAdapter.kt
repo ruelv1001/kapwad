@@ -8,21 +8,22 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterMembersBinding
+import com.lionscare.app.utils.loadAvatar
 
 class GroupMembersAdapter(val clickListener: MembersCallback) :
-    PagingDataAdapter<SampleData, GroupMembersAdapter.MembersViewHolder>(
+    PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SampleData>() {
-            override fun areItemsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MemberListData>() {
+            override fun areItemsTheSame(oldItem: MemberListData, newItem: MemberListData): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+            override fun areContentsTheSame(oldItem: MemberListData, newItem: MemberListData): Boolean {
                 return oldItem == newItem
             }
         }
@@ -43,12 +44,12 @@ class GroupMembersAdapter(val clickListener: MembersCallback) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: SampleData?) {
+        fun bind(data: MemberListData?) {
             data?.let {
 
-                binding.profileImageView.setImageResource(data.id?:0)
-                binding.nameTextView.text = data.title
-                binding.idNoTextView.text = data.amount
+                binding.nameTextView.text = data.user?.name
+                binding.idNoTextView.text = data.user?.qrcode
+               // binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path)
 
                 binding.membersLinearLayout.setOnClickListener {
                     if (binding.checkImageView.isVisible){
@@ -63,7 +64,10 @@ class GroupMembersAdapter(val clickListener: MembersCallback) :
     }
 
     interface MembersCallback {
-        fun onItemClicked(data: SampleData)
+        fun onItemClicked(data: MemberListData)
     }
 
+    fun hasData() : Boolean{
+        return itemCount != 0
+    }
 }

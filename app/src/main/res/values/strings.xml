@@ -264,7 +264,7 @@
     <string name="lbl_ok">OK</string>
     <string name="pending_accept_text">Accept</string>
     <string name="pending_decline_text">Decline</string>
-    <string name="pending_cancel_text">Cancel</string>
+    <string name="pending_cancel_text">Cancel Invitation</string>
     <string name="loading">Loading…</string>
     <string name="_63_999_000_000">+63 999 000 000</string>
     <string name="n_a">N/A</string>

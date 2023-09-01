@@ -66,6 +66,7 @@
                     <RelativeLayout
                         android:id="@+id/memberCountRelativeLayout"
                         android:layout_width="@dimen/dimen_23"
+                        android:visibility="gone"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/dimen_10">
 
