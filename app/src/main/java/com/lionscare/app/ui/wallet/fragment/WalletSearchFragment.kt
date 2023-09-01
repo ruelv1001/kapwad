@@ -76,31 +76,12 @@ class WalletSearchFragment : Fragment(), MembersAdapter.MembersCallback {
         )
         adapter?.submitData(lifecycle, PagingData.from(dataList))
 
-        searchView.setOnQueryTextListener(object : OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterData(newText)
-                return true
-            }
-
-        })
-    }
-
-    private fun filterData(query: String?) {
-        val filteredList = dataList.filter { data ->
-            data.amount?.contains(query ?: "", ignoreCase = true) == true
-        }
-        adapter?.submitData(lifecycle, PagingData.from(filteredList))
     }
 
     private fun setupClickListener() = binding.run{
         backImageView.setOnSingleClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
     }
 
     override fun onDestroyView() {
