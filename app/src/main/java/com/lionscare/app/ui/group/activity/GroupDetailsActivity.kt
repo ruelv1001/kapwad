@@ -69,7 +69,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
     }
 
     private fun setDetails(data : GroupData) = binding.run {
-        titleTextView.text = data.group_name
+        titleTextView.text = data.name
     }
 
     private fun setupClickListener() = binding.run{

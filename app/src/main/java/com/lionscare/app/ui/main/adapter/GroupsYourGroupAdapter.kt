@@ -43,7 +43,7 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
 
         fun bind(data: GroupListData?){
             data?.let {
-                binding.titleTextView.text = data.group_name
+                binding.titleTextView.text = data.name
                 //  binding.membersTextView.text = data.description
                 //  binding.referenceTextView.text = data.reference
 

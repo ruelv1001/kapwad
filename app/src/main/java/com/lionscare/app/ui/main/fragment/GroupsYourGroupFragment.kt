@@ -127,7 +127,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
                 binding.placeHolderTextView.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
                 binding.immediateFamilyLayout.titleTextView.text =
-                    viewState.immediateFamilyResponse?.data?.group_name
+                    viewState.immediateFamilyResponse?.data?.name
                 immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }
         }
