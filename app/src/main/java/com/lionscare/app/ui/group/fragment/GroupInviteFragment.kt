@@ -67,17 +67,18 @@ class GroupInviteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
             )
         )
         adapter?.submitData(lifecycle, PagingData.from(dataList))
-        if (activity.start == START_INVITE){
-            completeButton.text = getText(R.string.lbl_invite)
-        } else {
-            completeButton.text = getText(R.string.lbl_complete)
-        }
+        //complete button removed
+//        if (activity.start == START_INVITE){
+//            completeButton.text = getText(R.string.lbl_invite)
+//        } else {
+//            completeButton.text = getText(R.string.lbl_complete)
+//        }
     }
 
 
     override fun onResume() {
         super.onResume()
-        activity.setTitlee(getString(R.string.lbl_invite_group))
+        activity.setTitlee("Invite to ${activity.groupDetails?.name}")
     }
 
     private fun setView() = binding.run {
@@ -99,11 +100,15 @@ class GroupInviteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
     }
 
     private fun setClickListeners() = binding.run {
-        completeButton.setOnSingleClickListener {
+//        completeButton.setOnSingleClickListener {
 //            if (firstNameEditText.text.toString().isEmpty()){
 //                firstNameTextInputLayout.error = "Field is required"
 //            }
 //                findNavController().navigate(GroupInviteFragmentDirection.actionNavigationOtp())
+//        }
+
+        activity.getScanImageView().setOnSingleClickListener {
+            //TODO scanner
         }
 
     }

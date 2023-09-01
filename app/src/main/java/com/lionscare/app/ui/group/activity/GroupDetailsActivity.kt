@@ -3,6 +3,7 @@ package com.lionscare.app.ui.group.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -74,7 +75,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
 
     private fun setupClickListener() = binding.run{
         addImageView.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_INVITE)
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_INVITE, groupDetails)
             startActivity(intent)
         }
         settingsImageView.setOnSingleClickListener {
@@ -88,6 +89,9 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         membersLinearLayout.setOnSingleClickListener {
             val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP, groupDetails)
             startActivity(intent)
+        }
+        backImageView.setOnSingleClickListener {
+          finish()
         }
     }
 
@@ -151,6 +155,7 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
         private const val START_ASSISTANCE = "START_ASSISTANCE"
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         private const val GROUP_ID = "GROUP_ID"
+        private const val GROUP_NAME = "GROUP_NAME"
         fun getIntent(context: Context, group_id: String? = null): Intent {
             val intent = Intent(context, GroupDetailsActivity::class.java)
             intent.putExtra(GROUP_ID,group_id)

@@ -140,6 +140,28 @@ class WalletViewModel @Inject constructor(
         }
     }
 
+    private suspend fun doSearchUser(keyword: String) {
+        walletRepository.doSearchUser(keyword)
+            .cachedIn(viewModelScope)
+            .onStart {
+                _walletSharedFlow.emit(WalletViewState.Loading)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.sysLogE("error",exception.localizedMessage, exception)
+            }
+            .collect { pagingData ->
+                _walletSharedFlow.emit(
+                    WalletViewState.SuccessSearchUser(pagingData))
+            }
+    }
+
+    fun loadSearchUser(keyword: String) {
+        viewModelScope.launch {
+            doSearchUser(keyword)
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,

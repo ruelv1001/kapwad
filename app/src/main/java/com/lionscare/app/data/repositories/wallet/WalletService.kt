@@ -2,12 +2,14 @@ package com.lionscare.app.data.repositories.wallet
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.wallet.request.ScanQRRequest
+import com.lionscare.app.data.repositories.wallet.request.SearchUserRequest
 import com.lionscare.app.data.repositories.wallet.request.SendPointsToUserRequest
 import com.lionscare.app.data.repositories.wallet.request.TopupRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionDetailsRequest
 import com.lionscare.app.data.repositories.wallet.request.TransactionListRequest
 import com.lionscare.app.data.repositories.wallet.response.GetBalanceResponse
 import com.lionscare.app.data.repositories.wallet.response.ScanQRResponse
+import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionListResponse
 import retrofit2.Response
@@ -33,4 +35,7 @@ interface WalletService {
 
     @POST("api/wallet/user/scan")
     suspend fun doScanQr(@Body request: ScanQRRequest): Response<ScanQRResponse>
+
+    @POST("api/wallet/user/search")
+    suspend fun doSearchUser(@Body request: SearchUserRequest): Response<SearchUserResponse>
 }

@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/dimen_20"
+        android:layout_marginHorizontal="@dimen/dimen_20"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -70,38 +70,6 @@
             tools:listitem="@layout/adapter_members" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_15"
-            android:background="@drawable/bg_shadow_top"
-            android:visibility="visible" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_5"
-            android:background="@color/white">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/completeButton"
-                style="@style/MyButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_20"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:layout_marginEnd="@dimen/dimen_20"
-                android:layout_marginBottom="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:paddingTop="@dimen/dimen_15"
-                android:paddingBottom="@dimen/dimen_15"
-                android:text="@string/lbl_complete"
-                android:textAllCaps="false"
-                android:textSize="@dimen/font_14" />
-        </RelativeLayout>
-    </RelativeLayout>
 
 </LinearLayout>

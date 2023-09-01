@@ -19,15 +19,16 @@
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
             android:padding="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_12"
             android:src="@drawable/ic_back_arrow"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/titleTextView"
@@ -37,7 +38,7 @@
                 android:maxLines="1"
                 android:layout_marginTop="@dimen/dimen_4"
                 android:textColor="@color/black_text"
-                android:textSize="@dimen/font_20" />
+                android:textSize="@dimen/font_18" />
 
             <TextView
                 android:id="@+id/referenceTextView"
@@ -63,8 +64,8 @@
             android:id="@+id/settingsImageView"
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
-            android:padding="@dimen/dimen_5"
-            android:src="@drawable/ic_settings_group" />
+            app:tint="@color/color_primary"
+            android:src="@drawable/outline_info_24" />
 
     </LinearLayout>
 
@@ -108,18 +109,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
+                            android:gravity="center_vertical|end"
                             android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:drawablePadding="@dimen/dimen_10"
-                                android:fontFamily="@font/inter_semibold"
-                                android:text="@string/lbl_group_wallet"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/font_18" />
 
                             <ImageView
                                 android:id="@+id/notesImageView"
