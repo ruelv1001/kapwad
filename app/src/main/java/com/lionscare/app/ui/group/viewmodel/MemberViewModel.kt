@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -31,8 +32,8 @@ class MemberViewModel @Inject constructor(
     val memberSharedFlow: SharedFlow<MemberViewState> =
         _memberSharedFlow.asSharedFlow()
 
-    private suspend fun loadPendingMemberRequest(groupId: String) {
-        memberRepository.doGetAllPendingRequest(groupId = groupId)
+    private suspend fun loadPendingMemberRequest(groupId: String, type : String) {
+        memberRepository.doGetAllPendingRequest(groupId = groupId, type = type)
             .cachedIn(viewModelScope)
             .onStart {
                 _memberSharedFlow.emit(MemberViewState.Loading)
@@ -41,16 +42,16 @@ class MemberViewModel @Inject constructor(
                 onError(exception)
                 CommonLogger.devLog("error", exception)
             }
-            .collect { pagingData ->
+            .collectLatest { pagingData ->
                 _memberSharedFlow.emit(
                     MemberViewState.SuccessGetPendingRequest(pagingData)
                 )
             }
     }
 
-    fun refresh(groupId: String) {
+    fun refresh(groupId: String, type : String) {
         viewModelScope.launch {
-            loadPendingMemberRequest(groupId)
+            loadPendingMemberRequest(groupId, type)
         }
     }
 

@@ -5,9 +5,10 @@ import androidx.paging.PagingState
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import javax.inject.Inject
 
-class GetAllPendingRequestPagingSource @Inject constructor(
+class GetAllPendingRequestPagingSource constructor(
     private val memberRemoteDataSource: MemberRemoteDataSource,
-    private val groupId: String? = null
+    private val groupId: String? = null,
+    private val type: String? = null
 ) :
     PagingSource<Int, PendingMemberData>() {
     override fun getRefreshKey(state: PagingState<Int, PendingMemberData>): Int? {
@@ -23,7 +24,8 @@ class GetAllPendingRequestPagingSource @Inject constructor(
         return try {
             val response = memberRemoteDataSource.doGetAllPendingInviteAndRequest(
                 groupId = groupId,
-                page = page.toString()
+                page = page.toString(),
+                type = type
             )
             if (response.data?.isNotEmpty() == true) {
                 LoadResult.Page(

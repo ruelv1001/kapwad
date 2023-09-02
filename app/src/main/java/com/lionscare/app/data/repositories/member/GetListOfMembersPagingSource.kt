@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import javax.inject.Inject
 
-class GetListOfMembersPagingSource @Inject constructor(
+class GetListOfMembersPagingSource constructor(
     private val memberRemoteDataSource: MemberRemoteDataSource,
     private val groupId: String? = null
 ) :
