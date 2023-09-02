@@ -33,10 +33,4 @@ interface MemberService {
     //Pending member folder
     @POST("api/group/member/pending/all")
     suspend fun doGetAllPendingInviteAndRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<PendingMemberResponse>
-
-    @POST("api/group/member/pending/request")
-    suspend fun doGetAllPendingRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<PendingMemberResponse>
-
-    @POST("api/group/member/pending/invitation")
-    suspend fun doGetAllPendingInvitation(@Body listOfMembersRequest: ListOfMembersRequest): Response<PendingMemberResponse>
 }
