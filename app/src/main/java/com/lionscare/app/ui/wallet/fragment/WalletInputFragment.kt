@@ -42,14 +42,14 @@ class WalletInputFragment : Fragment() {
         when(activity.mode){
             "Send Points" -> {
                 titleTextView.text = getString(R.string.wallet_send_points_title)
-                recipientEditText.setText(activity.qrData.name)
-            }
-            "Scan 2 Pay" -> {
-                titleTextView.text = getString(R.string.wallet_points_recipient_title)
-            }
-            "Post Request" -> {
-                titleTextView.text = getString(R.string.wallet_request_points_title)
-                recipientTitleTextView.text = getString(R.string.wallet_from_title)
+
+                recipientEditText.setText(
+                    if (activity.isGroupId){
+                        activity.groupData.name
+                    }else{
+                        activity.qrData.name
+                    }
+                )
             }
         }
 
