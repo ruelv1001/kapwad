@@ -4,6 +4,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.ApproveRequestResponse
 import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.ListOfMembersResponse
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
@@ -65,6 +66,24 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
     ): PendingMemberResponse {
         val request = ListOfMembersRequest(group_id = groupId, page = page, type = type)
         val response = memberService.doGetAllPendingInviteAndRequest(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doApproveJoinRequest(pending_id: String, group_id: String): ApproveRequestResponse {
+        val request = ListOfMembersRequest(pending_id = pending_id, group_id = group_id)
+        val response = memberService.doApproveJoinRequest(request)
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doRejectJoinRequest(pending_id: String, group_id: String): GeneralResponse {
+        val request = ListOfMembersRequest(pending_id = pending_id, group_id = group_id)
+        val response = memberService.doRejectJoinRequest(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

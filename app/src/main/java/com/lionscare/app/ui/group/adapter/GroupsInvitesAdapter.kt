@@ -57,17 +57,17 @@ class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallbac
                 binding.titleTextView.text = data.user?.name
                 binding.membersTextView.text = data.user?.qrcode
                 binding.referenceTextView.visibility = View.GONE
-               // binding.imageView.loadImage(data.user?.avatar?.thumb_path, context)
+                // binding.imageView.loadImage(data.user?.avatar?.thumb_path, context)
 
-                if(data.type == "request"){
-                  binding.acceptTextView.visibility = View.VISIBLE
-                  binding.declineTextView.visibility = View.VISIBLE
-                  binding.cancelTextView.visibility = View.GONE
-              }else{
-                  binding.acceptTextView.visibility = View.GONE
-                  binding.declineTextView.visibility = View.GONE
-                  binding.cancelTextView.visibility = View.VISIBLE
-              }
+                if (data.type == "request") {
+                    binding.acceptTextView.visibility = View.VISIBLE
+                    binding.declineTextView.visibility = View.VISIBLE
+                    binding.cancelTextView.visibility = View.GONE
+                } else {
+                    binding.acceptTextView.visibility = View.GONE
+                    binding.declineTextView.visibility = View.GONE
+                    binding.cancelTextView.visibility = View.VISIBLE
+                }
 
                 binding.adapterLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)
@@ -92,7 +92,8 @@ class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallbac
         fun onCancelClicked(data: PendingMemberData)
     }
 
-    fun hasData() : Boolean{
+    fun hasData(): Boolean {
         return itemCount != 0
     }
+
 }

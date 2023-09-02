@@ -126,11 +126,20 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
             is ImmediateFamilyViewState.Success -> {
                 binding.placeHolderTextView.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
-                binding.immediateFamilyLayout.titleTextView.text =
-                    viewState.immediateFamilyResponse?.data?.name
+                viewState.immediateFamilyResponse?.data?.let { setImmediateFamily(it) }
                 immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }
         }
+    }
+
+    private fun setImmediateFamily(data: GroupListData) = binding.run{
+        immediateFamilyLayout.titleTextView.text = data.name
+        immediateFamilyLayout.membersTextView.text = if ((data.member_count ?: 0) > 1) {
+            "${data.member_count} members"
+        } else {
+            "${data.member_count} member"
+        }
+        immediateFamilyLayout.referenceTextView.text = data.qrcode
     }
 
     private fun showGroup(groupListData: PagingData<GroupListData>) {
