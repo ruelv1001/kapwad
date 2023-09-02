@@ -106,7 +106,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
 
     override fun onResume() {
         super.onResume()
-        activity.setTitlee(getString(R.string.lbl_reg_complete_profile))
+        activity.setTitlee(getString(R.string.lbl_update_profile))
         hideLoadingDialog()
     }
 
