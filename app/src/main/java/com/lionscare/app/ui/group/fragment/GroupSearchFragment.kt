@@ -11,8 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupData
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentGroupSearchBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
 import com.lionscare.app.ui.wallet.adapter.GroupsAdapter
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.utils.dialog.ScannerDialog
@@ -20,13 +22,12 @@ import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GroupSearchFragment : Fragment(),
-    GroupsAdapter.OnClickCallback {
+class GroupSearchFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     private var _binding: FragmentGroupSearchBinding? = null
     private val binding get() = _binding!!
     private var groupLinearLayoutManager: LinearLayoutManager? = null
-    private var groupsAdapter : GroupsAdapter? = null
+    private var groupsAdapter : GroupsYourGroupAdapter? = null
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModel: WalletViewModel by viewModels()
 
@@ -55,7 +56,7 @@ class GroupSearchFragment : Fragment(),
     }
 
     private fun setupGroupAdapter() = binding.run {
-        groupsAdapter = GroupsAdapter(requireActivity(), this@GroupSearchFragment)
+        groupsAdapter = GroupsYourGroupAdapter(requireActivity(), this@GroupSearchFragment)
         groupLinearLayoutManager = LinearLayoutManager(requireActivity())
         groupRecyclerView.layoutManager = groupLinearLayoutManager
         groupRecyclerView.adapter = groupsAdapter
@@ -88,9 +89,8 @@ class GroupSearchFragment : Fragment(),
         _binding = null
     }
 
-    override fun onGroupItemClickListener(data: GroupData) {
-        binding.searchEditText.setText("")
-//        findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
+    override fun onItemClicked(data: GroupListData) {
+//        TODO("Not yet implemented")
     }
 
 }

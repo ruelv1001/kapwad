@@ -59,20 +59,10 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_groups_title"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:textSize="@dimen/font_16"
-            android:fontFamily="@font/inter_semibold"
-            android:textColor="@color/text_color"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/groupRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:visibility="gone"
             android:layout_marginTop="@dimen/dimen_10"
             tools:listitem="@layout/adapter_search_group" />
