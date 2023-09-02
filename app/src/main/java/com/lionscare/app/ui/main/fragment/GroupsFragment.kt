@@ -76,7 +76,7 @@ class GroupsFragment : Fragment() {
         }
 
         createGroupFloatingActionButton.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(requireActivity(),START_CREATE)
+            val intent = GroupActivity.getIntent(requireActivity(),START_CREATE_ORG)
             startActivity(intent)
         }
 
@@ -176,7 +176,7 @@ class GroupsFragment : Fragment() {
     }
 
     companion object {
-        private const val START_CREATE = "START_CREATE"
+        private const val START_CREATE_ORG = "START_CREATE_ORG"
     }
 
 }

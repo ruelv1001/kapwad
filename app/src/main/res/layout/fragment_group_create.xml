@@ -69,8 +69,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_semibold"
                 android:background="@drawable/bg_edittext_selector"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="@font/inter_semibold"
                 android:padding="@dimen/dimen_16" />
 
             <TextView

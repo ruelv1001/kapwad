@@ -46,6 +46,7 @@
     <string name="lbl_primary_info">Primary Information</string>
     <string name="lbl_reg_otp">Confirm OTP</string>
     <string name="lbl_reg_complete_profile">Complete Profile</string>
+    <string name="lbl_update_profile">Update Profile</string>
     <string name="lbl_email_address">Email Address</string>
     <string name="lbl_province">Province</string>
     <string name="lbl_city_municipality">City/Municipality</string>
@@ -268,10 +269,15 @@
     <string name="loading">Loading…</string>
     <string name="_63_999_000_000">+63 999 000 000</string>
     <string name="n_a">N/A</string>
+    <string-array name="group_type_family">
+        <item>Immediate Family</item>
+    </string-array>
     <string-array name="group_type_items">
         <item>Immediate Family</item>
         <item>Organization</item>
-        <!--<item>Clan</item>-->
+    </string-array>
+    <string-array name="group_type_org">
+        <item>Organization</item>
     </string-array>
     <string name="lbl_nothing_to_show_txt">Nothing to show</string>
     <string name="lbl_edit_group">Edit Group</string>
@@ -295,6 +301,7 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="lbl_donate">Donate</string>
     <string name="search_people_groups_hint">Search People, Groups</string>
+    <string name="lbl_create_family">Create Family</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>

@@ -69,11 +69,20 @@ class GroupCreateFragment : Fragment() {
     }
 
     private fun setUpSpinner() = binding.run {
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            requireActivity(),
-            R.array.group_type_items,
-            android.R.layout.simple_spinner_item
-        )
+        var adapter: ArrayAdapter<CharSequence>? = null
+        if (activity.start == START_CREATE_ORG){
+            adapter = ArrayAdapter.createFromResource(
+                requireActivity(),
+                R.array.group_type_org,
+                android.R.layout.simple_spinner_item
+            )
+        } else {
+            adapter = ArrayAdapter.createFromResource(
+                requireActivity(),
+                R.array.group_type_family,
+                android.R.layout.simple_spinner_item
+            )
+        }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupTypeSpinner.adapter = adapter
         groupTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -190,5 +199,9 @@ class GroupCreateFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val START_CREATE_ORG = "START_CREATE_ORG"
     }
 }
