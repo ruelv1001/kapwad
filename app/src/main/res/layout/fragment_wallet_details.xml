@@ -139,6 +139,14 @@
                 layout="@layout/adapter_members"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <include
+                android:id="@+id/recipientGroupLayout"
+                android:layout_marginTop="@dimen/dimen_10"
+                layout="@layout/adapter_group_your_group"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"/>
+
 
             <TextView
                 android:layout_width="wrap_content"

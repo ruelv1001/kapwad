@@ -14,9 +14,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentWalletSearchBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
+import com.lionscare.app.ui.wallet.adapter.GroupsAdapter
 import com.lionscare.app.ui.wallet.adapter.MembersAdapter
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
@@ -28,13 +30,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class WalletSearchFragment : Fragment(), MembersAdapter.OnClickCallback {
+class WalletSearchFragment : Fragment(),
+    MembersAdapter.OnClickCallback,
+    GroupsAdapter.OnClickCallback {
 
     private var _binding: FragmentWalletSearchBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
+    private var groupLinearLayoutManager: LinearLayoutManager? = null
     private var adapter : MembersAdapter? = null
-    private var dataList: List<SampleData> = emptyList()
+    private var groupsAdapter : GroupsAdapter? = null
     private val activity by lazy { requireActivity() as WalletActivity }
     private val viewModel: WalletViewModel by viewModels()
 
@@ -53,6 +58,7 @@ class WalletSearchFragment : Fragment(), MembersAdapter.OnClickCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
+        setupGroupAdapter()
         setupDetails()
         setupClickListener()
         observeWallet()
@@ -86,6 +92,18 @@ class WalletSearchFragment : Fragment(), MembersAdapter.OnClickCallback {
                     binding.recyclerView.isVisible = true
                 }
             }
+            is WalletViewState.SuccessSearchGroup -> {
+                activity.hideLoadingDialog()
+                groupsAdapter?.clear()
+                groupsAdapter?.appendData(viewState.listData)
+                if (groupsAdapter?.getData()?.size == 0) {
+                    binding.groupPlaceHolderTextView.isVisible = true
+                    binding.groupRecyclerView.isGone = true
+                } else {
+                    binding.groupPlaceHolderTextView.isGone = true
+                    binding.groupRecyclerView.isVisible = true
+                }
+            }
             is WalletViewState.PopupError -> {
                 activity.hideLoadingDialog()
                 showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
@@ -114,6 +132,13 @@ class WalletSearchFragment : Fragment(), MembersAdapter.OnClickCallback {
         recyclerView.adapter = adapter
     }
 
+    private fun setupGroupAdapter() = binding.run {
+        groupsAdapter = GroupsAdapter(requireActivity(), this@WalletSearchFragment)
+        groupLinearLayoutManager = LinearLayoutManager(requireActivity())
+        groupRecyclerView.layoutManager = groupLinearLayoutManager
+        groupRecyclerView.adapter = groupsAdapter
+    }
+
     private fun setupClickListener() = binding.run{
 
         searchEditText.doAfterTextChanged {
@@ -135,6 +160,7 @@ class WalletSearchFragment : Fragment(), MembersAdapter.OnClickCallback {
 
         applyTextView.setOnSingleClickListener {
             viewModel.doSearchUser(searchEditText.text.toString())
+            viewModel.doSearchGroup(searchEditText.text.toString())
         }
     }
 
@@ -146,6 +172,15 @@ class WalletSearchFragment : Fragment(), MembersAdapter.OnClickCallback {
 
     override fun onItemClickListener(data: QRData) {
         activity.qrData = data
+        activity.isGroupId = false
+        binding.searchEditText.setText("")
+        findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
+    }
+
+    override fun onGroupItemClickListener(data: GroupData) {
+        activity.groupData = data
+        activity.isGroupId = true
+        binding.searchEditText.setText("")
         findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
     }
 

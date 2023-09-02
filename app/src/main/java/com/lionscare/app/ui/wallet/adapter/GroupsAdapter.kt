@@ -4,30 +4,30 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lionscare.app.data.repositories.wallet.response.QRData
-import com.lionscare.app.databinding.AdapterSearchUserBinding
+import com.lionscare.app.data.repositories.group.response.GroupData
+import com.lionscare.app.databinding.AdapterSearchGroupBinding
 
-class MembersAdapter(val context: Context, val clickListener: OnClickCallback) :
-    RecyclerView.Adapter<MembersAdapter.AdapterViewHolder>() {
+class GroupsAdapter(val context: Context, val clickListener: OnClickCallback) :
+    RecyclerView.Adapter<GroupsAdapter.AdapterViewHolder>() {
 
-    private val adapterData = mutableListOf<QRData>()
+    private val adapterData = mutableListOf<GroupData>()
 
     fun clear() {
         adapterData.clear()
         notifyDataSetChanged()
     }
 
-    fun appendData(newData: List<QRData>) {
+    fun appendData(newData: List<GroupData>) {
         val startAt = adapterData.size
         adapterData.addAll(newData)
         notifyItemRangeInserted(startAt, newData.size)
     }
 
 
-    fun getData(): MutableList<QRData> = adapterData
+    fun getData(): MutableList<GroupData> = adapterData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        val binding = AdapterSearchUserBinding
+        val binding = AdapterSearchGroupBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return AdapterViewHolder(binding)
 
@@ -37,23 +37,23 @@ class MembersAdapter(val context: Context, val clickListener: OnClickCallback) :
         holder.displayData(adapterData[position])
     }
 
-    inner class AdapterViewHolder(val binding: AdapterSearchUserBinding) :
+    inner class AdapterViewHolder(val binding: AdapterSearchGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun displayData(data: QRData) = with(itemView) {
+        fun displayData(data: GroupData) = with(itemView) {
 
-            binding.nameTextView.text = data.name
+            binding.titleTextView.text = data.name
             //idNoTextView.text = data.amount
 
-            binding.membersLinearLayout.setOnClickListener {
-                clickListener.onItemClickListener(data)
+            binding.adapterLinearLayout.setOnClickListener {
+                clickListener.onGroupItemClickListener(data)
             }
 
         }
     }
 
     interface OnClickCallback {
-        fun onItemClickListener(data: QRData)
+        fun onGroupItemClickListener(data: GroupData)
     }
 
     override fun getItemCount(): Int = adapterData.size
