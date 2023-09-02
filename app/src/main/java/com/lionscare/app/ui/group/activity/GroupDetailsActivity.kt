@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
@@ -17,14 +18,20 @@ import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.ActivityGroupDetailsBinding
 import com.lionscare.app.ui.group.viewmodel.GroupViewModel
 import com.lionscare.app.ui.group.viewmodel.GroupViewState
+import com.lionscare.app.ui.group.viewmodel.GroupWalletViewModel
+import com.lionscare.app.ui.group.viewmodel.GroupWalletViewState
 import com.lionscare.app.ui.notifications.adapter.NotificationsAdapter
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.NotificationsCallback {
+class GroupDetailsActivity : AppCompatActivity(),
+    NotificationsAdapter.NotificationsCallback, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivityGroupDetailsBinding
     private var loadingDialog: CommonDialog? = null
@@ -33,17 +40,20 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
     private var dataList: List<SampleData> = emptyList()
     private var groupId = ""
     private val viewModel: GroupViewModel by viewModels()
-    private var groupDetails: GroupData ?= null
+    private val walletViewModel: GroupWalletViewModel by viewModels()
+    private var groupDetails: GroupData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        observeShowGroup()
         groupId = intent.getStringExtra(GROUP_ID).toString()
         setupClickListener()
         setUpAdapter()
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
+        observeWallet()
+        observeShowGroup()
     }
 
     private fun setUpAdapter() = binding.run {
@@ -124,7 +134,32 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
                 hideLoadingDialog()
                 groupDetails = viewState.createGroupResponse?.data
                 groupDetails?.let { setDetails(it) }
+                walletViewModel.getWalletBalance(viewState.createGroupResponse?.data?.id.orEmpty())
             }
+            else -> Unit
+        }
+    }
+
+    private fun observeWallet() {
+        lifecycleScope.launch{
+            walletViewModel.walletSharedFlow.collectLatest { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: GroupWalletViewState) {
+        when (viewState) {
+            is GroupWalletViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is GroupWalletViewState.SuccessGetBalance -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                binding.pointsTextView.text = viewState.balanceData?.value
+            }
+            is GroupWalletViewState.PopupError -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                showPopupError(this, supportFragmentManager, viewState.errorCode, viewState.message)
+            }
+
             else -> Unit
         }
     }
@@ -170,5 +205,9 @@ class GroupDetailsActivity : AppCompatActivity(), NotificationsAdapter.Notificat
 
     override fun onItemClicked(data: SampleData) {
 
+    }
+
+    override fun onRefresh() {
+        viewModel.showGroup(groupId)
     }
 }
