@@ -23,6 +23,7 @@ import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
+import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
@@ -126,12 +127,10 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
             ImmediateFamilyViewState.Loading -> Unit
             is ImmediateFamilyViewState.PopupError -> {
                 //showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
-                binding.placeHolderTextView.isVisible = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
             }
 
             is ImmediateFamilyViewState.Success -> {
-                binding.placeHolderTextView.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
                 binding.immediateFamilyLayout.titleTextView.text =
                     viewState.immediateFamilyResponse?.data?.name
@@ -238,8 +237,17 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
             val intent = GroupDetailsActivity.getIntent(requireActivity(), immediateFamilyId)
             startActivity(intent)
         }
+
+        createGroupButton.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(requireActivity(), START_CREATE_FAMILY)
+            startActivity(intent)
+        }
     }
 
+
+    companion object {
+        private const val START_CREATE_FAMILY = "START_CREATE_FAMILY"
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
