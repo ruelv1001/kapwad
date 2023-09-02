@@ -18,6 +18,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/ownerLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="@string/lbl_group_owner"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/font_16" />
+
+                <include
+                    android:id="@+id/groupOwnerLayout"
+                    layout="@layout/adapter_members"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="@string/lbl_co_admins"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/font_16" />
+
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
