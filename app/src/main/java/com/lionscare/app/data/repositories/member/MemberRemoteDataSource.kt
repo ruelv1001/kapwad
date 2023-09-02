@@ -4,6 +4,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.ListOfMembersResponse
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import retrofit2.HttpException
@@ -12,7 +13,10 @@ import javax.inject.Inject
 
 class MemberRemoteDataSource @Inject constructor(private val memberService: MemberService) {
 
-    suspend fun doGetListOfMembers(groupId: String? = null, page: String?= null): ListOfMembersResponse {
+    suspend fun doGetListOfMembers(
+        groupId: String? = null,
+        page: String? = null
+    ): ListOfMembersResponse {
         val request = ListOfMembersRequest(group_id = groupId, page = page)
         val response = memberService.doGetListOfMembers(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
@@ -29,8 +33,9 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doJoinGroup(listOfMembersRequest: ListOfMembersRequest): GeneralResponse {
-        val response = memberService.doJoinGroup(listOfMembersRequest)
+    suspend fun doJoinGroup(groupId: String): JoinGroupResponse {
+        val request = ListOfMembersRequest(group_id = groupId)
+        val response = memberService.doJoinGroup(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }
@@ -53,26 +58,13 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doGetAllPendingInviteAndRequest(groupId: String? = null, page: String?= null): PendingMemberResponse {
-        val request = ListOfMembersRequest(group_id = groupId, page = page)
+    suspend fun doGetAllPendingInviteAndRequest(
+        groupId: String? = null,
+        page: String? = null,
+        type: String? = null
+    ): PendingMemberResponse {
+        val request = ListOfMembersRequest(group_id = groupId, page = page, type = type)
         val response = memberService.doGetAllPendingInviteAndRequest(request)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
-    suspend fun doGetAllPendingRequest(groupId: String? = null, page: String?= null): PendingMemberResponse {
-        val request = ListOfMembersRequest(group_id = groupId, page = page)
-        val response = memberService.doGetAllPendingRequest(request)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
-
-    suspend fun doGetAllPendingInvitation(groupId: String? = null, page: String?= null): PendingMemberResponse {
-        val request = ListOfMembersRequest(group_id = groupId, page = page)
-        val response = memberService.doGetAllPendingInvitation(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

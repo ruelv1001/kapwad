@@ -32,16 +32,6 @@ class MemberModule {
     }
 
     @Provides
-    fun providesGetAllPendingRequestPagingSource(memberRemoteDataSource: MemberRemoteDataSource): GetAllPendingRequestPagingSource {
-        return GetAllPendingRequestPagingSource(memberRemoteDataSource)
-    }
-
-    @Provides
-    fun providesGetListOfMembersPagingSource(memberRemoteDataSource: MemberRemoteDataSource): GetListOfMembersPagingSource {
-        return GetListOfMembersPagingSource(memberRemoteDataSource)
-    }
-
-    @Provides
     fun providesMemberRepository(
         memberRemoteDataSource: MemberRemoteDataSource
     ): MemberRepository {

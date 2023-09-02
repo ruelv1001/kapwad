@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.R
@@ -70,6 +71,8 @@ class MembersFragment : Fragment() {
 
                 membersView.visibility = View.GONE
                 membersTextView.visibility = View.GONE
+
+                activity.getFilterImageView().isVisible = true
             }
 
             membersRelativeLayout -> {
@@ -78,6 +81,8 @@ class MembersFragment : Fragment() {
 
                 requestView.visibility = View.GONE
                 requestTextView.visibility = View.GONE
+
+                activity.getFilterImageView().isVisible = false
             }
             else -> Unit
         }

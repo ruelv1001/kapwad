@@ -8,6 +8,7 @@ import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
@@ -39,9 +40,9 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doJoinGroup(listOfMembersRequest: ListOfMembersRequest): Flow<GeneralResponse> {
+    fun doJoinGroup(groupId: String): Flow<JoinGroupResponse> {
         return flow {
-            val response = memberRemoteDataSource.doJoinGroup(listOfMembersRequest)
+            val response = memberRemoteDataSource.doJoinGroup(groupId)
             emit(response)
         }.flowOn(ioDispatcher)
     }
@@ -61,8 +62,8 @@ class MemberRepository @Inject constructor(
     }
 
 
-    fun doGetAllPendingRequest(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String): Flow<PagingData<PendingMemberData>> {
-        val getAllPendingRequestPagingSource = GetAllPendingRequestPagingSource(memberRemoteDataSource, groupId)
+    fun doGetAllPendingRequest(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String, type: String? = null): Flow<PagingData<PendingMemberData>> {
+        val getAllPendingRequestPagingSource = GetAllPendingRequestPagingSource(memberRemoteDataSource, groupId = groupId, type = type)
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = { getAllPendingRequestPagingSource }

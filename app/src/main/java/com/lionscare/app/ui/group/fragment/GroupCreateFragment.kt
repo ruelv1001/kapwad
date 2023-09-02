@@ -168,6 +168,7 @@ class GroupCreateFragment : Fragment() {
             }
             is GroupViewState.SuccessCreateGroup -> {
                 hideLoadingDialog()
+                activity.groupDetails = viewState.createGroupResponse?.data
                 Toast.makeText(requireActivity(),viewState.createGroupResponse?.msg, Toast.LENGTH_SHORT).show()
                 findNavController().navigate(GroupCreateFragmentDirections.actionNavigationGroupInvite())
             }
