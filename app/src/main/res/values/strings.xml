@@ -298,6 +298,8 @@
     <string name="search_user_apply_btn">Apply</string>
     <string name="lbl_list_of_admin">Admins</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="lbl_donate">Donate</string>
+    <string name="search_people_groups_hint">Search People, Groups</string>
     <string name="lbl_create_family">Create Family</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>

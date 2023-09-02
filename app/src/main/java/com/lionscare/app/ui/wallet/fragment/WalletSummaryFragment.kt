@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -54,20 +56,20 @@ class WalletSummaryFragment : Fragment() {
         when(activity.mode){
             "Send Points" -> {
                 titleTextView.text = getString(R.string.wallet_send_points_summary_title)
-                recipientLayout.nameTextView.text = activity.qrData.name
-                //TODO to be updated when display id ready
-                recipientLayout.idNoTextView.text = "LC-000123"
-            }
-            "Scan 2 Pay" -> {
-                titleTextView.text = getString(R.string.wallet_points_recipient_summary_title)
-            }
-            "Post Request" -> {
-                titleTextView.text = getString(R.string.wallet_request_points_summary_title)
-                recipientTitleTextView.text = getString(R.string.wallet_from_title)
+                if (activity.isGroupId){
+                    recipientGroupLayout.adapterLinearLayout.isVisible = true
+                    recipientLayout.membersLinearLayout.isGone = true
+                    recipientGroupLayout.titleTextView.text = activity.groupData.name
+                    //TODO to be updated when display id ready
+                    recipientGroupLayout.referenceTextView.text = "LC-000123"
+                }else{
+                    recipientGroupLayout.adapterLinearLayout.isGone = true
+                    recipientLayout.membersLinearLayout.isVisible = true
+                    recipientLayout.nameTextView.text = activity.qrData.name
+                    //TODO to be updated when display id ready
+                    recipientLayout.idNoTextView.text = "LC-000123"
+                }
 
-                activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }
-                recipientLayout.nameTextView.text = activity.data.title
-                recipientLayout.idNoTextView.text = activity.data.amount
             }
         }
 
@@ -106,11 +108,19 @@ class WalletSummaryFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         continueButton.setOnSingleClickListener {
-            viewModel.doSendPoints(
-                userId = activity.qrData.id.orEmpty(),
-                amount = activity.amount,
-                notes = activity.message
-            )
+            if (activity.isGroupId){
+                viewModel.doSendPoints(
+                    groupId = activity.groupData.id.orEmpty(),
+                    amount = activity.amount,
+                    notes = activity.message
+                )
+            }else{
+                viewModel.doSendPoints(
+                    userId = activity.qrData.id.orEmpty(),
+                    amount = activity.amount,
+                    notes = activity.message
+                )
+            }
         }
     }
 
