@@ -70,7 +70,7 @@ class WalletViewModel @Inject constructor(
         viewModelScope.launch {
             walletRepository.doSearchGroup(keyword)
                 .onStart {
-                    _walletSharedFlow.emit(WalletViewState.Loading)
+
                 }
                 .catch { exception ->
                     onError(exception)

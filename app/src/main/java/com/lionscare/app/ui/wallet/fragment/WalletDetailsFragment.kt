@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentWalletDetailsBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
@@ -50,27 +52,26 @@ class WalletDetailsFragment : Fragment() {
             "Send Points" -> {
                 titleTextView.text = getString(R.string.wallet_send_points_details_title)
                 requestedPointsTextView.text = getString(R.string.wallet_sent_points_text)
-                recipientLayout.nameTextView.text = activity.qrData.name
-                //TODO to be updated when display id ready
-                recipientLayout.idNoTextView.text = "LC-000123"
+
+                if (activity.isGroupId){
+                    recipientGroupLayout.adapterLinearLayout.isVisible = true
+                    recipientLayout.membersLinearLayout.isGone = true
+                    recipientGroupLayout.titleTextView.text = activity.groupData.name
+                    //TODO to be updated when display id ready
+                    recipientGroupLayout.referenceTextView.text = "LC-000123"
+                }else{
+                    recipientGroupLayout.adapterLinearLayout.isGone = true
+                    recipientLayout.membersLinearLayout.isVisible = true
+                    recipientLayout.nameTextView.text = activity.qrData.name
+                    //TODO to be updated when display id ready
+                    recipientLayout.idNoTextView.text = "LC-000123"
+                }
+
                 reasonTextView.text = activity.message
                 pointsTextView.text = currencyFormat(activity.amount)
                 val valueRefNo = activity.transactionData.remarks?.split(": ")
                 refidTextView.text = valueRefNo?.get(1)
                 dateTextView.text = activity.transactionData.date_registered?.date_db
-            }
-            "Scan 2 Pay" -> {
-                titleTextView.text = getString(R.string.wallet_scan2pay_details_title)
-                requestedPointsTextView.text = getString(R.string.wallet_sent_points_text)
-            }
-            "Post Request" -> {
-                titleTextView.text = getString(R.string.wallet_request_points_details_title)
-                recipientTitleTextView.text = getString(R.string.wallet_from_title)
-                requestedPointsTextView.text = getString(R.string.request_posted_requested_points_text)
-
-                activity.data.id?.let { recipientLayout.profileImageView.setImageResource(it) }
-                recipientLayout.nameTextView.text = activity.data.title
-                recipientLayout.idNoTextView.text = activity.data.amount
             }
         }
 

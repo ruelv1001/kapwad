@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.ActivityWalletBinding
@@ -25,6 +26,7 @@ class WalletActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     var data = SampleData()
     var qrData = QRData()
+    var groupData = GroupData()
     var transactionData = TransactionData()
     var mode = ""
     var amount = ""

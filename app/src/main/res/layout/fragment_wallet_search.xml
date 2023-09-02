@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_55"
                 android:fontFamily="@font/inter_regular"
-                android:hint="Search People"
+                android:hint="@string/search_people_groups_hint"
                 app:boxBackgroundColor="@color/light_gray_line"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true">
@@ -114,7 +114,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/dimen_10"
             android:visibility="gone"
             tools:listitem="@layout/adapter_search_user" />
@@ -122,11 +123,39 @@
         <TextView
             android:id="@+id/placeHolderTextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dimen_200"
             android:fontFamily="@font/inter_regular"
             android:gravity="center"
             android:text="@string/lbl_nothing_to_show_txt"
             android:textSize="@dimen/font_14"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_groups_title"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:textSize="@dimen/font_16"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/text_color"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/groupRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dimen_10"
+            tools:listitem="@layout/adapter_search_group" />
+
+        <TextView
+            android:id="@+id/groupPlaceHolderTextView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_200"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center"
+            android:text="@string/lbl_nothing_to_show_txt"
+            android:textSize="@dimen/font_14"/>
+
 
 
     </LinearLayout>
