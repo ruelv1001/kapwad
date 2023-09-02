@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
+class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -105,11 +105,13 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
                     viewState.message
                 )
             }
+
             is SettingsViewState.InputError -> Unit
             is SettingsViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
                 setView(viewState.userModel)
             }
+
             else -> hideLoadingDialog()
         }
     }
@@ -128,23 +130,35 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
             is ImmediateFamilyViewState.PopupError -> {
                 //showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
+                binding.createGroupButton.isVisible = true
             }
 
             is ImmediateFamilyViewState.Success -> {
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
-                binding.immediateFamilyLayout.titleTextView.text =
-                    viewState.immediateFamilyResponse?.data?.name
+                binding.createGroupButton.isGone = true
+                viewState.immediateFamilyResponse?.data?.let { setImmediateFamily(it) }
                 immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }
         }
     }
 
-    private fun setView(userModel: UserModel?)=binding.run {
+    private fun setImmediateFamily(data: GroupListData) = binding.run{
+        immediateFamilyLayout.titleTextView.text = data.name
+        immediateFamilyLayout.membersTextView.text = if ((data.member_count ?: 0) > 1) {
+            "${data.member_count} members"
+        } else {
+            "${data.member_count} member"
+        }
+        immediateFamilyLayout.referenceTextView.text = data.qrcode
+    }
+
+    private fun setView(userModel: UserModel?) = binding.run {
         mainLayout.nameTextView.text = userModel?.name
         qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.id))
 
-        if (userModel?.street_name?.isNotEmpty() == true){
-            mainLayout.addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+        if (userModel?.street_name?.isNotEmpty() == true) {
+            mainLayout.addressTextView.text =
+                "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
         }
     }
 
@@ -157,8 +171,12 @@ class HomeFragment: Fragment(), GroupsYourGroupAdapter.GroupCallback {
     }
 
     private fun setUpAnimation() {
-        frontAnim = AnimatorInflater.loadAnimator(requireContext(), R.animator.front_animator) as AnimatorSet
-        backAnim = AnimatorInflater.loadAnimator(requireContext(), R.animator.back_animator) as AnimatorSet
+        frontAnim = AnimatorInflater.loadAnimator(
+            requireContext(),
+            R.animator.front_animator
+        ) as AnimatorSet
+        backAnim =
+            AnimatorInflater.loadAnimator(requireContext(), R.animator.back_animator) as AnimatorSet
 
         val scale = resources.displayMetrics.density * 8000
         binding.mainLayout.mainLinearLayout.cameraDistance = scale

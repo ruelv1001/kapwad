@@ -8,6 +8,7 @@ import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.ApproveRequestResponse
 import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
@@ -73,5 +74,19 @@ class MemberRepository @Inject constructor(
 
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(pageSize = 10, initialLoadSize = 5, enablePlaceholders = false)
+    }
+
+    fun doApproveJoinRequest(pending_id: String, group_id: String): Flow<ApproveRequestResponse> {
+        return flow {
+            val response = memberRemoteDataSource.doApproveJoinRequest(pending_id, group_id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doRejectJoinRequest(pending_id: String, group_id: String): Flow<GeneralResponse> {
+        return flow {
+            val response = memberRemoteDataSource.doRejectJoinRequest(pending_id, group_id)
+            emit(response)
+        }.flowOn(ioDispatcher)
     }
 }
