@@ -78,6 +78,7 @@ class GroupManageFragment : Fragment() {
         statisticsLinearLayout.setOnSingleClickListener {
             findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupStatistics())
         }
+        //TODO only visible when group admins are the user
         transactionLinearLayout.setOnSingleClickListener {
             findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupTransaction())
         }

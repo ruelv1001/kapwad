@@ -29,16 +29,10 @@ class GroupWalletModule {
     }
 
     @Provides
-    fun providesGroupWalletPagingSource(walletRemoteDataSource: GroupWalletRemoteDataSource,): GroupWalletPagingSource {
-        return GroupWalletPagingSource(walletRemoteDataSource)
-    }
-
-    @Provides
     fun providesGroupWalletRepository(
         walletRemoteDataSource: GroupWalletRemoteDataSource,
-        walletPagingSource: GroupWalletPagingSource
     ): GroupWalletRepository {
-        return GroupWalletRepository(walletRemoteDataSource, walletPagingSource)
+        return GroupWalletRepository(walletRemoteDataSource)
     }
 
 }

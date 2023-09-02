@@ -16,6 +16,8 @@ import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.FragmentHistoryTransactionBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.group.viewmodel.GroupWalletViewModel
+import com.lionscare.app.ui.group.viewmodel.GroupWalletViewState
 import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
@@ -33,7 +35,7 @@ class HistoryTransactionFragment: Fragment(), InboundOutboundAdapter.InboundOutb
 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter: InboundOutboundAdapter? = null
-    private val viewModel: WalletViewModel by viewModels()
+    private val viewModel: GroupWalletViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -90,11 +92,11 @@ class HistoryTransactionFragment: Fragment(), InboundOutboundAdapter.InboundOutb
         }
     }
 
-    private fun handleViewState(viewState: WalletViewState) {
+    private fun handleViewState(viewState: GroupWalletViewState) {
         when (viewState) {
-            is WalletViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
-            is WalletViewState.SuccessTransactionList -> showTransactionList(viewState.pagingData)
-            is WalletViewState.PopupError -> {
+            is GroupWalletViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is GroupWalletViewState.SuccessTransactionList -> showTransactionList(viewState.pagingData)
+            is GroupWalletViewState.PopupError -> {
                 showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
             }
 
@@ -127,6 +129,6 @@ class HistoryTransactionFragment: Fragment(), InboundOutboundAdapter.InboundOutb
     }
 
     override fun onRefresh() {
-        viewModel.loadTransactionList()
+        viewModel.loadTransactionList(groupId = activity.groupDetails?.id.orEmpty())
     }
 }
