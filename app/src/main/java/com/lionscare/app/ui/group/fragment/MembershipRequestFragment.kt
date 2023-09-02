@@ -16,8 +16,10 @@ import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import com.lionscare.app.databinding.FragmentGroupMembershipReqBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupsInvitesAdapter
+import com.lionscare.app.ui.group.dialog.RequestInviteFilterDialog
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
+import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -34,6 +36,7 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     private var adapter: GroupsInvitesAdapter? = null
     private val viewModel: MemberViewModel by viewModels()
     private val activity by lazy { requireActivity() as GroupActivity }
+    private var filterType = "all"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,21 +56,21 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
         setClickListeners()
         setupAdapter()
         observeAllPendingRequestList()
-        viewModel.refresh(activity.groupDetails?.id.toString())
+        viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupsInvitesAdapter( requireActivity(),this@MembershipRequestFragment)
+        adapter = GroupsInvitesAdapter(requireActivity(), this@MembershipRequestFragment)
         swipeRefreshLayout.setOnRefreshListener(this@MembershipRequestFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
         adapter?.addLoadStateListener {
-            if(adapter?.hasData() == true){
+            if (adapter?.hasData() == true) {
                 placeHolderTextView.isVisible = false
                 recyclerView.isVisible = true
-            }else{
+            } else {
                 placeHolderTextView.isVisible = true
                 recyclerView.isVisible = false
             }
@@ -75,7 +78,17 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     }
 
     private fun setClickListeners() = binding.run {
+        activity.getFilterImageView().setOnSingleClickListener {
+            RequestInviteFilterDialog.newInstance(object : RequestInviteFilterDialog.RequestInviteFilterDialogListener{
+                override fun onFilter(filter: String) {
+                    viewModel.refresh(activity.groupDetails?.id.toString(), filter)
+                }
 
+                override fun onCancel() {
+                    viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
+                }
+            }).show(childFragmentManager,RequestInviteFilterDialog.TAG)
+        }
     }
 
     private fun observeAllPendingRequestList() {
@@ -97,6 +110,7 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
                     viewState.message
                 )
             }
+
             is MemberViewState.SuccessGetPendingRequest -> showList(viewState.pagingData)
             else -> Unit
         }
@@ -121,22 +135,24 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     }
 
     override fun onItemClicked(data: PendingMemberData) {
-       // Toast.makeText(requireActivity(),"Clicked : ${data.user?.name}", Toast.LENGTH_SHORT).show()
+        // Toast.makeText(requireActivity(),"Clicked : ${data.user?.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAcceptClicked(data: PendingMemberData) {
-        Toast.makeText(requireActivity(),"Accept : ${data.user?.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), "Accept : ${data.user?.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDeclineClicked(data: PendingMemberData) {
-       Toast.makeText(requireActivity(),"Declined : ${data.user?.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), "Declined : ${data.user?.name}", Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onCancelClicked(data: PendingMemberData) {
-        Toast.makeText(requireActivity(),"Canceled : ${data.user?.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), "Canceled : ${data.user?.name}", Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onRefresh() {
-        viewModel.refresh(activity.groupDetails?.id.toString())
+        viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
     }
 }
