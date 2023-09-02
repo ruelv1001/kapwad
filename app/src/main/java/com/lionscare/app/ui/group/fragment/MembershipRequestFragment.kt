@@ -79,15 +79,18 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
 
     private fun setClickListeners() = binding.run {
         activity.getFilterImageView().setOnSingleClickListener {
-            RequestInviteFilterDialog.newInstance(object : RequestInviteFilterDialog.RequestInviteFilterDialogListener{
+            RequestInviteFilterDialog.newInstance(object :
+                RequestInviteFilterDialog.RequestInviteFilterDialogListener {
                 override fun onFilter(filter: String) {
+                    clear()
                     viewModel.refresh(activity.groupDetails?.id.toString(), filter)
                 }
 
                 override fun onCancel() {
+                    clear()
                     viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
                 }
-            }).show(childFragmentManager,RequestInviteFilterDialog.TAG)
+            }).show(childFragmentManager, RequestInviteFilterDialog.TAG)
         }
     }
 
@@ -112,6 +115,25 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
             }
 
             is MemberViewState.SuccessGetPendingRequest -> showList(viewState.pagingData)
+            is MemberViewState.SuccessRejectJoinRequest -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                clear()
+                viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
+                Toast.makeText(
+                    requireActivity(),
+                    viewState.message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            is MemberViewState.SuccessApproveJoinRequest -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                clear()
+                Toast.makeText(
+                    requireActivity(),
+                    viewState.approveRequestResponse?.msg,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
             else -> Unit
         }
     }
@@ -119,6 +141,10 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     private fun showList(pendingMemberList: PagingData<PendingMemberData>) {
         binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(viewLifecycleOwner.lifecycle, pendingMemberList)
+    }
+
+    fun clear() {
+        adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
     }
 
     override fun onDestroyView() {
@@ -139,12 +165,11 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     }
 
     override fun onAcceptClicked(data: PendingMemberData) {
-        Toast.makeText(requireActivity(), "Accept : ${data.user?.name}", Toast.LENGTH_SHORT).show()
+        viewModel.approveJoinRequest(data.id.toString(), activity.groupDetails?.id.toString())
     }
 
     override fun onDeclineClicked(data: PendingMemberData) {
-        Toast.makeText(requireActivity(), "Declined : ${data.user?.name}", Toast.LENGTH_SHORT)
-            .show()
+        viewModel.rejectJoinRequest(data.id.toString(), activity.groupDetails?.id.toString())
     }
 
     override fun onCancelClicked(data: PendingMemberData) {

@@ -81,6 +81,9 @@ class GroupDetailsActivity : AppCompatActivity(),
 
     private fun setDetails(data : GroupData) = binding.run {
         titleTextView.text = data.name
+        referenceTextView.text = data.qrcode
+        membersTextView.text = data.member_only_count.toString()
+        adminTextView.text = data.admin_only_count.toString()
     }
 
     private fun setupClickListener() = binding.run{

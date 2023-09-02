@@ -4,6 +4,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
 import com.lionscare.app.data.repositories.member.request.ListOfMembersRequest
+import com.lionscare.app.data.repositories.member.response.ApproveRequestResponse
 import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.ListOfMembersResponse
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
@@ -34,4 +35,10 @@ interface MemberService {
     //Pending member folder
     @POST("api/group/member/pending/all")
     suspend fun doGetAllPendingInviteAndRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<PendingMemberResponse>
+
+    @POST("api/group/member/pending/approve")
+    suspend fun doApproveJoinRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<ApproveRequestResponse>
+
+    @POST("api/group/member/pending/reject")
+    suspend fun doRejectJoinRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<GeneralResponse>
 }

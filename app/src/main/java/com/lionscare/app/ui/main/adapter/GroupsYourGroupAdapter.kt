@@ -44,8 +44,12 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
         fun bind(data: GroupListData?){
             data?.let {
                 binding.titleTextView.text = data.name
-                //  binding.membersTextView.text = data.description
-                //  binding.referenceTextView.text = data.reference
+                  binding.membersTextView.text = if(data.member_count!! > 1) {
+                      "${data.member_count} members"
+                  } else {
+                      "${data.member_count} member"
+                  }
+                  binding.referenceTextView.text = data.qrcode
 
                 /*if (data.type.equals("FAM")){
                     binding.typeFamTextView.visibility = View.VISIBLE

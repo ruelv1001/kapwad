@@ -4,6 +4,7 @@ package com.lionscare.app.data.repositories.group.response
 import androidx.annotation.Keep
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.Meta
+import com.lionscare.app.data.repositories.baseresponse.QrValue
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 
 @Keep
@@ -20,6 +21,14 @@ data class GetGroupListResponse(
 @Keep
 data class GroupListData(
     var id: String? = null,
+    var code: String? = null,
+    var qrcode: String? = null,
+    var qr_value: QrValue? = null,
+    var qrcode_vale: String? = null,
+    var member_count: Int? = null,
+    var member_only_count: Int? = null,
+    var admin_only_count: Int? = null,
+    var pending_requests_count: Int? = null,
     var name: String? = null,
     var type: String? = null,
     var privacy: String? = null,

@@ -77,9 +77,9 @@ class GroupWalletViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getTransactionList(perPage: Int) {
+    private suspend fun getTransactionList(perPage: Int, groupId: String) {
         val pageConfig = PagingConfig(pageSize = perPage, initialLoadSize = perPage,enablePlaceholders = false)
-        walletRepository.getTransactionList(pageConfig)
+        walletRepository.getTransactionList(pageConfig, groupId = groupId)
             .cachedIn(viewModelScope)
             .onStart {
                 _walletSharedFlow.emit(GroupWalletViewState.Loading)
@@ -94,9 +94,9 @@ class GroupWalletViewModel @Inject constructor(
             }
     }
 
-    fun loadTransactionList(perPage: Int = 10) {
+    fun loadTransactionList(perPage: Int = 10, groupId: String) {
         viewModelScope.launch {
-            getTransactionList(perPage)
+            getTransactionList(perPage, groupId)
         }
     }
 

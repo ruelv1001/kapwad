@@ -23,7 +23,6 @@ import javax.inject.Inject
 
 class GroupWalletRepository @Inject constructor(
     private val walletRemoteDataSource: GroupWalletRemoteDataSource,
-    private val walletPagingSource: GroupWalletPagingSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 )   {
 
@@ -52,10 +51,10 @@ class GroupWalletRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun getTransactionList(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<TransactionData>> {
+    fun getTransactionList(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String): Flow<PagingData<TransactionData>> {
         return Pager(
             config = pagingConfig,
-            pagingSourceFactory = { walletPagingSource }
+            pagingSourceFactory = { GroupWalletPagingSource(walletRemoteDataSource, groupId) }
         ).flow
             .flowOn(ioDispatcher)
     }

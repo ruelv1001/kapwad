@@ -6,6 +6,7 @@ import androidx.paging.cachedIn
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
+import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
 import com.lionscare.app.data.repositories.member.MemberRepository
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
@@ -78,6 +79,39 @@ class MemberViewModel @Inject constructor(
         }
     }
 
+    fun approveJoinRequest(pending_id: String, group_id: String) {
+        viewModelScope.launch {
+            memberRepository.doApproveJoinRequest(pending_id, group_id)
+                .onStart {
+                    _memberSharedFlow.emit(MemberViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _memberSharedFlow.emit(
+                        MemberViewState.SuccessApproveJoinRequest(it)
+                    )
+                }
+        }
+    }
+
+    fun rejectJoinRequest(pending_id: String, group_id: String) {
+        viewModelScope.launch {
+            memberRepository.doRejectJoinRequest(pending_id, group_id)
+                .onStart {
+                    _memberSharedFlow.emit(MemberViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _memberSharedFlow.emit(
+                        MemberViewState.SuccessRejectJoinRequest(it.msg.toString())
+                    )
+                }
+        }
+    }
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {
