@@ -19,6 +19,7 @@ import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
 import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
+import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -53,6 +54,7 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
         setClickListeners()
         setupAdapter()
         observeMemberList()
+        setOwner()
         viewModel.refresh(activity.groupDetails?.id.toString())
     }
 
@@ -76,6 +78,13 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
 
     private fun setClickListeners() = binding.run {
 
+    }
+
+    private fun setOwner() = binding.run{
+        ownerLinearLayout.isVisible = true
+        groupOwnerLayout.nameTextView.text = activity.groupDetails?.owner?.name
+        groupOwnerLayout.idNoTextView.text = activity.groupDetails?.owner?.qrcode
+        //groupOwnerLayout.profileImageView.loadAvatar(activity.groupDetails?.owner?.avatar?.thumb_path,requireActivity())
     }
 
     override fun onResume() {
