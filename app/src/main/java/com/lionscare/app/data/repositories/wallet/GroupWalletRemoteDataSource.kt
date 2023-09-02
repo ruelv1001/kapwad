@@ -30,8 +30,8 @@ class GroupWalletRemoteDataSource @Inject constructor(private val walletService:
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun getWalletTransaction(page: String, perPage: String): TransactionListResponse{
-        val request = TransactionListRequest(per_page = perPage, page = page)
+    suspend fun getWalletTransaction(page: String, perPage: String, groupId: String): TransactionListResponse{
+        val request = TransactionListRequest(per_page = perPage, page = page, group_id = groupId)
         val response = walletService.getWalletTransactions(request)
 
         if (response.code() != HttpURLConnection.HTTP_OK) {

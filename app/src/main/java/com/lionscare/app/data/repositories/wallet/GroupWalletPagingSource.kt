@@ -6,8 +6,10 @@ import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import javax.inject.Inject
 
 
-class GroupWalletPagingSource @Inject constructor(private val walletRemoteDataSource: GroupWalletRemoteDataSource) :
-    PagingSource<Int, TransactionData>() {
+class GroupWalletPagingSource(
+    private val walletRemoteDataSource: GroupWalletRemoteDataSource,
+    private val groupId: String
+) : PagingSource<Int, TransactionData>() {
 
     override fun getRefreshKey(state: PagingState<Int, TransactionData>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -20,7 +22,11 @@ class GroupWalletPagingSource @Inject constructor(private val walletRemoteDataSo
         val page = params.key ?: STARTING_PAGE_INDEX
 
         return try {
-            val response = walletRemoteDataSource.getWalletTransaction(page.toString(), params.loadSize.toString())
+            val response = walletRemoteDataSource.getWalletTransaction(
+                page.toString(),
+                params.loadSize.toString(),
+                groupId
+            )
             if(response.data?.isNotEmpty() == true){
                 LoadResult.Page(
                     data = response.data,
