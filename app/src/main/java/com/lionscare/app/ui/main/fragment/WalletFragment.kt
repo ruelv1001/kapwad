@@ -162,8 +162,13 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
     }
 
     override fun onRefresh() {
+        clearList()
         viewModel.loadTransactionList(5)
         viewModel.getWalletBalance()
+    }
+
+    private fun clearList(){
+        adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
     }
 
 }

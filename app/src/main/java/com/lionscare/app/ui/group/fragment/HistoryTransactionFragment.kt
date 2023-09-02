@@ -129,6 +129,11 @@ class HistoryTransactionFragment: Fragment(), InboundOutboundAdapter.InboundOutb
     }
 
     override fun onRefresh() {
+        clearList()
         viewModel.loadTransactionList(groupId = activity.groupDetails?.id.orEmpty())
+    }
+
+    private fun clearList(){
+        adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
     }
 }

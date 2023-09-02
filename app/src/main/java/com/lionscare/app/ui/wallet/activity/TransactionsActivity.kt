@@ -108,7 +108,12 @@ class TransactionsActivity : AppCompatActivity(),
     }
 
     override fun onRefresh() {
+        clearList()
         viewModel.loadTransactionList()
+    }
+
+    private fun clearList(){
+        adapter?.submitData(lifecycle, PagingData.empty())
     }
     companion object {
         fun getIntent(context: Context): Intent {
