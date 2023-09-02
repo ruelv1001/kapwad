@@ -9,6 +9,7 @@ import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
+import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -55,6 +56,15 @@ class GroupRepository @Inject constructor(
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = { getGroupPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
+    fun doGetPendingGroupRequestList(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<PendingGroupRequestData>>{
+        val getPendingGroupRequestPagingSource = GetPendingGroupRequestPagingSource(groupRemoteDataSource)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getPendingGroupRequestPagingSource }
         ).flow
             .flowOn(ioDispatcher)
     }

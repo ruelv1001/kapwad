@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.group.request.GetGroupListRequest
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
 import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
+import com.lionscare.app.data.repositories.group.response.PendingGroupRequestsListResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -24,4 +25,7 @@ interface GroupService {
     suspend fun doGetImmediateFamily(): Response<ImmediateFamilyResponse>
     @POST("api/group/all")
     suspend fun doGetGroupList(@Body getGroupListRequest: GetGroupListRequest): Response<GetGroupListResponse>
+
+    @POST("api/group/pending")
+    suspend fun doGetPendingGroupRequest(@Body getGroupListRequest: GetGroupListRequest): Response<PendingGroupRequestsListResponse>
 }
