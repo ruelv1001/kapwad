@@ -15,5 +15,6 @@ data class GetBalanceResponse(
 data class BalanceData(
     val id: String? = null,
     val raw_value: Int? = 0,
-    val value: String? = null
+    val value: String? = null,
+    val group_name: String? = null
 )
