@@ -302,6 +302,8 @@
     <string name="lbl_donate">Donate</string>
     <string name="search_people_groups_hint">Search People, Groups</string>
     <string name="lbl_create_family">Create Family</string>
+    <string name="lbl_group_search">Group Search</string>
+    <string name="lbl_search_group">Search Group</string>
     <string name="filter_request_text">Request</string>
     <string name="filter_invite_text">Invite</string>
     <string-array name="assistance_purpose_items">
