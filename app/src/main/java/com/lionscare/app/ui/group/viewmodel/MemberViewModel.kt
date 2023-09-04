@@ -116,6 +116,23 @@ class MemberViewModel @Inject constructor(
         }
     }
 
+    fun joinGroup(group_id: String, passcode: String? = null){
+        viewModelScope.launch {
+            memberRepository.doJoinGroup(group_id, passcode)
+                .onStart {
+                    _memberSharedFlow.emit(MemberViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _memberSharedFlow.emit(
+                        MemberViewState.SuccessJoinGroup(it)
+                    )
+                }
+        }
+    }
+
     fun leaveGroup(group_id: String) {
         viewModelScope.launch {
             memberRepository.doLeaveGroup(group_id)

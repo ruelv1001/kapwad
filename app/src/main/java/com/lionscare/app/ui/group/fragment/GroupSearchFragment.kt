@@ -4,32 +4,42 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupData
-import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentGroupSearchBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
-import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
-import com.lionscare.app.ui.wallet.adapter.GroupsAdapter
+import com.lionscare.app.ui.group.dialog.JoinGroupConfirmationDialog
+import com.lionscare.app.ui.group.viewmodel.MemberViewModel
+import com.lionscare.app.ui.group.viewmodel.MemberViewState
+import com.lionscare.app.ui.main.adapter.GroupsGroupAdapter
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GroupSearchFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
+class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
 
     private var _binding: FragmentGroupSearchBinding? = null
     private val binding get() = _binding!!
     private var groupLinearLayoutManager: LinearLayoutManager? = null
-    private var groupsAdapter : GroupsYourGroupAdapter? = null
+    private var groupsAdapter : GroupsGroupAdapter? = null
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModel: WalletViewModel by viewModels()
+    private val memberViewModel : MemberViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,16 +57,19 @@ class GroupSearchFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         super.onViewCreated(view, savedInstanceState)
         setupGroupAdapter()
         setupClickListener()
+        observeMember()
+        observeWallet()
         onResume()
     }
 
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_group_search))
+        activity.getScanImageView().visibility = View.GONE
     }
 
     private fun setupGroupAdapter() = binding.run {
-        groupsAdapter = GroupsYourGroupAdapter(requireActivity(), this@GroupSearchFragment)
+        groupsAdapter = GroupsGroupAdapter(requireActivity(), this@GroupSearchFragment)
         groupLinearLayoutManager = LinearLayoutManager(requireActivity())
         groupRecyclerView.layoutManager = groupLinearLayoutManager
         groupRecyclerView.adapter = groupsAdapter
@@ -79,8 +92,85 @@ class GroupSearchFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         }
 
         applyTextView.setOnSingleClickListener {
-            viewModel.doSearchUser(searchEditText.text.toString())
-            viewModel.doSearchGroup(searchEditText.text.toString())
+          //  viewModel.doSearchUser(searchEditText.text.toString())
+            viewModel.doSearchGroupWithLoading(searchEditText.text.toString())
+        }
+    }
+
+    private fun observeWallet() {
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewModel.walletSharedFlow.collectLatest { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: WalletViewState) {
+        when (viewState) {
+            is WalletViewState.Loading -> activity.showLoadingDialog(R.string.loading)
+            is WalletViewState.SuccessScanQR -> {
+               /* activity.hideLoadingDialog()
+                activity.qrData = viewState.scanQRData?: QRData()*/
+            }
+            is WalletViewState.SuccessSearchUser -> {
+                activity.hideLoadingDialog()
+             /*   adapter?.clear()
+                adapter?.appendData(viewState.listData)
+                if (adapter?.getData()?.size == 0) {
+                    binding.placeHolderTextView.isVisible = true
+                    binding.recyclerView.isGone = true
+                } else {
+                    binding.placeHolderTextView.isGone = true
+                    binding.recyclerView.isVisible = true
+                }*/
+            }
+            is WalletViewState.SuccessSearchGroup -> {
+                activity.hideLoadingDialog()
+                groupsAdapter?.clear()
+                groupsAdapter?.appendData(viewState.listData)
+                if (groupsAdapter?.getData()?.size == 0) {
+                    binding.groupPlaceHolderTextView.isVisible = true
+                    binding.groupRecyclerView.isGone = true
+                } else {
+                    binding.groupPlaceHolderTextView.isGone = true
+                    binding.groupRecyclerView.isVisible = true
+                }
+            }
+            is WalletViewState.PopupError -> {
+                activity.hideLoadingDialog()
+                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun observeMember() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            memberViewModel.memberSharedFlow.collectLatest { viewState ->
+                memberHandleViewState(viewState)
+            }
+        }
+    }
+
+    private fun memberHandleViewState(viewState: MemberViewState) {
+        when (viewState) {
+            MemberViewState.Loading -> activity.showLoadingDialog(R.string.loading)
+            is MemberViewState.PopupError -> {
+                activity.hideLoadingDialog()
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+            is MemberViewState.SuccessJoinGroup -> {
+                activity.hideLoadingDialog()
+                Toast.makeText(requireActivity(), viewState.data?.msg, Toast.LENGTH_LONG).show()
+                activity.finish()
+            }
+            else -> Unit
         }
     }
 
@@ -89,8 +179,15 @@ class GroupSearchFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         _binding = null
     }
 
-    override fun onItemClicked(data: GroupListData) {
-//        TODO("Not yet implemented")
+    override fun onItemClicked(data: GroupData) {
+    }
+
+    override fun onJoinClicked(data: GroupData) {
+        JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
+            override fun onConfirm(group_id: String, privacy: String, passcode: String) {
+                memberViewModel.joinGroup(group_id, passcode)
+            }
+        }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
     }
 
 }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.FragmentGroupsGroupBinding
 import com.lionscare.app.ui.main.adapter.GroupsGroupAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +49,7 @@ class GroupsGroupFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-        val model = listOf(
+      /*  val model = listOf(
             ArticleData(
                 name = "Group 1",
                 description = "10 Members",
@@ -70,7 +71,7 @@ class GroupsGroupFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                 reference = "CL-000004"
             )
         )
-        adapter?.appendData(model)
+        adapter?.appendData(model)*/
     }
 
 
@@ -83,11 +84,11 @@ class GroupsGroupFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         fun newInstance() = GroupsGroupFragment()
     }
 
-    override fun onItemClicked(data: ArticleData) {
+    override fun onItemClicked(data: GroupData) {
         Toast.makeText(requireActivity(),"CLICKED Title : ${data.name}", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onJoinClicked(data: ArticleData) {
+    override fun onJoinClicked(data: GroupData) {
         Toast.makeText(requireActivity(),"JOINED Title : ${data.name}", Toast.LENGTH_SHORT).show()
     }
 

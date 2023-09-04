@@ -278,6 +278,7 @@
     </string-array>
     <string-array name="group_type_org">
         <item>Organization</item>
+        <item>Community</item>
     </string-array>
     <string name="lbl_nothing_to_show_txt">Nothing to show</string>
     <string name="lbl_edit_group">Edit Group</string>
