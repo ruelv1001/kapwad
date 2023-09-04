@@ -5,26 +5,27 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.AdapterGroupGroupBinding
 
 class GroupsGroupAdapter (val context: Context, val clickListener: GroupCallback) :
     RecyclerView.Adapter<GroupsGroupAdapter.AdapterViewHolder>() {
 
-    private val adapterData = mutableListOf<ArticleData>()
+    private val adapterData = mutableListOf<GroupData>()
 
     fun clear(){
         adapterData.clear()
         notifyDataSetChanged()
     }
 
-    fun appendData(newData: List<ArticleData>) {
+    fun appendData(newData: List<GroupData>) {
         val startAt = adapterData.size
         adapterData.addAll(newData)
         notifyItemRangeInserted(startAt, newData.size)
     }
 
 
-    fun getData(): MutableList<ArticleData> = adapterData
+    fun getData(): MutableList<GroupData> = adapterData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
         val binding = AdapterGroupGroupBinding
@@ -40,10 +41,10 @@ class GroupsGroupAdapter (val context: Context, val clickListener: GroupCallback
     inner class AdapterViewHolder(val binding: AdapterGroupGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun displayData(data: ArticleData) = with(itemView) {
+        fun displayData(data: GroupData) = with(itemView) {
             binding.titleTextView.text = data.name
-            binding.membersTextView.text = data.description
-            binding.referenceTextView.text = data.reference
+            binding.membersTextView.text = data.member_count.toString()
+            binding.referenceTextView.text = data.qrcode
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data)
@@ -56,8 +57,8 @@ class GroupsGroupAdapter (val context: Context, val clickListener: GroupCallback
     }
 
     interface GroupCallback{
-        fun onItemClicked(data: ArticleData)
-        fun onJoinClicked(data: ArticleData)
+        fun onItemClicked(data: GroupData)
+        fun onJoinClicked(data: GroupData)
     }
 
     override fun getItemCount(): Int = adapterData.size

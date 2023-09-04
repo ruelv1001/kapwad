@@ -31,11 +31,13 @@
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_16" />
 
-        <Spinner
+        <TextView
             android:id="@+id/idTypeSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
+            android:textColor="@color/black"
+            android:text="@string/select_id_type"
             android:background="@drawable/bg_edittext_selector"
             android:padding="@dimen/dimen_16" />
 
