@@ -132,16 +132,16 @@ class GroupDetailsActivity : AppCompatActivity(),
             startActivity(intent)
         }
         walletLayout.qrImageView.setOnSingleClickListener {
-            frontAnim?.setTarget(qrLayout.qrCardView)
-            backAnim?.setTarget(walletLayout.walletCardView)
-            frontAnim?.start()
-            backAnim?.start()
-        }
-        qrLayout.walletImageView.setOnSingleClickListener {
             frontAnim?.setTarget(walletLayout.walletCardView)
             backAnim?.setTarget(qrLayout.qrCardView)
             frontAnim?.start()
             backAnim?.start()
+        }
+        qrLayout.walletImageView.setOnSingleClickListener {
+            frontAnim?.setTarget(qrLayout.qrCardView)
+            backAnim?.setTarget(walletLayout.walletCardView)
+            backAnim?.start()
+            frontAnim?.start()
         }
     }
 
