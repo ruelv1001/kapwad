@@ -150,7 +150,7 @@ class UploadIDFragment : Fragment() {
 
     private fun handleInputError(errorsData: ErrorsData){
         CommonLogger.instance.sysLogE("HERE", errorsData)
-        if (errorsData.image?.get(0)?.isNotEmpty() == true) {
+        if (errorsData.image?.get(0)?.isNotEmpty() == true){
             showPopupError(
                 requireContext(),
                 childFragmentManager,
