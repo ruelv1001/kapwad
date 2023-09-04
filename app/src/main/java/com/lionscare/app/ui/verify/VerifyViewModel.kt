@@ -75,7 +75,7 @@ class VerifyViewModel @Inject constructor(
         }
     }
 
-    fun getIDLists() {
+    fun getIDLists(){
         viewModelScope.launch {
             profileRepository.getIdList()
                 .onStart {
