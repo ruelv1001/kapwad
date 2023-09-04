@@ -1,14 +1,19 @@
 package com.lionscare.app.data.repositories.profile
 
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import java.io.File
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(
@@ -62,5 +67,36 @@ class ProfileRepository @Inject constructor(
             }
         }.flowOn(ioDispatcher)
     }
+
+
+    //=========== ===========================KYC API
+    fun doUploadId(request : KYCRequest): Flow<GeneralResponse> {
+        return flow {
+            val response = profileRemoteDataSource.doUploadId(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doUploadProofAddress(request : KYCRequest): Flow<GeneralResponse> {
+        return flow {
+            val response = profileRemoteDataSource.doUploadProofOfAddress(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getIdList(): Flow<LOVResponse> {
+        return flow {
+            val response = profileRemoteDataSource.getIdList()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getProofOfAddressList(): Flow<LOVResponse> {
+        return flow {
+            val response = profileRemoteDataSource.getProofOfAddressList()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
 
 }

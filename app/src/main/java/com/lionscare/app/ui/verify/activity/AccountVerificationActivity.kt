@@ -8,13 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.textfield.TextInputEditText
 import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityAccountVerificationBinding
+import com.lionscare.app.ui.verify.VerifyViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AccountVerificationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAccountVerificationBinding
@@ -29,6 +33,7 @@ class AccountVerificationActivity : AppCompatActivity() {
             }
         }
 
+    private val viewModel: VerifyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAccountVerificationBinding.inflate(layoutInflater)

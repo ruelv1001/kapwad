@@ -19,6 +19,7 @@ data class ErrorsData(
     var phone_number: List<String>? = null,
     var name: List<String>? = null,
     var image: List<String>? = null,
+    var type : List<String>? = null,
     var otp: List<String>? = null,
     var province_name: List<String>? = null,
     var city_name: List<String>? = null,

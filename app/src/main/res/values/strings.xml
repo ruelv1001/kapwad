@@ -308,6 +308,8 @@
     <string name="filter_invite_text">Invite</string>
     <string name="lbl_group_owner">Group Owner</string>
     <string name="lbl_co_admins">Co-Admins</string>
+    <string name="kyc_upload_id_error">Please upload an ID picture first</string>
+    <string name="kyc_upload_proof_of_address_error">Please upload an Proof of Address document first</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>
