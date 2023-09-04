@@ -190,6 +190,8 @@ class GroupUpdateFragment : Fragment() {
                 viewState.createGroupResponse?.data?.let { setDetails(it) }
                 groupId = viewState.createGroupResponse?.data?.id.toString()
             }
+
+            else -> Unit
         }
     }
 

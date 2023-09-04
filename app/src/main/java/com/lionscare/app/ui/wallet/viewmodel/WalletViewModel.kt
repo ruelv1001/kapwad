@@ -83,23 +83,6 @@ class WalletViewModel @Inject constructor(
         }
     }
 
-    fun doSearchGroupWithLoading(keyword: String) {
-        viewModelScope.launch {
-            walletRepository.doSearchGroup(keyword)
-                .onStart {
-                    _walletSharedFlow.emit(WalletViewState.Loading)
-                }
-                .catch { exception ->
-                    onError(exception)
-                }
-                .collect {
-                    _walletSharedFlow.emit(
-                        WalletViewState.SuccessSearchGroup(it.data.orEmpty())
-                    )
-                }
-        }
-    }
-
     fun getTransactionDetails(transactionId: String) {
         viewModelScope.launch {
             walletRepository.getTransactionDetails(transactionId)

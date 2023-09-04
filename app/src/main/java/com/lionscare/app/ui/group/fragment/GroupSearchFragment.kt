@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -18,11 +17,11 @@ import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.FragmentGroupSearchBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.dialog.JoinGroupConfirmationDialog
+import com.lionscare.app.ui.group.viewmodel.GroupViewModel
+import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.adapter.GroupsGroupAdapter
-import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
-import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -38,7 +37,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     private var groupLinearLayoutManager: LinearLayoutManager? = null
     private var groupsAdapter : GroupsGroupAdapter? = null
     private val activity by lazy { requireActivity() as GroupActivity }
-    private val viewModel: WalletViewModel by viewModels()
+    private val viewModel: GroupViewModel by viewModels()
     private val memberViewModel : MemberViewModel by viewModels()
 
     override fun onCreateView(
@@ -58,7 +57,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         setupGroupAdapter()
         setupClickListener()
         observeMember()
-        observeWallet()
+        observeGroup()
         onResume()
     }
 
@@ -85,7 +84,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
             ScannerDialog.newInstance( object : ScannerDialog.ScannerListener{
                 override fun onScannerSuccess(qrValue: String) {
                     //TODO to be updated when QR value is already in QR
-                    viewModel.doScanQr(qrValue)
+                   // viewModel.doScanQr(qrValue)
                 }
             }, "Scan QR")
                 .show(childFragmentManager, ScannerDialog.TAG)
@@ -97,24 +96,24 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         }
     }
 
-    private fun observeWallet() {
+    private fun observeGroup() {
         viewLifecycleOwner.lifecycleScope.launch{
-            viewModel.walletSharedFlow.collectLatest { viewState ->
+            viewModel.groupSharedFlow.collectLatest { viewState ->
                 handleViewState(viewState)
             }
         }
     }
 
-    private fun handleViewState(viewState: WalletViewState) {
+    private fun handleViewState(viewState: GroupViewState) {
         when (viewState) {
-            is WalletViewState.Loading -> activity.showLoadingDialog(R.string.loading)
-            is WalletViewState.SuccessScanQR -> {
-               /* activity.hideLoadingDialog()
-                activity.qrData = viewState.scanQRData?: QRData()*/
+            is GroupViewState.Loading -> activity.showLoadingDialog(R.string.loading)
+           /* is GroupViewState.SuccessScanQR -> {
+               *//* activity.hideLoadingDialog()
+                activity.qrData = viewState.scanQRData?: QRData()*//*
             }
-            is WalletViewState.SuccessSearchUser -> {
+            is GroupViewState.SuccessSearchUser -> {
                 activity.hideLoadingDialog()
-             /*   adapter?.clear()
+             *//*   adapter?.clear()
                 adapter?.appendData(viewState.listData)
                 if (adapter?.getData()?.size == 0) {
                     binding.placeHolderTextView.isVisible = true
@@ -122,9 +121,9 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                 } else {
                     binding.placeHolderTextView.isGone = true
                     binding.recyclerView.isVisible = true
-                }*/
-            }
-            is WalletViewState.SuccessSearchGroup -> {
+                }*//*
+            }*/
+            is GroupViewState.SuccessSearchGroup -> {
                 activity.hideLoadingDialog()
                 groupsAdapter?.clear()
                 groupsAdapter?.appendData(viewState.listData)
@@ -136,7 +135,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                     binding.groupRecyclerView.isVisible = true
                 }
             }
-            is WalletViewState.PopupError -> {
+            is GroupViewState.PopupError -> {
                 activity.hideLoadingDialog()
                 showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
             }

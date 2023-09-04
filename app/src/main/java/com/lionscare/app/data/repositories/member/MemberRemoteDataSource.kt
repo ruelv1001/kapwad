@@ -8,6 +8,8 @@ import com.lionscare.app.data.repositories.member.response.ApproveRequestRespons
 import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.ListOfMembersResponse
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
+import com.lionscare.app.data.repositories.wallet.request.SearchUserRequest
+import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -85,6 +87,16 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
     suspend fun doRejectJoinRequest(pending_id: String, group_id: String): GeneralResponse {
         val request = ListOfMembersRequest(pending_id = pending_id, group_id = group_id)
         val response = memberService.doRejectJoinRequest(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doSearchUser(keyword: String): SearchUserResponse {
+        val request = SearchUserRequest(keyword)
+        val response = memberService.doSearchUser(request)
+
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

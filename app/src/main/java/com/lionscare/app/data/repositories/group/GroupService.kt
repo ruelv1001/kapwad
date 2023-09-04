@@ -6,6 +6,8 @@ import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
 import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestsListResponse
+import com.lionscare.app.data.repositories.wallet.request.SearchUserRequest
+import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -28,4 +30,8 @@ interface GroupService {
 
     @POST("api/group/pending")
     suspend fun doGetPendingGroupRequest(@Body getGroupListRequest: GetGroupListRequest): Response<PendingGroupRequestsListResponse>
+
+
+    @POST("api/group/search")
+    suspend fun doSearchGroup(@Body request: SearchUserRequest): Response<SearchGroupResponse>
 }
