@@ -32,6 +32,8 @@ class WalletActivity : AppCompatActivity() {
     var amount = ""
     var message = ""
     var isGroupId = false
+    var isFromGroupWallet = false
+    var groupSenderId = ""
     private var loadingDialog: CommonDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +43,8 @@ class WalletActivity : AppCompatActivity() {
         setContentView(view)
         setupNavigationComponent()
         mode = intent.getStringExtra(MODE).toString()
+        groupSenderId = intent.getStringExtra(GROUP_SENDER_ID).toString()
+        isFromGroupWallet = intent.getBooleanExtra(IS_FROM_GROUP, false)
     }
 
     private fun setupNavigationComponent() {
@@ -66,10 +70,18 @@ class WalletActivity : AppCompatActivity() {
     companion object {
 
         private const val MODE = "MODE"
+        private const val IS_FROM_GROUP = "IS_FROM_GROUP"
+        private const val GROUP_SENDER_ID = "GROUP_SENDER_ID"
 
-        fun getIntent(context: Context, mode : String? = null): Intent {
+        fun getIntent(
+            context: Context, mode : String? = null,
+            isFromGroup: Boolean? = false,
+            groupSenderId: String? = ""
+        ): Intent {
             val intent = Intent(context, WalletActivity::class.java)
             intent.putExtra(MODE,mode)
+            intent.putExtra(IS_FROM_GROUP,isFromGroup)
+            intent.putExtra(GROUP_SENDER_ID, groupSenderId)
             return intent
         }
     }
