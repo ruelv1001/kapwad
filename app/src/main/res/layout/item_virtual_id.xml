@@ -225,8 +225,8 @@
 
     <ImageView
         android:id="@+id/qrImageView"
-        android:layout_width="@dimen/dimen_130"
-        android:layout_height="@dimen/dimen_130"
+        android:layout_width="@dimen/dimen_110"
+        android:layout_height="@dimen/dimen_110"
         android:layout_marginEnd="@dimen/dimen_30"
         android:rotation="90"
         android:src="@drawable/ic_qr"

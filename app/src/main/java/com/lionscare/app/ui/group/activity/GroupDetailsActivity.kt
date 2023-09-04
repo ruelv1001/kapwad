@@ -1,12 +1,17 @@
 package com.lionscare.app.ui.group.activity
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +30,7 @@ import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -43,6 +49,8 @@ class GroupDetailsActivity : AppCompatActivity(),
     private val viewModel: GroupViewModel by viewModels()
     private val walletViewModel: GroupWalletViewModel by viewModels()
     private var groupDetails: GroupData? = null
+    var frontAnim: AnimatorSet? = null
+    var backAnim: AnimatorSet? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +63,7 @@ class GroupDetailsActivity : AppCompatActivity(),
         binding.swipeRefreshLayout.setOnRefreshListener(this)
         observeWallet()
         observeShowGroup()
+        setUpAnimation()
     }
 
     private fun setUpAdapter() = binding.run {
@@ -85,6 +94,8 @@ class GroupDetailsActivity : AppCompatActivity(),
         referenceTextView.text = data.qrcode
         membersTextView.text = data.member_only_count.toString()
         adminTextView.text = data.admin_only_count.toString()
+        qrLayout.qrImageView.setImageBitmap(setQR(this@GroupDetailsActivity, data.qrcode_value))
+        qrLayout.idNoTextView.text = data.code
     }
 
     private fun setupClickListener() = binding.run{
@@ -111,7 +122,7 @@ class GroupDetailsActivity : AppCompatActivity(),
         backImageView.setOnSingleClickListener {
           finish()
         }
-        sendLinearLayout.setOnSingleClickListener {
+        walletLayout.sendLinearLayout.setOnSingleClickListener {
             val intent = WalletActivity.getIntent(
                 this@GroupDetailsActivity,
                 "Send Points",
@@ -120,6 +131,31 @@ class GroupDetailsActivity : AppCompatActivity(),
             )
             startActivity(intent)
         }
+        walletLayout.qrImageView.setOnSingleClickListener {
+            frontAnim?.setTarget(walletLayout.walletCardView)
+            backAnim?.setTarget(qrLayout.qrCardView)
+            frontAnim?.start()
+            backAnim?.start()
+        }
+        qrLayout.walletImageView.setOnSingleClickListener {
+            frontAnim?.setTarget(qrLayout.qrCardView)
+            backAnim?.setTarget(walletLayout.walletCardView)
+            backAnim?.start()
+            frontAnim?.start()
+        }
+    }
+
+    private fun setUpAnimation() {
+        frontAnim = AnimatorInflater.loadAnimator(
+            this,
+            R.animator.front_animator
+        ) as AnimatorSet
+        backAnim =
+            AnimatorInflater.loadAnimator(this, R.animator.back_animator) as AnimatorSet
+
+        val scale = resources.displayMetrics.density * 8000
+        binding.walletLayout.walletCardView.cameraDistance = scale
+        binding.qrLayout.qrCardView.cameraDistance = scale
     }
 
     private fun observeShowGroup() {
@@ -166,7 +202,7 @@ class GroupDetailsActivity : AppCompatActivity(),
             is GroupWalletViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
             is GroupWalletViewState.SuccessGetBalance -> {
                 binding.swipeRefreshLayout.isRefreshing = false
-                binding.pointsTextView.text = viewState.balanceData?.value
+                binding.walletLayout.pointsTextView.text = viewState.balanceData?.value
             }
             is GroupWalletViewState.PopupError -> {
                 binding.swipeRefreshLayout.isRefreshing = false

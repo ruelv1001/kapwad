@@ -34,6 +34,7 @@ import com.lionscare.app.ui.main.viewmodel.SettingsViewModel
 import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
+import com.lionscare.app.utils.copyToClipboard
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
@@ -154,6 +155,12 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     private fun setView(userModel: UserModel?) = binding.run {
         mainLayout.nameTextView.text = userModel?.name
+        idLayout.nameTextView.text = userModel?.name
+        idLayout.idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
+        mainLayout.idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
+        qrLayout.qrCodeTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
+        qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.qrcode_value))
+        idLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.qrcode_value))
         mainLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only
         qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.id))
 
@@ -165,8 +172,11 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         if (userModel?.street_name?.isNotEmpty() == true) {
             mainLayout.addressTextView.text =
                 "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
-            idLayout.addressTextView.text =  "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+            idLayout.addressTextView.text =
+                "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
         }
+
+        viewModel.userQrCode = userModel?.qrcode.orEmpty()
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -258,7 +268,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             findNavController().navigate(action)
         }
 
-        binding.immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
+        immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
             val intent = GroupDetailsActivity.getIntent(requireActivity(), immediateFamilyId)
             startActivity(intent)
         }
@@ -266,6 +276,9 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         createGroupButton.setOnSingleClickListener {
             val intent = GroupActivity.getIntent(requireActivity(), START_CREATE_FAMILY)
             startActivity(intent)
+        }
+        qrLayout.qrCodeTextView.setOnSingleClickListener {
+            activity?.copyToClipboard(viewModel.userQrCode)
         }
     }
 
