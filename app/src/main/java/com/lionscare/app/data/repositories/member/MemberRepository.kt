@@ -49,16 +49,23 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doInvitationByOwner(leaveGroupRequest: LeaveGroupRequest): Flow<GeneralResponse> {
+    fun doInvitationByOwner(userId: String ,groupId: String): Flow<JoinGroupResponse> {
         return flow {
-            val response = memberRemoteDataSource.doInvitationByOwner(leaveGroupRequest)
+            val response = memberRemoteDataSource.doInvitationByOwner(userId, groupId)
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
-    fun doAcceptInvitation(acceptDeclineRequest: AcceptDeclineRequest): Flow<GeneralResponse> {
+    fun doAcceptInvitation(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
         return flow {
-            val response = memberRemoteDataSource.doAcceptInvitation(acceptDeclineRequest)
+            val response = memberRemoteDataSource.doAcceptInvitation(pending_id, group_id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doDeclineInvitation(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
+        return flow {
+            val response = memberRemoteDataSource.doDeclineInvitation(pending_id, group_id)
             emit(response)
         }.flowOn(ioDispatcher)
     }

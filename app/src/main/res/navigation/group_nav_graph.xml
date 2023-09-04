@@ -72,7 +72,11 @@
         android:id="@+id/navigation_group_membership"
         android:name="com.lionscare.app.ui.group.fragment.MembersFragment"
         android:label=""
-        tools:layout="@layout/fragment_members"/>
+        tools:layout="@layout/fragment_members">
+        <action
+            android:id="@+id/action_navigation_group_membership_to_navigation_group_invite"
+            app:destination="@id/navigation_group_invite" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_group_statistics"

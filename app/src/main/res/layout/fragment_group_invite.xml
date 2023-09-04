@@ -11,37 +11,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
             android:layout_margin="@dimen/dimen_20"
             android:layout_marginTop="@dimen/dimen_15">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/searchTextInputLayout"
+                android:id="@+id/locationTextInputLayout"
                 style="@style/TextInputLayoutStyle"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_55"
                 android:fontFamily="@font/inter_regular"
-                app:boxBackgroundColor="@color/white"
+                android:hint="@string/lbl_search_group"
+                app:boxBackgroundColor="@color/light_gray_line"
                 app:hintAnimationEnabled="true"
-                app:hintEnabled="false">
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/searchEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edittext_selector"
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="@dimen/dimen_10"
-                    android:drawableTint="@color/commons_text_hint"
-                    android:fontFamily="@font/inter_semibold"
-                    android:hint="@string/lbl_search"
-                    android:imeOptions="actionDone"
-                    android:inputType="textEmailAddress"
+                    android:fontFamily="@font/inter_medium"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/commons_text_hint"
                     android:textSize="@dimen/font_14" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -57,7 +55,19 @@
                 android:src="@drawable/ic_close"
                 android:visibility="gone" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/applyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/search_user_apply_btn"
+                android:textSize="@dimen/font_14"
+                android:visibility="gone"
+                android:textColor="@color/color_primary"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:paddingHorizontal="@dimen/dimen_16"
+                android:gravity="center" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -69,7 +79,18 @@
             android:visibility="gone"
             tools:itemCount="5"
             tools:listitem="@layout/adapter_members" />
+
+        <TextView
+            android:id="@+id/memberPlaceHolderTextView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_200"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center"
+            android:text="@string/lbl_nothing_to_show_txt"
+            android:textSize="@dimen/font_14"/>
+
     </LinearLayout>
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

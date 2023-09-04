@@ -46,17 +46,28 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doInvitationByOwner(leaveGroupRequest: LeaveGroupRequest): GeneralResponse {
-        val response = memberService.doInvitationByOwner(leaveGroupRequest)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+    suspend fun doInvitationByOwner(userId: String ,groupId: String): JoinGroupResponse {
+        val request = LeaveGroupRequest(user_id = userId, group_id = groupId)
+        val response = memberService.doInvitationByOwner(request)
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doAcceptInvitation(acceptDeclineRequest: AcceptDeclineRequest): GeneralResponse {
-        val response = memberService.doAcceptInvitation(acceptDeclineRequest)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+    suspend fun doAcceptInvitation(pending_id: String, group_id: String): JoinGroupResponse {
+        val request = AcceptDeclineRequest(pending_id = pending_id, group_id = group_id)
+        val response = memberService.doAcceptInvitation(request)
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doDeclineInvitation(pending_id: String, group_id: String): JoinGroupResponse {
+        val request = AcceptDeclineRequest(pending_id = pending_id, group_id = group_id)
+        val response = memberService.doDeclineInvitation(request)
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")

@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.admin.AdminRepository
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,9 +25,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AdminViewModel @Inject constructor(
-    private val adminRepository: AdminRepository
+    private val adminRepository: AdminRepository,
+    encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
+    val user = encryptedDataManager.getUserBasicInfo()
     private val _adminSharedFlow = MutableSharedFlow<AdminViewState>()
 
     val adminSharedFlow: SharedFlow<AdminViewState> =
@@ -103,7 +106,7 @@ class AdminViewModel @Inject constructor(
                 }
         }
     }
-    
+
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {
