@@ -70,7 +70,7 @@ class LOVListDialog : BottomSheetDialogFragment() {
     }
 
 
-    private fun setClickListener()  {
+    private fun setClickListener() {
         adapter?.setOnClickListener {
             callback?.onLovDataClicked(this,it)
         }
