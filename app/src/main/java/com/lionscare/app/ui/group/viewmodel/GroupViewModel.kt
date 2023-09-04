@@ -24,11 +24,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupViewModel @Inject constructor(
-    private val groupRepository: GroupRepository,
-    encryptedDataManager: AuthEncryptedDataManager
+    private val groupRepository: GroupRepository
 ) : ViewModel() {
 
-    val user = encryptedDataManager.getUserBasicInfo()
     private val _groupSharedFlow = MutableSharedFlow<GroupViewState>()
 
     val groupSharedFlow: SharedFlow<GroupViewState> =

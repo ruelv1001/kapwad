@@ -80,7 +80,7 @@ class AssistanceCreateFragment : Fragment() {
                 id: Long
             ) {
                 val selectedItem = adapter.getItem(position)
-                val selectedValue = selectedItem?.value
+                val selectedValue = selectedItem?.name
                 othersTextInputLayout.isVisible = selectedValue == "Other"
             }
 
