@@ -41,9 +41,9 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doJoinGroup(groupId: String): Flow<JoinGroupResponse> {
+    fun doJoinGroup(groupId: String, passcode: String? = null): Flow<JoinGroupResponse> {
         return flow {
-            val response = memberRemoteDataSource.doJoinGroup(groupId)
+            val response = memberRemoteDataSource.doJoinGroup(groupId, passcode)
             emit(response)
         }.flowOn(ioDispatcher)
     }
