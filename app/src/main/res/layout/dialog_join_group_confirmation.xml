@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_bottom_sheet"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:background="@drawable/bg_edittext_normal" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/lbl_remove_selected_user"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_20" />
+
+    <LinearLayout
+        android:id="@+id/privateLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1"
+            android:layout_margin="@dimen/dimen_20"
+            android:background="@color/bg_edittext" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passcodeTextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_20"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false"
+            app:passwordToggleDrawable="@drawable/ic_show_pass"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/commons_text_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passcodeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_selector"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/lbl_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:background="@color/bg_edittext" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelledButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_8"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_weight="1"
+                android:backgroundTint="@color/bg_red"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="@string/lbl_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/red"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirmButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_weight="1"
+                android:backgroundTint="@color/color_primary"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="@string/lbl_confirm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

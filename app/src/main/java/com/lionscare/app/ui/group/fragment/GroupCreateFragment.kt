@@ -96,7 +96,7 @@ class GroupCreateFragment : Fragment() {
                 groupType = when (selectedItem) {
                     "Immediate Family" -> "immediate_family"
                     "Organization" -> "organization"
-                    "Clan" -> "clan"
+                    "Community" -> "community"
                     else -> "immediate_family"
                 }
             }
