@@ -312,6 +312,10 @@
     <string name="kyc_upload_id_error">Please upload an ID picture first</string>
     <string name="kyc_upload_proof_of_address_error">Please upload an Proof of Address document first</string>
     <string name="nothing_to_show">Nothing to show</string>
+    <string name="select_id_type">Select ID Type</string>
+    <string name="select_proof_of_address">Select Proof of Address</string>
+    <string name="please_select_id_type">Please select ID Type</string>
+    <string name="please_select_proof_of_address">Please select proof of address</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>

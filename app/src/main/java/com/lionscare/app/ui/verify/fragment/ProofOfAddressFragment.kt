@@ -1,6 +1,7 @@
 package com.lionscare.app.ui.verify.fragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -27,10 +28,12 @@ import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.databinding.FragmentProofOfAddressBinding
 import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.VerifyViewModel
+import com.lionscare.app.ui.verify.dialog.LOVListDialog
 import com.lionscare.app.utils.PopupErrorState
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.getFileFromUri
@@ -51,6 +54,7 @@ class ProofOfAddressFragment : Fragment() {
     private var selectedIdType : String = ""
 
     private var loadingDialog: CommonDialog? = null
+    private var dialogListInstance: LOVListDialog? = null
 
     private val viewModel : VerifyViewModel by activityViewModels()
     override fun onCreateView(
@@ -73,10 +77,17 @@ class ProofOfAddressFragment : Fragment() {
     }
 
     private fun setupClickListener() = binding.run {
+        idTypeSpinner.setOnSingleClickListener {
+            dialogListInstance?.show(childFragmentManager, LOVListDialog.TAG)
+        }
         proofOfAddressRelativeLayout.setOnSingleClickListener {
             openMediaOptionPicker()
         }
         continueButton.setOnSingleClickListener {
+            //reset to empty string if default string is still selected
+            if(selectedIdType == getString(R.string.select_proof_of_address)){
+                selectedIdType = ""
+            }
             if (viewModel.frontImageFile != null){
                 viewModel.doUploadProofOfAddress(
                     KYCRequest(
@@ -132,14 +143,18 @@ private fun observeUploadProofOfAddress() {
     }
 
     private fun handleInputError(errorsData: ErrorsData){
-        if (errorsData.image?.get(0)?.isNotEmpty() == true) showPopupError(requireContext(),
-            childFragmentManager,
-            PopupErrorState.UnknownError,
-            errorsData.image?.get(0).toString())
-        if (errorsData.type?.get(0)?.isNotEmpty() == true) showPopupError(requireContext(),
-            childFragmentManager,
-            PopupErrorState.UnknownError,
-            errorsData.type?.get(0).toString())
+        if (errorsData.image?.get(0)?.isNotEmpty() == true) {
+            showPopupError(requireContext(),
+                childFragmentManager,
+                PopupErrorState.HttpError,
+                errorsData.image?.get(0).toString())
+        }
+        if (errorsData.type?.get(0)?.isNotEmpty() == true) {
+            showPopupError(requireContext(),
+                childFragmentManager,
+                PopupErrorState.HttpError,
+                getString(R.string.please_select_proof_of_address))
+        }
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -157,22 +172,17 @@ private fun observeUploadProofOfAddress() {
     }
 
     private fun setSpinner(lovResponse: LOVResponse) = binding.run {
-        val adapter = ArrayAdapter<String>(requireActivity(),  android.R.layout.simple_spinner_item, lovResponse.data?.map { it.name }.orEmpty().toMutableList())
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        proofOfAddressTypeSpinner.adapter = adapter
-        proofOfAddressTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
+        dialogListInstance = LOVListDialog.newInstance(title = "Proof of Address Types List" ,lovData = lovResponse.data.orEmpty(), callback = object : LOVListDialog.LOVListDialogCallBack {
+            @SuppressLint("SetTextI18n")
+            override fun onLovDataClicked(
+                dialog: LOVListDialog,
+                lovData: LOVData
             ) {
-                selectedIdType =  parent.getItemAtPosition(position).toString()
+                selectedIdType =  lovData.name.toString()
+                binding.idTypeSpinner.text = selectedIdType
+                dialog.dismiss()
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
+        })
     }
 
 

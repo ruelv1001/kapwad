@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:textColor="@color/black"
-            android:text="Select ID Type"
+            android:text="@string/select_id_type"
             android:background="@drawable/bg_edittext_selector"
             android:padding="@dimen/dimen_16" />
 
