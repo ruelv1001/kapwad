@@ -55,11 +55,11 @@ class CommunityRolesUpdateFragment: Fragment() {
     private fun setClickListeners() = binding.run {
 
         removeImageView.setOnSingleClickListener {
-            RemoveConfirmationDialog.newInstance().show(childFragmentManager, RemoveConfirmationDialog.TAG)
+         //   RemoveConfirmationDialog.newInstance().show(childFragmentManager, RemoveConfirmationDialog.TAG)
         }
 
         removeImageView2.setOnSingleClickListener {
-            RemoveConfirmationDialog.newInstance().show(childFragmentManager, RemoveConfirmationDialog.TAG)
+          //  RemoveConfirmationDialog.newInstance().show(childFragmentManager, RemoveConfirmationDialog.TAG)
         }
 
         addLinearLayout.setOnSingleClickListener {

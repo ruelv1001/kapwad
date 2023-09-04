@@ -16,5 +16,5 @@ data class RequestAssistanceLOVResponse(
 @Keep
 data class RequestAssistanceData(
     var code: String? = null,
-    var value: String? = null
+    var name: String? = null
 )

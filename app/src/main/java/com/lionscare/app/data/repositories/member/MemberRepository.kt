@@ -34,9 +34,9 @@ class MemberRepository @Inject constructor(
             .flowOn(ioDispatcher)
     }
 
-    fun doLeaveGroup(leaveGroupRequest: LeaveGroupRequest): Flow<GeneralResponse> {
+    fun doLeaveGroup(group_id: String): Flow<GeneralResponse> {
         return flow {
-            val response = memberRemoteDataSource.doLeaveGroup(leaveGroupRequest)
+            val response = memberRemoteDataSource.doLeaveGroup(group_id)
             emit(response)
         }.flowOn(ioDispatcher)
     }

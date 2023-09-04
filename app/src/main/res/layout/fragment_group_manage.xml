@@ -296,6 +296,36 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/leaveGroupLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_60"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/lighter_red"
+                android:src="@drawable/ic_leave"
+                android:padding="@dimen/dimen_14"
+                android:paddingEnd="@dimen/dimen_10"
+                app:tint="@color/strong_red" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_leave_group"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/font_16" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -13,6 +13,7 @@
         android:background="@drawable/bg_edittext_normal" />
 
     <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_15"
@@ -26,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1"
         android:layout_margin="@dimen/dimen_20"
+        android:visibility="gone"
         android:background="@color/bg_edittext" />
 
     <TextView
@@ -34,6 +36,7 @@
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginEnd="@dimen/dimen_20"
         android:fontFamily="@font/inter_regular"
+        android:visibility="gone"
         android:maxLines="3"
         android:text="@string/sample_lorem_ipsum"
         android:textAlignment="textStart"
@@ -47,6 +50,7 @@
         android:layout_marginTop="@dimen/dimen_20"
         android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginBottom="@dimen/dimen_10"
+        android:visibility="gone"
         android:background="@color/bg_edittext" />
 
     <RelativeLayout
