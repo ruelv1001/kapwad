@@ -22,6 +22,7 @@ sealed class MemberViewState {
     data class SuccessGetListOfMembers(val pagingData: PagingData<MemberListData>) : MemberViewState()
 
     data class SuccessSearchUser(val listData: List<QRData>) : MemberViewState()
+    data class SuccessInviteMember(val data: JoinGroupResponse? = null): MemberViewState()
 
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : MemberViewState()
     data class InputError(val errorData: ErrorsData? = null) : MemberViewState()

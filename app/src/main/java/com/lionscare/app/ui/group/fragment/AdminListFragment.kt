@@ -59,7 +59,7 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(this@AdminListFragment)
+        adapter = GroupMembersAdapter(this@AdminListFragment, viewModel.user.id)
         swipeRefreshLayout.setOnRefreshListener(this@AdminListFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager

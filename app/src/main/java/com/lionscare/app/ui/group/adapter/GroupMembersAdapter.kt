@@ -12,7 +12,7 @@ import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterMembersBinding
 import com.lionscare.app.utils.loadAvatar
 
-class GroupMembersAdapter(val clickListener: MembersCallback) :
+class GroupMembersAdapter(val clickListener: MembersCallback, val id: String? = null) :
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {
@@ -47,6 +47,7 @@ class GroupMembersAdapter(val clickListener: MembersCallback) :
         fun bind(data: MemberListData?) {
             data?.let {
 
+                binding.youTextView.isVisible = id == data.user?.id
                 binding.nameTextView.text = data.user?.name
                 binding.idNoTextView.text = data.user?.qrcode
                // binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path)
