@@ -34,6 +34,7 @@ import com.lionscare.app.databinding.FragmentUploadIdBinding
 import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.VerifyViewModel
 import com.lionscare.app.ui.verify.dialog.LOVListDialog
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.getFileFromUri
@@ -91,6 +92,10 @@ class UploadIDFragment : Fragment() {
             openMediaOptionPicker()
         }
         continueButton.setOnSingleClickListener {
+            //reset to empty string if default string is still selected
+            if(selectedIdType == getString(R.string.select_id_type)){
+                selectedIdType = ""
+            }
             if (viewModel.frontImageFile != null && viewModel.backImageFile != null){
                 viewModel.doUploadId(KYCRequest(
                     idType = selectedIdType,
@@ -144,14 +149,19 @@ class UploadIDFragment : Fragment() {
     }
 
     private fun handleInputError(errorsData: ErrorsData){
-        if (errorsData.image?.get(0)?.isNotEmpty() == true) showPopupError(requireContext(),
+        CommonLogger.instance.sysLogE("HERE", errorsData)
+        if (errorsData.image?.get(0)?.isNotEmpty() == true){
+            showPopupError(
+                requireContext(),
+                childFragmentManager,
+                PopupErrorState.HttpError,
+                errorsData.image?.get(0).toString()
+            )
+        }
+        if (errorsData.type?.get(0)?.isNotEmpty() == true){ showPopupError(requireContext(),
             childFragmentManager,
-            PopupErrorState.UnknownError,
-            errorsData.image?.get(0).toString())
-        if (errorsData.type?.get(0)?.isNotEmpty() == true) showPopupError(requireContext(),
-            childFragmentManager,
-            PopupErrorState.UnknownError,
-            errorsData.type?.get(0).toString())
+            PopupErrorState.HttpError,
+            getString(R.string.please_select_id_type))}
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
