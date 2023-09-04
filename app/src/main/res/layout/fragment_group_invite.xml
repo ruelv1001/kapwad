@@ -14,9 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            android:layout_margin="@dimen/dimen_20"
-            android:layout_marginTop="@dimen/dimen_15">
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/dimen_20">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/locationTextInputLayout"
@@ -93,4 +92,3 @@
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</LinearLayout>

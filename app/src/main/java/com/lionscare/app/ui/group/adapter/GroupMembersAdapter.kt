@@ -13,8 +13,7 @@ import com.lionscare.app.databinding.AdapterMembersBinding
 import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 
-class GroupMembersAdapter(val clickListener: MembersCallback, var isUpdating: Boolean = false) :
-class GroupMembersAdapter(val clickListener: MembersCallback, val id: String? = null) :
+class GroupMembersAdapter(val clickListener: MembersCallback, val id: String? = null,var isUpdating: Boolean = false) :
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {

@@ -29,8 +29,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
-    SwipeRefreshLayout.OnRefreshListener {
+class AdminListFragment : Fragment(),
+    SwipeRefreshLayout.OnRefreshListener, GroupMembersAdapter.MembersCallback {
 
     private var _binding: FragmentGroupMembershipReqBinding? = null
     private val binding get() = _binding!!
@@ -62,9 +62,7 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
     }
 
     private fun setupAdapter(value : Boolean = false) = binding.run {
-        adapter = GroupMembersAdapter(this@AdminListFragment,value)
-    private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(this@AdminListFragment, viewModel.user.id)
+        adapter = GroupMembersAdapter(this@AdminListFragment, viewModel.user.id,value)
         swipeRefreshLayout.setOnRefreshListener(this@AdminListFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
@@ -136,15 +134,15 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
         _binding = null
     }
 
+    override fun onRefresh() {
+        viewModel.refresh(activity.groupDetails?.id.toString())
+    }
+
     override fun onItemClicked(data: MemberListData) {
-//
+//        TODO("Not yet implemented")
     }
 
     override fun onRemoveClicked(data: MemberListData) {
-
-    }
-
-    override fun onRefresh() {
-        viewModel.refresh(activity.groupDetails?.id.toString())
+//        TODO("Not yet implemented")
     }
 }
