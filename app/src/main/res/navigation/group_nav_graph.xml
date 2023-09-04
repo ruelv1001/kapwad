@@ -124,4 +124,10 @@
         android:label=""
         tools:layout="@layout/fragment_group_membership_req"/>
 
+    <fragment
+        android:id="@+id/navigation_group_search"
+        android:name="com.lionscare.app.ui.group.fragment.GroupSearchFragment"
+        android:label=""
+        tools:layout="@layout/fragment_group_search"/>
+
 </navigation>

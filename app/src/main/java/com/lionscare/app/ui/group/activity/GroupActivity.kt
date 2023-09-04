@@ -60,6 +60,7 @@ class GroupActivity : AppCompatActivity() {
             START_ASSISTANCE -> navGraph.setStartDestination(R.id.navigation_group_assistance)
             START_MEMBERSHIP -> navGraph.setStartDestination(R.id.navigation_group_membership)
             START_ADMIN -> navGraph.setStartDestination(R.id.navigation_group_admin_list)
+            START_GROUP_SEARCH -> navGraph.setStartDestination(R.id.navigation_group_search)
             else -> navGraph.setStartDestination(R.id.navigation_group_create)
         }
         navController.setGraph(navGraph, null)
@@ -123,6 +124,12 @@ class GroupActivity : AppCompatActivity() {
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.VISIBLE
             }
+            "Group Search" -> {
+                rolesImageView.visibility = View.GONE
+                searchImageView.visibility = View.GONE
+                filterImageView.visibility = View.GONE
+                scanImageView.visibility = View.VISIBLE
+            }
             else -> {
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.GONE
@@ -154,6 +161,7 @@ class GroupActivity : AppCompatActivity() {
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         private const val START_ASSISTANCE = "START_ASSISTANCE"
         private const val START_ADMIN = "START_ADMIN"
+        private const val START_GROUP_SEARCH = "START_GROUP_SEARCH"
         private const val GROUP_DATA = "GROUP_DATA"
         fun getIntent(context: Context, start: String, groupData: GroupData? = null): Intent {
             val intent = Intent(context, GroupActivity::class.java)
