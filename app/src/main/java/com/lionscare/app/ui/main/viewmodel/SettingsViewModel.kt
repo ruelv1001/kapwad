@@ -25,6 +25,7 @@ class SettingsViewModel @Inject constructor(
 
     val loginSharedFlow = _loginSharedFlow.asSharedFlow()
 
+    var userQrCode = ""
     fun doLogoutAccount() {
         viewModelScope.launch {
             authRepository.doLogout()

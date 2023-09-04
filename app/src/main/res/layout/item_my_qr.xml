@@ -53,14 +53,8 @@
             android:fontFamily="@font/inter_bold"
             android:text="@string/home_id_no_hint"
             android:textColor="@color/color_primary"
-            android:textSize="@dimen/font_24" />
-
-        <ImageView
-            android:id="@+id/copyImageView"
-            android:layout_width="@dimen/dimen_30"
-            android:layout_height="@dimen/dimen_30"
-            android:layout_marginStart="@dimen/dimen_16"
-            android:src="@drawable/ic_copy" />
+            android:textSize="@dimen/font_20"
+            android:drawableEnd="@drawable/ic_copy"/>
 
     </LinearLayout>
 
