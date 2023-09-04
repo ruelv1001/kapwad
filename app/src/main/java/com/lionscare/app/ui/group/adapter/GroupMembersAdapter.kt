@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterMembersBinding
+import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
 import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.setOnSingleClickListener
 
-class GroupMembersAdapter(val clickListener: MembersCallback) :
+class GroupMembersAdapter(val clickListener: MembersCallback, var isUpdating: Boolean = false) :
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {
@@ -51,20 +53,32 @@ class GroupMembersAdapter(val clickListener: MembersCallback) :
                 binding.idNoTextView.text = data.user?.qrcode
                // binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path)
 
-                binding.membersLinearLayout.setOnClickListener {
-                    if (binding.checkImageView.isVisible){
+                if (data.role != "member"){
+                    if (isUpdating){
                         binding.checkImageView.visibility = View.GONE
-                    } else {
-                        binding.checkImageView.visibility = View.VISIBLE
+                        binding.removeImageView.visibility = View.VISIBLE
+                        binding.removeImageView.setOnSingleClickListener {
+                            clickListener.onRemoveClicked(data)
+                        }
                     }
-                    clickListener.onItemClicked(data)
+                } else {
+                    binding.membersLinearLayout.setOnClickListener {
+                        if (binding.checkImageView.isVisible){
+                            binding.checkImageView.visibility = View.GONE
+                        } else {
+                            binding.checkImageView.visibility = View.VISIBLE
+                        }
+                        clickListener.onItemClicked(data)
+                    }
                 }
+
             }
         }
     }
 
     interface MembersCallback {
         fun onItemClicked(data: MemberListData)
+        fun onRemoveClicked(data: MemberListData)
     }
 
     fun hasData() : Boolean{

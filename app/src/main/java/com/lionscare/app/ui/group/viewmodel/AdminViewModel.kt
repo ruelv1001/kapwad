@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.admin.AdminRepository
+import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,6 +52,55 @@ class AdminViewModel @Inject constructor(
     fun refresh(groupId: String) {
         viewModelScope.launch {
             loadAdminList(groupId)
+        }
+    }
+
+    fun doRemoveMember(groupId: String, memberId: Int) {
+        viewModelScope.launch {
+            adminRepository.doRemoveMember(groupId,memberId)
+                .onStart {
+                    _adminSharedFlow.emit(AdminViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _adminSharedFlow.emit(
+                        AdminViewState.SuccessRemoveMember(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+    fun doDemoteAdmin(groupId: String, memberId: Int) {
+        viewModelScope.launch {
+            adminRepository.doDemoteAdmin(groupId,memberId)
+                .onStart {
+                    _adminSharedFlow.emit(AdminViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _adminSharedFlow.emit(
+                        AdminViewState.SuccessDemoteAdmin(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+    fun doPromoteMember(groupId: String, memberId: Int) {
+        viewModelScope.launch {
+            adminRepository.doPromoteMember(groupId,memberId)
+                .onStart {
+                    _adminSharedFlow.emit(AdminViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _adminSharedFlow.emit(
+                        AdminViewState.SuccessPromoteMember(it.msg.orEmpty())
+                    )
+                }
         }
     }
     

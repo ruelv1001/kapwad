@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -12,13 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.lionscare.app.R
-import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.member.response.MemberListData
-import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import com.lionscare.app.databinding.FragmentGroupMembershipReqBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
+import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
+import com.lionscare.app.ui.group.viewmodel.AdminViewModel
+import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.utils.showPopupError
@@ -33,10 +34,11 @@ class MemberListFragment : Fragment(),
 
     private var _binding: FragmentGroupMembershipReqBinding? = null
     private val binding get() = _binding!!
-    private var adapter : GroupMembersAdapter? = null
+    private var adapter: GroupMembersAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private val viewModel: MemberViewModel by viewModels()
     private val activity by lazy { requireActivity() as GroupActivity }
+    private val viewModelAdmin: AdminViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,10 +71,10 @@ class MemberListFragment : Fragment(),
         ownerLinearLayout.isGone = true
 
         adapter?.addLoadStateListener {
-            if(adapter?.hasData() == true){
+            if (adapter?.hasData() == true) {
                 placeHolderTextView.isVisible = false
                 recyclerView.isVisible = true
-            }else{
+            } else {
                 placeHolderTextView.isVisible = true
                 recyclerView.isVisible = false
             }
@@ -89,6 +91,35 @@ class MemberListFragment : Fragment(),
                 handleViewState(viewState)
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModelAdmin.adminSharedFlow.collectLatest { viewState ->
+                handleViewStateAdmin(viewState)
+            }
+        }
+    }
+
+    private fun handleViewStateAdmin(viewState: AdminViewState) {
+        when (viewState) {
+            AdminViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is AdminViewState.PopupError -> {
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+
+            is AdminViewState.SuccessGetListOfAdmin -> showList(viewState.pagingData)
+            is AdminViewState.SuccessRemoveMember -> {
+                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
+                setupAdapter()
+                onRefresh()
+            }
+
+            else -> Unit
+        }
     }
 
     private fun handleViewState(viewState: MemberViewState) {
@@ -102,6 +133,7 @@ class MemberListFragment : Fragment(),
                     viewState.message
                 )
             }
+
             is MemberViewState.SuccessGetListOfMembers -> showList(viewState.pagingData)
             else -> Unit
         }
@@ -125,7 +157,19 @@ class MemberListFragment : Fragment(),
     }
 
     override fun onItemClicked(data: MemberListData) {
-//
+        RemoveConfirmationDialog.newInstance(
+            object : RemoveConfirmationDialog.ConfirmationCallback {
+                override fun onConfirm(id: String) {
+                    viewModelAdmin.doRemoveMember(activity.groupDetails?.id!!,id.toInt())
+                }
+            },
+            title = "Remove Selected Member?",
+            groupId = data.id.toString()
+        ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
+    }
+
+    override fun onRemoveClicked(data: MemberListData) {
+//        TODO("Not yet implemented")
     }
 
     override fun onRefresh() {

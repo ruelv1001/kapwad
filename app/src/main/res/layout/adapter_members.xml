@@ -52,4 +52,13 @@
         android:visibility="gone"
         app:tint="@color/color_primary" />
 
+    <ImageView
+        android:id="@+id/removeImageView"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/dimen_5"
+        android:src="@drawable/ic_remove_eraser" />
+
 </LinearLayout>

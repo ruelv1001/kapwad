@@ -52,8 +52,8 @@ class GroupInviteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
     private fun setupAdapter() = binding.run {
         adapter = GroupMembersAdapter(this@GroupInviteFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
-        memberRecyclerView.layoutManager = linearLayoutManager
-        memberRecyclerView.adapter = adapter
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.adapter = adapter
 
         dataList = listOf(
             SampleData(
@@ -87,10 +87,10 @@ class GroupInviteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
                 text, start, before, count ->
 //            firstNameTextInputLayout.error = ""
             if (searchEditText.text?.isNotEmpty() == true){
-                memberRecyclerView.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
                 closeImageView.visibility = View.VISIBLE
             } else {
-                memberRecyclerView.visibility = View.GONE
+                recyclerView.visibility = View.GONE
                 closeImageView.visibility = View.GONE
             }
         }
@@ -125,5 +125,9 @@ class GroupInviteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
 
     override fun onItemClicked(data: MemberListData) {
 
+    }
+
+    override fun onRemoveClicked(data: MemberListData) {
+//        TODO("Not yet implemented")
     }
 }

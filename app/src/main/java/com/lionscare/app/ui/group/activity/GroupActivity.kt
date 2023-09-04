@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -94,9 +95,10 @@ class GroupActivity : AppCompatActivity() {
         return binding.filterImageView
     }
 
-    fun getScanImageView() : ImageView{
+    fun getScanImageView() : ImageView {
         return binding.scanImageView
     }
+
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
         when(title){

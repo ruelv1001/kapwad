@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,10 +19,10 @@ import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupMembershipReqBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
+import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
 import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.ui.group.viewmodel.AdminViewState
-import com.lionscare.app.ui.group.viewmodel.MemberViewState
-import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -55,11 +58,11 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
         setupAdapter()
         observeMemberList()
         setOwner()
-        viewModel.refresh(activity.groupDetails?.id.toString())
+        onRefresh()
     }
 
-    private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(this@AdminListFragment)
+    private fun setupAdapter(value : Boolean = false) = binding.run {
+        adapter = GroupMembersAdapter(this@AdminListFragment,value)
         swipeRefreshLayout.setOnRefreshListener(this@AdminListFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
@@ -77,7 +80,9 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
     }
 
     private fun setClickListeners() = binding.run {
-
+       activity.getRolesView().setOnSingleClickListener {
+           findNavController().navigate(AdminListFragmentDirections.actionNavigationGroupRolesUpdate())
+       }
     }
 
     private fun setOwner() = binding.run{
@@ -89,7 +94,7 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
 
     override fun onResume() {
         super.onResume()
-        activity.setTitlee(getString(R.string.lbl_list_of_admin))
+        activity.setTitlee(getString(R.string.lbl_group_community_roles))
     }
 
     private fun observeMemberList() {
@@ -112,6 +117,9 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
                 )
             }
             is AdminViewState.SuccessGetListOfAdmin -> showList(viewState.pagingData)
+            is AdminViewState.SuccessDemoteAdmin -> {
+                Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
+            }
             else -> Unit
         }
     }
@@ -128,6 +136,10 @@ class AdminListFragment : Fragment(), GroupMembersAdapter.MembersCallback,
 
     override fun onItemClicked(data: MemberListData) {
 //
+    }
+
+    override fun onRemoveClicked(data: MemberListData) {
+
     }
 
     override fun onRefresh() {
