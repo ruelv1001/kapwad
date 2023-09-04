@@ -14,15 +14,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
+import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.databinding.FragmentProofOfAddressBinding
+import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
+import com.lionscare.app.ui.verify.VerifyViewModel
+import com.lionscare.app.utils.PopupErrorState
+import com.lionscare.app.utils.dialog.CommonDialog
+import com.lionscare.app.utils.getFileFromUri
 import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
+import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Calendar
 
@@ -30,8 +45,14 @@ class ProofOfAddressFragment : Fragment() {
 
     private var _binding: FragmentProofOfAddressBinding? = null
     private val binding get() = _binding!!
-    private var uriFilePath: Uri? = null
 
+    private var uriFilePath: Uri? = null
+    private var isBackImage = false
+    private var selectedIdType : String = ""
+
+    private var loadingDialog: CommonDialog? = null
+
+    private val viewModel : VerifyViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,16 +67,97 @@ class ProofOfAddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeUploadProofOfAddress()
         setupClickListener()
-        setSpinner()
+        viewModel.getProofOfAddressLists()
     }
 
-    private fun setSpinner() = binding.run {
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            requireActivity(),
-            R.array.id_type_items,
-            android.R.layout.simple_spinner_item
-        )
+    private fun setupClickListener() = binding.run {
+        proofOfAddressRelativeLayout.setOnSingleClickListener {
+            openMediaOptionPicker()
+        }
+        continueButton.setOnSingleClickListener {
+            if (viewModel.frontImageFile != null){
+                viewModel.doUploadProofOfAddress(
+                    KYCRequest(
+                    idType = selectedIdType,
+                    frontImageFile = viewModel.frontImageFile!!,
+                    )
+                )
+            }else{
+                Toast.makeText(requireActivity(),
+                    getString(R.string.kyc_upload_proof_of_address_error), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+
+private fun observeUploadProofOfAddress() {
+    viewLifecycleOwner.lifecycleScope.launch {
+        viewModel.kycSharedFlow.collect { viewState ->
+            handleViewState(viewState)
+        }
+    }
+}
+
+
+    private fun handleViewState(viewState: ProfileViewState) {
+        when (viewState) {
+            is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
+            is ProfileViewState.SuccessUploadAddress -> {
+                hideLoadingDialog()
+                Toast.makeText(requireContext(),
+                    viewState.message, Toast.LENGTH_LONG).show()
+                findNavController().popBackStack()
+            }
+            is ProfileViewState.SuccessLoadLOVProofOfAddress -> {
+                hideLoadingDialog()
+                viewState.lovResponse?.let { setSpinner(it) }
+            }
+            is ProfileViewState.InputError -> {
+                hideLoadingDialog()
+                val errorData = viewState.errorData
+                if (errorData != null){
+                    handleInputError(errorData)
+                }
+            }
+            is ProfileViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+            }
+            else -> {
+                hideLoadingDialog()
+            }
+        }
+    }
+
+    private fun handleInputError(errorsData: ErrorsData){
+        if (errorsData.image?.get(0)?.isNotEmpty() == true) showPopupError(requireContext(),
+            childFragmentManager,
+            PopupErrorState.UnknownError,
+            errorsData.image?.get(0).toString())
+        if (errorsData.type?.get(0)?.isNotEmpty() == true) showPopupError(requireContext(),
+            childFragmentManager,
+            PopupErrorState.UnknownError,
+            errorsData.type?.get(0).toString())
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        if (loadingDialog == null){
+            loadingDialog = CommonDialog.getLoadingDialogInstance(
+                message = getString(strId)
+            )
+            loadingDialog?.show(childFragmentManager)
+        }
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+    }
+
+    private fun setSpinner(lovResponse: LOVResponse) = binding.run {
+        val adapter = ArrayAdapter<String>(requireActivity(),  android.R.layout.simple_spinner_item, lovResponse.data?.map { it.name }.orEmpty().toMutableList())
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         proofOfAddressTypeSpinner.adapter = adapter
         proofOfAddressTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -65,21 +167,14 @@ class ProofOfAddressFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
+                selectedIdType =  parent.getItemAtPosition(position).toString()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
     }
 
-    private fun setupClickListener() = binding.run {
-        proofOfAddressRelativeLayout.setOnSingleClickListener {
-            openMediaOptionPicker()
-        }
-        continueButton.setOnSingleClickListener {
-
-        }
-    }
 
     private fun openMediaOptionPicker() {
         val choices = arrayOf("Camera", "Gallery")
@@ -108,14 +203,14 @@ class ProofOfAddressFragment : Fragment() {
         if (isSaved)
         {
             binding.proofOfAddressImageView.loadImage(uriFilePath.toString(),requireActivity())
-            // viewModel.frontIdFile = getFileFromUri(requireActivity(), uriFilePath)
+            viewModel.frontImageFile = getFileFromUri(requireActivity(), uriFilePath)
         }
     }
 
     private val singlePhotoPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri: Uri? ->
         imageUri?.let { uri ->
-            binding.proofOfAddressImageView.loadImage(uriFilePath.toString(),requireActivity())
-            // viewModel.frontIdFile = getFileFromUri(requireActivity(), uriFilePath)
+            binding.proofOfAddressImageView.loadImage(uri.toString(),requireActivity())
+            viewModel.frontImageFile = getFileFromUri(requireActivity(), uri)
         }
     }
 

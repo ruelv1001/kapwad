@@ -4,23 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupManageBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
-import com.lionscare.app.ui.group.viewmodel.GroupViewModel
+import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
+import com.lionscare.app.ui.group.viewmodel.MemberViewModel
+import com.lionscare.app.ui.group.viewmodel.MemberViewState
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GroupManageFragment : Fragment() {
     private var _binding: FragmentGroupManageBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
-    private val viewModel : GroupViewModel by viewModels()
+    private val viewModel : MemberViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +48,7 @@ class GroupManageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
         setView()
+        observeMember()
         setDetails()
         onResume()
     }
@@ -57,10 +67,10 @@ class GroupManageFragment : Fragment() {
 
     private fun setDetails() = binding.run {
         titleTextView.text = activity.groupDetails?.name
-        if(activity.groupDetails?.type.equals("organization")){
+        if (activity.groupDetails?.type.equals("organization")) {
             typeFamTextView.isVisible = false
             typeOrgTextView.isVisible = true
-        }else{
+        } else {
             typeFamTextView.isVisible = true
             typeOrgTextView.isVisible = false
         }
@@ -85,6 +95,55 @@ class GroupManageFragment : Fragment() {
         editGroupImageView.setOnSingleClickListener {
             findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupUpdate())
         }
+        leaveGroupLinearLayout.setOnSingleClickListener {
+            RemoveConfirmationDialog.newInstance(
+                object : RemoveConfirmationDialog.ConfirmationCallback {
+                    override fun onConfirm(id: String) {
+                        viewModel.leaveGroup(id)
+                    }
+                },
+                title = "Are you sure you want to leave ${activity.groupDetails?.name}?",
+                groupId = activity.groupDetails?.id
+            ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
+        }
+    }
+
+    private fun observeMember() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.memberSharedFlow.collectLatest { viewState ->
+                memberHandleViewState(viewState)
+            }
+        }
+    }
+
+    private fun memberHandleViewState(viewState: MemberViewState) {
+        when (viewState) {
+            MemberViewState.Loading -> showLoadingDialog(R.string.loading)
+            is MemberViewState.PopupError -> {
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+            is MemberViewState.SuccessLeaveGroup -> {
+                hideLoadingDialog()
+                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_LONG).show()
+                val intent = MainActivity.getIntent(activity)
+                startActivity(intent)
+                activity.finishAffinity()
+            }
+            else -> Unit
+        }
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        (requireActivity() as GroupActivity).showLoadingDialog(strId)
+    }
+
+    private fun hideLoadingDialog() {
+        (requireActivity() as GroupActivity).hideLoadingDialog()
     }
 
     override fun onDestroyView() {
