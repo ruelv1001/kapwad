@@ -6,6 +6,8 @@ import com.lionscare.app.data.repositories.member.response.ApproveRequestRespons
 import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
+import com.lionscare.app.data.repositories.wallet.response.QRData
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.PopupErrorState
 
 sealed class MemberViewState {
@@ -18,6 +20,9 @@ sealed class MemberViewState {
     data class SuccessJoinGroup(val data: JoinGroupResponse? = null): MemberViewState()
     data class SuccessLeaveGroup(val message: String = ""): MemberViewState()
     data class SuccessGetListOfMembers(val pagingData: PagingData<MemberListData>) : MemberViewState()
+
+    data class SuccessSearchUser(val listData: List<QRData>) : MemberViewState()
+
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : MemberViewState()
     data class InputError(val errorData: ErrorsData? = null) : MemberViewState()
 

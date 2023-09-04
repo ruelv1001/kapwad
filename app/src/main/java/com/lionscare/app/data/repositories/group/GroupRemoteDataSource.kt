@@ -6,6 +6,8 @@ import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
 import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestsListResponse
+import com.lionscare.app.data.repositories.wallet.request.SearchUserRequest
+import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -65,4 +67,13 @@ class GroupRemoteDataSource @Inject constructor(private val groupService: GroupS
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
+    suspend fun doSearchGroup(keyword: String): SearchGroupResponse {
+        val request = SearchUserRequest(keyword)
+        val response = groupService.doSearchGroup(request)
+
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
 }

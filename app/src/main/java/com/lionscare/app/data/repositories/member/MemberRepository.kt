@@ -13,6 +13,7 @@ import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
+import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -86,6 +87,13 @@ class MemberRepository @Inject constructor(
     fun doRejectJoinRequest(pending_id: String, group_id: String): Flow<GeneralResponse> {
         return flow {
             val response = memberRemoteDataSource.doRejectJoinRequest(pending_id, group_id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doSearchUser(keyword: String): Flow<SearchUserResponse> {
+        return flow {
+            val response = memberRemoteDataSource.doSearchUser(keyword)
             emit(response)
         }.flowOn(ioDispatcher)
     }
