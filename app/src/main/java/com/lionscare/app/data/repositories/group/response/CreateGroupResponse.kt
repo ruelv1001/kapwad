@@ -25,7 +25,7 @@ data class GroupData(
     var code: String? = null,
     var qrcode: String? = null,
     var qr_value: QrValue? = null,
-    var qrcode_vale: String? = null,
+    var qrcode_value: String? = null,
     var member_count: Int? = null,
     var member_only_count: Int? = null,
     var admin_only_count: Int? = null,
