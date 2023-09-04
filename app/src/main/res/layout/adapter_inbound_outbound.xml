@@ -65,14 +65,6 @@
                 android:fontFamily="@font/inter_medium"
                 android:textSize="@dimen/font_14"/>
 
-            <TextView
-                android:id="@+id/nameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/light_gray"
-                android:text="@string/home_name_hint"
-                android:fontFamily="@font/inter_medium"
-                android:textSize="@dimen/font_14"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

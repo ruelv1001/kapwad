@@ -64,8 +64,8 @@ class WalletSummaryFragment : Fragment() {
                     recipientGroupLayout.adapterLinearLayout.isVisible = true
                     recipientLayout.membersLinearLayout.isGone = true
                     recipientGroupLayout.titleTextView.text = activity.groupData.name
-                    //TODO to be updated when display id ready
-                    recipientGroupLayout.referenceTextView.text = "LC-000123"
+                    recipientGroupLayout.referenceTextView.text = activity.groupData.code
+                    recipientGroupLayout.membersTextView.text = "${activity.groupData.member_count.toString()} members"
                 }else{
                     recipientGroupLayout.adapterLinearLayout.isGone = true
                     recipientLayout.membersLinearLayout.isVisible = true
