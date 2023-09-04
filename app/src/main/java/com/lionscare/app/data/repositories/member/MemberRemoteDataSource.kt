@@ -26,8 +26,9 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doLeaveGroup(leaveGroupRequest: LeaveGroupRequest): GeneralResponse {
-        val response = memberService.doLeaveGroup(leaveGroupRequest)
+    suspend fun doLeaveGroup(group_id: String): GeneralResponse {
+        val request = LeaveGroupRequest(group_id = group_id)
+        val response = memberService.doLeaveGroup(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

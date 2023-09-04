@@ -85,6 +85,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
         when (viewState) {
             is GroupListViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
             is GroupListViewState.SuccessGetPendingRequestList -> {
+                binding.swipeRefreshLayout.isRefreshing = false
                 showPending(viewState.pagingData)
             }
             is GroupListViewState.PopupError -> {
@@ -120,7 +121,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     }
 
     override fun onItemClicked(data: PendingGroupRequestData) {
-        Toast.makeText(requireActivity(),"CLICKED Title : ${data.group?.name}", Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onAcceptClicked(data: PendingGroupRequestData) {
@@ -128,7 +129,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     }
 
     override fun onDeclineClicked(data: PendingGroupRequestData) {
-        Toast.makeText(requireActivity(),"Decline Title : ${data.group?.name}", Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onCancelClicked(data: PendingGroupRequestData) {
@@ -141,6 +142,10 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     }
     override fun onRefresh() {
         viewModel.refreshPendingRequestList()
+    }
+
+    fun clear() {
+        adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
     }
 
 }

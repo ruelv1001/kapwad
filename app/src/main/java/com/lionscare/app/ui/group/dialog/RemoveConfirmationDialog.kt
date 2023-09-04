@@ -8,13 +8,16 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogRemoveConfirmationBinding
+import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RemoveConfirmationDialog : BottomSheetDialogFragment(){
 
     private var viewBinding: DialogRemoveConfirmationBinding? = null
-    private var callback: RegisterSuccessCallBack? = null
+    private var callback: ConfirmationCallback? = null
+    private var title = ""
+    private var groupId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,13 +44,17 @@ class RemoveConfirmationDialog : BottomSheetDialogFragment(){
     }
 
     private fun setView() = viewBinding?.run {
-
+        titleTextView.text = title
     }
 
     private fun setClickListener() {
-//        viewBinding?.myAcctButton?.setOnSingleClickListener {
-//            dismiss()
-//        }
+        viewBinding?.cancelledButton?.setOnSingleClickListener {
+            dismiss()
+        }
+        viewBinding?.confirmButton?.setOnSingleClickListener {
+            callback?.onConfirm(groupId)
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {
@@ -55,14 +62,16 @@ class RemoveConfirmationDialog : BottomSheetDialogFragment(){
         viewBinding = null
     }
 
-    interface RegisterSuccessCallBack {
-        fun onMyAccountClicked(cityName: String, citySku: String, zipCode: String)
+    interface ConfirmationCallback {
+        fun onConfirm(id: String)
     }
 
     companion object {
-        fun newInstance(callback: RegisterSuccessCallBack? = null) = RemoveConfirmationDialog()
+        fun newInstance(callback: ConfirmationCallback? = null, title: String, groupId: String? = null) = RemoveConfirmationDialog()
             .apply {
                 this.callback = callback
+                this.title = title
+                this.groupId = groupId.toString()
             }
 
         val TAG: String = RemoveConfirmationDialog::class.java.simpleName

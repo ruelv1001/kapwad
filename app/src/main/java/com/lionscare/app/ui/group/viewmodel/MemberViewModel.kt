@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
 import com.lionscare.app.data.repositories.member.MemberRepository
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,9 +26,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MemberViewModel @Inject constructor(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
+    val user = encryptedDataManager.getUserBasicInfo()
     private val _memberSharedFlow = MutableSharedFlow<MemberViewState>()
 
     val memberSharedFlow: SharedFlow<MemberViewState> =
@@ -108,6 +111,23 @@ class MemberViewModel @Inject constructor(
                 .collect {
                     _memberSharedFlow.emit(
                         MemberViewState.SuccessRejectJoinRequest(it.msg.toString())
+                    )
+                }
+        }
+    }
+
+    fun leaveGroup(group_id: String) {
+        viewModelScope.launch {
+            memberRepository.doLeaveGroup(group_id)
+                .onStart {
+                    _memberSharedFlow.emit(MemberViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _memberSharedFlow.emit(
+                        MemberViewState.SuccessLeaveGroup(it.msg.toString())
                     )
                 }
         }
