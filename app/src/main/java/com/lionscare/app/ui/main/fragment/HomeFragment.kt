@@ -154,11 +154,18 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     private fun setView(userModel: UserModel?) = binding.run {
         mainLayout.nameTextView.text = userModel?.name
+        mainLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only
         qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.id))
+
+        //id
+        idLayout.nameTextView.text = userModel?.name
+        idLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.id))
+        idLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only
 
         if (userModel?.street_name?.isNotEmpty() == true) {
             mainLayout.addressTextView.text =
                 "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+            idLayout.addressTextView.text =  "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
         }
     }
 

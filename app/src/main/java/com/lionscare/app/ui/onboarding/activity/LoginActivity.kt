@@ -66,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
                 val intent = MainActivity.getIntent(this@LoginActivity)
                 startActivity(intent)
                 Toast.makeText(this, viewState.message, Toast.LENGTH_SHORT).show()
+                finishAffinity()
             }
             is LoginViewState.PopupError -> {
                 hideLoadingDialog()
