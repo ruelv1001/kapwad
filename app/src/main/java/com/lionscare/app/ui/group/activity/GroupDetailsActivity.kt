@@ -21,6 +21,7 @@ import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.GroupWalletViewModel
 import com.lionscare.app.ui.group.viewmodel.GroupWalletViewState
 import com.lionscare.app.ui.notifications.adapter.NotificationsAdapter
+import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -109,6 +110,15 @@ class GroupDetailsActivity : AppCompatActivity(),
         }
         backImageView.setOnSingleClickListener {
           finish()
+        }
+        sendLinearLayout.setOnSingleClickListener {
+            val intent = WalletActivity.getIntent(
+                this@GroupDetailsActivity,
+                "Send Points",
+                true,
+                groupId
+            )
+            startActivity(intent)
         }
     }
 
