@@ -49,8 +49,7 @@
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_if_000001"
                 android:textColor="@color/commons_lbl"
-                android:textSize="@dimen/font_16"
-                app:drawableEndCompat="@drawable/ic_copy" />
+                android:textSize="@dimen/font_16" />
         </LinearLayout>
 
         <ImageView

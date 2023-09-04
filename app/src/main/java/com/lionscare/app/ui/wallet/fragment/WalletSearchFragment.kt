@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -28,6 +29,8 @@ import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class WalletSearchFragment : Fragment(),
@@ -75,9 +78,17 @@ class WalletSearchFragment : Fragment(),
     private fun handleViewState(viewState: WalletViewState) {
         when (viewState) {
             is WalletViewState.Loading -> activity.showLoadingDialog(R.string.loading)
+            is WalletViewState.LoadingScanGroup -> activity.showLoadingDialog(R.string.loading)
             is WalletViewState.SuccessScanQR -> {
                 activity.hideLoadingDialog()
+                activity.isGroupId = false
                 activity.qrData = viewState.scanQRData?: QRData()
+                findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
+            }
+            is WalletViewState.SuccessScanGroup -> {
+                activity.hideLoadingDialog()
+                activity.isGroupId = true
+                activity.groupData = viewState.groupData
                 findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
             }
             is WalletViewState.SuccessSearchUser -> {
@@ -149,19 +160,42 @@ class WalletSearchFragment : Fragment(),
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         qrImageView.setOnSingleClickListener {
-            ScannerDialog.newInstance( object : ScannerDialog.ScannerListener{
-                override fun onScannerSuccess(qrValue: String) {
-                    //TODO to be updated when QR value is already in QR
-                    viewModel.doScanQr(qrValue)
-                }
-            }, "Scan QR")
-                .show(childFragmentManager, ScannerDialog.TAG)
+            callScanner()
         }
 
         applyTextView.setOnSingleClickListener {
             viewModel.doSearchUser(searchEditText.text.toString())
             viewModel.doSearchGroup(searchEditText.text.toString())
         }
+    }
+
+    private fun callScanner() {
+        ScannerDialog.newInstance(object : ScannerDialog.ScannerListener {
+            override fun onScannerSuccess(qrValue: String) {
+                val jsonObject: JSONObject
+                val res = qrValue.replace("\\", "")
+                try {
+                    jsonObject = JSONObject(res)
+                    val type = jsonObject.getString("type")
+                    val value = jsonObject.getString("value")
+
+                    if (type.equals("lionscare", true)) {
+                        viewModel.doScanQr(value)
+                    } else {
+                        viewModel.doScanGroup(value)
+                    }
+
+                } catch (e: JSONException) {
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.invalid_qr_code_msg),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    e.printStackTrace()
+                }
+            }
+        }, "Scan QR")
+            .show(childFragmentManager, ScannerDialog.TAG)
     }
 
     override fun onDestroyView() {

@@ -7,6 +7,7 @@ import androidx.paging.cachedIn
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
+import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.data.repositories.wallet.WalletRepository
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
@@ -71,6 +72,40 @@ class WalletViewModel @Inject constructor(
             walletRepository.doSearchGroup(keyword)
                 .onStart {
 
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _walletSharedFlow.emit(
+                        WalletViewState.SuccessSearchGroup(it.data.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun doScanGroup(keyword: String) {
+        viewModelScope.launch {
+            walletRepository.doSearchGroup(keyword)
+                .onStart {
+                    _walletSharedFlow.emit(WalletViewState.LoadingScanGroup)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _walletSharedFlow.emit(
+                        WalletViewState.SuccessScanGroup(it.data?.get(0)?: GroupData())
+                    )
+                }
+        }
+    }
+
+    fun doSearchGroupWithLoading(keyword: String) {
+        viewModelScope.launch {
+            walletRepository.doSearchGroup(keyword)
+                .onStart {
+                    _walletSharedFlow.emit(WalletViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)

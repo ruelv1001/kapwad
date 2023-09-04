@@ -14,6 +14,7 @@ import com.lionscare.app.utils.PopupErrorState
 sealed class WalletViewState{
 
     object Loading : WalletViewState()
+    object LoadingScanGroup : WalletViewState()
     data class SuccessGetBalance(val balanceData: BalanceData? = null) : WalletViewState()
 
     data class SuccessTopup(val webUrl: String? = null) : WalletViewState()
@@ -29,6 +30,7 @@ sealed class WalletViewState{
     data class SuccessSearchUser(val listData: List<QRData>) : WalletViewState()
 
     data class SuccessSearchGroup(val listData: List<GroupData>) : WalletViewState()
+    data class SuccessScanGroup(val groupData: GroupData) : WalletViewState()
 
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : WalletViewState()
 
