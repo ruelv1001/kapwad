@@ -8,6 +8,9 @@ import com.lionscare.app.data.repositories.member.response.ApproveRequestRespons
 import com.lionscare.app.data.repositories.member.response.JoinGroupResponse
 import com.lionscare.app.data.repositories.member.response.ListOfMembersResponse
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
+import com.lionscare.app.data.repositories.wallet.request.SearchUserRequest
+import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
+import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -41,4 +44,7 @@ interface MemberService {
 
     @POST("api/group/member/pending/reject")
     suspend fun doRejectJoinRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<GeneralResponse>
+
+    @POST("api/group/member/search")
+    suspend fun doSearchUser(@Body request: SearchUserRequest): Response<SearchUserResponse>
 }

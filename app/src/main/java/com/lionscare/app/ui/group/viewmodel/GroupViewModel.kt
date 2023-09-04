@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
-import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -79,6 +78,23 @@ class GroupViewModel @Inject constructor(
                 }
                 .collect{
                     _groupSharedFlow.emit(GroupViewState.SuccessShowGroup(it))
+                }
+        }
+    }
+
+    fun doSearchGroupWithLoading(keyword: String) {
+        viewModelScope.launch {
+            groupRepository.doSearchGroup(keyword)
+                .onStart {
+                    _groupSharedFlow.emit(GroupViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _groupSharedFlow.emit(
+                        GroupViewState.SuccessSearchGroup(it.data.orEmpty())
+                    )
                 }
         }
     }

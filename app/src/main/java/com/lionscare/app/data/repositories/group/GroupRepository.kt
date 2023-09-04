@@ -10,6 +10,7 @@ import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
+import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +68,13 @@ class GroupRepository @Inject constructor(
             pagingSourceFactory = { getPendingGroupRequestPagingSource }
         ).flow
             .flowOn(ioDispatcher)
+    }
+
+    fun doSearchGroup(keyword: String): Flow<SearchGroupResponse> {
+        return flow {
+            val response = groupRemoteDataSource.doSearchGroup(keyword)
+            emit(response)
+        }.flowOn(ioDispatcher)
     }
 
     private fun getDefaultPageConfig(): PagingConfig {

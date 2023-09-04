@@ -162,7 +162,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         //qr
         qrLayout.qrCodeTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
         qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.qrcode_value))
-        qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.id))
 
         //id
         idLayout.nameTextView.text = userModel?.name
