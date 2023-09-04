@@ -29,10 +29,12 @@ interface MemberService {
 
     //invite member folder
     @POST("api/group/member/invite")
-    suspend fun doInvitationByOwner(@Body leaveGroupRequest: LeaveGroupRequest): Response<GeneralResponse>
+    suspend fun doInvitationByOwner(@Body leaveGroupRequest: LeaveGroupRequest): Response<JoinGroupResponse>
 
     @POST("api/group/member/accept")
-    suspend fun doAcceptInvitation(@Body acceptDeclineRequest: AcceptDeclineRequest): Response<GeneralResponse>
+    suspend fun doAcceptInvitation(@Body acceptDeclineRequest: AcceptDeclineRequest): Response<JoinGroupResponse>
+    @POST("api/group/member/decline")
+    suspend fun doDeclineInvitation(@Body acceptDeclineRequest: AcceptDeclineRequest): Response<JoinGroupResponse>
 
 
     //Pending member folder

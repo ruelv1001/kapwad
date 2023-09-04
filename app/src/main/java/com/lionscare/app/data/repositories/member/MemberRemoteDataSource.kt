@@ -46,15 +46,16 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doInvitationByOwner(leaveGroupRequest: LeaveGroupRequest): GeneralResponse {
-        val response = memberService.doInvitationByOwner(leaveGroupRequest)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+    suspend fun doInvitationByOwner(userId: String ,groupId: String): JoinGroupResponse {
+        val request = LeaveGroupRequest(user_id = userId, group_id = groupId)
+        val response = memberService.doInvitationByOwner(request)
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doAcceptInvitation(acceptDeclineRequest: AcceptDeclineRequest): GeneralResponse {
+    suspend fun doAcceptInvitation(acceptDeclineRequest: AcceptDeclineRequest): JoinGroupResponse {
         val response = memberService.doAcceptInvitation(acceptDeclineRequest)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)

@@ -318,6 +318,7 @@
     <string name="please_select_id_type">Please select ID Type</string>
     <string name="please_select_proof_of_address">Please select proof of address</string>
     <string name="invalid_qr_code_msg">Invalid QR Code</string>
+    <string name="lbl_you">You</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>

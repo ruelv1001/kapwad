@@ -166,6 +166,24 @@ class MemberViewModel @Inject constructor(
         }
     }
 
+    fun inviteMember(userId: String ,group_id: String) {
+        viewModelScope.launch {
+            memberRepository.doInvitationByOwner(userId = userId, groupId = group_id)
+                .onStart {
+                    _memberSharedFlow.emit(MemberViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                    CommonLogger.sysLogE("ERROR", exception)
+                }
+                .collect {
+                    _memberSharedFlow.emit(
+                        MemberViewState.SuccessInviteMember(it)
+                    )
+                }
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentMembersBinding
@@ -60,6 +61,9 @@ class MembersFragment : Fragment() {
             viewPager.currentItem = 1
         }
 
+        inviteMemberFloatingActionButton.setOnSingleClickListener {
+            findNavController().navigate(MembersFragmentDirections.actionNavigationGroupMembershipToNavigationGroupInvite())
+        }
     }
 
     private fun setActiveTab(layout: RelativeLayout) = binding.run {
@@ -73,6 +77,7 @@ class MembersFragment : Fragment() {
                 membersTextView.visibility = View.GONE
 
                 activity.getFilterImageView().isVisible = true
+                inviteMemberFloatingActionButton.isVisible = false
             }
 
             membersRelativeLayout -> {
@@ -83,6 +88,8 @@ class MembersFragment : Fragment() {
                 requestTextView.visibility = View.GONE
 
                 activity.getFilterImageView().isVisible = false
+                //TODO: Add isAdmin condition
+                inviteMemberFloatingActionButton.isVisible = true
             }
             else -> Unit
         }
@@ -120,6 +127,7 @@ class MembersFragment : Fragment() {
 
     companion object {
         private const val APPROVED = "APPROVED"
+        private const val START_INVITE = "START_INVITE"
     }
 
 }

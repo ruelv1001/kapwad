@@ -79,7 +79,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
 
     private fun setView() = binding.run {
         memberRecyclerView.visibility = View.VISIBLE
-        searchEditText.doOnTextChanged {
+       /* searchEditText.doOnTextChanged {
                 text, start, before, count ->
 //            firstNameTextInputLayout.error = ""
             if (searchEditText.text?.isNotEmpty() == true){
@@ -91,7 +91,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
         closeImageView.setOnSingleClickListener {
             closeImageView.visibility = View.GONE
             searchEditText.setText("")
-        }
+        }*/
     }
 
     private fun setClickListeners() = binding.run {
