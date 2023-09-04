@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/violationLinearLayout"
+    android:paddingHorizontal="@dimen/dimen_16"
+    android:paddingVertical="@dimen/dimen_10"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_rounded"
+    android:elevation="@dimen/dimen_4"
+    android:layout_marginHorizontal="@dimen/dimen_16"
+    android:layout_marginVertical="@dimen/dimen_8"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Illegal parking (Attended)"
+        android:textSize="@dimen/font_14"
+        android:layout_marginStart="@dimen/dimen_10"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:fontFamily="@font/inter_medium"/>
+
+</LinearLayout>

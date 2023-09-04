@@ -311,6 +311,7 @@
     <string name="lbl_leave_group">Leave Group</string>
     <string name="kyc_upload_id_error">Please upload an ID picture first</string>
     <string name="kyc_upload_proof_of_address_error">Please upload an Proof of Address document first</string>
+    <string name="nothing_to_show">Nothing to show</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>
