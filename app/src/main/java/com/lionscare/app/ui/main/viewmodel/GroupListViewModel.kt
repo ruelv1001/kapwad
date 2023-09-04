@@ -54,6 +54,29 @@ class GroupListViewModel @Inject constructor(private val groupRepository: GroupR
         }
     }
 
+    private suspend fun loadPendingRequestList() {
+        groupRepository.doGetPendingGroupRequestList()
+            .cachedIn(viewModelScope)
+            .onStart {
+                _getGroupSharedFlow.emit(GroupListViewState.Loading)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.devLog("error",exception)
+            }
+            .collect { pagingData ->
+                _getGroupSharedFlow.emit(
+                    GroupListViewState.SuccessGetPendingRequestList(pagingData)
+                )
+            }
+    }
+
+    fun refreshPendingRequestList() {
+        viewModelScope.launch {
+            loadPendingRequestList()
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,

@@ -111,6 +111,8 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
                     viewState.message
                 )
             }
+
+            else -> Unit
         }
     }
 

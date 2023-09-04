@@ -4,81 +4,87 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.repositories.group.response.GroupListData
+import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.databinding.AdapterGroupPendingRequestBinding
+import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
 
 class GroupsPendingRequestsAdapter (val context: Context, val clickListener: GroupCallback) :
-    RecyclerView.Adapter<GroupsPendingRequestsAdapter.AdapterViewHolder>() {
+    PagingDataAdapter<PendingGroupRequestData, GroupsPendingRequestsAdapter.AdapterViewHolder>(
+        DIFF_CALLBACK
+    ) {
 
-    private val adapterData = mutableListOf<ArticleData>()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PendingGroupRequestData>() {
+            override fun areItemsTheSame(oldItem: PendingGroupRequestData, newItem: PendingGroupRequestData): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    fun clear(){
-        adapterData.clear()
-        notifyDataSetChanged()
+            override fun areContentsTheSame(oldItem: PendingGroupRequestData, newItem: PendingGroupRequestData): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
-
-    fun appendData(newData: List<ArticleData>) {
-        val startAt = adapterData.size
-        adapterData.addAll(newData)
-        notifyItemRangeInserted(startAt, newData.size)
-    }
-
-
-    fun getData(): MutableList<ArticleData> = adapterData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        val binding = AdapterGroupPendingRequestBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = AdapterGroupPendingRequestBinding.inflate(inflater, parent, false)
         return AdapterViewHolder(binding)
 
     }
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
-        holder.displayData(adapterData[position])
+        val data = getItem(position)
+        holder.bind(data)
     }
 
     inner class AdapterViewHolder(val binding: AdapterGroupPendingRequestBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun displayData(data: ArticleData) = with(itemView) {
-            binding.titleTextView.text = data.name
-            binding.membersTextView.text = data.description
-            binding.referenceTextView.text = data.reference
+        fun bind(data: PendingGroupRequestData?){
+            data?.let {
+                binding.titleTextView.text = data.group?.name
+                binding.membersTextView.text = data.group?.member_count.toString()
+                binding.referenceTextView.text = data.group?.qrcode
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
 
-            /*if(type == "invite"){
-                binding.acceptTextView.visibility = View.VISIBLE
-                binding.declineTextView.visibility = View.VISIBLE
-                binding.cancelTextView.visibility = View.GONE
-            }else{
-                binding.acceptTextView.visibility = View.GONE
-                binding.declineTextView.visibility = View.GONE
-                binding.cancelTextView.visibility = View.VISIBLE
-            }*/
+                /*if(type == "invite"){
+                    binding.acceptTextView.visibility = View.VISIBLE
+                    binding.declineTextView.visibility = View.VISIBLE
+                    binding.cancelTextView.visibility = View.GONE
+                }else{
+                    binding.acceptTextView.visibility = View.GONE
+                    binding.declineTextView.visibility = View.GONE
+                    binding.cancelTextView.visibility = View.VISIBLE
+                }*/
 
-            binding.adapterLinearLayout.setOnClickListener {
-                clickListener.onItemClicked(data)
+                binding.adapterLinearLayout.setOnClickListener {
+                    clickListener.onItemClicked(data)
+                }
+                binding.acceptTextView.setOnClickListener {
+                    clickListener.onAcceptClicked(data)
+                }
+                binding.declineTextView.setOnClickListener {
+                    clickListener.onDeclineClicked(data)
+                }
+                binding.cancelTextView.setOnClickListener {
+                    clickListener.onCancelClicked(data)
+                }
             }
-            binding.acceptTextView.setOnClickListener {
-                clickListener.onAcceptClicked(data)
-            }
-            binding.declineTextView.setOnClickListener {
-                clickListener.onDeclineClicked(data)
-            }
-            binding.cancelTextView.setOnClickListener {
-                clickListener.onCancelClicked(data)
-            }
-
         }
     }
 
     interface GroupCallback{
-        fun onItemClicked(data: ArticleData)
-        fun onAcceptClicked(data: ArticleData)
-        fun onDeclineClicked(data: ArticleData)
-        fun onCancelClicked(data: ArticleData)
+        fun onItemClicked(data: PendingGroupRequestData)
+        fun onAcceptClicked(data: PendingGroupRequestData)
+        fun onDeclineClicked(data: PendingGroupRequestData)
+        fun onCancelClicked(data: PendingGroupRequestData)
     }
 
-    override fun getItemCount(): Int = adapterData.size
+    fun hasData() : Boolean{
+        return itemCount != 0
+    }
 }
