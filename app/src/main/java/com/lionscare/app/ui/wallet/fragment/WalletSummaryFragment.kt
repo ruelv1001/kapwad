@@ -14,6 +14,8 @@ import com.lionscare.app.R
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.FragmentWalletSummaryBinding
+import com.lionscare.app.ui.group.viewmodel.GroupWalletViewModel
+import com.lionscare.app.ui.group.viewmodel.GroupWalletViewState
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
@@ -31,6 +33,7 @@ class WalletSummaryFragment : Fragment() {
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as WalletActivity }
     private val viewModel: WalletViewModel by viewModels()
+    private val groupViewModel: GroupWalletViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -50,6 +53,7 @@ class WalletSummaryFragment : Fragment() {
         setupDetails()
         setupClickListener()
         observeWallet()
+        observeGroupWallet()
     }
 
     private fun setupDetails() = binding.run {
@@ -60,8 +64,8 @@ class WalletSummaryFragment : Fragment() {
                     recipientGroupLayout.adapterLinearLayout.isVisible = true
                     recipientLayout.membersLinearLayout.isGone = true
                     recipientGroupLayout.titleTextView.text = activity.groupData.name
-                    //TODO to be updated when display id ready
-                    recipientGroupLayout.referenceTextView.text = "LC-000123"
+                    recipientGroupLayout.referenceTextView.text = activity.groupData.code
+                    recipientGroupLayout.membersTextView.text = "${activity.groupData.member_count.toString()} members"
                 }else{
                     recipientGroupLayout.adapterLinearLayout.isGone = true
                     recipientLayout.membersLinearLayout.isVisible = true
@@ -103,24 +107,73 @@ class WalletSummaryFragment : Fragment() {
         }
     }
 
+    private fun observeGroupWallet() {
+        viewLifecycleOwner.lifecycleScope.launch{
+            groupViewModel.walletSharedFlow.collectLatest { viewState ->
+                handleViewState(viewState)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: GroupWalletViewState) {
+        when (viewState) {
+            is GroupWalletViewState.Loading -> activity.showLoadingDialog(R.string.loading)
+            is GroupWalletViewState.SuccessSendPoint -> {
+                activity.hideLoadingDialog()
+                activity.transactionData = viewState.data?: TransactionData()
+                findNavController().navigate(WalletSummaryFragmentDirections.actionNavigationWalletSummaryToNavigationWalletDetails())
+            }
+            is GroupWalletViewState.PopupError -> {
+                activity.hideLoadingDialog()
+                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+            }
+
+            else -> Unit
+        }
+    }
+
     private fun setupClickListener() = binding.run{
         backImageView.setOnSingleClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         continueButton.setOnSingleClickListener {
-            if (activity.isGroupId){
-                viewModel.doSendPoints(
-                    groupId = activity.groupData.id.orEmpty(),
-                    amount = activity.amount,
-                    notes = activity.message
-                )
+            if (activity.isFromGroupWallet){
+                callGroupWalletSendPoints()
             }else{
-                viewModel.doSendPoints(
-                    userId = activity.qrData.id.orEmpty(),
-                    amount = activity.amount,
-                    notes = activity.message
-                )
+                callUserWalletSendPoints()
             }
+        }
+    }
+
+    private fun callUserWalletSendPoints() {
+        if (activity.isGroupId) {
+            viewModel.doSendPoints(
+                groupId = activity.groupData.id.orEmpty(),
+                amount = activity.amount,
+                notes = activity.message
+            )
+        } else {
+            viewModel.doSendPoints(
+                userId = activity.qrData.id.orEmpty(),
+                amount = activity.amount,
+                notes = activity.message
+            )
+        }
+    }
+
+    private fun callGroupWalletSendPoints() {
+        if (activity.isGroupId) {
+            groupViewModel.doSendPoints(
+                groupId = activity.groupSenderId,
+                amount = activity.amount,
+                receiverGroupId = activity.groupData.id.orEmpty()
+            )
+        } else {
+            groupViewModel.doSendPoints(
+                groupId = activity.groupSenderId,
+                amount = activity.amount,
+                receiverUserId = activity.qrData.id.orEmpty()
+            )
         }
     }
 

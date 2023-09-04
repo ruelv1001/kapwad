@@ -1,13 +1,19 @@
 package com.lionscare.app.data.repositories.profile
 
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
+import com.lionscare.app.data.repositories.profile.response.LOVResponse
+import com.lionscare.app.utils.asNetWorkRequestBody
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MultipartBody
 import retrofit2.HttpException
+import java.io.File
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
@@ -62,6 +68,67 @@ class ProfileRemoteDataSource @Inject constructor(
             emit(response.body() ?: throw NullPointerException("Response data is empty"))
         }.flowOn(ioDispatcher)
     }
+
+
+    //=============== ======================KYC API
+    suspend fun doUploadId(request : KYCRequest): GeneralResponse {
+        val response = profileService.doUploadId(
+            MultipartBody.Part.createFormData(
+                "front_id",
+                request.frontImageFile.name,
+                request.frontImageFile.asNetWorkRequestBody(IMAGE_MIME_TYPE)
+            ),
+            request.backImageFile.let {
+                MultipartBody.Part.createFormData(
+                    "back_id",
+                    it?.name,
+                    it?.asNetWorkRequestBody(IMAGE_MIME_TYPE)!!
+                )
+            }
+        ,
+            MultipartBody.Part.createFormData("type", request.idType)
+        )
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doUploadProofOfAddress(request : KYCRequest): GeneralResponse {
+        val response = profileService.doUploadProofOfAddress(
+            MultipartBody.Part.createFormData(
+                "file",
+                request.frontImageFile.name,
+                request.frontImageFile.asNetWorkRequestBody(IMAGE_MIME_TYPE)
+            ),
+            MultipartBody.Part.createFormData("type", request.idType)
+        )
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getIdList(): LOVResponse {
+        val response = profileService.getLOVIdList()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getProofOfAddressList(): LOVResponse {
+        val response = profileService.getLOVProofOfAddressList()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
 
     companion object {
         private const val IMAGE_MIME_TYPE = "image/*"

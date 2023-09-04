@@ -43,7 +43,8 @@ class GroupsAdapter(val context: Context, val clickListener: OnClickCallback) :
         fun displayData(data: GroupData) = with(itemView) {
 
             binding.titleTextView.text = data.name
-            //idNoTextView.text = data.amount
+            binding.referenceTextView.text = data.code
+            binding.membersTextView.text = "${data.member_count.toString()} members"
 
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onGroupItemClickListener(data)
