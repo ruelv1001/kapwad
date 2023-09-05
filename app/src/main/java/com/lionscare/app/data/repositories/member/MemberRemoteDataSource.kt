@@ -73,6 +73,15 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
+    suspend fun doCancelInvitation(pending_id: String, group_id: String): JoinGroupResponse {
+        val request = ListOfMembersRequest(pending_id = pending_id, group_id = group_id)
+        val response = memberService.doCancelInvitation(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
     suspend fun doGetAllPendingInviteAndRequest(
         groupId: String? = null,
         page: String? = null,
@@ -98,6 +107,14 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
     suspend fun doRejectJoinRequest(pending_id: String, group_id: String): GeneralResponse {
         val request = ListOfMembersRequest(pending_id = pending_id, group_id = group_id)
         val response = memberService.doRejectJoinRequest(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+    suspend fun doCancelJoinRequest(pending_id: String, group_id: String): JoinGroupResponse {
+        val request = ListOfMembersRequest(pending_id = pending_id, group_id = group_id)
+        val response = memberService.doCancelJoinRequst(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

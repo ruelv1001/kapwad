@@ -146,7 +146,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     }
 
     override fun onCancelClicked(data: PendingGroupRequestData) {
-
+        openCancelJoinRequest(data)
     }
 
     override fun onResume() {
@@ -176,6 +176,16 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
         builder.setMessage("Are you sure your want to decline the invitation from ${data.group?.name}?")
         builder.setPositiveButton(getString(R.string.option_yes_txt)) { _, _ ->
             viewModel.doDeclineInvitation(data.id?.toLong()?: 0, data.group_id.orEmpty())
+        }
+        builder.setNegativeButton(getString(R.string.option_no_txt), null)
+        builder.show()
+    }
+
+    private fun openCancelJoinRequest(data: PendingGroupRequestData) {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage("Are you sure your want to cancel your request to ${data.group?.name}?")
+        builder.setPositiveButton(getString(R.string.option_yes_txt)) { _, _ ->
+            viewModel.cancelJoinRequest(data.id.toString(), data.group_id.orEmpty())
         }
         builder.setNegativeButton(getString(R.string.option_no_txt), null)
         builder.show()

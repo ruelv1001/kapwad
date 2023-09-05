@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.group.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.lionscare.app.R
+import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import com.lionscare.app.databinding.FragmentGroupMembershipReqBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
@@ -164,23 +167,52 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     }
 
     override fun onItemClicked(data: PendingMemberData) {
-        // Toast.makeText(requireActivity(),"Clicked : ${data.user?.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAcceptClicked(data: PendingMemberData) {
-        viewModel.approveJoinRequest(data.id.toString(), activity.groupDetails?.id.toString())
+        openApproveJoinRequest(data)
     }
 
     override fun onDeclineClicked(data: PendingMemberData) {
-        viewModel.rejectJoinRequest(data.id.toString(), activity.groupDetails?.id.toString())
+        openRejectJoinRequest(data)
     }
 
     override fun onCancelClicked(data: PendingMemberData) {
-        Toast.makeText(requireActivity(), "Canceled : ${data.user?.name}", Toast.LENGTH_SHORT)
-            .show()
+        openCancelInvitation(data)
+    }
+
+    private fun openApproveJoinRequest(data: PendingMemberData) {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage("Are you sure your want to approve the join request from ${data.user?.name}?")
+        builder.setPositiveButton(getString(R.string.option_yes_txt)) { _, _ ->
+            viewModel.approveJoinRequest(data.id.toString(), activity.groupDetails?.id.toString())
+        }
+        builder.setNegativeButton(getString(R.string.option_no_txt), null)
+        builder.show()
+    }
+
+    private fun openRejectJoinRequest(data: PendingMemberData) {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage("Are you sure your want to reject the join request from ${data.user?.name}?")
+        builder.setPositiveButton(getString(R.string.option_yes_txt)) { _, _ ->
+            viewModel.rejectJoinRequest(data.id.toString(), activity.groupDetails?.id.toString())
+        }
+        builder.setNegativeButton(getString(R.string.option_no_txt), null)
+        builder.show()
+    }
+
+    private fun openCancelInvitation(data: PendingMemberData) {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage("Are you sure your want to cancel your invitation to ${data.user?.name}?")
+        builder.setPositiveButton(getString(R.string.option_yes_txt)) { _, _ ->
+            viewModel.cancelInvitation(data.id.toString(), data.group_id.toString())
+        }
+        builder.setNegativeButton(getString(R.string.option_no_txt), null)
+        builder.show()
     }
 
     override fun onRefresh() {
+        clear()
         viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
     }
 }

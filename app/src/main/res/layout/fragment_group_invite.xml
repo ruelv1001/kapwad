@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_55"
                 android:fontFamily="@font/inter_regular"
-                android:hint="@string/lbl_search_group"
+                android:hint="@string/lbl_search"
                 app:boxBackgroundColor="@color/light_gray_line"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true">
