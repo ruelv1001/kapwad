@@ -18,6 +18,17 @@
         android:textSize="@dimen/font_16" />
 
     <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/account_verification_note_text"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:textSize="@dimen/font_16" />
+
+    <TextView
+        android:id="@+id/verifyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_regular"
@@ -25,7 +36,15 @@
         android:textColor="@color/light_gray"
         android:layout_marginTop="@dimen/dimen_16"
         android:textSize="@dimen/font_16" />
-
+    <TextView
+        android:id="@+id/verifyAddressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/account_verification_note_text"
+        android:textColor="@color/light_gray"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:textSize="@dimen/font_16" />
     <LinearLayout
         android:id="@+id/validIdLinearLayout"
         android:layout_width="match_parent"
