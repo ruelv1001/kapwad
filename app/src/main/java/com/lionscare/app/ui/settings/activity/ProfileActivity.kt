@@ -3,13 +3,16 @@ package com.lionscare.app.ui.settings.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityProfileBinding
+import com.lionscare.app.ui.settings.viewmodel.ProfileViewModel
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +22,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
     private var loadingDialog: CommonDialog? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -40,8 +42,6 @@ class ProfileActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-        val navGraph = navController.navInflater.inflate(R.navigation.profile_nav_graph)
-        navController.setGraph(navGraph, null)
         val appBarConfig = AppBarConfiguration.Builder(INVALID_ID)
             .setFallbackOnNavigateUpListener {
                 onBackPressed()

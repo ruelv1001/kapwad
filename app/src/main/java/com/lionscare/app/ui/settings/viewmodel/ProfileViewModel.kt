@@ -26,6 +26,8 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _profileSharedFlow = MutableSharedFlow<ProfileViewState>()
+    val profileSharedFlow: SharedFlow<ProfileViewState> =
+        _profileSharedFlow.asSharedFlow()
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {
@@ -81,8 +83,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    val profileSharedFlow: SharedFlow<ProfileViewState> =
-        _profileSharedFlow.asSharedFlow()
+
 
     fun doUpdateProfile(province_sku: String,
                         province_name: String,
