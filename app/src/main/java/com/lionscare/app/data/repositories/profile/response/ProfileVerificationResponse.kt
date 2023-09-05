@@ -12,7 +12,7 @@ data class ProfileVerificationResponse(
     val status_code: String? = null
 )
 @Keep
-data class Verification(
+data class Verification (
     val address_remarks: String? = null,
     val address_status: String? = null,
     val address_submitted_date: DateModel? = null,
@@ -25,3 +25,4 @@ data class Verification(
     val id_type: String? = null,
     val id_verified_date: DateModel? = null
 )
+
