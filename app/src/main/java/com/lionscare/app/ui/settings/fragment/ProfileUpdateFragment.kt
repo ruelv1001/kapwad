@@ -173,16 +173,22 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 }
                 .setPositiveButton(resources.getString(R.string.pending_accept_text)) { dialog, _ ->
                     val number =  dialogView.findViewById<TextView>(R.id.inputPhoneEditText).text.toString()
-                    phoneEditText.setText(number)
-                    dialog.dismiss()
+                    if (number.isEmpty()){
+                        Toast.makeText(requireContext(),
+                            getString(R.string.field_is_required), Toast.LENGTH_SHORT).show()
+                    }else{
+                        phoneEditText.setText(number)
+                        dialog.dismiss()
 
-                    val bundle = Bundle().apply {
-                        putString("phone", number)
+                        val bundle = Bundle().apply {
+                            putString("phone", number)
+                        }
+                        val action =
+                            ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment(number)
+
+                        findNavController().navigate(action.actionId, bundle)
                     }
-                    val action =
-                        ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment(number)
 
-                    findNavController().navigate(action.actionId, bundle)
                 }
                 .show()
         }

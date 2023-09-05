@@ -53,6 +53,7 @@ class ProfileOTPFragment: Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().setTitle(R.string.lbl_reg_otp)
         observeOTP()
         setClickListeners()
         setView()
