@@ -4,29 +4,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import androidx.core.widget.doOnTextChanged
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
-import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupInviteBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
-import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
+import com.lionscare.app.ui.group.viewmodel.AdminViewModel
+import com.lionscare.app.ui.group.viewmodel.AdminViewState
+import com.lionscare.app.ui.group.viewmodel.MemberViewModel
+import com.lionscare.app.ui.group.viewmodel.MemberViewState
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
+class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback,
+    SwipeRefreshLayout.OnRefreshListener {
     private var _binding: FragmentGroupInviteBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
     private var adapter : GroupMembersAdapter? = null
-    private var dataList: List<SampleData> = emptyList()
     private var linearLayoutManager: LinearLayoutManager? = null
+    private val viewModel: MemberViewModel by viewModels()
+    private val viewModelAdmin: AdminViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,29 +56,77 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
         setupAdapter()
         setClickListeners()
         setView()
+        observeMemberList()
         onResume()
+        onRefresh()
     }
 
     private fun setupAdapter() = binding.run {
         adapter = GroupMembersAdapter(this@GroupPromoteFragment)
+        swipeRefreshLayout.setOnRefreshListener(this@GroupPromoteFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
-        memberRecyclerView.layoutManager = linearLayoutManager
-        memberRecyclerView.adapter = adapter
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.adapter = adapter
 
-        dataList = listOf(
-            SampleData(
-                id = R.drawable.img_profile,
-                title = "Raquel Castro",
-                amount = "LC-000004",
-            ),
-            SampleData(
-                id = R.drawable.img_profile,
-                title = "Romeo Dela Cruz",
-                amount = "LC-000001",
-            )
-        )
-        //adapter?.submitData(lifecycle, PagingData.from(dataList))
-//            completeButton.text = getText(R.string.lbl_invite2)
+        adapter?.addLoadStateListener {
+            recyclerView.isVisible = adapter?.hasData() == true
+        }
+    }
+
+    private fun observeMemberList() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.memberSharedFlow.collectLatest { viewState ->
+                handleViewState(viewState)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModelAdmin.adminSharedFlow.collectLatest { viewState ->
+                handleViewStateAdmin(viewState)
+            }
+        }
+    }
+
+    private fun handleViewStateAdmin(viewState: AdminViewState) {
+        when (viewState) {
+            AdminViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is AdminViewState.PopupError -> {
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+            is AdminViewState.SuccessGetListOfAdmin -> showList(viewState.pagingData)
+            is AdminViewState.SuccessPromoteMember -> {
+                Toast.makeText(requireActivity(),viewState.message, Toast.LENGTH_SHORT).show()
+                setupAdapter()
+                onRefresh()
+            }
+            else -> Unit
+        }
+    }
+
+    private fun handleViewState(viewState: MemberViewState) {
+        when (viewState) {
+            MemberViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is MemberViewState.PopupError -> {
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+            is MemberViewState.SuccessGetListOfMembers -> showList(viewState.pagingData)
+            else -> Unit
+        }
+    }
+
+    private fun showList(memberListData: PagingData<MemberListData>) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        adapter?.submitData(viewLifecycleOwner.lifecycle, memberListData)
     }
 
 
@@ -78,8 +136,10 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
     }
 
     private fun setView() = binding.run {
-        memberRecyclerView.visibility = View.VISIBLE
+        recyclerView.visibility = View.VISIBLE
        /* searchEditText.doOnTextChanged {
+        recyclerView.visibility = View.VISIBLE
+        searchEditText.doOnTextChanged {
                 text, start, before, count ->
 //            firstNameTextInputLayout.error = ""
             if (searchEditText.text?.isNotEmpty() == true){
@@ -110,10 +170,27 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback {
     }
 
     override fun onItemClicked(data: MemberListData) {
+        RemoveConfirmationDialog.newInstance(
+            object : RemoveConfirmationDialog.ConfirmationCallback {
+                override fun onConfirm(id: String) {
+                    viewModelAdmin.doPromoteMember(activity.groupDetails?.id!!,id.toInt())
+                }
+            },
+            title = "Promote Selected Member?",
+            groupId = data.id.toString()
+        ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
+    }
+
+    override fun onRemoveClicked(data: MemberListData) {
 //        TODO("Not yet implemented")
     }
 
     companion object {
         private const val START_INVITE = "START_INVITE"
+    }
+
+    override fun onRefresh() {
+        viewModel.refreshListOfMembers(activity.groupDetails?.id.toString())
+
     }
 }

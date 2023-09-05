@@ -31,7 +31,7 @@ class AdminRemoteDataSource @Inject constructor(private val adminService: AdminS
     suspend fun doDemoteAdmin(groupId: String, memberId: Int): GeneralResponse {
         val request = AdminRequest(group_id = groupId, member_id = memberId)
         val response = adminService.doDemoteAdmin(request)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")
@@ -40,7 +40,7 @@ class AdminRemoteDataSource @Inject constructor(private val adminService: AdminS
     suspend fun doPromoteMember(groupId: String, memberId: Int): GeneralResponse {
         val request = AdminRequest(group_id = groupId, member_id = memberId)
         val response = adminService.doPromoteMember(request)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")

@@ -126,7 +126,11 @@
         android:id="@+id/navigation_group_admin_list"
         android:name="com.lionscare.app.ui.group.fragment.AdminListFragment"
         android:label=""
-        tools:layout="@layout/fragment_group_membership_req"/>
+        tools:layout="@layout/fragment_group_membership_req">
+        <action
+            android:id="@+id/action_navigation_group_roles_update"
+            app:destination="@id/navigation_group_roles_update" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_group_search"
