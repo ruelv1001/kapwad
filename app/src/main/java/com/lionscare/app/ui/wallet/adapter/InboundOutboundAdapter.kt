@@ -50,7 +50,7 @@ class InboundOutboundAdapter(val clickListener: InboundOutboundCallback) :
         fun bind(data: TransactionData?) {
             data?.let {
 
-                if (data.title == "Inbound") {
+                if (data.type == "credit") {
                     binding.iconImageView.setImageResource(R.drawable.ic_inbound)
                     binding.amountTextView.setTextColor(ContextCompat.getColor(itemView.context,R.color.color_primary))
                     binding.amountTextView.text = "+${data.value}"
