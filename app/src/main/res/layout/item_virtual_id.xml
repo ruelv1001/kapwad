@@ -14,7 +14,10 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/myMainLayout"
@@ -31,12 +34,12 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_12"
-        android:layout_marginTop="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_16"
         android:layout_marginEnd="@dimen/dimen_12"
         android:orientation="vertical"
         android:rotation="90"
@@ -45,10 +48,13 @@
         app:layout_constraintTop_toBottomOf="@id/buttonsLinearLayout">
 
         <LinearLayout
+            android:id="@+id/logoLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/detailsLinearLayout">
 
             <ImageView
                 android:layout_width="@dimen/dimen_30"
@@ -68,10 +74,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/detailsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/logoLinearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="match_parent"
@@ -191,7 +201,7 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:id="@+id/profileRelativeLayout"
