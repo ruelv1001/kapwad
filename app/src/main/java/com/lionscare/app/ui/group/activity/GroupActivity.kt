@@ -108,12 +108,12 @@ class GroupActivity : AppCompatActivity() {
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.GONE
             }
-            getString(R.string.lbl_group_community_roles) ->{
+            /*getString(R.string.lbl_group_community_roles) ->{
                 rolesImageView.visibility = View.VISIBLE
                 searchImageView.visibility = View.GONE
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.GONE
-            }
+            }*/
             getString(R.string.lbl_assistance) -> {
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.GONE

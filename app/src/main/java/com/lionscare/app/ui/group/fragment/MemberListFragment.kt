@@ -157,7 +157,9 @@ class MemberListFragment : Fragment(),
     }
 
     override fun onItemClicked(data: MemberListData) {
-        RemoveConfirmationDialog.newInstance(
+        //TODO: Integrate this inside the view member details
+
+        /*RemoveConfirmationDialog.newInstance(
             object : RemoveConfirmationDialog.ConfirmationCallback {
                 override fun onConfirm(id: String) {
                     viewModelAdmin.doRemoveMember(activity.groupDetails?.id!!,id.toInt())
@@ -165,7 +167,7 @@ class MemberListFragment : Fragment(),
             },
             title = "Remove Selected Member?",
             groupId = data.id.toString()
-        ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
+        ).show(childFragmentManager, RemoveConfirmationDialog.TAG)*/
     }
 
     override fun onRemoveClicked(data: MemberListData) {

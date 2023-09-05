@@ -64,7 +64,7 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupsInvitesAdapter(requireActivity(), this@MembershipRequestFragment)
+        adapter = GroupsInvitesAdapter(requireActivity(), this@MembershipRequestFragment, activity.groupDetails?.is_admin)
         swipeRefreshLayout.setOnRefreshListener(this@MembershipRequestFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
