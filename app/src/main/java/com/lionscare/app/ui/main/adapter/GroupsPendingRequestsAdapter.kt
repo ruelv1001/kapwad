@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -54,6 +55,12 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
                     data.group?.member_count?: 0 //var arg
                 )
                 binding.referenceTextView.text = data.group?.qrcode
+                
+                binding.cancelTextView.text = context.getString(R.string.lbl_cancel_join_request)
+
+                binding.cancelTextView.isVisible = data.type == "request"
+                binding.acceptTextView.isVisible = data.type == "invite"
+                binding.declineTextView.isVisible = data.type == "invite"
 
                 binding.adapterLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)

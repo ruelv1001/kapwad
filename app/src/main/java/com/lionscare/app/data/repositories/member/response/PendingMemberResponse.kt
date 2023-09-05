@@ -22,6 +22,7 @@ data class PendingMemberResponse(
 data class PendingMemberData(
     var date_created: DateModel? = null,
     var id: Int? = null,
+    var group_id: String? = null,
     var status: String? = null,
     var type: String? = null,
     var user: User? = null

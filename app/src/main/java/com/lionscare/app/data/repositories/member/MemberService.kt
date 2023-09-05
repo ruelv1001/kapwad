@@ -35,7 +35,8 @@ interface MemberService {
     suspend fun doAcceptInvitation(@Body acceptDeclineRequest: AcceptDeclineRequest): Response<JoinGroupResponse>
     @POST("api/group/member/decline")
     suspend fun doDeclineInvitation(@Body acceptDeclineRequest: AcceptDeclineRequest): Response<JoinGroupResponse>
-
+    @POST("api/group/member/pending/cancel")
+    suspend fun doCancelInvitation(@Body listOfMembersRequest: ListOfMembersRequest): Response<JoinGroupResponse>
 
     //Pending member folder
     @POST("api/group/member/pending/all")
@@ -43,9 +44,10 @@ interface MemberService {
 
     @POST("api/group/member/pending/approve")
     suspend fun doApproveJoinRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<ApproveRequestResponse>
-
     @POST("api/group/member/pending/reject")
     suspend fun doRejectJoinRequest(@Body listOfMembersRequest: ListOfMembersRequest): Response<GeneralResponse>
+    @POST("api/group/cancel")
+    suspend fun doCancelJoinRequst(@Body listOfMembersRequest: ListOfMembersRequest): Response<JoinGroupResponse>
 
     @POST("api/group/member/search")
     suspend fun doSearchUser(@Body request: SearchUserRequest): Response<SearchUserResponse>
