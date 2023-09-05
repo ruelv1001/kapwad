@@ -33,6 +33,8 @@ data class GroupData(
     var name: String? = null,
     var type: String? = null,
     var privacy: String? = null,
+    var is_member: Boolean? = false,
+    var is_admin: Boolean? = false,
     var with_approval: Boolean? = false,
     var owner_user_id: String? = null,
     var date_created: DateModel? = null,
