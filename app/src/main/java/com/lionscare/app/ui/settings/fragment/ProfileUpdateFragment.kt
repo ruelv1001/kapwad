@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
@@ -145,15 +149,50 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         cityEditText.setText(userModel?.city_name)
         barangayEditText.setText(userModel?.brgy_name)
         streetEditText.setText(userModel?.street_name)
-
+        phoneEditText.setText(userModel?.phone_number)
         reference = userModel?.province_sku.toString()
         cityCode = userModel?.city_code.toString()
         brgyCode = userModel?.brgy_code.toString()
+        zipCode = userModel?.zipcode.toString()
 
         setClickable()
     }
 
     private fun setClickListeners() = binding.run {
+        phoneEditText.setOnSingleClickListener {
+            // Inflate the custom dialog layout
+            val inflater = requireActivity().layoutInflater
+            val dialogView = inflater.inflate(R.layout.dialog_change_phone_number, null)
+
+            //create custom dialog
+            MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogView)
+                .setMessage(resources.getString(R.string.set_new_phone_number))
+                .setNegativeButton(resources.getString(R.string.lbl_cancel)) { dialog, _ ->
+                   dialog.dismiss()
+                }
+                .setPositiveButton(resources.getString(R.string.pending_accept_text)) { dialog, _ ->
+                    val number =  dialogView.findViewById<TextView>(R.id.inputPhoneEditText).text.toString()
+                    if (number.isEmpty()){
+                        Toast.makeText(requireContext(),
+                            getString(R.string.field_is_required), Toast.LENGTH_SHORT).show()
+                    }else{
+                        phoneEditText.setText(number)
+                        dialog.dismiss()
+
+                        val bundle = Bundle().apply {
+                            putString("phone", number)
+                        }
+                        val action =
+                            ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment(number)
+
+                        findNavController().navigate(action.actionId, bundle)
+                    }
+
+                }
+                .show()
+        }
+
         provinceEditText.setOnSingleClickListener {
             ProvinceDialog.newInstance(object : ProvinceDialog.AddressCallBack {
                 override fun onAddressClicked(
