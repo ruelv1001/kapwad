@@ -6,9 +6,12 @@ import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.repositories.profile.ProfileRepository
+import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
+import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.registration.RegistrationRepository
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
+import com.lionscare.app.ui.register.viewmodel.RegisterViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,10 +22,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
 ) : ViewModel() {
 
     private val _profileSharedFlow = MutableSharedFlow<ProfileViewState>()
+
+    fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
+        viewModelScope.launch {
+            profileRepository.changePhoneNumber(request)
+                .onStart {
+                    _profileSharedFlow.emit(ProfileViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _profileSharedFlow.emit(
+                        ProfileViewState.SuccessUpdatePhoneNumber(it)
+                    )
+                }
+        }
+    }
+
+    fun changePhoneNumberWithOTP(request : UpdatePhoneNumberOTPRequest) {
+        viewModelScope.launch {
+            profileRepository.changePhoneNumberWithOTP(request)
+                .onStart {
+                    _profileSharedFlow.emit(ProfileViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _profileSharedFlow.emit(
+                        ProfileViewState.SuccessUpdatePhoneNumberWithOTP(it)
+                    )
+                }
+        }
+    }
 
     fun getProfileDetails() {
         viewModelScope.launch {

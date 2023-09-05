@@ -3,6 +3,8 @@ package com.lionscare.app.data.repositories.profile
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
+import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
+import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -40,5 +42,12 @@ interface ProfileService {
     @POST("api/setting/lov/address")
     suspend fun getLOVProofOfAddressList(): Response<LOVResponse>
 
+
+    //================================PHONE NUMBER OTP
+    @POST("api/profile/phone-number/edit")
+    suspend fun doEditPhoneNumber(@Body request : UpdatePhoneNumberRequest): Response<GeneralResponse>
+
+    @POST("api/profile/phone-number/otp")
+    suspend fun doOTP(@Body request : UpdatePhoneNumberOTPRequest): Response<GeneralResponse>
 
 }
