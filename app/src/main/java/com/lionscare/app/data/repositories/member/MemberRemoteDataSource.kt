@@ -55,7 +55,7 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doAcceptInvitation(pending_id: String, group_id: String): JoinGroupResponse {
+    suspend fun doAcceptInvitation(pending_id: Long, group_id: String): JoinGroupResponse {
         val request = AcceptDeclineRequest(pending_id = pending_id, group_id = group_id)
         val response = memberService.doAcceptInvitation(request)
         if (response.code() != HttpURLConnection.HTTP_CREATED) {
@@ -64,7 +64,7 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doDeclineInvitation(pending_id: String, group_id: String): JoinGroupResponse {
+    suspend fun doDeclineInvitation(pending_id: Long, group_id: String): JoinGroupResponse {
         val request = AcceptDeclineRequest(pending_id = pending_id, group_id = group_id)
         val response = memberService.doDeclineInvitation(request)
         if (response.code() != HttpURLConnection.HTTP_CREATED) {

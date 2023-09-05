@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
@@ -47,19 +48,12 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
         fun bind(data: PendingGroupRequestData?){
             data?.let {
                 binding.titleTextView.text = data.group?.name
-                binding.membersTextView.text = data.group?.member_count.toString()
+                binding.membersTextView.text = context.resources.getQuantityString(
+                    R.plurals.member_plural, //plural from strings.xml file
+                    data.group?.member_count?: 0, //quantity
+                    data.group?.member_count?: 0 //var arg
+                )
                 binding.referenceTextView.text = data.group?.qrcode
-//            binding.articleImageView.loadImage(data.image?.thumb_path, context)
-
-                /*if(type == "invite"){
-                    binding.acceptTextView.visibility = View.VISIBLE
-                    binding.declineTextView.visibility = View.VISIBLE
-                    binding.cancelTextView.visibility = View.GONE
-                }else{
-                    binding.acceptTextView.visibility = View.GONE
-                    binding.declineTextView.visibility = View.GONE
-                    binding.cancelTextView.visibility = View.VISIBLE
-                }*/
 
                 binding.adapterLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)

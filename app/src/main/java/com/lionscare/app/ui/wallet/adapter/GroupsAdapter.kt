@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.AdapterSearchGroupBinding
 
@@ -44,7 +45,11 @@ class GroupsAdapter(val context: Context, val clickListener: OnClickCallback) :
 
             binding.titleTextView.text = data.name
             binding.referenceTextView.text = data.code
-            binding.membersTextView.text = "${data.member_count.toString()} members"
+            binding.membersTextView.text = context.resources.getQuantityString(
+                R.plurals.member_plural, //plural from strings.xml file
+                data.member_count?: 0, //quantity
+                data.member_count?: 0 //var arg
+            )
 
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onGroupItemClickListener(data)

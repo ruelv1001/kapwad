@@ -320,6 +320,8 @@
     <string name="invalid_qr_code_msg">Invalid QR Code</string>
     <string name="lbl_loading">Loading . . .</string>
     <string name="lbl_you">You</string>
+    <string name="option_yes_txt">Yes</string>
+    <string name="option_no_txt">No</string>
     <string name="set_new_phone_number">Set new phone number</string>
     <string name="field_is_required">Field is required</string>
     <string-array name="assistance_purpose_items">
@@ -327,4 +329,11 @@
         <item>Medical bill</item>
         <item>Others</item>
     </string-array>
+
+    <plurals name="member_plural">
+        <item quantity="one">%d member</item>
+        <item quantity="zero">%d member</item>
+        <item quantity="other">%d members</item>
+    </plurals>
+
 </resources>

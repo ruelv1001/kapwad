@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.AdapterGroupGroupBinding
@@ -43,9 +44,12 @@ class GroupsGroupAdapter (val context: Context, val clickListener: GroupCallback
 
         fun displayData(data: GroupData) = with(itemView) {
             binding.titleTextView.text = data.name
-            binding.membersTextView.text = data.member_count.toString()
+            binding.membersTextView.text = context.resources.getQuantityString(
+                R.plurals.member_plural, //plural from strings.xml file
+                data.member_count?: 0, //quantity
+                data.member_count?: 0 //var arg
+            )
             binding.referenceTextView.text = data.qrcode
-//            binding.articleImageView.loadImage(data.image?.thumb_path, context)
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data)
             }

@@ -7,6 +7,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
+import com.lionscare.app.data.repositories.member.MemberRepository
+import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +24,10 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class GroupListViewModel @Inject constructor(private val groupRepository: GroupRepository) :
+class GroupListViewModel @Inject constructor(
+    private val groupRepository: GroupRepository,
+    private val memberRepository: MemberRepository,
+) :
     ViewModel() {
 
     private val _getGroupSharedFlow = MutableSharedFlow<GroupListViewState>()
@@ -69,6 +74,40 @@ class GroupListViewModel @Inject constructor(private val groupRepository: GroupR
                     GroupListViewState.SuccessGetPendingRequestList(pagingData)
                 )
             }
+    }
+
+    fun doAcceptInvitation(pendingMemberId: Long, groupId: String) {
+        viewModelScope.launch {
+            memberRepository.doAcceptInvitation(pendingMemberId, groupId)
+                .onStart {
+
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _getGroupSharedFlow.emit(
+                        GroupListViewState.SuccessAcceptDeclineInvitation(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun doDeclineInvitation(pendingMemberId: Long, groupId: String) {
+        viewModelScope.launch {
+            memberRepository.doDeclineInvitation(pendingMemberId, groupId)
+                .onStart {
+
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _getGroupSharedFlow.emit(
+                        GroupListViewState.SuccessAcceptDeclineInvitation(it.msg.orEmpty())
+                    )
+                }
+        }
     }
 
     fun refreshPendingRequestList() {
