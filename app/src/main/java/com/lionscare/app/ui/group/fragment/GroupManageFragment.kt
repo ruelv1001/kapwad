@@ -67,6 +67,14 @@ class GroupManageFragment : Fragment() {
 
     private fun setDetails() = binding.run {
         titleTextView.text = activity.groupDetails?.name
+        membersTextView.text = context?.resources?.getQuantityString(
+            R.plurals.member_plural,
+            activity.groupDetails?.member_count?: 0,
+            activity.groupDetails?.member_count?: 0
+        )
+        membershipNotifRelativeLayout.isVisible = activity.groupDetails?.pending_requests_count !=0
+        membershipCountTextView.text = activity.groupDetails?.pending_requests_count.toString()
+
         if (activity.groupDetails?.type.equals("organization")) {
             typeFamTextView.isVisible = false
             typeOrgTextView.isVisible = true
