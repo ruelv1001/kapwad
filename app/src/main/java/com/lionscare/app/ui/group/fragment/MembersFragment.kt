@@ -91,8 +91,7 @@ class MembersFragment : Fragment() {
                 requestTextView.visibility = View.GONE
 
                 activity.getFilterImageView().isVisible = false
-                //TODO: Add isAdmin condition
-                inviteMemberFloatingActionButton.isVisible = true
+                inviteMemberFloatingActionButton.isVisible = activity.groupDetails?.is_admin == true
             }
             else -> Unit
         }

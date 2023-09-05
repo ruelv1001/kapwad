@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupCommunityRolesBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,10 +46,7 @@ class CommunityRolesFragment: Fragment() {
     }
 
     private fun setView() = binding.run{
-//        firstNameEditText.doOnTextChanged {
-//                text, start, before, count ->
-//            firstNameTextInputLayout.error = ""
-//        }
+        activity.getRolesView().isVisible = activity.groupDetails?.is_admin == true
     }
 
     private fun setClickListeners() = binding.run {
