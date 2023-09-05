@@ -4,6 +4,8 @@ import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
+import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
+import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.utils.asNetWorkRequestBody
 import kotlinx.coroutines.CoroutineDispatcher
@@ -128,6 +130,26 @@ class ProfileRemoteDataSource @Inject constructor(
 
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
+
+    //==================================== Change phone number
+    suspend fun changePhoneNumber(request : UpdatePhoneNumberRequest): GeneralResponse {
+        val response = profileService.doEditPhoneNumber(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun changePhoneNumberWithOTP(request : UpdatePhoneNumberOTPRequest): GeneralResponse {
+        val response = profileService.doOTP(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
 
 
     companion object {
