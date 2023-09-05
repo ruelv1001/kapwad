@@ -171,7 +171,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 .setNegativeButton(resources.getString(R.string.lbl_cancel)) { dialog, _ ->
                    dialog.dismiss()
                 }
-                .setPositiveButton(resources.getString(R.string.pending_accept_text)) { dialog, _ ->
+                .setPositiveButton(resources.getString(R.string.pending_accept_text)) { dialog , _ ->
                     val number =  dialogView.findViewById<TextView>(R.id.inputPhoneEditText).text.toString()
                     if (number.isEmpty()){
                         Toast.makeText(requireContext(),
