@@ -221,7 +221,8 @@
             <RelativeLayout
                 android:id="@+id/membershipNotifRelativeLayout"
                 android:layout_width="@dimen/dimen_23"
-                android:layout_height="@dimen/dimen_23">
+                android:layout_height="@dimen/dimen_23"
+                android:visibility="gone">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="match_parent"

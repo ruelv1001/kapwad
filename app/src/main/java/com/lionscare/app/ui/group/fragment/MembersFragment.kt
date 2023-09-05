@@ -51,6 +51,9 @@ class MembersFragment : Fragment() {
 
     private fun setClickListeners() = binding.run {
 
+        pendingRequestCountTextView.isVisible = activity.groupDetails?.pending_requests_count != 0
+        pendingRequestCountTextView.text = activity.groupDetails?.pending_requests_count.toString()
+
         membersRelativeLayout.setOnSingleClickListener {
             setActiveTab(membersRelativeLayout)
             viewPager.currentItem = 0
