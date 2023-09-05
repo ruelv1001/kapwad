@@ -320,6 +320,8 @@
     <string name="invalid_qr_code_msg">Invalid QR Code</string>
     <string name="lbl_loading">Loading . . .</string>
     <string name="lbl_you">You</string>
+    <string name="set_new_phone_number">Set new phone number</string>
+    <string name="field_is_required">Field is required</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>
