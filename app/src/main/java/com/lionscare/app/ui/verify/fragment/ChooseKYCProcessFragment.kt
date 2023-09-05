@@ -1,11 +1,14 @@
 package com.lionscare.app.ui.verify.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +19,7 @@ import com.lionscare.app.databinding.FragmentChooseKycProcessBinding
 import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.VerifyViewModel
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
+import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import kotlinx.coroutines.launch
@@ -29,7 +33,7 @@ class ChooseKYCProcessFragment : Fragment() {
     private val activity by lazy { requireActivity() as AccountVerificationActivity }
 
     private val viewModel : VerifyViewModel by activityViewModels()
-
+    private var loadingDialog: CommonDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +50,7 @@ class ChooseKYCProcessFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeProfile()
         setupClickListener()
-        setUpDetails()
+//        setUpDetails()
         viewModel.getVerificationStatus()
 
     }
@@ -64,76 +68,138 @@ class ChooseKYCProcessFragment : Fragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun handleViewState(viewState: ProfileViewState) {
         when (viewState) {
-            is ProfileViewState.Loading -> Unit
+            is ProfileViewState.Loading ->  showLoadingDialog(R.string.loading)
             is ProfileViewState.SuccessGetVerificationStatus -> {
-                if (viewState.profileVerificationResponse.data?.id_status == "pending"
-                    && viewState.profileVerificationResponse.data?.address_status == "pending"
-                    ){
-                    binding.statusTextView.text = "Pending"
+                hideLoadingDialog()
 
-                    binding.verifyTextView.text = "ID Status: ${viewState.profileVerificationResponse.data?.id_status }\n" +
-                            "ID Type: ${viewState.profileVerificationResponse.data?.id_type}\n" +
-                            "Submitted on: ${viewState.profileVerificationResponse.data?.id_submitted_date?.date_db}"
+                val idStatus = "Valid ID"
+                val idDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.id_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
 
-                    binding.verifyAddressTextView.text = "Address Proof Status: ${viewState.profileVerificationResponse.data?.address_status }\n" +
-                            "Address Proof Type: ${viewState.profileVerificationResponse.data?.address_type}\n" +
-                            "Submitted on: ${viewState.profileVerificationResponse.data?.address_submitted_date?.date_db}"
+                val addressStatus = "Proof of Address"
+                val addressDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.address_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
+
+                //for id
+                when( viewState.profileVerificationResponse.data?.id_status ){
+                    "pending" -> {
+                        binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_pending)
+                        binding.badgeIdStatus.visibility = View.VISIBLE
+                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data.id_status?.replaceFirstChar(Char::titlecase)}"
+
+                        binding.validIdLinearLayout.isClickable = false
+                        binding.validIdButtonTextView.text = idStatus
+                        binding.validIdDateTextView.text = idDate
+                        binding.idArrowImageView.visibility = View.GONE
+                    }
+                    "declined" ->{
+                        binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_declined)
+                        binding.badgeIdStatus.visibility = View.VISIBLE
+                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data.id_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.validIdLinearLayout.isClickable = true
+                        binding.validIdButtonTextView.text = idStatus
+                        binding.validIdDateTextView.text = idDate
+                        binding.idArrowImageView.visibility = View.GONE
+                    }
+                    "approved" -> {
+                        binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_approved)
+                        binding.badgeIdStatus.visibility = View.GONE
+                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data.id_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.validIdLinearLayout.isClickable = false
+                        binding.validIdButtonTextView.text = idStatus
+                        binding.validIdDateTextView.text = idDate
+                        binding.idArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_check))
+                    }
+                    else -> {
+                        binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded)
+                        binding.badgeIdStatus.visibility = View.GONE
+                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data?.id_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.validIdLinearLayout.isClickable = true
+                        binding.validIdButtonTextView.text = idStatus
+                        binding.validIdDateTextView.text = idDate
+                        binding.idArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_forward_arrow))
+                    }
                 }
-
-                if (viewState.profileVerificationResponse.data?.id_status == "approved"
-                    && viewState.profileVerificationResponse.data?.address_status == "approved"
-                ){
-                    binding.statusTextView.text = "Approved"
-
-                    binding.verifyTextView.text = "ID Status: ${viewState.profileVerificationResponse.data?.id_status }\n" +
-                            "ID Type: ${viewState.profileVerificationResponse.data?.id_type}\n" +
-                            "Submitted on: ${viewState.profileVerificationResponse.data?.id_submitted_date?.date_db}"
-
-                    binding.verifyAddressTextView.text = "Address Proof Status: ${viewState.profileVerificationResponse.data?.address_status }\n" +
-                            "Address Proof Type: ${viewState.profileVerificationResponse.data?.address_type}\n" +
-                            "Submitted on: ${viewState.profileVerificationResponse.data?.address_submitted_date?.date_db}"
+                //for address
+                when( viewState.profileVerificationResponse.data?.address_status ){
+                    "pending" -> {
+                        binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded_pending)
+                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.badgeAddressStatus.visibility = View.VISIBLE
+                        binding.addressLinearLayout.isClickable = false
+                        binding.addressButtonTextView.text = addressStatus
+                        binding.addressDateTextView.text = addressDate
+                        binding.addressArrowImageView.setImageDrawable(null)
+                        binding.addressArrowImageView.visibility = View.GONE
+                    }
+                    "declined" ->{
+                        binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded_declined)
+                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.badgeAddressStatus.visibility = View.VISIBLE
+                        binding.addressLinearLayout.isClickable = true
+                        binding.addressButtonTextView.text = addressStatus
+                        binding.addressDateTextView.text = addressDate
+                        binding.addressArrowImageView.setImageDrawable(null)
+                        binding.addressArrowImageView.visibility = View.GONE
+                    }
+                    "approved" -> {
+                        binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded_approved)
+                        binding.badgeAddressStatus.visibility = View.GONE
+                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.addressLinearLayout.isClickable = false
+                        binding.addressButtonTextView.text = addressStatus
+                        binding.addressDateTextView.text = addressDate
+                        binding.addressArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_check))
+                    }
+                    else -> {
+                        binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded)
+                        binding.badgeAddressStatus.visibility = View.GONE
+                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data?.id_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.addressLinearLayout.isClickable = true
+                        binding.addressButtonTextView.text = idStatus
+                        binding.addressDateTextView.text = idDate
+                        binding.addressArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_forward_arrow))
+                    }
                 }
-
-
-                if (viewState.profileVerificationResponse.data?.id_status == "declined"
-                    && viewState.profileVerificationResponse.data?.address_status == "declined"
-                ){
-                    binding.statusTextView.text = "Declined"
-
-                    binding.verifyTextView.text = "ID Status: ${viewState.profileVerificationResponse.data?.id_status }\n" +
-                            "ID Type: ${viewState.profileVerificationResponse.data?.id_type}\n" +
-                            "Submitted on: ${viewState.profileVerificationResponse.data?.id_submitted_date?.date_db}"
-
-                    binding.verifyAddressTextView.text = "Address Proof Status: ${viewState.profileVerificationResponse.data?.address_status }\n" +
-                            "Address Proof Type: ${viewState.profileVerificationResponse.data?.address_type}\n" +
-                            "Submitted on: ${viewState.profileVerificationResponse.data?.address_submitted_date?.date_db}"
-                }
-
 
             }
             is ProfileViewState.PopupError -> {
+                hideLoadingDialog()
                 showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
             }
-            else -> Unit
+            else ->  hideLoadingDialog()
         }
     }
 
 
-
-    private fun setUpDetails() = binding.run{
-        activity.setTitle(getString(R.string.verify_account_title))
-
-        if(isIdVerified == true){
-            idArrowImageView.visibility = View.GONE
-            idCheckImageView.visibility = View.VISIBLE
-        }
-        if(isAddressVerified == true){
-            addressArrowImageView.visibility = View.GONE
-            addressCheckImageView.visibility = View.VISIBLE
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        if (loadingDialog == null){
+            loadingDialog = CommonDialog.getLoadingDialogInstance(
+                message = getString(strId)
+            )
+            loadingDialog?.show(childFragmentManager)
         }
     }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+    }
+
+
+//    private fun setUpDetails() = binding.run{
+//        activity.setTitle(getString(R.string.verify_account_title))
+//
+//        if(isIdVerified == true){
+//            idArrowImageView.visibility = View.GONE
+//            idCheckImageView.visibility = View.VISIBLE
+//        }
+//        if(isAddressVerified == true){
+//            addressArrowImageView.visibility = View.GONE
+//            addressCheckImageView.visibility = View.VISIBLE
+//        }
+//    }
 
     private fun setupClickListener() = binding.run {
         validIdLinearLayout.setOnSingleClickListener {
