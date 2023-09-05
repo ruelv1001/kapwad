@@ -5,6 +5,7 @@ import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
+import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.utils.PopupErrorState
 
@@ -18,6 +19,8 @@ sealed class ProfileViewState {
     data class SuccessLoadLOVProofOfAddress(val message : String = "", val lovResponse: LOVResponse? = LOVResponse()) : ProfileViewState()
     data class SuccessUploadId(val message : String = "") : ProfileViewState()
     data class SuccessUploadAddress(val message : String = "") : ProfileViewState()
+
+    data class SuccessGetVerificationStatus(val message : String = "", val profileVerificationResponse: ProfileVerificationResponse) : ProfileViewState()
 
     data class SuccessUpdatePhoneNumber(val response: GeneralResponse) : ProfileViewState()
     data class SuccessUpdatePhoneNumberWithOTP(val response: GeneralResponse) : ProfileViewState()
