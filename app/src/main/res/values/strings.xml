@@ -327,4 +327,11 @@
         <item>Medical bill</item>
         <item>Others</item>
     </string-array>
+
+    <plurals name="member_plural">
+        <item quantity="one">%d member</item>
+        <item quantity="zero">%d member</item>
+        <item quantity="other">%d members</item>
+    </plurals>
+
 </resources>

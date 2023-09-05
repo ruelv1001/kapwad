@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
 
@@ -44,11 +45,11 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
         fun bind(data: GroupListData?){
             data?.let {
                 binding.titleTextView.text = data.name
-                  binding.membersTextView.text = if(data.member_count!! > 1) {
-                      "${data.member_count} members"
-                  } else {
-                      "${data.member_count} member"
-                  }
+                  binding.membersTextView.text = context.resources.getQuantityString(
+                      R.plurals.member_plural, //plural from strings.xml file
+                      data.member_count?: 0, //quantity
+                      data.member_count?: 0 //var arg
+                  )
                   binding.referenceTextView.text = data.qrcode
 
                 /*if (data.type.equals("FAM")){
