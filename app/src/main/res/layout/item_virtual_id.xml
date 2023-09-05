@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_500"
     android:layout_margin="@dimen/dimen_20"
-    android:background="@drawable/img_bg_virtual_id"
+    android:background="@drawable/bg_id_layout"
     android:padding="@dimen/dimen_20">
 
     <LinearLayout
