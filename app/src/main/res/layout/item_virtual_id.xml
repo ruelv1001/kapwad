@@ -36,11 +36,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_12"
         android:layout_marginTop="@dimen/dimen_16"
-        android:layout_marginEnd="@dimen/dimen_12"
         android:orientation="vertical"
         android:rotation="90"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
+            android:baselineAligned="false"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/detailsLinearLayout">
 
@@ -143,6 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <LinearLayout
