@@ -77,6 +77,9 @@ class AdminListFragment : Fragment(),
                 recyclerView.isVisible = false
             }
         }
+
+        //TODO: if is_admin
+        //activity.getRolesView().isVisible = activity.groupDetails.is_admin
     }
 
     private fun setClickListeners() = binding.run {
@@ -90,6 +93,8 @@ class AdminListFragment : Fragment(),
         groupOwnerLayout.nameTextView.text = activity.groupDetails?.owner?.name
         groupOwnerLayout.idNoTextView.text = activity.groupDetails?.owner?.qrcode
         //groupOwnerLayout.profileImageView.loadAvatar(activity.groupDetails?.owner?.avatar?.thumb_path,requireActivity())
+
+        groupOwnerLayout.youTextView.isVisible = viewModel.user.id == activity.groupDetails?.owner_user_id
     }
 
     override fun onResume() {
