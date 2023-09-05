@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.lionscare.app.databinding.AdapterGroupPendingRequestBinding
 import com.lionscare.app.databinding.AdapterMembersBinding
 import com.lionscare.app.utils.loadImage
 
-class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallback) :
+class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallback, val isAdmin: Boolean? = false) :
     PagingDataAdapter<PendingMemberData, GroupsInvitesAdapter.AdapterViewHolder>(
         DIFF_CALLBACK
     ) {
@@ -59,14 +60,18 @@ class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallbac
                 binding.referenceTextView.visibility = View.GONE
                 // binding.imageView.loadImage(data.user?.avatar?.thumb_path, context)
 
-                if (data.type == "request") {
+                if (data.type == "request" && isAdmin == true) {
                     binding.acceptTextView.visibility = View.VISIBLE
                     binding.declineTextView.visibility = View.VISIBLE
                     binding.cancelTextView.visibility = View.GONE
-                } else {
+                } else if (data.type == "invite" && isAdmin == true){
                     binding.acceptTextView.visibility = View.GONE
                     binding.declineTextView.visibility = View.GONE
                     binding.cancelTextView.visibility = View.VISIBLE
+                }else{
+                    binding.acceptTextView.visibility = View.GONE
+                    binding.declineTextView.visibility = View.GONE
+                    binding.cancelTextView.visibility = View.GONE
                 }
 
                 binding.adapterLinearLayout.setOnClickListener {

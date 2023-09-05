@@ -22,6 +22,7 @@ import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
 import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
 import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.ui.group.viewmodel.AdminViewState
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,9 +78,6 @@ class AdminListFragment : Fragment(),
                 recyclerView.isVisible = false
             }
         }
-
-        //TODO: if is_admin
-        //activity.getRolesView().isVisible = activity.groupDetails.is_admin
     }
 
     private fun setClickListeners() = binding.run {
@@ -100,6 +98,7 @@ class AdminListFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_group_community_roles))
+        activity.getRolesView().isVisible = activity.groupDetails?.is_admin == true
     }
 
     private fun observeMemberList() {

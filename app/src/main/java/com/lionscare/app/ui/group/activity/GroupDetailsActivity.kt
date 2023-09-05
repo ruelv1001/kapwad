@@ -97,6 +97,7 @@ class GroupDetailsActivity : AppCompatActivity(),
         qrLayout.qrImageView.setImageBitmap(setQR(this@GroupDetailsActivity, data.qrcode_value))
         qrLayout.idNoTextView.text = data.code
         walletLayout.sendLinearLayout.isVisible = data.is_admin == true
+        addImageView.isVisible = data.is_admin == true
     }
 
     private fun setupClickListener() = binding.run{
