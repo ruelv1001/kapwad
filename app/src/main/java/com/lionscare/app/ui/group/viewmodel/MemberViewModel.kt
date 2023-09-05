@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.member.MemberRepository
 import com.lionscare.app.security.AuthEncryptedDataManager
+import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -179,6 +180,23 @@ class MemberViewModel @Inject constructor(
                 .collect {
                     _memberSharedFlow.emit(
                         MemberViewState.SuccessInviteMember(it)
+                    )
+                }
+        }
+    }
+
+    fun cancelInvitation(pending_id: String, group_id: String) {
+        viewModelScope.launch {
+            memberRepository.doCancelInvitation(pending_id, group_id)
+                .onStart {
+
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _memberSharedFlow.emit(
+                        MemberViewState.SuccessCancelInvitation(it.msg.toString())
                     )
                 }
         }

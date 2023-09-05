@@ -105,6 +105,7 @@ class SettingsFragment : Fragment() {
     private fun setView(userModel: UserModel?)=binding.run {
         nameTextView.text = userModel?.name
         badgeTextView.isVisible = false
+        idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {

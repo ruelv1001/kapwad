@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.member.MemberRepository
+import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
@@ -105,6 +106,23 @@ class GroupListViewModel @Inject constructor(
                 .collect {
                     _getGroupSharedFlow.emit(
                         GroupListViewState.SuccessAcceptDeclineInvitation(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun cancelJoinRequest(pending_id: String, group_id: String) {
+        viewModelScope.launch {
+            memberRepository.doCancelJoinRequest(pending_id, group_id)
+                .onStart {
+
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _getGroupSharedFlow.emit(
+                        GroupListViewState.SuccessCancelJoinRequest(it.msg.toString())
                     )
                 }
         }

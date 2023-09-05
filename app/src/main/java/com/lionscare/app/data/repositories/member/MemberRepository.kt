@@ -70,6 +70,13 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    fun doCancelInvitation(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
+        return flow {
+            val response = memberRemoteDataSource.doCancelInvitation(pending_id, group_id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
 
     fun doGetAllPendingRequest(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String, type: String? = null): Flow<PagingData<PendingMemberData>> {
         val getAllPendingRequestPagingSource = GetAllPendingRequestPagingSource(memberRemoteDataSource, groupId = groupId, type = type)
@@ -94,6 +101,13 @@ class MemberRepository @Inject constructor(
     fun doRejectJoinRequest(pending_id: String, group_id: String): Flow<GeneralResponse> {
         return flow {
             val response = memberRemoteDataSource.doRejectJoinRequest(pending_id, group_id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doCancelJoinRequest(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
+        return flow {
+            val response = memberRemoteDataSource.doCancelJoinRequest(pending_id, group_id)
             emit(response)
         }.flowOn(ioDispatcher)
     }

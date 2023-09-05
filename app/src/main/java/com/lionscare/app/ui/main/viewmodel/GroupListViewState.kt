@@ -3,6 +3,7 @@ package com.lionscare.app.ui.main.viewmodel
 import androidx.paging.PagingData
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
+import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.utils.PopupErrorState
 
 sealed class GroupListViewState{
@@ -10,6 +11,8 @@ sealed class GroupListViewState{
     object LoadingAcceptDeclineInvitation : GroupListViewState()
     data class Success(val pagingData: PagingData<GroupListData>) : GroupListViewState()
     data class SuccessAcceptDeclineInvitation(val msg: String) : GroupListViewState()
+
+    data class SuccessCancelJoinRequest(val message: String = ""): GroupListViewState()
     data class SuccessGetPendingRequestList(val pagingData: PagingData<PendingGroupRequestData>) : GroupListViewState()
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : GroupListViewState()
 }
