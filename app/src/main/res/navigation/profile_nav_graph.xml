@@ -21,5 +21,20 @@
         tools:layout="@layout/fragment_profile_update"
         android:label="">
 
+        <action
+            android:id="@+id/action_navigation_profile_update_to_profileOTPFragment"
+            app:destination="@id/profileOTPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileOTPFragment"
+        tools:layout="@layout/fragment_registration_otp"
+        android:name="com.lionscare.app.ui.settings.fragment.ProfileOTPFragment"
+        android:label="ProfileOTPFragment" >
+        <action
+            android:id="@+id/action_profileOTPFragment_to_navigation_profile_preview"
+            app:destination="@id/navigation_profile_preview" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
     </fragment>
 </navigation>
