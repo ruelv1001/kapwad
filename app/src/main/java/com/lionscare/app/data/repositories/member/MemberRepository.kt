@@ -56,14 +56,14 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doAcceptInvitation(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
+    fun doAcceptInvitation(pending_id: Long, group_id: String): Flow<JoinGroupResponse> {
         return flow {
             val response = memberRemoteDataSource.doAcceptInvitation(pending_id, group_id)
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
-    fun doDeclineInvitation(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
+    fun doDeclineInvitation(pending_id: Long, group_id: String): Flow<JoinGroupResponse> {
         return flow {
             val response = memberRemoteDataSource.doDeclineInvitation(pending_id, group_id)
             emit(response)

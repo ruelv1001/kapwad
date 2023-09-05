@@ -47,7 +47,7 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
         fun bind(data: PendingGroupRequestData?){
             data?.let {
                 binding.titleTextView.text = data.group?.name
-                binding.membersTextView.text = data.group?.member_count.toString()
+                binding.membersTextView.text = "${data.group?.member_count.toString()} members"
                 binding.referenceTextView.text = data.group?.qrcode
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
 
