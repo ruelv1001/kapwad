@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/virtualIdLinearLayout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_500"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_20"
+    android:minHeight="@dimen/dimen_500"
     android:background="@drawable/bg_id_layout"
     android:padding="@dimen/dimen_20">
 
@@ -51,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            android:baselineAligned="false"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/detailsLinearLayout">
 
