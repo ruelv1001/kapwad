@@ -109,7 +109,7 @@ class VerifyViewModel @Inject constructor(
         viewModelScope.launch {
             profileRepository.getVerificationStatus()
                 .onStart {
-                    _kycSharedFlow.emit(ProfileViewState.Loading)
+                    _kycSharedFlow.emit(ProfileViewState.LoadingVerificationStatus)
                 }
                 .catch { exception ->
                     onError(exception)

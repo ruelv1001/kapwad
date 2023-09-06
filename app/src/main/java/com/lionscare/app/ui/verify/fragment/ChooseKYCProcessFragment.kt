@@ -19,6 +19,7 @@ import com.lionscare.app.databinding.FragmentChooseKycProcessBinding
 import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.VerifyViewModel
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
+import com.lionscare.app.utils.PopupErrorState
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -50,7 +51,9 @@ class ChooseKYCProcessFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeProfile()
         setupClickListener()
-//        setUpDetails()
+//        setUpDetails()\
+        //show loading here immediately
+        showLoadingDialog(R.string.loading)
         viewModel.getVerificationStatus()
 
     }
@@ -71,10 +74,10 @@ class ChooseKYCProcessFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun handleViewState(viewState: ProfileViewState) {
         when (viewState) {
-            is ProfileViewState.Loading ->  showLoadingDialog(R.string.loading)
+            is ProfileViewState.LoadingVerificationStatus -> {
+                showLoadingDialog(R.string.loading)
+            }
             is ProfileViewState.SuccessGetVerificationStatus -> {
-                hideLoadingDialog()
-
                 val idStatus = "Valid ID"
                 val idDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.id_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
 
@@ -162,11 +165,16 @@ class ChooseKYCProcessFragment : Fragment() {
                         binding.addressArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_forward_arrow))
                     }
                 }
+                hideLoadingDialog()
 
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
-                showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+                //do not show popup on first run or if nothing was sent yet
+                //based on api flow
+                if ( viewState.errorCode != PopupErrorState.HttpError && viewState.message != "Record not found."){
+                    showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+                }
             }
             else ->  hideLoadingDialog()
         }
