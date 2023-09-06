@@ -14,9 +14,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.databinding.FragmentProfileUpdateBinding
 import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
@@ -80,6 +82,22 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
                 activity.onBackPressed()
             }
+            is ProfileViewState.SuccessUpdatePhoneNumber -> {
+                hideLoadingDialog()
+                val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
+                snackbar.setTextMaxLines(3)
+                snackbar.view.translationY = -(binding.saveButton.height + snackbar.view.height).toFloat()
+                snackbar.show()
+
+                val bundle = Bundle().apply {
+                    putString("phone", binding.phoneEditText.text.toString() )
+                }
+                val action =
+                    ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment( binding.phoneEditText.text.toString())
+
+                findNavController().navigate(action.actionId, bundle)
+            }
+
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
                 setView(viewState.userModel)
@@ -105,6 +123,9 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error = errorsData.city_name?.get(0)
         if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
         if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
+        if (errorsData.phone_number?.get(0)?.isNotEmpty() == true){
+            Toast.makeText(requireActivity(),errorsData.phone_number?.get(0),Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -177,16 +198,9 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                         Toast.makeText(requireContext(),
                             getString(R.string.field_is_required), Toast.LENGTH_SHORT).show()
                     }else{
-                        phoneEditText.setText(number)
-                        dialog.dismiss()
-
-                        val bundle = Bundle().apply {
-                            putString("phone", number)
-                        }
-                        val action =
-                            ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment(number)
-
-                        findNavController().navigate(action.actionId, bundle)
+                        binding.phoneEditText.setText(number)
+                        //send the otp immediately
+                        viewModel.changePhoneNumber(UpdatePhoneNumberRequest(phone_number = number))
                     }
 
                 }

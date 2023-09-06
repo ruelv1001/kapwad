@@ -13,6 +13,7 @@ import com.lionscare.app.utils.PopupErrorState
 
 sealed class ProfileViewState {
     object Loading : ProfileViewState()
+    object LoadingVerificationStatus : ProfileViewState()
     data class Success(val message: String = "") : ProfileViewState()
     data class SuccessGetUserInfo(val message: String = "",val userModel: UserModel? = UserModel()) : ProfileViewState()
 

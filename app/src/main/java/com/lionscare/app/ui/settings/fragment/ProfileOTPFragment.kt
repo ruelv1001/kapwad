@@ -157,12 +157,13 @@ class ProfileOTPFragment: Fragment(){
             viewModel.changePhoneNumberWithOTP(request)
         }
         resendTextView.setOnSingleClickListener {
+            //only send when resend is clicked and after initial timeout since it was send prior to going to this screen
+            sendOtpToUser()
             startCountdown()
         }
     }
 
     private fun startCountdown() = binding.run {
-        sendOtpToUser()
         resendTextView.visibility = View.GONE
         resendTimeLinearLayout.visibility = View.VISIBLE
         countDownTimer = object : CountDownTimer(MILLI_SEC, COUNTDOWN_INTERVAL) {
