@@ -175,43 +175,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_username"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/usernameTextInputLayout"
-                style="@style/TextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                app:boxBackgroundColor="@color/white"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/usernameEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edittext_selector"
-                    android:fontFamily="@font/inter_semibold"
-                    android:hint="@string/lbl_username"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/commons_text_hint"
-                    android:textSize="@dimen/font_14" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_nominate_password"
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
