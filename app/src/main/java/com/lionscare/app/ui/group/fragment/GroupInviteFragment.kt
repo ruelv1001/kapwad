@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -197,19 +198,13 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
     private fun setView() = binding.run {
         searchEditText.doAfterTextChanged {
             applyTextView.isVisible = it.toString().isNotEmpty()
-            searchEditText.doOnTextChanged { text, start, before, count ->
-                if (searchEditText.text?.isNotEmpty() == true) {
-                    recyclerView.visibility = View.VISIBLE
-                    closeImageView.visibility = View.VISIBLE
-                } else {
-                    recyclerView.visibility = View.GONE
-                    closeImageView.visibility = View.GONE
-                }
+        }
+        searchEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.doSearchUser(searchEditText.text.toString())
+                true
             }
-            closeImageView.setOnSingleClickListener {
-                closeImageView.visibility = View.GONE
-                searchEditText.setText("")
-            }
+            false
         }
     }
 

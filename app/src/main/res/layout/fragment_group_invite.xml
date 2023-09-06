@@ -37,22 +37,12 @@
                     android:drawablePadding="@dimen/dimen_10"
                     android:fontFamily="@font/inter_medium"
                     android:inputType="text"
+                    android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_14" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/closeImageView"
-                android:layout_width="@dimen/dimen_25"
-                android:layout_height="@dimen/dimen_25"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:padding="@dimen/dimen_3"
-                android:src="@drawable/ic_close"
-                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/applyTextView"
@@ -71,8 +61,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_20"
             android:layout_marginEnd="@dimen/dimen_20"
             android:visibility="gone"
@@ -82,7 +71,7 @@
         <TextView
             android:id="@+id/memberPlaceHolderTextView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_200"
+            android:layout_height="match_parent"
             android:fontFamily="@font/inter_regular"
             android:gravity="center"
             android:text="@string/lbl_nothing_to_show_txt"
