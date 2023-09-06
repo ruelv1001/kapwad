@@ -14,6 +14,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.data.repositories.member.response.MemberListData
+import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupMembershipReqBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
@@ -23,6 +24,7 @@ import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
+import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -164,7 +166,18 @@ class MemberListFragment : Fragment(),
                 }
 
                 override fun onSendPoint(memberListData: MemberListData) {
-                    //TODO("Not yet implemented")
+                    val intent = WalletActivity.getIntent(
+                        requireActivity(),
+                        "Send Points",
+                        true,
+                        activity.groupDetails?.id.orEmpty(),
+                        QRData(
+                            data.user?.id,
+                            data.user?.name,
+                        ),
+                        "START_INPUT"
+                    )
+                    startActivity(intent)
                 }
             }, data
         ).show(childFragmentManager, MemberDetailsDialog.TAG)
