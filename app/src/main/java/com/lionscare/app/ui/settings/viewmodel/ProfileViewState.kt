@@ -4,6 +4,8 @@ import com.lionscare.app.data.local.UserLocalData
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.response.BadgeResponse
+import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
@@ -22,6 +24,12 @@ sealed class ProfileViewState {
 
     data class SuccessGetVerificationStatus(val message : String = "", val profileVerificationResponse: ProfileVerificationResponse) : ProfileViewState()
 
+    //BADGE
+    data class SuccessGetBadgeStatus(val message : String = "", val badgeStatusResponse: BadgeStatusResponse) : ProfileViewState()
+    data class SuccessBadgeRequest(val message : String = "", val badgeResponse: BadgeResponse) : ProfileViewState()
+
+
+    //PHONE NUMBER
     data class SuccessUpdatePhoneNumber(val response: GeneralResponse) : ProfileViewState()
     data class SuccessUpdatePhoneNumberWithOTP(val response: GeneralResponse) : ProfileViewState()
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : ProfileViewState()

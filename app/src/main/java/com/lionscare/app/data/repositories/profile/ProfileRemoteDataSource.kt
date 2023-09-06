@@ -2,10 +2,13 @@ package com.lionscare.app.data.repositories.profile
 
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.data.repositories.profile.response.BadgeResponse
+import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.lionscare.app.utils.asNetWorkRequestBody
@@ -160,6 +163,23 @@ class ProfileRemoteDataSource @Inject constructor(
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
+    //=================================BADGE API
+    suspend fun doRequestBadge(request : BadgeRequest): BadgeResponse {
+        val response = profileService.doRequestBadge(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+    suspend fun getBadgeStatus(): BadgeStatusResponse {
+        val response = profileService.getBadgeStatus()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
 
 
     companion object {

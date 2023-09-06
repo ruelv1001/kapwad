@@ -2,9 +2,12 @@ package com.lionscare.app.data.repositories.profile
 
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.data.repositories.profile.response.BadgeResponse
+import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import okhttp3.MultipartBody
@@ -54,6 +57,15 @@ interface ProfileService {
 
     @POST("api/profile/phone-number/otp")
     suspend fun doOTP(@Body request : UpdatePhoneNumberOTPRequest): Response<GeneralResponse>
+
+
+    //=================================BADGE API
+    @POST("api/profile/badge/verification")
+    suspend fun doRequestBadge(@Body request : BadgeRequest): Response<BadgeResponse>
+
+    @POST("api/profile/badge/status")
+    suspend fun getBadgeStatus(): Response<BadgeStatusResponse>
+
 
 
 }
