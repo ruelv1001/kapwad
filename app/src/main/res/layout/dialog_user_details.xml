@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_bottom_sheet"
+    android:padding="@dimen/dimen_16"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@drawable/bg_edittext_normal" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="@dimen/dimen_130"
+        android:layout_height="@dimen/dimen_130"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:src="@drawable/img_profile"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/home_id_no_text"
+        android:textSize="@dimen/font_14" />
+
+    <TextView
+        android:id="@+id/idTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_6"
+        android:fontFamily="@font/inter_semibold"
+        tools:text="8888 8888 0000 0000"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_18" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/lbl_name"
+        android:textSize="@dimen/font_14" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_6"
+        android:fontFamily="@font/inter_semibold"
+        tools:text="Juan Dela Cruz"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_18" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/home_address_text"
+        android:visibility="gone"
+        android:textSize="@dimen/font_14" />
+
+    <TextView
+        android:id="@+id/addressTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_6"
+        android:fontFamily="@font/inter_semibold"
+        tools:text="Taguig City"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_18" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:layout_margin="@dimen/dimen_20"
+        android:visibility="gone"
+        android:background="@color/bg_edittext" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:layout_marginVertical="@dimen/dimen_16"
+        android:background="@color/bg_edittext" />
+
+        <LinearLayout
+            android:id="@+id/membersLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/removeButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/bg_red"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingVertical="@dimen/dimen_15"
+                android:text="@string/member_details_remove_txt"
+                android:textAllCaps="false"
+                android:textColor="@color/red"
+                android:layout_marginEnd="@dimen/dimen_8"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sendPointsButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8"
+                android:layout_weight="1"
+                android:backgroundTint="@color/color_primary"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingVertical="@dimen/dimen_15"
+                android:text="@string/lbl_send_points"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/inviteButton"
+        style="@style/MyButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/filter_invite_text"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:textColor="@color/color_primary"
+        android:textSize="@dimen/font_14" />
+
+
+</LinearLayout>

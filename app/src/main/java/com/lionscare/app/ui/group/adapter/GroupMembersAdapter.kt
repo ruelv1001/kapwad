@@ -51,7 +51,7 @@ class GroupMembersAdapter(val clickListener: MembersCallback, val id: String? = 
                 binding.youTextView.isVisible = id == data.user?.id
                 binding.nameTextView.text = data.user?.name
                 binding.idNoTextView.text = data.user?.qrcode
-               // binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path)
+                //binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path )
 
                 if (data.role != "member"){
                     if (isUpdating){
@@ -63,11 +63,6 @@ class GroupMembersAdapter(val clickListener: MembersCallback, val id: String? = 
                     }
                 } else {
                     binding.membersLinearLayout.setOnClickListener {
-                        if (binding.checkImageView.isVisible){
-                            binding.checkImageView.visibility = View.GONE
-                        } else {
-                            binding.checkImageView.visibility = View.VISIBLE
-                        }
                         clickListener.onItemClicked(data)
                     }
                 }

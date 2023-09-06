@@ -325,6 +325,7 @@
     <string name="set_new_phone_number">Set new phone number</string>
     <string name="field_is_required">Field is required</string>
     <string name="lbl_cancel_join_request">Cancel Join Request</string>
+    <string name="member_details_remove_txt">Remove</string>
     <string-array name="assistance_purpose_items">
         <item>Scholarship</item>
         <item>Medical bill</item>

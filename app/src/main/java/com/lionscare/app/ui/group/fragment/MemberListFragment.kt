@@ -17,6 +17,7 @@ import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupMembershipReqBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
+import com.lionscare.app.ui.group.dialog.MemberDetailsDialog
 import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
 import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.ui.group.viewmodel.AdminViewState
@@ -62,7 +63,7 @@ class MemberListFragment : Fragment(),
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(this@MemberListFragment,viewModel.user.id)
+        adapter = GroupMembersAdapter(this@MemberListFragment, viewModel.user.id)
         swipeRefreshLayout.setOnRefreshListener(this@MemberListFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
@@ -149,34 +150,47 @@ class MemberListFragment : Fragment(),
         _binding = null
     }
 
-    companion object {
-        private const val REQUEST = "REQUEST"
-        fun newInstance(): MemberListFragment {
-            return MemberListFragment()
-        }
+    override fun onItemClicked(data: MemberListData) {
+        callMemberDetailDialog(data)
     }
 
-    override fun onItemClicked(data: MemberListData) {
-        //TODO: Integrate this inside the view member details
+    override fun onRemoveClicked(data: MemberListData) = Unit
 
-        /*RemoveConfirmationDialog.newInstance(
+    private fun callMemberDetailDialog(data: MemberListData) {
+        MemberDetailsDialog.newInstance(
+            object : MemberDetailsDialog.MembershipCallback {
+                override fun onRemoveMember(memberListData: MemberListData) {
+                    callRemoveMemberDialog(memberListData.id ?: 0)
+                }
+
+                override fun onSendPoint(memberListData: MemberListData) {
+                    //TODO("Not yet implemented")
+                }
+            }, data
+        ).show(childFragmentManager, MemberDetailsDialog.TAG)
+    }
+
+    private fun callRemoveMemberDialog(id: Int) {
+        RemoveConfirmationDialog.newInstance(
             object : RemoveConfirmationDialog.ConfirmationCallback {
                 override fun onConfirm(id: String) {
-                    viewModelAdmin.doRemoveMember(activity.groupDetails?.id!!,id.toInt())
+                    viewModelAdmin.doRemoveMember(activity.groupDetails?.id.orEmpty(), id.toInt())
                 }
             },
             title = "Remove Selected Member?",
-            groupId = data.id.toString()
-        ).show(childFragmentManager, RemoveConfirmationDialog.TAG)*/
-    }
-
-    override fun onRemoveClicked(data: MemberListData) {
-//        TODO("Not yet implemented")
+            groupId = id.toString()
+        ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
     }
 
     override fun onRefresh() {
         viewModel.refreshListOfMembers(activity.groupDetails?.id.toString())
     }
 
+    companion object {
+        private const val REQUEST = "REQUEST"
+        fun newInstance(): MemberListFragment {
+            return MemberListFragment()
+        }
+    }
 
 }
