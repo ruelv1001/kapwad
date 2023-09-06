@@ -30,7 +30,7 @@ class AdminRepository @Inject constructor(
     }
 
     private fun getDefaultPageConfig(): PagingConfig {
-        return PagingConfig(pageSize = 10, initialLoadSize = 5, enablePlaceholders = false)
+        return PagingConfig(pageSize = 5, initialLoadSize = 5, enablePlaceholders = false)
     }
 
     fun doRemoveMember(groupId: String, memberId: Int) : Flow<GeneralResponse> {

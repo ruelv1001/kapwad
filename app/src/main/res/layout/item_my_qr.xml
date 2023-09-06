@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/qrLinearLayout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_500"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_20"
+    android:minHeight="@dimen/dimen_500"
     android:background="@drawable/bg_rounded_outline"
     android:orientation="vertical"
     android:padding="@dimen/dimen_20">
