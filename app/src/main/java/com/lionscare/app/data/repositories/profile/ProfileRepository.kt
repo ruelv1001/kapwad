@@ -3,9 +3,12 @@ package com.lionscare.app.data.repositories.profile
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.data.repositories.profile.response.BadgeResponse
+import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
@@ -120,6 +123,20 @@ class ProfileRepository @Inject constructor(
     fun changePhoneNumberWithOTP(request : UpdatePhoneNumberOTPRequest): Flow<GeneralResponse> {
         return flow {
             val response = profileRemoteDataSource.changePhoneNumberWithOTP(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    //=============================== BADGE API
+    fun doRequestBadge(request : BadgeRequest): Flow<BadgeResponse> {
+        return flow {
+            val response = profileRemoteDataSource.doRequestBadge(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+    fun getBadgeStatus(): Flow<BadgeStatusResponse> {
+        return flow {
+            val response = profileRemoteDataSource.getBadgeStatus()
             emit(response)
         }.flowOn(ioDispatcher)
     }
