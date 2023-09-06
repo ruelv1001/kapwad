@@ -93,7 +93,6 @@ class RegisterPrimaryInfoFragment: Fragment() {
         if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.passwordTextInputLayout.error = errorsData.password?.get(0)
         if (errorsData.password_confirmation?.get(0)?.isNotEmpty() == true) binding.confirmPasswordTextInputLayout.error = errorsData.password_confirmation?.get(0)
         if (errorsData.phone_number?.get(0)?.isNotEmpty() == true) binding.contactTextInputLayout.error = errorsData.phone_number?.get(0)
-        if (errorsData.username?.get(0)?.isNotEmpty() == true) binding.usernameTextInputLayout.error = errorsData.username?.get(0)
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -145,7 +144,6 @@ class RegisterPrimaryInfoFragment: Fragment() {
         continueButton.setOnSingleClickListener {
             if (isPasswordValid(passwordEditText.text.toString())){
                 val data = RegistrationRequest()
-                data.username = usernameEditText.text.toString()
                 data.firstname = firstNameEditText.text.toString()
                 data.middlename = middleNameEditText.text.toString()
                 data.lastname = lastNameEditText.text.toString()
