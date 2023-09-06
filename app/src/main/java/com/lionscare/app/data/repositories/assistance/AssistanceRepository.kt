@@ -61,7 +61,7 @@ class AssistanceRepository @Inject constructor(
     }
 
     private fun getDefaultPageConfig(): PagingConfig {
-        return PagingConfig(pageSize = 10, initialLoadSize = 5, enablePlaceholders = false)
+        return PagingConfig(pageSize = 5, initialLoadSize = 5, enablePlaceholders = false)
     }
 
 }

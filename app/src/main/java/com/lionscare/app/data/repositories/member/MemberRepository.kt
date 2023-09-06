@@ -88,7 +88,7 @@ class MemberRepository @Inject constructor(
     }
 
     private fun getDefaultPageConfig(): PagingConfig {
-        return PagingConfig(pageSize = 10, initialLoadSize = 5, enablePlaceholders = false)
+        return PagingConfig(pageSize = 5, initialLoadSize = 5, enablePlaceholders = false)
     }
 
     fun doApproveJoinRequest(pending_id: String, group_id: String): Flow<ApproveRequestResponse> {

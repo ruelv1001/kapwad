@@ -203,54 +203,63 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     private fun setClickListeners() = binding.run {
         mainLayout.myIdImageView.setOnSingleClickListener {
+            qrLayout.qrLinearLayout.visibility = View.GONE
             frontAnim?.setTarget(mainLayout.mainLinearLayout)
             backAnim?.setTarget(idLayout.virtualIdLinearLayout)
             frontAnim?.start()
             backAnim?.start()
-
-            qrLayout.qrLinearLayout.visibility = View.GONE
+            mainLayout.mainLinearLayout.visibility = View.VISIBLE
+            idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
         }
 
         idLayout.myMainLayout.setOnSingleClickListener {
+            qrLayout.qrLinearLayout.visibility = View.GONE
             frontAnim?.setTarget(idLayout.virtualIdLinearLayout)
             backAnim?.setTarget(mainLayout.mainLinearLayout)
             backAnim?.start()
             frontAnim?.start()
-
+            idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
+            mainLayout.mainLinearLayout.visibility = View.VISIBLE
         }
 
         mainLayout.myQrImageView.setOnSingleClickListener {
-            qrLayout.qrLinearLayout.visibility = View.VISIBLE
             idLayout.virtualIdLinearLayout.visibility = View.GONE
             frontAnim?.setTarget(mainLayout.mainLinearLayout)
             backAnim?.setTarget(qrLayout.qrLinearLayout)
             backAnim?.start()
             frontAnim?.start()
+            mainLayout.mainLinearLayout.visibility = View.VISIBLE
+            qrLayout.qrLinearLayout.visibility = View.VISIBLE
         }
 
         idLayout.myQrImageView.setOnSingleClickListener {
-            qrLayout.qrLinearLayout.visibility = View.VISIBLE
-
+            mainLayout.mainLinearLayout.visibility = View.GONE
             frontAnim?.setTarget(idLayout.virtualIdLinearLayout)
             backAnim?.setTarget(qrLayout.qrLinearLayout)
             frontAnim?.start()
             backAnim?.start()
+            idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
+            qrLayout.qrLinearLayout.visibility = View.VISIBLE
         }
 
         qrLayout.myIdImageView.setOnSingleClickListener {
-            idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
-
+            mainLayout.mainLinearLayout.visibility = View.GONE
             frontAnim?.setTarget(qrLayout.qrLinearLayout)
             backAnim?.setTarget(idLayout.virtualIdLinearLayout)
             backAnim?.start()
             frontAnim?.start()
+            qrLayout.qrLinearLayout.visibility = View.VISIBLE
+            idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
         }
 
         qrLayout.myMainLayout.setOnSingleClickListener {
+            idLayout.virtualIdLinearLayout.visibility = View.GONE
             frontAnim?.setTarget(qrLayout.qrLinearLayout)
             backAnim?.setTarget(mainLayout.mainLinearLayout)
             backAnim?.start()
             frontAnim?.start()
+            qrLayout.qrLinearLayout.visibility = View.VISIBLE
+            mainLayout.mainLinearLayout.visibility = View.VISIBLE
         }
 
         mainLayout.requestVerifiedBadgeLinearLayout.setOnSingleClickListener {
