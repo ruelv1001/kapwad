@@ -7,6 +7,7 @@ import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
+import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -96,6 +97,13 @@ class ProfileRepository @Inject constructor(
     fun getProofOfAddressList(): Flow<LOVResponse> {
         return flow {
             val response = profileRemoteDataSource.getProofOfAddressList()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getVerificationStatus(): Flow<ProfileVerificationResponse> {
+        return flow {
+            val response = profileRemoteDataSource.getVerificationStatus()
             emit(response)
         }.flowOn(ioDispatcher)
     }

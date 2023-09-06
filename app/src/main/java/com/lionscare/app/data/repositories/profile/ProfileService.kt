@@ -6,6 +6,7 @@ import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
+import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -43,11 +44,16 @@ interface ProfileService {
     suspend fun getLOVProofOfAddressList(): Response<LOVResponse>
 
 
+    @POST("api/profile/kyc/status")
+    suspend fun getVerificationStatus(): Response<ProfileVerificationResponse>
+
+
     //================================PHONE NUMBER OTP
     @POST("api/profile/phone-number/edit")
     suspend fun doEditPhoneNumber(@Body request : UpdatePhoneNumberRequest): Response<GeneralResponse>
 
     @POST("api/profile/phone-number/otp")
     suspend fun doOTP(@Body request : UpdatePhoneNumberOTPRequest): Response<GeneralResponse>
+
 
 }

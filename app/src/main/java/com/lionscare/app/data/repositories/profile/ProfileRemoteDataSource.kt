@@ -7,6 +7,7 @@ import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
+import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.lionscare.app.utils.asNetWorkRequestBody
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -124,6 +125,15 @@ class ProfileRemoteDataSource @Inject constructor(
 
     suspend fun getProofOfAddressList(): LOVResponse {
         val response = profileService.getLOVProofOfAddressList()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getVerificationStatus(): ProfileVerificationResponse {
+        val response = profileService.getVerificationStatus()
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

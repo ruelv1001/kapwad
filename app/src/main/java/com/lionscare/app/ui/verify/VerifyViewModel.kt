@@ -105,6 +105,21 @@ class VerifyViewModel @Inject constructor(
         }
     }
 
+    fun getVerificationStatus() {
+        viewModelScope.launch {
+            profileRepository.getVerificationStatus()
+                .onStart {
+                    _kycSharedFlow.emit(ProfileViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _kycSharedFlow.emit(ProfileViewState.SuccessGetVerificationStatus(message = it.msg.toString(), profileVerificationResponse = it))
+                }
+        }
+    }
+
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {

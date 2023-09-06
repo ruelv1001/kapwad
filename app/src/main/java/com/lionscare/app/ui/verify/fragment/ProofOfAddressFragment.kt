@@ -23,7 +23,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -105,8 +107,10 @@ class ProofOfAddressFragment : Fragment() {
 
 private fun observeUploadProofOfAddress() {
     viewLifecycleOwner.lifecycleScope.launch {
-        viewModel.kycSharedFlow.collect { viewState ->
-            handleViewState(viewState)
+        repeatOnLifecycle(Lifecycle.State.STARTED){
+            viewModel.kycSharedFlow.collect { viewState ->
+                handleViewState(viewState)
+            }
         }
     }
 }
