@@ -1,18 +1,41 @@
 package com.lionscare.app.ui.badge.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.lionscare.app.R
+import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.databinding.FragmentUploadBadgeDocumentsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
+import com.lionscare.app.ui.badge.viewmodel.BadgeViewModel
 import com.lionscare.app.ui.main.activity.MainActivity
+import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
+import com.lionscare.app.ui.verify.VerifyViewModel
 import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.utils.PopupErrorState
+import com.lionscare.app.utils.dialog.CommonDialog
+import com.lionscare.app.utils.getFileFromUri
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
+import kotlinx.coroutines.launch
+import java.io.File
 
 class UploadBadgeDocumentsFragment : Fragment() {
 
@@ -21,6 +44,13 @@ class UploadBadgeDocumentsFragment : Fragment() {
     private var focusedEditTextId: Int = 0
     private val activity by lazy { requireActivity() as VerifiedBadgeActivity }
 
+    private val viewModel : BadgeViewModel by viewModels()
+
+    private var loadingDialog: CommonDialog? = null
+
+    private var selectedFile : String = "doc1"
+    private var doc1: File? = null
+    private var doc2: File? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +65,7 @@ class UploadBadgeDocumentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeProfile()
         setupClickListener()
     }
 
@@ -44,24 +75,97 @@ class UploadBadgeDocumentsFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         supporting1EditText.setOnSingleClickListener {
-            openFilePicker(supporting1EditText)
+            openFilePicker(supporting1EditText, DOC1)
         }
         supporting2EditText.setOnSingleClickListener {
-            openFilePicker(supporting2EditText)
+            openFilePicker(supporting2EditText, DOC2)
         }
         continueButton.setOnSingleClickListener {
-            val intent = MainActivity.getIntent(requireActivity())
-            startActivity(intent)
-            requireActivity().finishAffinity()
+
+            viewModel.doRequestBadge(
+                BadgeRequest(
+                    doc1 = doc1!!,
+                    doc2 = doc2!!,
+                    type = activity.accountType
+                )
+            )
         }
     }
+
+    private fun observeProfile() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.badgeSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: ProfileViewState) {
+        when (viewState) {
+            is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
+            is ProfileViewState.SuccessBadgeRequest -> {
+                hideLoadingDialog()
+                Toast.makeText(requireContext(), viewState.message, Toast.LENGTH_LONG).show()
+                val intent = MainActivity.getIntent(requireActivity())
+                startActivity(intent)
+                requireActivity().finishAffinity()
+            }
+            is ProfileViewState.InputError -> {
+                hideLoadingDialog()
+                val errorData = viewState.errorData
+                if (errorData != null){
+                    handleInputError(errorData)
+                }
+            }
+            is ProfileViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+            }
+            else -> {
+                hideLoadingDialog()
+            }
+        }
+    }
+
+    private fun handleInputError(errorsData: ErrorsData){
+        if (errorsData.image?.get(0)?.isNotEmpty() == true) {
+            showPopupError(requireContext(),
+                childFragmentManager,
+                PopupErrorState.HttpError,
+                errorsData.image?.get(0).toString())
+        }
+        if (errorsData.type?.get(0)?.isNotEmpty() == true) {
+            showPopupError(requireContext(),
+                childFragmentManager,
+                PopupErrorState.HttpError,
+                getString(R.string.please_select_proof_of_address))
+        }
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        if (loadingDialog == null){
+            loadingDialog = CommonDialog.getLoadingDialogInstance(
+                message = getString(strId)
+            )
+            loadingDialog?.show(childFragmentManager)
+        }
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun openFilePicker(editText: TextInputEditText) {
+    private fun openFilePicker(editText: TextInputEditText, file: String) {
         focusedEditTextId = editText.id
+        selectedFile = file
         editText.clearFocus()
         filePickerLauncher.launch("*/*")
     }
@@ -72,6 +176,15 @@ class UploadBadgeDocumentsFragment : Fragment() {
                 val selectedFileName = getFileNameFromUri(uri)
                 val focusedEditText = requireActivity().findViewById<TextInputEditText>(focusedEditTextId)
                 focusedEditText.setText(selectedFileName)
+
+                when(selectedFile){
+                    DOC1 -> {
+                        doc1 = getFileFromUri(requireContext(), uri)
+                    }
+                    DOC2 -> {
+                        doc2 = getFileFromUri(requireContext(), uri)
+                    }
+                }
             }
         }
 
@@ -85,4 +198,10 @@ class UploadBadgeDocumentsFragment : Fragment() {
         return uri.lastPathSegment ?: ""
     }
 
+
+
+    companion object {
+        const val DOC1 = "doc1"
+        const val DOC2 = "doc2"
+    }
 }
