@@ -41,9 +41,9 @@
 
     <style name="MyButtonOutlinedStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:padding">@dimen/dimen_10</item>
-        <item name="cornerRadius">@dimen/dimen_20</item>
+        <item name="cornerRadius">@dimen/dimen_30</item>
         <item name="strokeColor">@color/color_primary</item>
-        <item name="strokeWidth">@dimen/dimen_1</item>
+        <item name="strokeWidth">@dimen/dimen_2</item>
         <item name="fontFamily">@font/inter_semibold</item>
         <item name="android:letterSpacing">0</item>
     </style>

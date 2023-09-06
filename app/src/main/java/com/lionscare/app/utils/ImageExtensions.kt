@@ -12,8 +12,8 @@ import com.bumptech.glide.request.RequestOptions
 
 fun ImageView.loadAvatar(url: String?, context: Context) {
     val requestOption = RequestOptions()
-        .placeholder(R.color.color_primary)
-        .error(R.color.color_primary)
+        .placeholder(R.drawable.img_profile)
+        .error(R.drawable.img_profile)
         .fitCenter()
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
 

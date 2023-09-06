@@ -39,7 +39,7 @@ data class User(
     var name: String? = null,
     var qr_value: QrValue? = null,
     var qrcode: String? = null,
-    var qrcode_value: String? = null
+    var qrcode_value: String? = null,
 )
 
 

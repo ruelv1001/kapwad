@@ -16,10 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.member.response.MemberListData
+import com.lionscare.app.data.repositories.member.response.User
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupInviteBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.SearchInviteMemberAdapter
+import com.lionscare.app.ui.group.dialog.InviteMemberDetailsDialog
+import com.lionscare.app.ui.group.dialog.MemberDetailsDialog
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
@@ -125,7 +128,6 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
                     viewState.message
                 )
             }
-
             is MemberViewState.SuccessSearchUser -> {
                 activity.hideLoadingDialog()
                 adapter?.clear()
@@ -141,6 +143,7 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
 
             is MemberViewState.SuccessInviteMember -> {
                 activity.hideLoadingDialog()
+                activity.onBackPressedDispatcher.onBackPressed()
                 Toast.makeText(activity, viewState.data?.msg, Toast.LENGTH_LONG).show()
             }
 
@@ -183,14 +186,6 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
         recyclerView.adapter = adapter
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-
-        //adapter?.submitData(lifecycle, PagingData.from(dataList))
-        //complete button removed
-//        if (activity.start == START_INVITE){
-//            completeButton.text = getText(R.string.lbl_invite)
-//        } else {
-//            completeButton.text = getText(R.string.lbl_complete)
-//        }
     }
 
 
@@ -203,7 +198,6 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
         searchEditText.doAfterTextChanged {
             applyTextView.isVisible = it.toString().isNotEmpty()
             searchEditText.doOnTextChanged { text, start, before, count ->
-//            firstNameTextInputLayout.error = ""
                 if (searchEditText.text?.isNotEmpty() == true) {
                     recyclerView.visibility = View.VISIBLE
                     closeImageView.visibility = View.VISIBLE
@@ -220,7 +214,18 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
     }
 
     override fun onItemClicked(data: QRData) {
-        viewModel.inviteMember(data.id.toString(),activity.groupDetails?.id.toString())
+        callInviteMemberDialog(data)
+    }
+
+    private fun callInviteMemberDialog(data: QRData) {
+        InviteMemberDetailsDialog.newInstance(
+            object : InviteMemberDetailsDialog.MembershipCallback {
+                override fun onInviteMember(memberListData: QRData) {
+                    viewModel.inviteMember(data.id.toString(),activity.groupDetails?.id.toString())
+                }
+
+            }, data
+        ).show(childFragmentManager, MemberDetailsDialog.TAG)
     }
 
 }
