@@ -3,6 +3,7 @@ package com.lionscare.app.ui.wallet.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.AdapterSearchUserBinding
@@ -43,7 +44,8 @@ class MembersAdapter(val context: Context, val clickListener: OnClickCallback) :
         fun displayData(data: QRData) = with(itemView) {
 
             binding.nameTextView.text = data.name
-            //idNoTextView.text = data.amount
+            binding.idNoTextView.isGone = true
+
 
             binding.membersLinearLayout.setOnClickListener {
                 clickListener.onItemClickListener(data)

@@ -71,7 +71,7 @@ class WalletSummaryFragment : Fragment() {
                     recipientLayout.membersLinearLayout.isVisible = true
                     recipientLayout.nameTextView.text = activity.qrData.name
                     //TODO to be updated when display id ready
-                    recipientLayout.idNoTextView.text = "LC-000123"
+                    recipientLayout.idNoTextView.isGone = true
                 }
 
             }

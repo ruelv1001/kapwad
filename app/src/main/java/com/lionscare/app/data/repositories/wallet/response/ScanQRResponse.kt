@@ -1,7 +1,9 @@
 package com.lionscare.app.data.repositories.wallet.response
 
 
+import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
 
 @Keep
 data class ScanQRResponse(
@@ -12,8 +14,9 @@ data class ScanQRResponse(
 )
 
 @Keep
+@Parcelize
 data class QRData(
     val id: String? = null,
     val name: String? = null,
     val phone_number: String? = null
-)
+): Parcelable
