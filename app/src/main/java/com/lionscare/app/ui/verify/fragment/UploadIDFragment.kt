@@ -189,7 +189,7 @@ class UploadIDFragment : Fragment() {
                 dialog: LOVListDialog,
                 lovData: LOVData
             ) {
-                selectedIdType =  lovData.name.toString()
+                selectedIdType =  lovData.code.toString()
                 binding.idTypeSpinner.text = selectedIdType
                 dialog.dismiss()
             }
