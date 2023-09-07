@@ -340,5 +340,6 @@
         <item quantity="zero">%d member</item>
         <item quantity="other">%d members</item>
     </plurals>
+    <string name="change_pass_loading">Updating Password..</string>
 
 </resources>
