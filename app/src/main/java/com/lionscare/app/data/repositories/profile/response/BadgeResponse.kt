@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 
 @Keep
 data class BadgeResponse(
-    val id : Long? = 0
-    //TODO waiting for api in postman
+    val msg : String? = null,
+    val status : Boolean? = false,
+    val status_code : String? = null,
 )

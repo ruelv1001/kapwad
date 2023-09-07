@@ -8,7 +8,9 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -20,6 +22,7 @@ import java.io.IOException
 import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
+@HiltViewModel
 class BadgeViewModel @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : ViewModel() {
@@ -53,12 +56,17 @@ class BadgeViewModel @Inject constructor(
                     _badgeSharedFlow.emit(ProfileViewState.Loading)
                 }
                 .catch { exception ->
+//                    CommonLogger.instance.sysLogE(
+//                        "222 BadgeViewModel",
+//                        exception.localizedMessage,
+//                        exception
+//                    )
                     onError(exception)
                 }
                 .collect {
                     _badgeSharedFlow.emit(
                         ProfileViewState.SuccessBadgeRequest(
-                            message = "TODO", badgeResponse = it)
+                            message = it.msg.orEmpty(), badgeResponse = it)
                     )
                 }
         }
