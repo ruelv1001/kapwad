@@ -30,25 +30,6 @@ class BadgeViewModel @Inject constructor(
     val badgeSharedFlow: SharedFlow<ProfileViewState> =
         _badgeSharedFlow.asSharedFlow()
 
-
-    fun getBadgeStatus() {
-        viewModelScope.launch {
-            profileRepository.getBadgeStatus()
-                .onStart {
-                    _badgeSharedFlow.emit(ProfileViewState.Loading)
-                }
-                .catch { exception ->
-                    onError(exception)
-                }
-                .collect {
-                    _badgeSharedFlow.emit(
-                        ProfileViewState.SuccessGetBadgeStatus(
-                            message = "TODO", badgeStatusResponse = it)
-                    )
-                }
-        }
-    }
-
     fun doRequestBadge(request : BadgeRequest) {
         viewModelScope.launch {
             profileRepository.doRequestBadge(request)
