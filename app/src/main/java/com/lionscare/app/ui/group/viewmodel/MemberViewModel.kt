@@ -196,7 +196,7 @@ class MemberViewModel @Inject constructor(
                 }
                 .collect {
                     _memberSharedFlow.emit(
-                        MemberViewState.SuccessCancelInvitation(it.msg.toString())
+                        MemberViewState.SuccessRejectJoinRequest(it.msg.toString())
                     )
                 }
         }
