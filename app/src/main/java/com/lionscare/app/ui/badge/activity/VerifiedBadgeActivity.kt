@@ -9,7 +9,7 @@ import com.lionscare.app.databinding.ActivityVerifiedBadgeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class VerifiedBadgeActivity : AppCompatActivity() {
+class VerifiedBadgeActivity  : AppCompatActivity() {
 
     private lateinit var binding: ActivityVerifiedBadgeBinding
     var accountType = ""
