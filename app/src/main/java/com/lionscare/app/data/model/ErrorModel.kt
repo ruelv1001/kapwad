@@ -1,5 +1,8 @@
 package com.lionscare.app.data.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class ErrorModel(
     val msg: String? = null,
     val status: Boolean? = false,
@@ -8,6 +11,7 @@ data class ErrorModel(
     var errors: ErrorsData? = null
 )
 
+@Keep
 data class ErrorsData(
     var email: List<String>? = null,
     var username: List<String>? = null,

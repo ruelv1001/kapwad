@@ -1,5 +1,8 @@
 package com.lionscare.app.data.repositories.address.response
 
+import androidx.annotation.Keep
+
+@Keep
 data class MunicipalityResponse(
     var data: List<MuniData>? = null,
     var msg: String? = null,
@@ -8,6 +11,7 @@ data class MunicipalityResponse(
 
     )
 
+@Keep
 data class MuniData(
     var province_id: Int? = null,
     var name: String? = null,

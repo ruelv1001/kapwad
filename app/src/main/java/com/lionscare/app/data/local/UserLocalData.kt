@@ -1,8 +1,10 @@
 package com.lionscare.app.data.local
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Keep
 @Entity(tableName = "users")
 data class UserLocalData(
     @PrimaryKey(autoGenerate = true)
