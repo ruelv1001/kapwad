@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.assistance
 
 import com.lionscare.app.data.repositories.assistance.request.AssistanceRequest
+import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
@@ -8,6 +9,13 @@ import javax.inject.Inject
 
 class AssistanceRemoteDataSource @Inject constructor(private val assistanceService: AssistanceService) {
 
+    suspend fun doCreateAssistance(request: CreateAssistanceRequest): GeneralResponse {
+        val response = assistanceService.doCreateAssistance(request)
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
     suspend fun doGetAllAssistanceRequestList(
         groupId: String? = null,
         per_page: Int? = null,
