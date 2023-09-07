@@ -1,7 +1,9 @@
 package com.lionscare.app.data.repositories.member.response
 
+import androidx.annotation.Keep
 import com.lionscare.app.data.repositories.baseresponse.Meta
 
+@Keep
 data class ApproveRequestResponse(
     var data: MemberListData? = null,
     var has_morepage: Boolean? = null,

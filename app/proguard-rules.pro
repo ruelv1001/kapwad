@@ -46,6 +46,8 @@
   <fields>;
 }
 
+-keep class com.lionscare.app.data.local.* { *; }
+
 -keep class com.lionscare.app.data.model.* { *; }
 
 -keep class com.lionscare.app.data.repositories.address.request.* { *; }
