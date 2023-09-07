@@ -122,7 +122,7 @@ class GroupListViewModel @Inject constructor(
                 }
                 .collect {
                     _getGroupSharedFlow.emit(
-                        GroupListViewState.SuccessCancelJoinRequest(it.msg.toString())
+                        GroupListViewState.SuccessAcceptDeclineInvitation(it.msg.toString())
                     )
                 }
         }

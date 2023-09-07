@@ -70,7 +70,7 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doCancelInvitation(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
+    fun doCancelInvitation(pending_id: String, group_id: String): Flow<GeneralResponse> {
         return flow {
             val response = memberRemoteDataSource.doCancelInvitation(pending_id, group_id)
             emit(response)
@@ -105,7 +105,7 @@ class MemberRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun doCancelJoinRequest(pending_id: String, group_id: String): Flow<JoinGroupResponse> {
+    fun doCancelJoinRequest(pending_id: String, group_id: String): Flow<GeneralResponse> {
         return flow {
             val response = memberRemoteDataSource.doCancelJoinRequest(pending_id, group_id)
             emit(response)
