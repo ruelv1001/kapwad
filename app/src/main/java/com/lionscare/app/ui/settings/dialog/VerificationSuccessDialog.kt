@@ -45,6 +45,7 @@ class VerificationSuccessDialog : BottomSheetDialogFragment(){
     private fun setView() = viewBinding?.run {
         titleTextView.text = "Verification Sent"
         myAcctButton.text = "Done"
+        descriptionTextView.text = "In order to complete your profile, please check and go to the email we sent and verify your account."
     }
 
     private fun setClickListener() {
