@@ -62,6 +62,27 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun doChangePass(
+        currentPass: String,
+        newPass: String,
+        confirmPass: String
+    ) {
+        viewModelScope.launch {
+            profileRepository.doChangePass(currentPass, newPass, confirmPass)
+                .onStart {
+                    _loginSharedFlow.emit(SettingsViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _loginSharedFlow.emit(
+                        SettingsViewState.Success(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {
