@@ -34,9 +34,11 @@ import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.getFileFromUri
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
 
+@AndroidEntryPoint
 class UploadBadgeDocumentsFragment : Fragment() {
 
     private var _binding: FragmentUploadBadgeDocumentsBinding? = null
@@ -81,12 +83,28 @@ class UploadBadgeDocumentsFragment : Fragment() {
             openFilePicker(supporting2EditText, DOC2)
         }
         continueButton.setOnSingleClickListener {
+            //format account type for api request
 
+            var accountTypeFormmatted = ""
+            when(activity.accountType){
+                getString(R.string.account_type_influencer_text) -> {
+                    accountTypeFormmatted = "influencer"
+                }
+                getString(R.string.account_type_public_servant_text) -> {
+                    accountTypeFormmatted = "public_servant"
+                }
+                getString(R.string.account_type_npo_text) -> {
+                    accountTypeFormmatted = "non_government_Organization"
+                }
+            }
+
+            CommonLogger.sysLogE("Hat", doc1)
+//            viewModel.getBadgeStatus()
             viewModel.doRequestBadge(
                 BadgeRequest(
                     doc1 = doc1!!,
                     doc2 = doc2!!,
-                    type = activity.accountType
+                    type = accountTypeFormmatted
                 )
             )
         }
@@ -121,7 +139,9 @@ class UploadBadgeDocumentsFragment : Fragment() {
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
-                showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+                CommonLogger.sysLogE("here", viewState.errorCode)
+                    showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+
             }
             else -> {
                 hideLoadingDialog()
@@ -166,27 +186,37 @@ class UploadBadgeDocumentsFragment : Fragment() {
     private fun openFilePicker(editText: TextInputEditText, file: String) {
         focusedEditTextId = editText.id
         selectedFile = file
-        editText.clearFocus()
-        filePickerLauncher.launch("*/*")
+
+        filePickerLauncher.launch(  arrayOf(
+            "application/pdf",
+            "application/msword",
+            "application/ms-doc",
+            "application/doc",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ))
     }
 
     private val filePickerLauncher =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
             if (uri != null) {
                 val selectedFileName = getFileNameFromUri(uri)
-                val focusedEditText = requireActivity().findViewById<TextInputEditText>(focusedEditTextId)
+                val focusedEditText =
+                    requireActivity().findViewById<TextInputEditText>(focusedEditTextId)
                 focusedEditText.setText(selectedFileName)
 
-                when(selectedFile){
-                    DOC1 -> {
-                        doc1 = getFileFromUri(requireContext(), uri)
+                    when (selectedFile) {
+                        DOC1 -> {
+                            doc1 = getFileFromUri(requireContext(), uri)
+                        }
+
+                        DOC2 -> {
+                            doc2 = getFileFromUri(requireContext(), uri)
+                        }
                     }
-                    DOC2 -> {
-                        doc2 = getFileFromUri(requireContext(), uri)
-                    }
-                }
             }
         }
+
+
 
     private fun getFileNameFromUri(uri: Uri): String {
         val cursor = requireActivity().contentResolver.query(uri, null, null, null, null)

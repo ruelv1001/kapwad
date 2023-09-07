@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.ActivityLoginBinding
@@ -52,8 +54,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeLogin(){
         lifecycleScope.launch {
-            viewModel.loginSharedFlow.collect{
-                handleViewState(it)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.loginSharedFlow.collect{
+                    handleViewState(it)
+                }
             }
         }
     }
@@ -80,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleInputError(errorsData: com.lionscare.app.data.model.ErrorsData){
+    private fun handleInputError(errorsData: ErrorsData){
         if (errorsData.email?.get(0)?.isNotEmpty() == true) binding.emailTextInputLayout.error = errorsData.email?.get(0)
         if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.passwordTextInputLayout.error = errorsData.password?.get(0)
     }

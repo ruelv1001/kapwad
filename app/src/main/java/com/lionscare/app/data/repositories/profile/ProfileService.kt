@@ -60,8 +60,13 @@ interface ProfileService {
 
 
     //=================================BADGE API
-    @POST("api/profile/badge/verification")
-    suspend fun doRequestBadge(@Body request : BadgeRequest): Response<BadgeResponse>
+    @Multipart
+    @POST("api/profile/badge/apply")
+    suspend fun doRequestBadge(
+        @Part doc1: MultipartBody.Part,
+        @Part doc2: MultipartBody.Part,
+        @Part type: MultipartBody.Part
+    ): Response<BadgeResponse>
 
     @POST("api/profile/badge/status")
     suspend fun getBadgeStatus(): Response<BadgeStatusResponse>

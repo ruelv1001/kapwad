@@ -11,6 +11,7 @@ import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.asNetWorkRequestBody
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -165,7 +166,20 @@ class ProfileRemoteDataSource @Inject constructor(
 
     //=================================BADGE API
     suspend fun doRequestBadge(request : BadgeRequest): BadgeResponse {
-        val response = profileService.doRequestBadge(request)
+        val response = profileService.doRequestBadge(
+            MultipartBody.Part.createFormData(
+                "doc1",
+                request.doc1.name,
+                request.doc1.asNetWorkRequestBody(DOCS_MIME_TYPE)
+            ),
+            MultipartBody.Part.createFormData(
+                "doc2",
+                request.doc2.name,
+                request.doc2.asNetWorkRequestBody(DOCS_MIME_TYPE)
+            ),
+            MultipartBody.Part.createFormData("type", request.type)
+        )
+
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }
@@ -184,6 +198,8 @@ class ProfileRemoteDataSource @Inject constructor(
 
     companion object {
         private const val IMAGE_MIME_TYPE = "image/*"
+        private const val DOCS_MIME_TYPE = "application/*"
+
     }
 
 }

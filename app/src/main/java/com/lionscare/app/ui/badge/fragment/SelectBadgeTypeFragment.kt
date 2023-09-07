@@ -15,7 +15,9 @@ import com.lionscare.app.databinding.FragmentSelectBadgeTypeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.badge.adapter.AccountTypeAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
 
     private var _binding: FragmentSelectBadgeTypeBinding? = null
