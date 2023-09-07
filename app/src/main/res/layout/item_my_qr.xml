@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/qrLinearLayout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_20"
-    android:minHeight="@dimen/dimen_500"
+    android:maxHeight="@dimen/dimen_500"
+    android:maxWidth="@dimen/dimen_350"
+    android:layout_gravity="center_horizontal"
     android:background="@drawable/bg_rounded_outline"
     android:orientation="vertical"
     android:padding="@dimen/dimen_20">

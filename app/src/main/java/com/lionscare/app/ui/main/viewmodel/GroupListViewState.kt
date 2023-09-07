@@ -11,8 +11,6 @@ sealed class GroupListViewState{
     object LoadingAcceptDeclineInvitation : GroupListViewState()
     data class Success(val pagingData: PagingData<GroupListData>) : GroupListViewState()
     data class SuccessAcceptDeclineInvitation(val msg: String) : GroupListViewState()
-
-    data class SuccessCancelJoinRequest(val message: String = ""): GroupListViewState()
     data class SuccessGetPendingRequestList(val pagingData: PagingData<PendingGroupRequestData>) : GroupListViewState()
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : GroupListViewState()
 }

@@ -18,7 +18,6 @@ sealed class MemberViewState {
 
     data class SuccessApproveJoinRequest(val approveRequestResponse: ApproveRequestResponse? = null): MemberViewState()
     data class SuccessRejectJoinRequest(val message: String = ""): MemberViewState()
-    data class SuccessCancelInvitation(val message: String = ""): MemberViewState()
 
     data class SuccessJoinGroup(val data: JoinGroupResponse? = null): MemberViewState()
     data class SuccessLeaveGroup(val message: String = ""): MemberViewState()
