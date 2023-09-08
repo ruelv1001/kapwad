@@ -38,7 +38,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupNavigationComponent() {
+    private fun setupNavigationComponent()  {
         setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navFragmentContainerView) as NavHostFragment
