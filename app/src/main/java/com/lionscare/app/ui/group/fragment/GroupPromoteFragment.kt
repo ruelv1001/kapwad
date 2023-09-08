@@ -190,7 +190,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback,
     }
 
     override fun onRefresh() {
-        viewModel.refreshListOfMembers(activity.groupDetails?.id.toString())
+        viewModel.refreshListOfMembers(activity.groupDetails?.id.toString(), false)
 
     }
 }

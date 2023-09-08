@@ -26,8 +26,8 @@ class MemberRepository @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    fun doGetListOfMember(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String): Flow<PagingData<MemberListData>> {
-        val getListOfMembersPagingSource = GetListOfMembersPagingSource(memberRemoteDataSource, groupId)
+    fun doGetListOfMember(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String, include_admin: Boolean? = null): Flow<PagingData<MemberListData>> {
+        val getListOfMembersPagingSource = GetListOfMembersPagingSource(memberRemoteDataSource, groupId = groupId, include_admin = include_admin)
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = { getListOfMembersPagingSource }

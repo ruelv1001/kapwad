@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentGroupsYourGroupBinding
+import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.main.viewmodel.GroupListViewModel
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
@@ -121,13 +122,13 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
             ImmediateFamilyViewState.Loading -> Unit
             is ImmediateFamilyViewState.PopupError -> {
                 //showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
-                binding.placeHolderTextView.isVisible = true
+                binding.createGroupButton.isVisible = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
             }
 
             is ImmediateFamilyViewState.Success -> {
-                binding.placeHolderTextView.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
+                binding.createGroupButton.isGone = true
                 viewState.immediateFamilyResponse?.data?.let { setImmediateFamily(it) }
                 immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }
@@ -150,8 +151,14 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     }
 
     private fun setClickListeners() = binding.run {
-        binding.immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
+        immediateFamilyLayout.adapterLinearLayout.setOnSingleClickListener {
             val intent = GroupDetailsActivity.getIntent(requireActivity(), immediateFamilyId)
+            startActivity(intent)
+        }
+        createGroupButton.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(requireActivity(),
+                START_CREATE_FAMILY
+            )
             startActivity(intent)
         }
     }
@@ -163,6 +170,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     }
 
     companion object {
+        private const val START_CREATE_FAMILY = "START_CREATE_FAMILY"
         fun newInstance() = GroupsYourGroupFragment()
     }
 
