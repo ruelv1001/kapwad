@@ -7,7 +7,8 @@ import javax.inject.Inject
 
 class GetListOfMembersPagingSource constructor(
     private val memberRemoteDataSource: MemberRemoteDataSource,
-    private val groupId: String? = null
+    private val groupId: String? = null,
+    private val include_admin: Boolean? = null,
 ) :
     PagingSource<Int, MemberListData>() {
     override fun getRefreshKey(state: PagingState<Int, MemberListData>): Int? {
@@ -23,6 +24,7 @@ class GetListOfMembersPagingSource constructor(
         return try {
             val response = memberRemoteDataSource.doGetListOfMembers(
                 groupId = groupId,
+                include_admin = include_admin,
                 page = page.toString()
             )
             if (response.data?.isNotEmpty() == true) {

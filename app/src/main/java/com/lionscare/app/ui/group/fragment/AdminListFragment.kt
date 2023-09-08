@@ -69,15 +69,6 @@ class AdminListFragment : Fragment(),
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-        adapter?.addLoadStateListener {
-            if(adapter?.hasData() == true){
-                placeHolderTextView.isVisible = false
-                recyclerView.isVisible = true
-            }else{
-                placeHolderTextView.isVisible = true
-                recyclerView.isVisible = false
-            }
-        }
     }
 
     private fun setClickListeners() = binding.run {
@@ -99,6 +90,16 @@ class AdminListFragment : Fragment(),
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_group_community_roles))
         activity.getRolesView().isVisible = activity.groupDetails?.is_admin == true
+
+        adapter?.addLoadStateListener {
+            if(adapter?.hasData() == true){
+                binding.placeHolderTextView.isVisible = false
+                binding.recyclerView.isVisible = true
+            }else{
+                binding.placeHolderTextView.isVisible = true
+                binding.recyclerView.isVisible = false
+            }
+        }
     }
 
     private fun observeMemberList() {

@@ -28,6 +28,7 @@ import com.lionscare.app.ui.group.viewmodel.GroupWalletViewState
 import com.lionscare.app.ui.notifications.adapter.NotificationsAdapter
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
+import com.lionscare.app.utils.copyToClipboard
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
@@ -71,28 +72,12 @@ class GroupDetailsActivity : AppCompatActivity(),
         linearLayoutManager = LinearLayoutManager(this@GroupDetailsActivity)
         activityRecyclerView.layoutManager = linearLayoutManager
         activityRecyclerView.adapter = adapter
-
-        dataList = listOf(
-            SampleData(
-                id = 1,
-                title = "You received a badge",
-                remarks = "KYC process completed",
-                date = "2023-07-04 3:59 PM"
-            ),
-            SampleData(
-                id = 2,
-                title = "You Joined a Group",
-                remarks = "You joined Malasakit Family",
-                date = "2023-07-04 3:59 PM"
-            )
-        )
-        adapter?.submitData(lifecycle, PagingData.from(dataList))
     }
 
     private fun setDetails(data : GroupData) = binding.run {
         titleTextView.text = data.name
         referenceTextView.text = data.qrcode
-        membersTextView.text = data.member_only_count.toString()
+        membersTextView.text = data.member_count.toString()
         adminTextView.text = data.admin_only_count.toString()
         qrLayout.qrImageView.setImageBitmap(setQR(this@GroupDetailsActivity, data.qrcode_value))
         qrLayout.idNoTextView.text = data.code
@@ -144,6 +129,9 @@ class GroupDetailsActivity : AppCompatActivity(),
             backAnim?.setTarget(walletLayout.walletCardView)
             backAnim?.start()
             frontAnim?.start()
+        }
+        qrLayout.idNoTextView.setOnSingleClickListener {
+            copyToClipboard(qrLayout.idNoTextView.text.toString())
         }
     }
 
