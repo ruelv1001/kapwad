@@ -6,6 +6,7 @@ import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.lionscare.app.base.CommonsLib
 import com.lionscare.app.data.repositories.baseresponse.Avatar
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.QrValue
@@ -13,25 +14,30 @@ import com.lionscare.app.data.repositories.baseresponse.UserModel
 
 class AuthEncryptedDataManager {
 
-    private val keyGenParameterSpec = KeyGenParameterSpec.Builder(
-        ENCRYPTED_ALIAS_NAME,
-        KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-    ).setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-        .setKeySize(256)
-        .build()
+    private val keyGenParameterSpec by lazy {
+        KeyGenParameterSpec.Builder(
+            ENCRYPTED_ALIAS_NAME,
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+        ).setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            .setKeySize(256)
+            .build()
+    }
 
-    private val masterKeyAlias = MasterKey.Builder(com.lionscare.app.base.CommonsLib.context!!, ENCRYPTED_ALIAS_NAME)
-        .setKeyGenParameterSpec(keyGenParameterSpec)
-        .build()
+    private val masterKeyAlias by lazy {
+        MasterKey.Builder(CommonsLib.context!!, ENCRYPTED_ALIAS_NAME)
+            .setKeyGenParameterSpec(keyGenParameterSpec)
+            .build()
+    }
 
-    private val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
-        com.lionscare.app.base.CommonsLib.context!!,
-        ENCRYPTED_PREFS_NAME,
-        masterKeyAlias,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+    private val sharedPreferences: SharedPreferences by lazy {
+        EncryptedSharedPreferences.create(
+            CommonsLib.context!!,
+            ENCRYPTED_PREFS_NAME,
+            masterKeyAlias,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
+    }
 
     /**
      * Function used to save the user access token in this sharedPref
