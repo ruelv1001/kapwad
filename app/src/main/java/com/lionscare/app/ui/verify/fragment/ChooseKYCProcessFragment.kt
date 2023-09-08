@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -16,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentChooseKycProcessBinding
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.VerifyViewModel
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.PopupErrorState

@@ -1,9 +1,22 @@
 package com.lionscare.app.data.repositories.profile.response
 
+
 import androidx.annotation.Keep
+import com.lionscare.app.data.repositories.baseresponse.DateModel
 
 @Keep
 data class BadgeStatusResponse(
-    val id : Long? = 0
-    //TODO waiting for api in postman
+    val `data`: BadgeStatus? = null,
+    val msg: String? = null,
+    val status: Boolean? = false,
+    val status_code: String? = null
+)
+@Keep
+data class BadgeStatus(
+    val activated_date: DateModel? = null,
+    val badge_type: String? = null,
+    val id: Int? = 0,
+    val remarks: String? = null,
+    val status: String? = null,
+    val submitted_date: DateModel? = null
 )

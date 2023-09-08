@@ -73,6 +73,6 @@ interface ProfileService {
     suspend fun getBadgeStatus(): Response<BadgeStatusResponse>
 
     @POST("api/profile/setting/password")
-    suspend fun doChangePass(@Body request: ChangePassRequest): Response<GeneralResponse>
+    suspend fun doChangePass(@Body request : ChangePassRequest): Response<GeneralResponse>
 
 }

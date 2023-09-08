@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.settings.dialog
+package com.lionscare.app.ui.profile.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogRegisterSuccessBinding
-import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 

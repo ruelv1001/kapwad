@@ -36,13 +36,13 @@
         android:label=""
         tools:layout="@layout/fragment_groups" >
         <action
-            android:id="@+id/action_navigation_groups_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
+            android:id="@+id/action_navigation_groups_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_settings"
-        android:name="com.lionscare.app.ui.main.fragment.SettingsFragment"
+        android:id="@+id/navigation_profile"
+        android:name="com.lionscare.app.ui.main.fragment.ProfileFragment"
         android:label=""
         tools:layout="@layout/fragment_settings" />
 

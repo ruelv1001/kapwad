@@ -21,10 +21,9 @@ import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.viewmodel.SettingsViewModel
 import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
-import com.lionscare.app.ui.settings.activity.NotificationsActivity
-import com.lionscare.app.ui.settings.activity.ProfileActivity
-import com.lionscare.app.ui.settings.activity.UpdatePasswordActivity
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
+import com.lionscare.app.ui.profile.activity.NotificationsActivity
+import com.lionscare.app.ui.profile.activity.ProfileActivity
+import com.lionscare.app.ui.profile.activity.UpdatePasswordActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -33,7 +32,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SettingsFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!

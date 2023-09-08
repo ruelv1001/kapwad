@@ -32,7 +32,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ui.settings.activity.UpdatePasswordActivity"
+            android:name=".ui.profile.activity.UpdatePasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.verify.activity.AccountVerificationActivity"
@@ -92,11 +92,11 @@
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.settings.activity.ProfileActivity"
+            android:name=".ui.profile.activity.ProfileActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.settings.activity.NotificationsActivity"
+            android:name=".ui.profile.activity.NotificationsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
