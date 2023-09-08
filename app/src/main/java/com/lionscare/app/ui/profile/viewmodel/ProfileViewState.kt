@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.settings.viewmodel
+package com.lionscare.app.ui.profile.viewmodel
 
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse

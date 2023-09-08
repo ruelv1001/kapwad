@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.settings.dialog
+package com.lionscare.app.ui.profile.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

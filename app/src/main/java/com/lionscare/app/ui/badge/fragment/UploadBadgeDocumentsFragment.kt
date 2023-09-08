@@ -1,7 +1,5 @@
 package com.lionscare.app.ui.badge.fragment
 
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,13 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -26,8 +21,7 @@ import com.lionscare.app.databinding.FragmentUploadBadgeDocumentsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.badge.viewmodel.BadgeViewModel
 import com.lionscare.app.ui.main.activity.MainActivity
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
-import com.lionscare.app.ui.verify.VerifyViewModel
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import com.lionscare.app.utils.dialog.CommonDialog
