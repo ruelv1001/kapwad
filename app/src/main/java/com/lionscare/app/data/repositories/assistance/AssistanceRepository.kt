@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.assistance
 
 import androidx.paging.PagingConfig
+import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,14 @@ class AssistanceRepository @Inject constructor(
     private val assistanceRemoteDataSource: AssistanceRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
+
+    fun doCreateAssistance(request: CreateAssistanceRequest): Flow<GeneralResponse> {
+        return flow {
+            val response =
+                assistanceRemoteDataSource.doCreateAssistance(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
 
     fun doGetAssistanceRequestInfo(
         referenceId: String? = null,

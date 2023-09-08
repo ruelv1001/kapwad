@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.assistance
 
 import com.lionscare.app.data.repositories.assistance.request.AssistanceRequest
+import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -8,6 +9,8 @@ import retrofit2.http.POST
 
 interface AssistanceService {
 
+    @POST("api/group/assistance/create")
+    suspend fun doCreateAssistance(@Body createAssistanceRequest: CreateAssistanceRequest): Response<GeneralResponse>
     @POST("api/group/assistance/pending/all")
     suspend fun doGetAllAssistanceRequestList(@Body assistanceRequest: AssistanceRequest): Response<GeneralResponse>
 

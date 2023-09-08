@@ -16,6 +16,7 @@ data class ErrorsData(
     var email: List<String>? = null,
     var username: List<String>? = null,
     var password: List<String>? = null,
+    var current_password: List<String>? = null,
     var password_confirmation: List<String>? = null,
     var firstname: List<String>? = null,
     var lastname: List<String>? = null,

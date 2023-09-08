@@ -50,7 +50,7 @@ class ProfileRepository @Inject constructor(
         firstname: String,
         lastname: String,
         middlename: String,
-        email : String
+        email: String
     ): Flow<LoginResponse> {
         return channelFlow {
             profileRemoteDataSource.doUpdateInfo(
@@ -76,14 +76,14 @@ class ProfileRepository @Inject constructor(
 
 
     //=========== ===========================KYC API
-    fun doUploadId(request : KYCRequest): Flow<GeneralResponse> {
+    fun doUploadId(request: KYCRequest): Flow<GeneralResponse> {
         return flow {
             val response = profileRemoteDataSource.doUploadId(request)
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
-    fun doUploadProofAddress(request : KYCRequest): Flow<GeneralResponse> {
+    fun doUploadProofAddress(request: KYCRequest): Flow<GeneralResponse> {
         return flow {
             val response = profileRemoteDataSource.doUploadProofOfAddress(request)
             emit(response)
@@ -112,14 +112,14 @@ class ProfileRepository @Inject constructor(
     }
 
     //=============================CHange phonenumber
-    fun changePhoneNumber(request : UpdatePhoneNumberRequest): Flow<GeneralResponse> {
+    fun changePhoneNumber(request: UpdatePhoneNumberRequest): Flow<GeneralResponse> {
         return flow {
             val response = profileRemoteDataSource.changePhoneNumber(request)
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
-    fun changePhoneNumberWithOTP(request : UpdatePhoneNumberOTPRequest): Flow<GeneralResponse> {
+    fun changePhoneNumberWithOTP(request: UpdatePhoneNumberOTPRequest): Flow<GeneralResponse> {
         return flow {
             val response = profileRemoteDataSource.changePhoneNumberWithOTP(request)
             emit(response)
@@ -127,12 +127,13 @@ class ProfileRepository @Inject constructor(
     }
 
     //=============================== BADGE API
-    fun doRequestBadge(request : BadgeRequest): Flow<BadgeResponse> {
+    fun doRequestBadge(request: BadgeRequest): Flow<BadgeResponse> {
         return flow {
             val response = profileRemoteDataSource.doRequestBadge(request)
             emit(response)
         }.flowOn(ioDispatcher)
     }
+
     fun getBadgeStatus(): Flow<BadgeStatusResponse> {
         return flow {
             val response = profileRemoteDataSource.getBadgeStatus()
@@ -140,5 +141,17 @@ class ProfileRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    fun doChangePass(
+        currentPass: String,
+        newPass: String,
+        confirmPass: String
+    ): Flow<GeneralResponse> {
+        return channelFlow {
+            profileRemoteDataSource.doChangePass(currentPass, newPass, confirmPass)
+                .collectLatest { response ->
+                    send(response)
+                }
+        }.flowOn(ioDispatcher)
+    }
 
 }

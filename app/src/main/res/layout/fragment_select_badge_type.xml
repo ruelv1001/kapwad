@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_account_type_title"
+            android:text="@string/request_badge"
             android:textSize="@dimen/font_20"
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_color"/>

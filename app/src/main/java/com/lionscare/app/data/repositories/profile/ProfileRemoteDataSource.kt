@@ -3,6 +3,7 @@ package com.lionscare.app.data.repositories.profile
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
+import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
@@ -193,6 +194,20 @@ class ProfileRemoteDataSource @Inject constructor(
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
+    fun doChangePass(
+        currentPass: String,
+        newPass: String,
+        confirmPass: String
+    ): Flow<GeneralResponse> {
+        return flow {
+            val request = ChangePassRequest(currentPass, newPass, confirmPass)
+            val response = profileService.doChangePass(request)
+            if (response.code() != HttpURLConnection.HTTP_OK) {
+                throw HttpException(response)
+            }
+            emit(response.body() ?: throw NullPointerException("Response data is empty"))
+        }.flowOn(ioDispatcher)
+    }
 
     companion object {
         private const val IMAGE_MIME_TYPE = "image/*"
