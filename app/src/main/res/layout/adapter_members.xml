@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/home_name_hint"
-            android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_16" />
 
@@ -54,15 +53,6 @@
         android:layout_gravity="center"
         android:visibility="gone"
         android:textSize="@dimen/font_16" />
-
-    <ImageView
-        android:id="@+id/checkImageView"
-        android:layout_width="@dimen/dimen_25"
-        android:layout_height="@dimen/dimen_25"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_common_check_saved"
-        android:visibility="gone"
-        app:tint="@color/color_primary" />
 
     <ImageView
         android:id="@+id/removeImageView"

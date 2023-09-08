@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.data.repositories.member.response.MemberListData
@@ -61,7 +62,7 @@ class MemberListFragment : Fragment(),
         setClickListeners()
         setupAdapter()
         observeMemberList()
-        viewModel.refreshListOfMembers(activity.groupDetails?.id.toString())
+        viewModel.refreshListOfMembers(activity.groupDetails?.id.toString(), true)
     }
 
     private fun setupAdapter() = binding.run {
@@ -113,8 +114,6 @@ class MemberListFragment : Fragment(),
                     viewState.message
                 )
             }
-
-            is AdminViewState.SuccessGetListOfAdmin -> showList(viewState.pagingData)
             is AdminViewState.SuccessRemoveMember -> {
                 Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
                 setupAdapter()
@@ -141,8 +140,7 @@ class MemberListFragment : Fragment(),
             else -> Unit
         }
     }
-
-    private fun showList(memberListData: PagingData<MemberListData>) {
+    private fun showList(memberListData: PagingData<MemberListData>){
         binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(viewLifecycleOwner.lifecycle, memberListData)
     }
@@ -196,7 +194,7 @@ class MemberListFragment : Fragment(),
     }
 
     override fun onRefresh() {
-        viewModel.refreshListOfMembers(activity.groupDetails?.id.toString())
+        viewModel.refreshListOfMembers(activity.groupDetails?.id.toString(), true)
     }
 
     companion object {

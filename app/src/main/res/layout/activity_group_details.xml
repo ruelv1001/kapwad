@@ -229,7 +229,7 @@
                         android:layout_weight="1"
                         android:drawablePadding="@dimen/dimen_10"
                         android:fontFamily="@font/inter_semibold"
-                        android:text="@string/lbl_recent_activity"
+                        android:text="@string/lbl_recent_requests"
                         android:textColor="@color/black_text"
                         android:textSize="@dimen/font_18" />
 
