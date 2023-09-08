@@ -120,37 +120,37 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             }
             is SettingsViewState.SuccessGetBadgeStatus -> {
                 hideLoadingDialog()
-                when(viewState.badgeStatusResponse.data?.status){
-                    "pending" -> {
-                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
-                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
-
-                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.baseline_access_time_filled_24))
-                        binding.mainLayout.statusVerifiedBadgeTextView.text = "Pending: ${formatBadgeType(viewState.badgeStatusResponse.data.badge_type)}"
-                        binding.mainLayout.statusDateVerifiedBadgeTextView.text = "Submitted on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
-                    }
-                    "approved" -> {
-                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
-                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
-
-                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_check)
-                                ?.mutate()
-                                ?.apply {
-                                    setColorFilter(
-                                        ContextCompat.getColor(requireContext(), R.color.color_primary),
-                                        PorterDuff.Mode.SRC_IN
-                                    )
-                                }
-                        )
-                        binding.mainLayout.statusVerifiedBadgeTextView.text = formatBadgeType(viewState.badgeStatusResponse.data.badge_type)
-                        binding.mainLayout.statusDateVerifiedBadgeTextView.text =  "Approved on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
-                    }
-                    else -> {
-                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.VISIBLE
-                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.GONE
-                    }
-                }
+//                when(viewState.badgeStatus?.status){
+//                    "pending" -> {
+//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
+//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
+//
+//                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.baseline_access_time_filled_24))
+//                        binding.mainLayout.statusVerifiedBadgeTextView.text = "Pending: ${formatBadgeType(viewState.badgeStatusResponse.data.badge_type)}"
+//                        binding.mainLayout.statusDateVerifiedBadgeTextView.text = "Submitted on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
+//                    }
+//                    "approved" -> {
+//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
+//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
+//
+//                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(
+//                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_check)
+//                                ?.mutate()
+//                                ?.apply {
+//                                    setColorFilter(
+//                                        ContextCompat.getColor(requireContext(), R.color.color_primary),
+//                                        PorterDuff.Mode.SRC_IN
+//                                    )
+//                                }
+//                        )
+//                        binding.mainLayout.statusVerifiedBadgeTextView.text = formatBadgeType(viewState.badgeStatusResponse.data.badge_type)
+//                        binding.mainLayout.statusDateVerifiedBadgeTextView.text =  "Approved on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
+//                    }
+//                    else -> {
+//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.VISIBLE
+//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.GONE
+//                    }
+//                }
             }
 
 

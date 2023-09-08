@@ -75,7 +75,7 @@ class SettingsViewModel @Inject constructor(
                 .collect {
                     _loginSharedFlow.emit(
                         SettingsViewState.SuccessGetBadgeStatus(
-                            message = "TODO", badgeStatusResponse = it)
+                         badgeStatus = it.data)
                     )
                 }
         }
