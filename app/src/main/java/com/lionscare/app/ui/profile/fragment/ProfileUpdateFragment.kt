@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.settings.fragment
+package com.lionscare.app.ui.profile.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -24,10 +23,10 @@ import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
 import com.lionscare.app.ui.register.dialog.ProvinceDialog
 import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
-import com.lionscare.app.ui.settings.activity.ProfileActivity
-import com.lionscare.app.ui.settings.dialog.ProfileConfirmationDialog
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewModel
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
+import com.lionscare.app.ui.profile.activity.ProfileActivity
+import com.lionscare.app.ui.profile.dialog.ProfileConfirmationDialog
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint

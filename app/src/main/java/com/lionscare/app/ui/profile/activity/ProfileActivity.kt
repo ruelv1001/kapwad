@@ -1,18 +1,15 @@
-package com.lionscare.app.ui.settings.activity
+package com.lionscare.app.ui.profile.activity
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityProfileBinding
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewModel
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint

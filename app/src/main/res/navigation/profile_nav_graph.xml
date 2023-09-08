@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_profile_preview"
-        android:name="com.lionscare.app.ui.settings.fragment.ProfilePreviewFragment"
+        android:name="com.lionscare.app.ui.profile.fragment.ProfilePreviewFragment"
         tools:layout="@layout/fragment_profile_preview"
         android:label="">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_profile_update"
-        android:name="com.lionscare.app.ui.settings.fragment.ProfileUpdateFragment"
+        android:name="com.lionscare.app.ui.profile.fragment.ProfileUpdateFragment"
         tools:layout="@layout/fragment_profile_update"
         android:label="">
 
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/profileOTPFragment"
         tools:layout="@layout/fragment_registration_otp"
-        android:name="com.lionscare.app.ui.settings.fragment.ProfileOTPFragment"
+        android:name="com.lionscare.app.ui.profile.fragment.ProfileOTPFragment"
         android:label="ProfileOTPFragment" >
         <action
             android:id="@+id/action_profileOTPFragment_to_navigation_profile_preview"
