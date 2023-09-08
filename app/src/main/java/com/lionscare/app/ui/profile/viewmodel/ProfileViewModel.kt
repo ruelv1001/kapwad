@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
@@ -24,6 +25,10 @@ class ProfileViewModel @Inject constructor(
     private val _profileSharedFlow = MutableSharedFlow<ProfileViewState>()
     val profileSharedFlow: SharedFlow<ProfileViewState> =
         _profileSharedFlow.asSharedFlow()
+
+    //holder for userModel
+    var userModel : UserModel? = null
+
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {
@@ -92,7 +97,7 @@ class ProfileViewModel @Inject constructor(
                         firstname: String,
                         lastname: String,
                         middlename: String,
-                        email:String
+                        email:String? = null
     ) {
         viewModelScope.launch {
             profileRepository.doUpdateInfo(

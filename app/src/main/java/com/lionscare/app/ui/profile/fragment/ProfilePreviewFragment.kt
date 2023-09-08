@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,7 +28,7 @@ class ProfilePreviewFragment : Fragment() {
     private var _binding: FragmentProfilePreviewBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as ProfileActivity }
-    private val viewModel: ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +64,7 @@ class ProfilePreviewFragment : Fragment() {
             is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
+                viewModel.userModel = viewState.userModel
                 setView(viewState.userModel)
             }
             is ProfileViewState.PopupError -> {
@@ -74,7 +76,6 @@ class ProfilePreviewFragment : Fragment() {
             }
             is ProfileViewState.InputError -> {
                 hideLoadingDialog()
-//                handleInputError(viewState.errorData?: ErrorsData())
             }
 
             else -> hideLoadingDialog()
@@ -92,6 +93,7 @@ class ProfilePreviewFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_my_profile))
+        requireActivity().title = getString(R.string.lbl_my_profile)
         hideLoadingDialog()
     }
 

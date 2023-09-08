@@ -15,5 +15,5 @@ data class UpdateInfoRequest(
     var firstname: String,
     var lastname: String,
     var middlename: String,
-    var email : String
+    var email : String ? = null //could be requested in diff screen
 )
