@@ -17,8 +17,8 @@
         android:title="@string/menu_groups_title" />
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/menu_settings_title" />
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="@string/profile" />
 
 </menu>

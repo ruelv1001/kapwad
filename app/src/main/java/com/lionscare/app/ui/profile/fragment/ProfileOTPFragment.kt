@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.settings.fragment
+package com.lionscare.app.ui.profile.fragment
 
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,10 +19,9 @@ import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.databinding.FragmentRegistrationOtpBinding
-import com.lionscare.app.ui.settings.activity.ProfileActivity
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewModel
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
-import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.ui.profile.activity.ProfileActivity
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.GenericKeyEvent
 import com.lionscare.app.utils.GenericTextWatcher
 import com.lionscare.app.utils.setOnSingleClickListener

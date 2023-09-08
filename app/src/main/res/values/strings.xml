@@ -342,5 +342,6 @@
     </plurals>
     <string name="change_pass_loading">Updating Password..</string>
     <string name="request_badge">Request Badge</string>
+    <string name="profile">Profile</string>
 
 </resources>

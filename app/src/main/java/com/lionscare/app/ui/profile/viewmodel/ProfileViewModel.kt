@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.settings.viewmodel
+package com.lionscare.app.ui.profile.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,10 +8,6 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
-import com.lionscare.app.data.repositories.registration.RegistrationRepository
-import com.lionscare.app.data.repositories.registration.request.OTPRequest
-import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
-import com.lionscare.app.ui.register.viewmodel.RegisterViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

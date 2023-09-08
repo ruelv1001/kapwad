@@ -7,8 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
-import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

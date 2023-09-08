@@ -1,4 +1,4 @@
-package com.lionscare.app.ui.settings.activity
+package com.lionscare.app.ui.profile.activity
 
 import android.content.Context
 import android.content.Intent
