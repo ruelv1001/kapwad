@@ -10,6 +10,8 @@ import java.io.Serializable
 data class DateModel(
     var date_db: String? = null,
     var date_only: String? = null,
+    var datetime_ph: String? = null,
+    var date_only_ph: String? = null,
     var time_passed: String? = null,
     var timestamp: String? = null,
     var iso_format: String? = null,

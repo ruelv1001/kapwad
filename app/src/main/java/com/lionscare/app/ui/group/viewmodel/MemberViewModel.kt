@@ -59,8 +59,8 @@ class MemberViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadListOfMembers(groupId: String) {
-        memberRepository.doGetListOfMember(groupId = groupId)
+    private suspend fun loadListOfMembers(groupId: String, includeAdmin: Boolean? = null) {
+        memberRepository.doGetListOfMember(groupId = groupId, include_admin = includeAdmin)
             .cachedIn(viewModelScope)
             .onStart {
                 _memberSharedFlow.emit(MemberViewState.Loading)
@@ -76,9 +76,9 @@ class MemberViewModel @Inject constructor(
             }
     }
 
-    fun refreshListOfMembers(groupId: String) {
+    fun refreshListOfMembers(groupId: String, includeAdmin: Boolean? = null) {
         viewModelScope.launch {
-            loadListOfMembers(groupId)
+            loadListOfMembers(groupId, includeAdmin)
         }
     }
 

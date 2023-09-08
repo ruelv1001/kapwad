@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -48,7 +49,16 @@ class GroupMembersAdapter(val clickListener: MembersCallback, val id: String? = 
         fun bind(data: MemberListData?) {
             data?.let {
 
-                binding.youTextView.isVisible = id == data.user?.id
+                if(id == data.user?.id){
+                    binding.youTextView.isVisible = true
+                    binding.youTextView.text = "You"
+                } else if(id != data.user?.id && data.role == "admin"){
+                    binding.youTextView.isVisible = true
+                    binding.youTextView.text = "Admin"
+                }else{
+                    binding.youTextView.isGone = true
+                }
+
                 binding.nameTextView.text = data.user?.name
                 binding.idNoTextView.text = data.user?.qrcode
                 //binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path )
