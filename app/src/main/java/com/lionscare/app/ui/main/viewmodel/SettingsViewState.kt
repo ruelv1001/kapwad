@@ -1,7 +1,6 @@
 package com.lionscare.app.ui.main.viewmodel
 
 import com.lionscare.app.data.repositories.baseresponse.UserModel
-import com.lionscare.app.ui.settings.viewmodel.ProfileViewState
 import com.lionscare.app.utils.PopupErrorState
 
 sealed class SettingsViewState{
