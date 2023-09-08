@@ -50,7 +50,7 @@ class ProfileRepository @Inject constructor(
         firstname: String,
         lastname: String,
         middlename: String,
-        email: String
+        email: String? = null
     ): Flow<LoginResponse> {
         return channelFlow {
             profileRemoteDataSource.doUpdateInfo(

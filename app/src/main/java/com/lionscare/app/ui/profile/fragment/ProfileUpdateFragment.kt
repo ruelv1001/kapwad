@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -37,12 +40,8 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
     private var _binding: FragmentProfileUpdateBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as ProfileActivity }
-    private var reference:String = ""
-    private var cityCode:String = ""
-    private var brgyCode:String = ""
-    private var zipCode:String = ""
-    private val viewModel: ProfileViewModel by viewModels()
-    private var userModelz:UserModel? = null
+
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,13 +61,15 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         observeProfile()
         setClickListeners()
         onResume()
-        viewModel.getProfileDetails()
+//        viewModel.getProfileDetails()
     }
 
     private fun observeProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.profileSharedFlow.collect { viewState ->
-                handleViewState(viewState)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.profileSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
             }
         }
     }
@@ -79,27 +80,27 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             is ProfileViewState.Success -> {
                 hideLoadingDialog()
                 Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
-                activity.onBackPressed()
+                findNavController().popBackStack()
             }
             is ProfileViewState.SuccessUpdatePhoneNumber -> {
-                hideLoadingDialog()
-                val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
-                snackbar.setTextMaxLines(3)
-                snackbar.view.translationY = -(binding.saveButton.height + snackbar.view.height).toFloat()
-                snackbar.show()
-
-                val bundle = Bundle().apply {
-                    putString("phone", binding.phoneEditText.text.toString() )
-                }
-                val action =
-                    ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment( binding.phoneEditText.text.toString())
-
-                findNavController().navigate(action.actionId, bundle)
+//                hideLoadingDialog()
+//                val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
+//                snackbar.setTextMaxLines(3)
+//                snackbar.view.translationY = -(binding.saveButton.height + snackbar.view.height).toFloat()
+//                snackbar.show()
+//
+//                val bundle = Bundle().apply {
+//                    putString("phone", binding.phoneEditText.text.toString() )
+//                }
+//                val action =
+//                    ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment( binding.phoneEditText.text.toString())
+//
+//                findNavController().navigate(action.actionId, bundle)
             }
 
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
-                setView(viewState.userModel)
+//                setView(viewState.userModel)
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
@@ -132,6 +133,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_update_profile))
         hideLoadingDialog()
+        setView(viewModel.userModel)
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -143,7 +145,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
     }
 
     private fun setView(userModel: UserModel?) = binding.run{
-        userModelz = userModel
         provinceEditText.doOnTextChanged {
                 text, start, before, count ->
             provinceTextInputLayout.error = ""
@@ -164,61 +165,56 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         firstNameEditText.setText(userModel?.firstname)
         middleNameEditText.setText(userModel?.middlename)
         lastNameEditText.setText(userModel?.lastname)
-        emailEditText.setText(userModel?.email)
         provinceEditText.setText(userModel?.province_name)
         cityEditText.setText(userModel?.city_name)
         barangayEditText.setText(userModel?.brgy_name)
         streetEditText.setText(userModel?.street_name)
-        phoneEditText.setText(userModel?.phone_number)
-        reference = userModel?.province_sku.toString()
-        cityCode = userModel?.city_code.toString()
-        brgyCode = userModel?.brgy_code.toString()
-        zipCode = userModel?.zipcode.toString()
+        zipcodeEditText.setText(userModel?.zipcode)
 
         setClickable()
     }
 
     private fun setClickListeners() = binding.run {
-        phoneEditText.setOnSingleClickListener {
-            // Inflate the custom dialog layout
-            val inflater = requireActivity().layoutInflater
-            val dialogView = inflater.inflate(R.layout.dialog_change_phone_number, null)
-
-            //create custom dialog
-            MaterialAlertDialogBuilder(requireContext())
-                .setView(dialogView)
-                .setMessage(resources.getString(R.string.set_new_phone_number))
-                .setNegativeButton(resources.getString(R.string.lbl_cancel)) { dialog, _ ->
-                   dialog.dismiss()
-                }
-                .setPositiveButton(resources.getString(R.string.pending_accept_text)) { dialog , _ ->
-                    val number =  dialogView.findViewById<TextView>(R.id.inputPhoneEditText).text.toString()
-                    if (number.isEmpty()){
-                        Toast.makeText(requireContext(),
-                            getString(R.string.field_is_required), Toast.LENGTH_SHORT).show()
-                    }else{
-                        binding.phoneEditText.setText(number)
-                        //send the otp immediately
-                        viewModel.changePhoneNumber(UpdatePhoneNumberRequest(phone_number = number))
-                    }
-
-                }
-                .show()
-        }
+//        phoneEditText.setOnSingleClickListener {
+//            // Inflate the custom dialog layout
+//            val inflater = requireActivity().layoutInflater
+//            val dialogView = inflater.inflate(R.layout.dialog_change_phone_number, null)
+//
+//            //create custom dialog
+//            MaterialAlertDialogBuilder(requireContext())
+//                .setView(dialogView)
+//                .setMessage(resources.getString(R.string.set_new_phone_number))
+//                .setNegativeButton(resources.getString(R.string.lbl_cancel)) { dialog, _ ->
+//                   dialog.dismiss()
+//                }
+//                .setPositiveButton(resources.getString(R.string.pending_accept_text)) { dialog , _ ->
+//                    val number =  dialogView.findViewById<TextView>(R.id.inputPhoneEditText).text.toString()
+//                    if (number.isEmpty()){
+//                        Toast.makeText(requireContext(),
+//                            getString(R.string.field_is_required), Toast.LENGTH_SHORT).show()
+//                    }else{
+//                        binding.phoneEditText.setText(number)
+//                        //send the otp immediately
+//                        viewModel.changePhoneNumber(UpdatePhoneNumberRequest(phone_number = number))
+//                    }
+//
+//                }
+//                .show()
+//        }
 
         provinceEditText.setOnSingleClickListener {
             ProvinceDialog.newInstance(object : ProvinceDialog.AddressCallBack {
                 override fun onAddressClicked(
                     provinceName: String,
                     provinceSku: String,
-                    referencea: String,
+                    reference: String,
                 ) {
                     provinceEditText.setText(provinceName)
-                    reference = referencea
+                    viewModel.userModel?.province_sku = reference
 
                     cityEditText.setText("")
                     barangayEditText.setText("")
-
+                    zipcodeEditText.setText("")
                     setClickable()
                 }
             }).show(childFragmentManager, ProvinceDialog.TAG)
@@ -232,13 +228,13 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     zipcode: String
                 ) {
                     cityEditText.setText(cityName)
-                    cityCode = citySku
+                    viewModel.userModel?.city_code = citySku
 
                     barangayEditText.setText("")
-
+                    zipcodeEditText.setText("")
                     setClickable()
                 }
-            }, reference).show(childFragmentManager, CityDialog.TAG)
+            },  viewModel.userModel?.province_sku.orEmpty()).show(childFragmentManager, CityDialog.TAG)
         }
 
         barangayEditText.setOnSingleClickListener {
@@ -249,12 +245,15 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     zipCodes: String
                 ) {
 
-                    brgyCode = citySku
-                    zipCode = zipCodes
+//                    brgyCode = citySku
+                    viewModel.userModel?.brgy_code = citySku
+                    viewModel.userModel?.zipcode = zipCodes
+//                    zipCode = zipCodes
                     barangayEditText.setText(cityName)
+                    zipcodeEditText.setText(zipCodes)
                     setClickable()
                 }
-            }, cityCode).show(childFragmentManager, BrgyDialog.TAG)
+            }, viewModel.userModel?.city_code.orEmpty()).show(childFragmentManager, BrgyDialog.TAG)
         }
 
         saveButton.setOnSingleClickListener {
@@ -276,18 +275,17 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
     override fun onMyAccountClicked(dialog: ProfileConfirmationDialog)=binding.run {
         dialog.dismiss()
         viewModel.doUpdateProfile(
-            reference,
+            viewModel.userModel?.province_sku.orEmpty(),
             provinceEditText.text.toString(),
-            cityCode,
+            viewModel.userModel?.city_code.orEmpty(),
             cityEditText.text.toString(),
-            brgyCode,
+            viewModel.userModel?.brgy_code.orEmpty(),
             barangayEditText.text.toString(),
             streetEditText.text.toString(),
-            zipCode,
+            viewModel.userModel?.zipcode.orEmpty(),
             firstNameEditText.text.toString(),
             lastNameEditText.text.toString(),
-            middleNameEditText.text.toString(),
-            emailEditText.text.toString()
+            middleNameEditText.text.toString()
         )
     }
 }

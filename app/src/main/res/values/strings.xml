@@ -343,5 +343,7 @@
     <string name="change_pass_loading">Updating Password..</string>
     <string name="request_badge">Request Badge</string>
     <string name="profile">Profile</string>
+    <string name="address_information">Address Information</string>
+    <string name="personal_information">Personal Information</string>
 
 </resources>
