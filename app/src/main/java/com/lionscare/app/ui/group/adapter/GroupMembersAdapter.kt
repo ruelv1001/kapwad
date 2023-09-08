@@ -65,7 +65,7 @@ class GroupMembersAdapter(val clickListener: MembersCallback, val id: String? = 
 
                 if (data.role != "member"){
                     if (isUpdating){
-                        binding.checkImageView.visibility = View.GONE
+                        //binding.checkImageView.visibility = View.GONE
                         binding.removeImageView.visibility = View.VISIBLE
                         binding.removeImageView.setOnSingleClickListener {
                             clickListener.onRemoveClicked(data)
