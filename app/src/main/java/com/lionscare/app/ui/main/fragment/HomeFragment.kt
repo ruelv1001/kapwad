@@ -2,12 +2,15 @@ package com.lionscare.app.ui.main.fragment
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.annotation.SuppressLint
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -76,6 +79,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         setUpAnimation()
         onResume()
         viewModel.getProfileDetails()
+        viewModel.getBadgeStatus()
         iFViewModel.getImmediateFamily()
     }
 
@@ -94,9 +98,11 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun handleViewState(viewState: SettingsViewState) {
         when (viewState) {
             is SettingsViewState.Loading -> showLoadingDialog(R.string.loading)
+            is SettingsViewState.LoadingBadge -> Unit
             is SettingsViewState.PopupError -> {
                 hideLoadingDialog()
                 showPopupError(
@@ -112,11 +118,61 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 hideLoadingDialog()
                 setView(viewState.userModel)
             }
+            is SettingsViewState.SuccessGetBadgeStatus -> {
+                hideLoadingDialog()
+//                when(viewState.badgeStatus?.status){
+//                    "pending" -> {
+//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
+//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
+//
+//                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.baseline_access_time_filled_24))
+//                        binding.mainLayout.statusVerifiedBadgeTextView.text = "Pending: ${formatBadgeType(viewState.badgeStatusResponse.data.badge_type)}"
+//                        binding.mainLayout.statusDateVerifiedBadgeTextView.text = "Submitted on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
+//                    }
+//                    "approved" -> {
+//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
+//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
+//
+//                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(
+//                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_check)
+//                                ?.mutate()
+//                                ?.apply {
+//                                    setColorFilter(
+//                                        ContextCompat.getColor(requireContext(), R.color.color_primary),
+//                                        PorterDuff.Mode.SRC_IN
+//                                    )
+//                                }
+//                        )
+//                        binding.mainLayout.statusVerifiedBadgeTextView.text = formatBadgeType(viewState.badgeStatusResponse.data.badge_type)
+//                        binding.mainLayout.statusDateVerifiedBadgeTextView.text =  "Approved on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
+//                    }
+//                    else -> {
+//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.VISIBLE
+//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.GONE
+//                    }
+//                }
+            }
+
 
             else -> hideLoadingDialog()
         }
     }
 
+    private fun formatBadgeType(badge: String?) : String{
+        var accountTypeFormmatted = ""
+        when(badge){
+            "influencer" -> {
+                accountTypeFormmatted =   getString(R.string.account_type_influencer_text)
+            }
+            "public_servant" -> {
+                accountTypeFormmatted =   getString(R.string.account_type_public_servant_text)
+            }
+            "non_government_Organization" -> {
+                accountTypeFormmatted =   getString(R.string.account_type_npo_text)
+            }
+        }
+        return accountTypeFormmatted
+    }
     private fun observeImmediateFamily() {
         viewLifecycleOwner.lifecycleScope.launch {
             iFViewModel.immediateFamilySharedFlow.collectLatest { viewState ->

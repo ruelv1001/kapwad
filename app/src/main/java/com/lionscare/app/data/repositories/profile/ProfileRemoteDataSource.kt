@@ -12,7 +12,6 @@ import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
-import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.asNetWorkRequestBody
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +20,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.MultipartBody
 import retrofit2.HttpException
-import java.io.File
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
