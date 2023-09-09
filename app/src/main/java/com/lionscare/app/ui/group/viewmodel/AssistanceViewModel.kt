@@ -52,6 +52,57 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
+    fun cancelAssistance(requestId: String, groupId: String) {
+        viewModelScope.launch {
+            assistanceRepository.doCancelAssistanceRequest(requestId, groupId)
+                .onStart {
+                    _assistanceSharedFlow.emit(AssistanceViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _assistanceSharedFlow.emit(
+                        AssistanceViewState.SuccessCancelAssistance(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun approveAssistance(requestId: String, groupId: String, remarks: String? = null) {
+        viewModelScope.launch {
+            assistanceRepository.doApproveAssistanceRequest(requestId, groupId, remarks)
+                .onStart {
+                    _assistanceSharedFlow.emit(AssistanceViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _assistanceSharedFlow.emit(
+                        AssistanceViewState.SuccessApproveDeclineAssistance(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun declineAssistance(requestId: String, groupId: String, remarks: String? = null) {
+        viewModelScope.launch {
+            assistanceRepository.doDeclineAssistanceRequest(requestId, groupId, remarks)
+                .onStart {
+                    _assistanceSharedFlow.emit(AssistanceViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _assistanceSharedFlow.emit(
+                        AssistanceViewState.SuccessApproveDeclineAssistance(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
