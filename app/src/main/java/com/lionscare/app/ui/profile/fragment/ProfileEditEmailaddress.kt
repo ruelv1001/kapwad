@@ -125,11 +125,19 @@ class ProfileEditEmailaddress: Fragment(){
             }
             is ProfileViewState.InputError -> {
                 hideLoadingDialog()
+                handleInputError(viewState.errorData?: ErrorsData())
             }
 
             else -> hideLoadingDialog()
         }
     }
+
+    private fun handleInputError(errorsData: ErrorsData) = binding.run {
+        if (errorsData.email?.get(0)?.isNotEmpty() == true){
+            Toast.makeText(requireActivity(),errorsData.email?.get(0), Toast.LENGTH_LONG).show()
+        }
+    }
+
 
 
     private fun showLoadingDialog(@StringRes strId: Int) {

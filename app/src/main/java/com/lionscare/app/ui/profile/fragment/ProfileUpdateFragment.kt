@@ -269,6 +269,8 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         }
 
         zoneEditText.setOnSingleClickListener {
+            CommonLogger.instance.sysLogE("gege",    viewModel.userModel?.lc_region_id)
+
             ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
                 override fun onZoneClicked(
                     data: LOVData
@@ -279,7 +281,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     clusterEditText.setText("")
                     setClickableLionsClub()
                 }
-            }).show(childFragmentManager, CityDialog.TAG)
+            }, region = viewModel.userModel?.lc_region_id.toString()).show(childFragmentManager, CityDialog.TAG)
         }
 
         clusterEditText.setOnSingleClickListener {
@@ -291,7 +293,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     clusterEditText.setText(data.value)
                     setClickableLionsClub()
                 }
-            }).show(childFragmentManager, BrgyDialog.TAG)
+            },region = viewModel.userModel?.lc_region_id.toString(), zone = viewModel.userModel?.lc_zone_id.toString()).show(childFragmentManager, BrgyDialog.TAG)
         }
 
         saveButton.setOnSingleClickListener {

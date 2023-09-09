@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.address.request.ZoneRequest
 import com.lionscare.app.data.repositories.address.response.AddressData
 import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.DialogAddressBinding
@@ -34,6 +35,7 @@ class ZoneDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.RegionCa
     private val viewModel: AddressViewModel by viewModels()
     private var callback: ZoneCallBack? = null
 
+    private var region_id: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,7 +58,7 @@ class ZoneDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.RegionCa
         viewBinding = DialogAddressBinding.bind(view)
         setupList()
         observeProvinceList()
-        viewModel.getRegionList()
+        viewModel.getZoneList(ZoneRequest(region_id = region_id))
         setClickListener()
     }
 
@@ -122,9 +124,10 @@ class ZoneDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.RegionCa
     }
 
     companion object {
-        fun newInstance(callback: ZoneCallBack? = null) = ZoneDialog()
+        fun newInstance(callback: ZoneCallBack? = null, region: String) = ZoneDialog()
             .apply {
                 this.callback = callback
+                this.region_id = region
             }
 
         val TAG: String = ZoneDialog::class.java.simpleName

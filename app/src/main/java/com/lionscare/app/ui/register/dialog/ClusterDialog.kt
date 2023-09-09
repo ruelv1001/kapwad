@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.address.request.LocationRequest
 import com.lionscare.app.data.repositories.address.response.AddressData
 import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.DialogAddressBinding
@@ -34,6 +35,9 @@ class ClusterDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.Regio
     private val viewModel: AddressViewModel by viewModels()
     private var callback: ClusterCallBack? = null
 
+
+    private var region_id: String? = null
+    private var zone_id: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,7 +60,7 @@ class ClusterDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.Regio
         viewBinding = DialogAddressBinding.bind(view)
         setupList()
         observeProvinceList()
-        viewModel.getRegionList()
+        viewModel.getLocationList(LocationRequest(region_id = region_id, zone_id = zone_id))
         setClickListener()
     }
 
@@ -122,9 +126,11 @@ class ClusterDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.Regio
     }
 
     companion object {
-        fun newInstance(callback: ClusterCallBack? = null) = ClusterDialog()
+        fun newInstance(callback: ClusterCallBack? = null, region: String, zone:String) = ClusterDialog()
             .apply {
                 this.callback = callback
+                this.region_id = region
+                this.zone_id = zone
             }
 
         val TAG: String = ClusterDialog::class.java.simpleName
