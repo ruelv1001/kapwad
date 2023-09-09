@@ -17,13 +17,18 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
 import com.lionscare.app.data.repositories.generalsetting.response.RequestAssistanceData
 import com.lionscare.app.databinding.FragmentAssistanceCreateBinding
 import com.lionscare.app.ui.generalSetting.viewmodel.GeneralSettingViewModel
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.RequestAssistanceDataAdapter
+import com.lionscare.app.ui.group.viewmodel.AssistanceViewModel
+import com.lionscare.app.ui.group.viewmodel.AssistanceViewState
 import com.lionscare.app.ui.group.viewmodel.GeneralSettingViewState
 import com.lionscare.app.ui.group.viewmodel.GroupViewState
+import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.utils.setAmountFormat
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +41,8 @@ class AssistanceCreateFragment : Fragment() {
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
     private val generalSettingViewModel : GeneralSettingViewModel by viewModels()
+    private val viewModel: AssistanceViewModel by viewModels()
+    private var reason = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +62,7 @@ class AssistanceCreateFragment : Fragment() {
         setClickListeners()
         onResume()
         observeGeneralSetting()
+        observeAssistance()
         generalSettingViewModel.getRequestAssistanceReasons()
     }
 
@@ -64,8 +72,15 @@ class AssistanceCreateFragment : Fragment() {
     }
 
     private fun setClickListeners() = binding.run {
+        amountEditText.setAmountFormat()
         proceedButton.setOnSingleClickListener {
-
+            val request = CreateAssistanceRequest(
+                group_id = activity.groupDetails?.id,
+                amount = amountEditText.text.toString().replace(",",""),
+                reason = reason,
+                remarks = messageEditText.text.toString()
+            )
+            viewModel.createAssistance(request)
         }
     }
 
@@ -81,6 +96,7 @@ class AssistanceCreateFragment : Fragment() {
             ) {
                 val selectedItem = adapter.getItem(position)
                 val selectedValue = selectedItem?.name
+                reason = selectedItem?.code.toString()
                 othersTextInputLayout.isVisible = selectedValue == "Other"
             }
 
@@ -93,13 +109,13 @@ class AssistanceCreateFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 generalSettingViewModel.generalSettingSharedFlow.collect { viewState ->
-                    handleViewState(viewState)
+                    generalHandleViewState(viewState)
                 }
             }
         }
     }
 
-    private fun handleViewState(viewState: GeneralSettingViewState) {
+    private fun generalHandleViewState(viewState: GeneralSettingViewState) {
         when (viewState) {
             is GeneralSettingViewState.Loading -> showLoadingDialog(R.string.loading)
             is GeneralSettingViewState.Success -> {
@@ -113,6 +129,35 @@ class AssistanceCreateFragment : Fragment() {
                     viewState.errorCode,
                     viewState.message)
             }
+        }
+    }
+
+    private fun observeAssistance() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.assistanceSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: AssistanceViewState) {
+        when (viewState) {
+            is AssistanceViewState.Loading -> showLoadingDialog(R.string.loading)
+            is AssistanceViewState.SuccessCreateAssistance -> {
+                hideLoadingDialog()
+                Toast.makeText(activity,viewState.message,Toast.LENGTH_LONG).show()
+                activity.onBackPressedDispatcher.onBackPressed()
+            }
+            is AssistanceViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message)
+            }
+            else -> Unit
         }
     }
 

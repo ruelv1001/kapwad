@@ -95,7 +95,7 @@ class GroupDetailsActivity : AppCompatActivity(),
             startActivity(intent)
         }
         assistanceRequestsLinearLayout.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_ASSISTANCE)
+            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_ASSISTANCE, groupDetails)
             startActivity(intent)
         }
         membersLinearLayout.setOnSingleClickListener {
