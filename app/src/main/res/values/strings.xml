@@ -192,7 +192,7 @@
     <string name="verfiy_click_to_open_camera_text">Click to open camera</string>
     <string name="settings_request_badge_text">Request Badge</string>
     <string name="settings_change_password_text">Change Password</string>
-    <string name="lbl_assistance">Assistance</string>
+    <string name="lbl_assistance">Request Assistance</string>
     <string name="lbl_1">1</string>
     <string name="lbl_membership">Members</string>
     <string name="lbl_statistics">Statistics</string>
