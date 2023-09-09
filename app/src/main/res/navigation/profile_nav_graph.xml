@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_profile_preview_to_profileEditNumberFragment"
             app:destination="@id/profileEditNumberFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_preview_to_profileEditEmailaddress"
+            app:destination="@id/profileEditEmailaddress" />
     </fragment>
 
     <fragment
@@ -41,4 +44,8 @@
             android:id="@+id/action_profileEditNumberFragment_to_profileOTPFragment"
             app:destination="@id/profileOTPFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileEditEmailaddress"
+        android:name="com.lionscare.app.ui.profile.fragment.ProfileEditEmailaddress"
+        android:label="ProfileEditEmailaddress" />
 </navigation>

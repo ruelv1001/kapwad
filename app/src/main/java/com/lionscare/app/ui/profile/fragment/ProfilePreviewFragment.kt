@@ -106,11 +106,19 @@ class ProfilePreviewFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
         nameTextView.text = userModel?.getFullName()
-        dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph
-        ageTextView.text = userModel?.birthdate?.date_only_ph?.calculateAge().toString()
-        addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name.orEmpty().ifEmpty { "Address unavailable" }}"
+        dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph?.ifEmpty { "Not set "}
+        ageTextView.text = userModel?.birthdate?.date_only_ph
+            ?.takeIf { it.isNotEmpty() }
+            ?.calculateAge()
+            ?.toString() ?: "Not set"
 
-        emailEditText.setText(userModel?.email)
+        if (userModel?.province_name?.isNotEmpty() == true){
+            addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+        }else{
+            addressTextView.text = "Address Unavailable"
+        }
+
+        emailEditText.setText(userModel?.email.orEmpty().ifEmpty { "Check your email for verification" })
         if (userModel?.email_verified == true){
             emailIsVerifiedTextView.text = getString(R.string.lbl_verified)
             emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_verified)
@@ -129,7 +137,7 @@ class ProfilePreviewFragment : Fragment() {
 
     private fun setClickListeners() = binding.run  {
         emailEditText.setOnSingleClickListener {
-
+            findNavController().navigate(ProfilePreviewFragmentDirections.actionNavigationProfilePreviewToProfileEditEmailaddress())
         }
         phoneEditText.setOnSingleClickListener {
             findNavController().navigate(ProfilePreviewFragmentDirections.actionNavigationProfilePreviewToProfileEditNumberFragment())

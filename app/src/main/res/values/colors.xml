@@ -10,6 +10,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="color_primary">#1D8A5F</color>
+    <color name="color_primaryLight">#A8EAD0</color>
     <color name="color_primaryDark">#1D8A5F</color>
     <color name="color_accent">#E0F5ED</color>
     <color name="commons_text_hint">#BBBBBB</color>
