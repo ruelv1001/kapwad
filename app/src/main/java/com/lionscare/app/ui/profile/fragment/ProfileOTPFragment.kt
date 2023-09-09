@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -33,9 +36,9 @@ import kotlinx.coroutines.launch
 class ProfileOTPFragment: Fragment(){
     private var _binding: FragmentRegistrationOtpBinding? = null
     private val binding get() = _binding!!
+    private val activity by lazy { requireActivity() as ProfileActivity }
     private var countDownTimer: CountDownTimer? = null
-    private val viewModel: ProfileViewModel by viewModels()
-    val args: ProfileOTPFragmentArgs by navArgs()
+    private val viewModel: ProfileViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,16 +59,19 @@ class ProfileOTPFragment: Fragment(){
         setClickListeners()
         setView()
         startCountdown()
+        activity.setTitlee(getString(R.string.otp))
     }
 
     private fun sendOtpToUser() {
-        viewModel.changePhoneNumber(UpdatePhoneNumberRequest(phone_number = args.phone))
+        viewModel.changePhoneNumber(UpdatePhoneNumberRequest(phone_number = viewModel.phoneNumber))
     }
 
     private fun observeOTP() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.profileSharedFlow.collect { viewState ->
-                handleViewState(viewState)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.profileSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
             }
         }
     }
@@ -85,7 +91,7 @@ class ProfileOTPFragment: Fragment(){
                 val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
                 snackbar.setTextMaxLines(3)
                 snackbar.show()
-                findNavController().popBackStack()
+                findNavController().navigate(ProfileOTPFragmentDirections.actionProfileOTPFragmentToNavigationProfilePreview())
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
@@ -149,7 +155,7 @@ class ProfileOTPFragment: Fragment(){
     private fun setClickListeners() = binding.run {
         confirmButton.setOnSingleClickListener {
             val request = UpdatePhoneNumberOTPRequest(
-                phone_number = args.phone,
+                phone_number = viewModel.phoneNumber,
                 otp =  "${otpFirstEdittext.text}${otpSecondEdittext.text}${otpThirdEdittext.text}${otpFourthEdittext.text}${otpFifthEdittext.text}${otpSixthEdittext.text}"
             )
             viewModel.changePhoneNumberWithOTP(request)

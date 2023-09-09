@@ -13,18 +13,16 @@
         <action
             android:id="@+id/action_navigation_profile_update"
             app:destination="@id/navigation_profile_update" />
+        <action
+            android:id="@+id/action_navigation_profile_preview_to_profileEditNumberFragment"
+            app:destination="@id/profileEditNumberFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_profile_update"
         android:name="com.lionscare.app.ui.profile.fragment.ProfileUpdateFragment"
         tools:layout="@layout/fragment_profile_update"
-        android:label="">
-
-        <action
-            android:id="@+id/action_navigation_profile_update_to_profileOTPFragment"
-            app:destination="@id/profileOTPFragment" />
-    </fragment>
+        android:label=""/>
     <fragment
         android:id="@+id/profileOTPFragment"
         tools:layout="@layout/fragment_registration_otp"
@@ -33,8 +31,14 @@
         <action
             android:id="@+id/action_profileOTPFragment_to_navigation_profile_preview"
             app:destination="@id/navigation_profile_preview" />
-        <argument
-            android:name="phone"
-            app:argType="string" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_profile_edit_number"
+        android:id="@+id/profileEditNumberFragment"
+        android:name="com.lionscare.app.ui.profile.fragment.ProfileEditNumberFragment"
+        android:label="ProfileEditNumberFragment" >
+        <action
+            android:id="@+id/action_profileEditNumberFragment_to_profileOTPFragment"
+            app:destination="@id/profileOTPFragment" />
     </fragment>
 </navigation>

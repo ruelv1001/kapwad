@@ -30,6 +30,8 @@ class ProfileViewModel @Inject constructor(
     //holder for userModel
     var userModel : UserModel? = null
 
+    //holder for phonenumber
+    var phoneNumber : String? = null
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {

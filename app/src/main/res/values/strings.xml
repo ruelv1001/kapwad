@@ -358,5 +358,8 @@
     <string name="lbl_zone">Zone</string>
     <string name="lbl_cluster_location">Cluster/Location</string>
     <string name="not_yet_a_member">Not yet a member</string>
+    <string name="phone_warning">Please type in your new phone number below. Make sure you have access to it as OTP code will be sent and later be needed for verification</string>
+    <string name="update_contact_number">Update Contact Number</string>
+    <string name="otp">OTP</string>
 
 </resources>

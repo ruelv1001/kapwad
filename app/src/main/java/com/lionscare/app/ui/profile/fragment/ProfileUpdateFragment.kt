@@ -71,7 +71,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         observeProfile()
         setClickListeners()
         onResume()
-//        viewModel.getProfileDetails()
     }
 
     private fun observeProfile() {
@@ -92,22 +91,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
-            is ProfileViewState.SuccessUpdatePhoneNumber -> {
-//                hideLoadingDialog()
-//                val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
-//                snackbar.setTextMaxLines(3)
-//                snackbar.view.translationY = -(binding.saveButton.height + snackbar.view.height).toFloat()
-//                snackbar.show()
-//
-//                val bundle = Bundle().apply {
-//                    putString("phone", binding.phoneEditText.text.toString() )
-//                }
-//                val action =
-//                    ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment( binding.phoneEditText.text.toString())
-//
-//                findNavController().navigate(action.actionId, bundle)
-            }
-
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
 //                setView(viewState.userModel)
