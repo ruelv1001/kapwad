@@ -2,6 +2,7 @@ package com.lionscare.app.data.repositories.assistance
 
 import com.lionscare.app.data.repositories.assistance.request.AssistanceRequest
 import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
+import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
@@ -32,7 +33,7 @@ class AssistanceRemoteDataSource @Inject constructor(private val assistanceServi
     suspend fun doGetAssistanceRequestInfo(
         referenceId: String? = null,
         groupId: String? = null
-    ): GeneralResponse {
+    ): CreateAssistanceResponse {
         val request = AssistanceRequest(group_id = groupId, reference_id = referenceId)
         val response = assistanceService.doGetAssistanceRequestInfo(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
