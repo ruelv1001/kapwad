@@ -266,7 +266,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                     clusterEditText.setText("")
                     setClickableLionsClub()
                 }
-            }).show(childFragmentManager, CityDialog.TAG)
+            }, lc_region_id).show(childFragmentManager, CityDialog.TAG)
         }
 
         clusterEditText.setOnSingleClickListener {
@@ -278,7 +278,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                     clusterEditText.setText(data.value)
                     setClickableLionsClub()
                 }
-            }).show(childFragmentManager, BrgyDialog.TAG)
+            }, zone= lc_zone_id, region = lc_region_id).show(childFragmentManager, BrgyDialog.TAG)
         }
 
 
