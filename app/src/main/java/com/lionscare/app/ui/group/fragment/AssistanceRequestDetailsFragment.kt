@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupAssistanceReqDetailsBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.utils.copyToClipboard
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -72,6 +73,9 @@ class AssistanceRequestDetailsFragment : Fragment() {
         }
         declineButton.setOnSingleClickListener {
             activity.onBackPressed()
+        }
+        refIDTextView.setOnSingleClickListener {
+            activity.copyToClipboard(refIDTextView.text.toString())
         }
     }
 

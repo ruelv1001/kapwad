@@ -346,5 +346,6 @@
     <string name="address_information">Address Information</string>
     <string name="personal_information">Personal Information</string>
     <string name="lbl_recent_requests">Recent Requests</string>
+    <string name="lbl_cancelled">Cancelled</string>
 
 </resources>

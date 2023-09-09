@@ -175,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/declineButton"
@@ -216,6 +216,25 @@
                         android:textSize="@dimen/font_14" />
                 </LinearLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancelButton"
+                    style="@style/MyButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_8"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:backgroundTint="@color/light_gray_line"
+                    android:fontFamily="@font/inter_semibold"
+                    android:paddingTop="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    android:text="@string/lbl_cancel"
+                    android:textAllCaps="false"
+                    android:visibility="gone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_14" />
+
                 <TextView
                     android:id="@+id/approvedTextView"
                     android:layout_width="match_parent"
@@ -243,6 +262,21 @@
                     android:gravity="center"
                     android:text="@string/lbl_declined"
                     android:textColor="@color/red"
+                    android:textSize="@dimen/font_16"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/cancelledTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="center"
+                    android:text="@string/lbl_cancelled"
+                    android:textColor="@color/light_gray"
                     android:textSize="@dimen/font_16"
                     android:visibility="gone" />
             </RelativeLayout>

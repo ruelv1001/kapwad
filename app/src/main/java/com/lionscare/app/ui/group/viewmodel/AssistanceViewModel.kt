@@ -103,6 +103,23 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
+    fun getAssistanceInfo(requestId: String, groupId: String) {
+        viewModelScope.launch {
+            assistanceRepository.doGetAssistanceRequestInfo(requestId, groupId)
+                .onStart {
+                    _assistanceSharedFlow.emit(AssistanceViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _assistanceSharedFlow.emit(
+                        AssistanceViewState.SuccessGetAssistanceInfo(it)
+                    )
+                }
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
