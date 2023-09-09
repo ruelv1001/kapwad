@@ -38,6 +38,7 @@
                 android:paddingBottom="@dimen/dimen_15"
                 android:text="@string/lbl_create_family"
                 android:textAllCaps="false"
+                android:visibility="gone"
                 android:textSize="@dimen/font_14" />
 
             <include
