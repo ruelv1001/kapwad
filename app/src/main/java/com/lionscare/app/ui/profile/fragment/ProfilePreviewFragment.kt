@@ -123,7 +123,7 @@ class ProfilePreviewFragment : Fragment() {
         }
     }
 
-    private fun setClickListeners() = binding.run {
+    private fun setClickListeners() = binding.run  {
         emailEditText.setOnSingleClickListener {
 
         }
