@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.profile.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.lionscare.app.ui.profile.activity.ProfileActivity
 import com.lionscare.app.ui.profile.dialog.VerificationSuccessDialog
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.utils.calculateAge
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -97,21 +99,36 @@ class ProfilePreviewFragment : Fragment() {
         hideLoadingDialog()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
-        firstNameTextView.text = userModel?.firstname
-        middleNameTextView.text = userModel?.middlename
-        lastNameTextView.text = userModel?.lastname
-        contactTextView.text = userModel?.phone_number
-        emailTextView.text = userModel?.email
-        provinceTextView.text = userModel?.province_name
-        cityTextView.text = userModel?.city_name
-        barangayTextView.text = userModel?.brgy_name
-        streetTextView.text = userModel?.street_name
+        nameTextView.text = userModel?.getFullName()
+        dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph
+        ageTextView.text = userModel?.birthdate?.date_only_ph?.calculateAge().toString()
+        addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name.orEmpty().ifEmpty { "Address unavailable" }}"
+
+        emailEditText.setText(userModel?.email)
+        if (userModel?.email_verified == true){
+            emailIsVerifiedTextView.text = getString(R.string.lbl_verified)
+            emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_verified)
+        }else{
+            emailIsVerifiedTextView.text = getString(R.string.unverified)
+            emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_pending)
+        }
+
+        phoneEditText.setText(userModel?.phone_number)
+        if (userModel?.lc_member == true){
+            lionsClubTextView.text = "${userModel.lc_group} (${userModel.lc_location_id})"
+        }else{
+            lionsClubTextView.text = getString(R.string.not_yet_a_member)
+        }
     }
 
     private fun setClickListeners() = binding.run {
-        emailVerifyTextView.setOnSingleClickListener {
-            VerificationSuccessDialog.newInstance().show(childFragmentManager, RegisterSuccessDialog.TAG)
+        emailEditText.setOnSingleClickListener {
+
+        }
+        phoneEditText.setOnSingleClickListener {
+
         }
         editImageView.setOnSingleClickListener {
             findNavController().navigate(ProfilePreviewFragmentDirections.actionNavigationProfileUpdate())

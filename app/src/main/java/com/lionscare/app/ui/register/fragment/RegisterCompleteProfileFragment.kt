@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.databinding.FragmentRegistrationCompleteProfileBinding
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.register.activity.RegisterActivity
@@ -185,20 +186,23 @@ class RegisterCompleteProfileFragment: Fragment() {
         }
 
         continueButton.setOnSingleClickListener {
-            viewModel.doUpdateProfile(
-                reference,
-                provinceEditText.text.toString(),
-                cityCode,
-                cityEditText.text.toString(),
-                brgyCode,
-                barangayEditText.text.toString(),
-                streetEditText.text.toString(),
-                zipcodeEditText.text.toString(),
-                activity.requestModel.firstname.orEmpty(),
-                activity.requestModel.lastname.orEmpty(),
-                activity.requestModel.middlename.orEmpty(),
-                emailEditText.text.toString()
+            val request = UpdateInfoRequest(
+                province_sku =  reference,
+                province_name = provinceEditText.text.toString(),
+                city_sku =cityCode,
+                city_name = cityEditText.text.toString(),
+                brgy_sku = brgyCode,
+                brgy_name = barangayEditText.text.toString(),
+                street_name =  streetEditText.text.toString(),
+                zipcode =  zipcodeEditText.text.toString(),
+                firstname =   activity.requestModel.firstname.orEmpty(),
+                lastname =   activity.requestModel.lastname.orEmpty(),
+                middlename = activity.requestModel.middlename.orEmpty(),
+                email =  emailEditText.text.toString(),
+                birthdate =" birthdateEditText.text.toString()"
             )
+
+            viewModel.doUpdateProfile(request)
         }
     }
 

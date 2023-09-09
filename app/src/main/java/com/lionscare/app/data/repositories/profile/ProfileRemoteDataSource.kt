@@ -39,34 +39,9 @@ class ProfileRemoteDataSource @Inject constructor(
     }
 
     fun doUpdateInfo(
-        province_sku: String,
-        province_name: String,
-        city_sku: String,
-        city_name: String,
-        brgy_sku: String,
-        brgy_name: String,
-        street_name: String,
-        zipcode: String,
-        firstname: String,
-        lastname: String,
-        middlename: String,
-        email: String? = null
+        request: UpdateInfoRequest
     ): Flow<LoginResponse> {
         return flow {
-            val request = UpdateInfoRequest(
-                province_sku,
-                province_name,
-                city_sku,
-                city_name,
-                brgy_sku,
-                brgy_name,
-                street_name,
-                zipcode,
-                firstname,
-                lastname,
-                middlename,
-                email
-            )
             val response = profileService.doUpdateInfo(request)
             if (response.code() != HttpURLConnection.HTTP_OK) {
                 throw HttpException(response)
@@ -76,7 +51,21 @@ class ProfileRemoteDataSource @Inject constructor(
     }
 
 
-    //=============== ======================KYC API
+    //=============== ======================KYC AP      val request = UpdateInfoRequest(
+    //                province_sku,
+    //                province_name,
+    //                city_sku,
+    //                city_name,
+    //                brgy_sku,
+    //                brgy_name,
+    //                street_name,
+    //                zipcode,
+    //                firstname,
+    //                lastname,
+    //                middlename,
+    //                email,
+    //                birthdate
+    //            )I
     suspend fun doUploadId(request : KYCRequest): GeneralResponse {
         val response = profileService.doUploadId(
             MultipartBody.Part.createFormData(

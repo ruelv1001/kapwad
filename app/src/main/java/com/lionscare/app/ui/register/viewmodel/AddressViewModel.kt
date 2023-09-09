@@ -8,8 +8,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.address.AddressRepository
+import com.lionscare.app.data.repositories.address.request.LocationRequest
 import com.lionscare.app.data.repositories.address.request.MunicipalityListRequest
 import com.lionscare.app.data.repositories.address.request.RegistrationRequest
+import com.lionscare.app.data.repositories.address.request.ZoneRequest
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -108,6 +110,62 @@ class AddressViewModel @Inject constructor(
                 }
         }
 
+    }
+
+
+    //==================================LionsClub
+    fun getRegionList() {
+        viewModelScope.launch {
+            addressRepository.getRegionList()
+                .onStart {
+                    _addressSharedFlow.emit(AddressViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _addressSharedFlow.emit(
+                        AddressViewState.SuccessGetLionsClubLOV(it.data.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun getZoneList(request: ZoneRequest) {
+        viewModelScope.launch {
+            addressRepository.getZoneList(request)
+                .onStart {
+                    _addressSharedFlow.emit(AddressViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _addressSharedFlow.emit(
+                        AddressViewState.SuccessGetLionsClubLOV(it.data.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun getLocationList(request: LocationRequest) {
+        viewModelScope.launch {
+            addressRepository.getLocationList(request)
+                .onStart {
+                    _addressSharedFlow.emit(AddressViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _addressSharedFlow.emit(
+                        AddressViewState.SuccessGetLionsClubLOV(it.data.orEmpty())
+                    )
+                }
+        }
     }
 
     private suspend fun onError(exception: Throwable) {
