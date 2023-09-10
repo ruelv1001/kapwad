@@ -165,6 +165,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         streetEditText.setText(userModel?.street_name)
         zipcodeEditText.setText(userModel?.zipcode)
 
+        birthdateEditText.setText(userModel?.birthdate?.date_only_ph)
         setClickable()
     }
 
