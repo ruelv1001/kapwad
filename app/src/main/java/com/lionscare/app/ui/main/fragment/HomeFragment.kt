@@ -284,28 +284,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 "${userModel.street_name}, ${userModel.brgy_name},\n${userModel.city_name}, ${userModel.province_name}"
         }
 
-        //badge
-        when(userModel?.badge_type){
-            "pending" -> {
-                binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE //remove initial button
-                binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout.visibility = View.VISIBLE //show status button
-
-                binding.mainLayout.includeBadgeLayout.badgeIdStatus.visibility = View.VISIBLE
-                binding.mainLayout.includeBadgeLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_pending) //set background
-                binding.mainLayout.includeBadgeLayout.badgeIdStatus.text = "Pending"
-                binding.mainLayout.includeBadgeLayout.accountTypeRadioButton.visibility = View.GONE //remove radio button
-
-                binding.mainLayout.includeBadgeLayout.dateTextView.visibility = View.VISIBLE //show date submitted
-                binding.mainLayout.includeBadgeLayout.accountTypeTextView.text = "Inluencer"
-                binding.mainLayout.includeBadgeLayout.dateTextView.text = "Submitted on:\n ${userModel.badge_type_issued_at?.date_only}"
-            }
-            "approved" -> {
-
-            }
-            else -> {
-
-            }
-        }
 
         //KYC status
         when(userModel?.kyc_status){
