@@ -299,7 +299,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                 birthdate = birthdateEditText.text.toString(),
                 lc_region_id = lc_region_id,
                 lc_zone_id = lc_zone_id,
-                lc_location_id = lc_zone_id,
+                lc_location_id = lc_location_id,
             )
 
             viewModel.doUpdateProfile(request)

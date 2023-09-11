@@ -88,6 +88,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
     override fun onResume() {
         super.onResume()
         hideLoadingDialog()
+        //call profile  again to check if correct badge and kyc or get updated one
+        viewModel.getProfileDetails()
     }
 
     private fun observeAccount() {
@@ -299,7 +301,13 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 )
             }
             "completed" -> {
-
+                // Change the status bar color
+                requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.color_primary)
+                binding.notVerifiedRelativeLayout.visibility = View.GONE
+            }
+            "pending" -> {
+                // Change the status bar color
+                requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.color_primary)
             }
         }
         viewModel.userQrCode = userModel?.qrcode.orEmpty()

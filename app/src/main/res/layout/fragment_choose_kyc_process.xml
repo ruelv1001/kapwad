@@ -107,6 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_4"
             android:paddingStart="@dimen/dimen_40"
+            android:visibility="gone"
             android:fontFamily="@font/inter_regular"
             android:text="@string/account_verification_valid_id_text"
             android:textColor="@color/black_text"
@@ -116,12 +117,6 @@
 
     </LinearLayout>
 
-        <ImageView
-            android:id="@+id/idArrowImageView"
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
-            android:src="@drawable/ic_forward_arrow"
-     />
 
         <TextView
             android:visibility="gone"
@@ -131,10 +126,20 @@
             android:fontFamily="@font/inter_regular"
             android:textSize="@dimen/font_13"
             android:layout_marginStart="@dimen/dimen_12"
-            android:padding="@dimen/dimen_4"
+            android:paddingStart="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingEnd="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_5"
             android:textColor="@color/white"
             android:text="Pending"
             />
+        <ImageView
+            android:id="@+id/idArrowImageView"
+            android:layout_width="@dimen/dimen_24"
+            android:layout_height="@dimen/dimen_24"
+            android:src="@drawable/ic_forward_arrow"
+     />
+
 
     </LinearLayout>
 
@@ -186,18 +191,11 @@
                 android:text="@string/account_verification_valid_id_text"
                 android:textColor="@color/black_text"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:textSize="@dimen/font_13"
                 tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml" />
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/addressArrowImageView"
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
-            android:src="@drawable/ic_forward_arrow"
-            />
-
 
         <TextView
             android:visibility="gone"
@@ -207,10 +205,21 @@
             android:fontFamily="@font/inter_regular"
             android:textSize="@dimen/font_13"
             android:layout_marginStart="@dimen/dimen_12"
-            android:padding="@dimen/dimen_4"
+            android:paddingStart="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingEnd="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_5"
             android:textColor="@color/white"
             android:text="Pending"
             />
+        <ImageView
+            android:id="@+id/addressArrowImageView"
+            android:layout_width="@dimen/dimen_24"
+            android:layout_height="@dimen/dimen_24"
+            android:src="@drawable/ic_forward_arrow"
+            />
+
+
 
     </LinearLayout>
 </LinearLayout>
