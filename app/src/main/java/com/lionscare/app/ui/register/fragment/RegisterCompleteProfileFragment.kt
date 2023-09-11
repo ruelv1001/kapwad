@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -29,11 +31,13 @@ import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
 import com.lionscare.app.ui.register.dialog.ZoneDialog
 import com.lionscare.app.ui.register.viewmodel.RegisterViewModel
 import com.lionscare.app.ui.register.viewmodel.RegisterViewState
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -159,11 +163,16 @@ class RegisterCompleteProfileFragment: Fragment() {
 
     private fun setClickListeners() = binding.run {
         birthdateEditText.setOnSingleClickListener {
+            val constraintsBuilder=CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointBackward.now())
+
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
+                    .setCalendarConstraints(constraintsBuilder.build())
                     .setTitleText("Select date")
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
+
 
             datePicker.addOnPositiveButtonClickListener {
                 // Respond to positive button click.
@@ -302,7 +311,9 @@ class RegisterCompleteProfileFragment: Fragment() {
                 lc_location_id = lc_location_id,
             )
 
-            viewModel.doUpdateProfile(request)
+            CommonLogger.instance.sysLogE("HERE", request)
+
+//            viewModel.doUpdateProfile(request)
         }
     }
 
