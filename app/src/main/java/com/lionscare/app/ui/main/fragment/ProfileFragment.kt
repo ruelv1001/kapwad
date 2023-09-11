@@ -1,12 +1,16 @@
 package com.lionscare.app.ui.main.fragment
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.response.BadgeStatus
 import com.lionscare.app.databinding.FragmentSettingsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.main.activity.MainActivity
@@ -57,7 +62,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeLogoutAccount()
         setClickListeners()
-        setDetails()
+
         viewModel.getProfileDetails()
     }
 
@@ -105,6 +110,21 @@ class ProfileFragment : Fragment() {
         nameTextView.text = userModel?.name
         badgeTextView.isVisible = false
         idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
+
+        isBadgeVerified = userModel?.badge_type?.isNotEmpty() == true
+        when(userModel?.kyc_status){
+            "ongoing" -> {
+                isAccountVerified = false
+            }
+            "completed" -> {
+                isAccountVerified = true
+            }
+            "pending" -> {
+                isAccountVerified = false
+            }
+        }
+
+        setDetails(userModel)
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -151,12 +171,35 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setDetails() = binding.run {
+    private fun setDetails(data: UserModel?) = binding.run {
         if(isBadgeVerified == true){
+            binding.badgeIdStatus.visibility = View.VISIBLE
+            binding.badgeImageView.visibility = View.VISIBLE
+            //change icon of avatar badge
+            when(data?.badge_type){
+                "non_government_Organization" -> {
+                    binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
+                    binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
+                }
+                "influencer" -> {
+                    binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
+                    binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_influencer)
+                }
+                "public_servant" -> {
+                    binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
+                    binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_public_servant)
+                }
+            }
+
+            requestBadgeLinearLayout.isClickable = false
             requestBadgeImageView.setImageResource(R.drawable.ic_settings_request_badge_gray)
             verifiedRBTextView.visibility = View.VISIBLE
             arrowRBImageView.visibility = View.GONE
         }else{
+            binding.badgeIdStatus.visibility = View.GONE
+            binding.badgeImageView.visibility = View.GONE
+
+            requestBadgeLinearLayout.isClickable = true
             requestBadgeImageView.setImageResource(R.drawable.ic_settings_request_badge)
             verifiedRBTextView.visibility = View.GONE
             arrowRBImageView.visibility = View.VISIBLE
