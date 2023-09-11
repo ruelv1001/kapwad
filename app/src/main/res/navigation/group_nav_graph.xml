@@ -12,6 +12,8 @@
         tools:layout="@layout/fragment_group_create">
         <action
             android:id="@+id/action_navigation_group_invite"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_group_create"
             app:destination="@id/navigation_group_invite" />
     </fragment>
     <fragment
