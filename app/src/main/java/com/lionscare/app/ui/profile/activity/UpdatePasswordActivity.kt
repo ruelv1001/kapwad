@@ -99,9 +99,9 @@ class UpdatePasswordActivity : AppCompatActivity() {
     }
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run{
-        if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.newPasswordEditText.error = errorsData.password?.get(0)
-        if (errorsData.current_password?.get(0)?.isNotEmpty() == true) binding.oldPasswordEditText.error = errorsData.current_password?.get(0)
-        if (errorsData.password_confirmation?.get(0)?.isNotEmpty() == true) binding.confirmPasswordEditText.error = errorsData.password_confirmation?.get(0)
+        if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.newPasswordTextInputLayout.error = errorsData.password?.get(0)
+        if (errorsData.current_password?.get(0)?.isNotEmpty() == true) binding.oldPasswordTextInputLayout.error = errorsData.current_password?.get(0)
+        if (errorsData.password_confirmation?.get(0)?.isNotEmpty() == true) binding.confirmPasswordTextInputLayout.error = errorsData.password_confirmation?.get(0)
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {

@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen_20"
         android:background="@drawable/bg_rounded_outline"
-        android:maxHeight="@dimen/dimen_530"
+        android:minHeight="@dimen/dimen_530"
         android:minWidth="@dimen/dimen_350"
         android:orientation="vertical"
         android:padding="@dimen/dimen_20">

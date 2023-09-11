@@ -218,8 +218,8 @@
                 android:text="@string/lbl_require_approval_to_join"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16"
-                android:thumbTint="@color/white"
-                android:trackTint="@color/color_primary"
+                android:thumbTint="@drawable/selector_switch_thumb"
+                android:trackTint="@drawable/selector_switch_track"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
 

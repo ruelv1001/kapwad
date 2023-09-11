@@ -34,7 +34,6 @@ class LoginViewModel @Inject constructor(
                 }
                 .catch { exception ->
                     onError(exception)
-
                 }
                 .collect {
                     _loginSharedFlow.emit(
