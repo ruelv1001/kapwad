@@ -1,157 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:padding="@dimen/dimen_20">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/assistance_create_purpose_text"
-        android:textAlignment="center"
-        android:textColor="@color/black_text"
-        android:textSize="@dimen/font_16" />
-
-    <Spinner
-        android:id="@+id/purposeSpinner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:fontFamily="@font/inter_semibold"
-        android:background="@drawable/bg_edittext_selector"
-        android:padding="@dimen/dimen_16" />
+        android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/othersTextInputLayout"
-        style="@style/TextInputLayoutStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:visibility="gone"
-        android:fontFamily="@font/inter_regular"
-        app:boxBackgroundColor="@color/white"
-        app:hintAnimationEnabled="true"
-        app:hintEnabled="false">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/assistance_create_purpose_text"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_16" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/othersEditText"
+        <Spinner
+            android:id="@+id/purposeSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_edittext_selector"
+            android:layout_marginTop="@dimen/dimen_10"
             android:fontFamily="@font/inter_semibold"
-            android:hint="@string/assistance_create_please_indicate_your_purpose_text"
-            android:imeOptions="actionNext"
-            android:inputType="textCapCharacters"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/commons_text_hint"
-            android:textSize="@dimen/font_14" />
+            android:background="@drawable/bg_edittext_selector"
+            android:padding="@dimen/dimen_16" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:text="@string/request_posted_amount_text"
-        android:textAlignment="center"
-        android:textColor="@color/black_text"
-        android:textSize="@dimen/font_16" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/amountTextInputLayout"
-        style="@style/TextInputLayoutStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:fontFamily="@font/inter_regular"
-        app:boxBackgroundColor="@color/white"
-        app:hintAnimationEnabled="true"
-        app:hintEnabled="false">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/amountEditText"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/othersTextInputLayout"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_edittext_selector"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:visibility="gone"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/othersEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_selector"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/assistance_create_please_indicate_your_purpose_text"
+                android:imeOptions="actionNext"
+                android:inputType="textCapCharacters"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:hint="@string/lbl_0"
-            android:imeOptions="actionNext"
-            android:inputType="numberDecimal"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/commons_text_hint"
-            android:textSize="@dimen/font_14" />
+            android:layout_marginTop="@dimen/dimen_16"
+            android:text="@string/request_posted_amount_text"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_16" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/amountTextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
 
-    <TextView
-        android:id="@+id/messageTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:text="@string/wallet_message_title"
-        android:textAlignment="center"
-        android:textColor="@color/black_text"
-        android:textSize="@dimen/font_16" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/amountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_selector"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/lbl_0"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/messageTextInputLayout"
-        style="@style/TextInputLayoutStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_150"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:fontFamily="@font/inter_regular"
-        app:boxBackgroundColor="@color/white"
-        app:hintAnimationEnabled="true"
-        app:hintEnabled="false">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/messageEditText"
+        <TextView
+            android:id="@+id/messageTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:text="@string/wallet_message_title"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_16" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/messageTextInputLayout"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_150"
-            android:background="@drawable/bg_edittext_selector"
-            android:fontFamily="@font/inter_semibold"
-            android:hint="@string/wallet_enter_your_message_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textCapSentences|textMultiLine"
-            android:gravity="start"
-            android:maxLines="5"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/commons_text_hint"
-            android:textSize="@dimen/font_14" />
+            android:layout_marginTop="@dimen/dimen_10"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/messageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_150"
+                android:background="@drawable/bg_edittext_selector"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/wallet_enter_your_message_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences|textMultiLine"
+                android:gravity="start"
+                android:maxLines="5"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:layout_marginTop="@dimen/dimen_5"
-        android:background="@color/white">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/proceedButton"
-            style="@style/MyButtonStyle"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_20"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:layout_marginEnd="@dimen/dimen_20"
-            android:layout_marginBottom="@dimen/dimen_20"
-            android:fontFamily="@font/inter_semibold"
-            android:paddingTop="@dimen/dimen_15"
-            android:paddingBottom="@dimen/dimen_15"
-            android:text="@string/lbl_proceed"
-            android:textAllCaps="false"
-            android:textSize="@dimen/font_14" />
-    </RelativeLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:background="@color/white">
 
-</LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/proceedButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="@string/lbl_proceed"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
