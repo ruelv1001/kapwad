@@ -9,15 +9,21 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.FragmentProfileUpdateBinding
 import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
@@ -27,22 +33,25 @@ import com.lionscare.app.ui.profile.activity.ProfileActivity
 import com.lionscare.app.ui.profile.dialog.ProfileConfirmationDialog
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.ui.register.dialog.ClusterDialog
+import com.lionscare.app.ui.register.dialog.RegionDialog
+import com.lionscare.app.ui.register.dialog.ZoneDialog
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDialogCallBack {
     private var _binding: FragmentProfileUpdateBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as ProfileActivity }
-    private var reference:String = ""
-    private var cityCode:String = ""
-    private var brgyCode:String = ""
-    private var zipCode:String = ""
-    private val viewModel: ProfileViewModel by viewModels()
-    private var userModelz:UserModel? = null
+
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,13 +71,14 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         observeProfile()
         setClickListeners()
         onResume()
-        viewModel.getProfileDetails()
     }
 
     private fun observeProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.profileSharedFlow.collect { viewState ->
-                handleViewState(viewState)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.profileSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
             }
         }
     }
@@ -79,27 +89,11 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             is ProfileViewState.Success -> {
                 hideLoadingDialog()
                 Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
-                activity.onBackPressed()
+                findNavController().popBackStack()
             }
-            is ProfileViewState.SuccessUpdatePhoneNumber -> {
-                hideLoadingDialog()
-                val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
-                snackbar.setTextMaxLines(3)
-                snackbar.view.translationY = -(binding.saveButton.height + snackbar.view.height).toFloat()
-                snackbar.show()
-
-                val bundle = Bundle().apply {
-                    putString("phone", binding.phoneEditText.text.toString() )
-                }
-                val action =
-                    ProfileUpdateFragmentDirections.actionNavigationProfileUpdateToProfileOTPFragment( binding.phoneEditText.text.toString())
-
-                findNavController().navigate(action.actionId, bundle)
-            }
-
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
-                setView(viewState.userModel)
+//                setView(viewState.userModel)
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
@@ -118,13 +112,14 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
     }
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
+        if (errorsData.firstname?.get(0)?.isNotEmpty() == true) binding.firstNameTextInputLayout.error = errorsData.firstname?.get(0)
+        if (errorsData.lastname?.get(0)?.isNotEmpty() == true) binding.lastNameTextInputLayout.error = errorsData.lastname?.get(0)
+        if (errorsData.birthdate?.get(0)?.isNotEmpty() == true) binding.birthdateTextInputLayout.error = errorsData.birthdate?.get(0)
+        if (errorsData.zipcode?.get(0)?.isNotEmpty() == true) binding.zipcodeTextInputLayout.error = errorsData.zipcode?.get(0)
         if (errorsData.province_name?.get(0)?.isNotEmpty() == true) binding.provinceTextInputLayout.error = errorsData.province_name?.get(0)
         if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error = errorsData.city_name?.get(0)
         if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
         if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
-        if (errorsData.phone_number?.get(0)?.isNotEmpty() == true){
-            Toast.makeText(requireActivity(),errorsData.phone_number?.get(0),Toast.LENGTH_SHORT).show()
-        }
     }
 
 
@@ -132,6 +127,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_update_profile))
         hideLoadingDialog()
+        setView(viewModel.userModel)
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -143,7 +139,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
     }
 
     private fun setView(userModel: UserModel?) = binding.run{
-        userModelz = userModel
         provinceEditText.doOnTextChanged {
                 text, start, before, count ->
             provinceTextInputLayout.error = ""
@@ -164,61 +159,59 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         firstNameEditText.setText(userModel?.firstname)
         middleNameEditText.setText(userModel?.middlename)
         lastNameEditText.setText(userModel?.lastname)
-        emailEditText.setText(userModel?.email)
         provinceEditText.setText(userModel?.province_name)
         cityEditText.setText(userModel?.city_name)
         barangayEditText.setText(userModel?.brgy_name)
         streetEditText.setText(userModel?.street_name)
-        phoneEditText.setText(userModel?.phone_number)
-        reference = userModel?.province_sku.toString()
-        cityCode = userModel?.city_code.toString()
-        brgyCode = userModel?.brgy_code.toString()
-        zipCode = userModel?.zipcode.toString()
+        zipcodeEditText.setText(userModel?.zipcode)
 
+        birthdateEditText.setText(userModel?.birthdate?.date_only_ph)
         setClickable()
     }
 
     private fun setClickListeners() = binding.run {
-        phoneEditText.setOnSingleClickListener {
-            // Inflate the custom dialog layout
-            val inflater = requireActivity().layoutInflater
-            val dialogView = inflater.inflate(R.layout.dialog_change_phone_number, null)
+        birthdateEditText.setOnSingleClickListener {
+            val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .build()
 
-            //create custom dialog
-            MaterialAlertDialogBuilder(requireContext())
-                .setView(dialogView)
-                .setMessage(resources.getString(R.string.set_new_phone_number))
-                .setNegativeButton(resources.getString(R.string.lbl_cancel)) { dialog, _ ->
-                   dialog.dismiss()
-                }
-                .setPositiveButton(resources.getString(R.string.pending_accept_text)) { dialog , _ ->
-                    val number =  dialogView.findViewById<TextView>(R.id.inputPhoneEditText).text.toString()
-                    if (number.isEmpty()){
-                        Toast.makeText(requireContext(),
-                            getString(R.string.field_is_required), Toast.LENGTH_SHORT).show()
-                    }else{
-                        binding.phoneEditText.setText(number)
-                        //send the otp immediately
-                        viewModel.changePhoneNumber(UpdatePhoneNumberRequest(phone_number = number))
-                    }
-
-                }
-                .show()
+            datePicker.addOnPositiveButtonClickListener {
+                // Respond to positive button click.
+                val formattedDate = SimpleDateFormat("MM/dd/yyyy", Locale("en", "PH")).format(
+                    Date(it)
+                )
+                birthdateEditText.setText(formattedDate)
+            }
+            datePicker.addOnNegativeButtonClickListener {
+                // Respond to negative button click.
+                datePicker.dismiss()
+            }
+            datePicker.addOnCancelListener {
+                // Respond to cancel button click.
+                datePicker.dismiss()
+            }
+            datePicker.addOnDismissListener {
+                // Respond to dismiss events.
+                datePicker.dismiss()
+            }
+            datePicker.show(childFragmentManager, "ProfileUpdateFragment");
         }
 
         provinceEditText.setOnSingleClickListener {
+
             ProvinceDialog.newInstance(object : ProvinceDialog.AddressCallBack {
                 override fun onAddressClicked(
                     provinceName: String,
                     provinceSku: String,
-                    referencea: String,
+                    reference: String,
                 ) {
                     provinceEditText.setText(provinceName)
-                    reference = referencea
-
+                    viewModel.userModel?.province_sku = reference
                     cityEditText.setText("")
                     barangayEditText.setText("")
-
+                    zipcodeEditText.setText("")
                     setClickable()
                 }
             }).show(childFragmentManager, ProvinceDialog.TAG)
@@ -232,29 +225,76 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     zipcode: String
                 ) {
                     cityEditText.setText(cityName)
-                    cityCode = citySku
+                    viewModel.userModel?.city_code = citySku
 
                     barangayEditText.setText("")
-
+                    zipcodeEditText.setText("")
                     setClickable()
                 }
-            }, reference).show(childFragmentManager, CityDialog.TAG)
+            },  reference = viewModel.userModel?.province_sku.toString()).show(childFragmentManager, CityDialog.TAG)
         }
 
         barangayEditText.setOnSingleClickListener {
             BrgyDialog.newInstance(object : BrgyDialog.AddressCallBack {
                 override fun onAddressClicked(
-                    cityName: String,
-                    citySku: String,
-                    zipCodes: String
+                    brgyName: String,
+                    brgySku: String,
+                    zipCode: String
                 ) {
 
-                    brgyCode = citySku
-                    zipCode = zipCodes
-                    barangayEditText.setText(cityName)
+//                    brgyCode = citySku
+                    viewModel.userModel?.brgy_code = brgySku
+                    viewModel.userModel?.zipcode = zipCode
+//                    zipCode = zipCodes
+                    barangayEditText.setText(brgyName)
+                    zipcodeEditText.setText(zipCode)
                     setClickable()
                 }
-            }, cityCode).show(childFragmentManager, BrgyDialog.TAG)
+            }, viewModel.userModel?.city_code.toString()).show(childFragmentManager, BrgyDialog.TAG)
+        }
+
+//        ===================== LIONS CLUB INTL
+        regionEditText.setOnClickListener {
+            RegionDialog.newInstance(object : RegionDialog.RegionCallBack {
+                override fun onRegionClicked(
+                    data: LOVData
+                ) {
+                    regionEditText.setText(data.value)
+                    viewModel.userModel?.lc_region_id = data.code
+
+                    zoneEditText.setText("")
+                    clusterEditText.setText("")
+                    setClickableLionsClub()
+                }
+            }).show(childFragmentManager, RegionDialog.TAG)
+        }
+
+        zoneEditText.setOnSingleClickListener {
+            CommonLogger.instance.sysLogE("gege",    viewModel.userModel?.lc_region_id)
+
+            ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
+                override fun onZoneClicked(
+                    data: LOVData
+                ) {
+                    zoneEditText.setText(data.value)
+                    viewModel.userModel?.lc_zone_id = data.code
+
+                    clusterEditText.setText("")
+                    setClickableLionsClub()
+                }
+            }, region = viewModel.userModel?.lc_region_id.toString()).show(childFragmentManager, CityDialog.TAG)
+        }
+
+        clusterEditText.setOnSingleClickListener {
+            ClusterDialog.newInstance(object : ClusterDialog.ClusterCallBack {
+                override fun onClusterClicked(
+                    data: LOVData
+                ) {
+                    viewModel.userModel?.lc_location_id = data.code
+                    clusterEditText.setText(data.value)
+                    setClickableLionsClub()
+                }
+            },region = viewModel.userModel?.lc_region_id.toString(), zone = viewModel.userModel?.lc_zone_id.toString()).show(childFragmentManager, BrgyDialog.TAG)
         }
 
         saveButton.setOnSingleClickListener {
@@ -268,6 +308,12 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         barangayEditText.isClickable= cityEditText.text.toString().isNotEmpty()
     }
 
+    private fun setClickableLionsClub() = binding.run {
+        zoneEditText.isClickable = regionEditText.text.toString().isNotEmpty()
+        clusterEditText.isClickable= zoneEditText.text.toString().isNotEmpty()
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -275,19 +321,24 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
 
     override fun onMyAccountClicked(dialog: ProfileConfirmationDialog)=binding.run {
         dialog.dismiss()
-        viewModel.doUpdateProfile(
-            reference,
-            provinceEditText.text.toString(),
-            cityCode,
-            cityEditText.text.toString(),
-            brgyCode,
-            barangayEditText.text.toString(),
-            streetEditText.text.toString(),
-            zipCode,
-            firstNameEditText.text.toString(),
-            lastNameEditText.text.toString(),
-            middleNameEditText.text.toString(),
-            emailEditText.text.toString()
+        val request = UpdateInfoRequest(
+            province_sku =  viewModel.userModel?.province_sku.orEmpty(),
+            province_name = provinceEditText.text.toString(),
+            city_sku =viewModel.userModel?.city_code.orEmpty(),
+            city_name = cityEditText.text.toString(),
+            brgy_sku = viewModel.userModel?.brgy_code.orEmpty(),
+            brgy_name = barangayEditText.text.toString(),
+            street_name =  streetEditText.text.toString(),
+            zipcode = viewModel.userModel?.zipcode.orEmpty(),
+            firstname = firstNameEditText.text.toString(),
+            lastname = lastNameEditText.text.toString(),
+            middlename = middleNameEditText.text.toString(),
+            email = null,
+            birthdate = birthdateEditText.text.toString(),
+            lc_region_id = viewModel.userModel?.lc_region_id.orEmpty(),
+            lc_zone_id = viewModel.userModel?.lc_zone_id.orEmpty(),
+            lc_location_id = viewModel.userModel?.lc_location_id.orEmpty(),
         )
+        viewModel.doUpdateProfile(request)
     }
 }

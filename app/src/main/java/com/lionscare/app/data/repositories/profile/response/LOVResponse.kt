@@ -12,5 +12,6 @@ data class LOVResponse(
 @Keep
 data class LOVData(
     val code: String? = null,
-    val name: String? = null
+    val name: String? = null,
+    val value: String? =null
 )

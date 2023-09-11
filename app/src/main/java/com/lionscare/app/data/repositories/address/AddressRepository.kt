@@ -1,7 +1,10 @@
 package com.lionscare.app.data.repositories.address
 
+import com.lionscare.app.data.repositories.address.request.LocationRequest
 import com.lionscare.app.data.repositories.address.request.MunicipalityListRequest
+import com.lionscare.app.data.repositories.address.request.ZoneRequest
 import com.lionscare.app.data.repositories.address.response.AddressResponse
+import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +37,28 @@ class AddressRepository @Inject constructor(
     fun getBarangay(municipalityListRequest: MunicipalityListRequest): Flow<AddressResponse> {
         return flow {
             val response = regRemoteDataSource.getBarangayList(municipalityListRequest)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+
+    fun getRegionList(): Flow<LOVResponse> {
+        return flow {
+            val response = regRemoteDataSource.getRegionList()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getZoneList(request: ZoneRequest): Flow<LOVResponse> {
+        return flow {
+            val response = regRemoteDataSource.getZoneList(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getLocationList(request : LocationRequest): Flow<LOVResponse> {
+        return flow {
+            val response = regRemoteDataSource.getLocationList(request)
             emit(response)
         }.flowOn(ioDispatcher)
     }

@@ -116,6 +116,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setClickListeners() = binding.run {
+        profileDetailsLinearLayout.setOnSingleClickListener {
+            val intent = ProfileActivity.getIntent(requireActivity())
+            startActivity(intent)
+        }
+
         requestBadgeLinearLayout.setOnSingleClickListener {
             val intent = VerifiedBadgeActivity.getIntent(requireActivity())
             startActivity(intent)

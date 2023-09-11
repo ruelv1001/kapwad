@@ -112,7 +112,7 @@ class BrgyDialog : BottomSheetDialogFragment(), AddressListAdapter.AddressCallba
     }
 
     interface AddressCallBack {
-        fun onAddressClicked(cityName: String, citySku: String, zipCode: String)
+        fun onAddressClicked(brgyName: String, brgySku: String, zipCode: String)
     }
 
     override fun onItemClicked(data: AddressData, position: Int) {

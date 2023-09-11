@@ -12,10 +12,12 @@ data class ErrorModel(
 )
 
 @Keep
-data class ErrorsData(
+data class  ErrorsData(
     var email: List<String>? = null,
     var username: List<String>? = null,
     var password: List<String>? = null,
+    var birthdate: List<String>? = null,
+    var zipcode: List<String>? = null,
     var current_password: List<String>? = null,
     var password_confirmation: List<String>? = null,
     var firstname: List<String>? = null,
@@ -35,5 +37,6 @@ data class ErrorsData(
     var group_type: List<String>? = null,
     var group_privacy: List<String>? = null,
     var group_approval: List<String>? = null,
-    var group_passcode: List<String>? = null
+    var group_passcode: List<String>? = null,
+    var passcode: List<String>? = null
 )

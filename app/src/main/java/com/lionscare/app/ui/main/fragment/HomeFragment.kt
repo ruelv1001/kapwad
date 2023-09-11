@@ -105,12 +105,17 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             is SettingsViewState.LoadingBadge -> Unit
             is SettingsViewState.PopupError -> {
                 hideLoadingDialog()
-                showPopupError(
+                /* tinanggal ko yung pop up
+                error para walang lumalabas
+                if wala pa syang badge
+                -josh
+                 */
+                /*showPopupError(
                     requireActivity(),
                     childFragmentManager,
                     viewState.errorCode,
                     viewState.message
-                )
+                )*/
             }
 
             is SettingsViewState.InputError -> Unit

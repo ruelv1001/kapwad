@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="@dimen/dimen_20"
+    android:layout_marginTop="?android:actionBarSize"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/email_warning"
+        android:textAlignment="center"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/font_14"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTextInputLayout"
+        android:layout_marginTop="@dimen/dimen_30"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:hint="@string/lbl_email_address"
+        app:boxStrokeColor="@color/color_primary"
+        app:boxBackgroundColor="@color/white"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/commons_text_hint"
+            android:textSize="@dimen/font_14" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/verificationTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/email_verification_sent"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/color_primary"
+        android:textSize="@dimen/font_16"
+        />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/verificationDescTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/check_email"
+        android:textAlignment="center"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/font_14"
+        />
+    <RelativeLayout
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/confirmButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="@string/lbl_confirm"
+            android:backgroundTint="@color/color_primary"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_14" />
+    </RelativeLayout>
+</LinearLayout>

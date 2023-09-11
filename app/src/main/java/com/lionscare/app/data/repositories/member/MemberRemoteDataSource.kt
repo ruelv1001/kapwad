@@ -18,9 +18,10 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
 
     suspend fun doGetListOfMembers(
         groupId: String? = null,
+        include_admin: Boolean? = null,
         page: String? = null
     ): ListOfMembersResponse {
-        val request = ListOfMembersRequest(group_id = groupId, page = page)
+        val request = ListOfMembersRequest(group_id = groupId, include_admin = include_admin, page = page)
         val response = memberService.doGetListOfMembers(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)

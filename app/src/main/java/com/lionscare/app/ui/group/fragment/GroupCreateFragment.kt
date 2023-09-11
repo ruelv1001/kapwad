@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -62,10 +63,14 @@ class GroupCreateFragment : Fragment() {
     }
 
     private fun setView() = binding.run {
-//        firstNameEditText.doOnTextChanged {
-//                text, start, before, count ->
-//            firstNameTextInputLayout.error = ""
-//        }
+        nameEditText.doOnTextChanged {
+                text, start, before, count ->
+            nameTextInputLayout.error = ""
+        }
+        passwordEditText.doOnTextChanged{
+                text, start, before, count ->
+            passwordTextInputLayout.error = ""
+        }
     }
 
     private fun setUpSpinner() = binding.run {
@@ -195,6 +200,7 @@ class GroupCreateFragment : Fragment() {
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
         if (errorsData.group_name?.get(0)?.isNotEmpty() == true) nameTextInputLayout.error = errorsData.group_name?.get(0)
         if (errorsData.group_passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error = errorsData.group_passcode?.get(0)
+        if (errorsData.passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error = errorsData.passcode?.get(0)
     }
 
     override fun onDestroyView() {
