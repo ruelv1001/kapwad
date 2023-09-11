@@ -347,5 +347,26 @@
     <string name="personal_information">Personal Information</string>
     <string name="lbl_recent_requests">Recent Requests</string>
     <string name="lbl_cancelled">Cancelled</string>
+    <string name="age">Age</string>
+    <string name="contact_information">Contact Information</string>
+    <string name="unverified">Unverified</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="mm_dd_yyyy">MM / DD / YYYY</string>
+    <string name="lions_club_international">Lions Club International (Optional)</string>
+    <string name="lions_club_international_membership">Lions Club International Membership</string>
+    <string name="lbl_region">Region</string>
+    <string name="lbl_zone">Zone</string>
+    <string name="lbl_cluster_location">Cluster/Location</string>
+    <string name="not_yet_a_member">Not yet a member</string>
+    <string name="phone_warning">Please type in your new phone number below. Make sure you have access to it as OTP code will be sent and later be needed for verification</string>
+    <string name="update_contact_number">Update Contact Number</string>
+    <string name="otp">OTP</string>
+    <string name="update_email_address">Update Email Address</string>
+    <string name="email_warning">Please type in your desired email address to use. Make sure to have access to that email address as verification will be sent to that email address later after confirming</string>
+    <string name="check_email">Please check our email we sent to verify your email address</string>
+    <string name="email_verification_sent">Email Verification Sent!</string>
+    <string name="fields_cannot_be_empty">Fields cannot be empty</string>
+    <string name="this_email_is_currently_your_email">This email is currently your email</string>
+    <string name="profile_details">Profile Details</string>
 
 </resources>

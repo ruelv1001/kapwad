@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.profile.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,9 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
@@ -18,6 +21,7 @@ import com.lionscare.app.ui.profile.activity.ProfileActivity
 import com.lionscare.app.ui.profile.dialog.VerificationSuccessDialog
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.utils.calculateAge
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,8 +57,10 @@ class ProfilePreviewFragment : Fragment() {
 
     private fun observeProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.profileSharedFlow.collect { viewState ->
-                handleViewState(viewState)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.profileSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
             }
         }
     }
@@ -97,21 +103,44 @@ class ProfilePreviewFragment : Fragment() {
         hideLoadingDialog()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
-        firstNameTextView.text = userModel?.firstname
-        middleNameTextView.text = userModel?.middlename
-        lastNameTextView.text = userModel?.lastname
-        contactTextView.text = userModel?.phone_number
-        emailTextView.text = userModel?.email
-        provinceTextView.text = userModel?.province_name
-        cityTextView.text = userModel?.city_name
-        barangayTextView.text = userModel?.brgy_name
-        streetTextView.text = userModel?.street_name
+        nameTextView.text = userModel?.getFullName()
+        dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph?.ifEmpty { "Not set "}
+        ageTextView.text = userModel?.birthdate?.date_only_ph
+            ?.takeIf { it.isNotEmpty() }
+            ?.calculateAge()
+            ?.toString() ?: "Not set"
+
+        if (userModel?.province_name?.isNotEmpty() == true){
+            addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+        }else{
+            addressTextView.text = "Address Unavailable"
+        }
+
+        emailEditText.setText(userModel?.email.orEmpty().ifEmpty { "Check your email for verification" })
+        if (userModel?.email_verified == true){
+            emailIsVerifiedTextView.text = getString(R.string.lbl_verified)
+            emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_verified)
+        }else{
+            emailIsVerifiedTextView.text = getString(R.string.unverified)
+            emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_pending)
+        }
+
+        phoneEditText.setText(userModel?.phone_number)
+        if (userModel?.lc_member == true){
+            lionsClubTextView.text = "${userModel.lc_group} (${userModel.lc_location_id})"
+        }else{
+            lionsClubTextView.text = getString(R.string.not_yet_a_member)
+        }
     }
 
-    private fun setClickListeners() = binding.run {
-        emailVerifyTextView.setOnSingleClickListener {
-            VerificationSuccessDialog.newInstance().show(childFragmentManager, RegisterSuccessDialog.TAG)
+    private fun setClickListeners() = binding.run  {
+        emailEditText.setOnSingleClickListener {
+            findNavController().navigate(ProfilePreviewFragmentDirections.actionNavigationProfilePreviewToProfileEditEmailaddress())
+        }
+        phoneEditText.setOnSingleClickListener {
+            findNavController().navigate(ProfilePreviewFragmentDirections.actionNavigationProfilePreviewToProfileEditNumberFragment())
         }
         editImageView.setOnSingleClickListener {
             findNavController().navigate(ProfilePreviewFragmentDirections.actionNavigationProfileUpdate())

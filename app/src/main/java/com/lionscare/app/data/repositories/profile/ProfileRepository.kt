@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.BadgeResponse
@@ -39,33 +40,11 @@ class ProfileRepository @Inject constructor(
     }
 
     fun doUpdateInfo(
-        province_sku: String,
-        province_name: String,
-        city_sku: String,
-        city_name: String,
-        brgy_sku: String,
-        brgy_name: String,
-        street_name: String,
-        zipcode: String,
-        firstname: String,
-        lastname: String,
-        middlename: String,
-        email: String? = null
+       request: UpdateInfoRequest
     ): Flow<LoginResponse> {
         return channelFlow {
             profileRemoteDataSource.doUpdateInfo(
-                province_sku,
-                province_name,
-                city_sku,
-                city_name,
-                brgy_sku,
-                brgy_name,
-                street_name,
-                zipcode,
-                firstname,
-                lastname,
-                middlename,
-                email
+              request
             ).collectLatest { response ->
                 val userInfo = response.data ?: UserModel()
                 encryptedDataManager.setUserBasicInfo(userInfo)

@@ -15,6 +15,7 @@ data class UserModel(
     var middlename: String? = null,
     var lastname: String? = null,
     var email: String? = null,
+    var email_verified : Boolean? = false,
     var phone_number: String? = null,
     var address: String? = null,
     var province_name: String? = null,
@@ -25,10 +26,16 @@ data class UserModel(
     var brgy_code: String? = null,
     var street_name: String? = null,
     var zipcode: String? = null,
+    var birthdate : DateModel? = null,
+    var lc_member : Boolean? = false,
+    var lc_group : String? = null,
+    var lc_region_id : String? = null,
+    var lc_zone_id : String? = null,
+    var lc_location_id : String? = null,
     var date_registered: DateModel? = null,
     //var qr_value: String? = null
 ): Serializable {
-    fun getFullName() = "$firstname $lastname"
+    fun getFullName() = "$firstname ${middlename.orEmpty()} $lastname"
 }
 
 

@@ -96,6 +96,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
                 android:textColorHint="@color/commons_text_hint" />
+
             <View
                 android:layout_width="@dimen/dimen_10"
                 android:layout_height="@dimen/dimen_1" />
@@ -113,6 +114,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
                 android:textColorHint="@color/commons_text_hint" />
+
             <View
                 android:layout_width="@dimen/dimen_10"
                 android:layout_height="@dimen/dimen_1" />

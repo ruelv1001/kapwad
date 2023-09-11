@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -18,283 +19,327 @@
         android:layout_weight="1"
         android:fillViewport="true">
 
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/dimen_20"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_first_name"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/firstNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/lbl_first_name"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_middle_name"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/middleNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/lbl_middle_name"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_last_name"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/lastNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/lbl_last_name"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_contact_number"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:id="@+id/mainLinearLayout"
+           >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dimen_20"
+                android:background="@drawable/bg_rounded_outline"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_20">
+
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_gravity="center">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profileImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/img_profile" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/badgeImageView"
+                        android:layout_width="@dimen/dimen_30"
+                        android:layout_height="@dimen/dimen_30"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_photo_camera_black_48dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="@dimen/dimen_6"
+                        android:background="@drawable/bg_circle"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/home_name_text"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:textColor="@color/commons_lbl"
+                        android:textSize="@dimen/font_14" />
+
+                    <TextView
+                        android:id="@+id/nameTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:fontFamily="@font/inter_semibold"
+                        android:hint="@string/loading"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/font_16" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:orientation="horizontal">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="@string/home_date_of_birth_text"
+                                android:textColor="@color/commons_lbl"
+                                android:textSize="@dimen/font_14" />
+
+                            <TextView
+                                android:id="@+id/dateOfBirthTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="@string/loading"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/font_16" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="@string/age"
+                                android:textColor="@color/commons_lbl"
+                                android:textSize="@dimen/font_14" />
+
+                            <TextView
+                                android:id="@+id/ageTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="@string/loading"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/font_16" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/home_address_text"
+                        android:textColor="@color/commons_lbl"
+                        android:textSize="@dimen/font_14" />
+
+                    <TextView
+                        android:id="@+id/addressTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:fontFamily="@font/inter_semibold"
+                        android:text="@string/loading"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/font_16" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:layout_marginTop="@dimen/dimen_12"
+                    android:background="@color/line"/>
 
                 <TextView
-                    android:id="@+id/contactTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/inter_regular"
-                    android:gravity="center_vertical"
-                    android:hint="@string/_63_999_000_000"
-                    android:textColor="@color/black_text"
-                    android:textSize="@dimen/font_14" />
-
-                <TextView
-                    android:id="@+id/contactVerifyTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12"
                     android:fontFamily="@font/inter_bold"
+                    android:text="@string/contact_information"
+                    android:textColor="@color/color_primaryDark"
+                    android:textSize="@dimen/font_16" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/lbl_email_address"
+                        android:textColor="@color/commons_lbl"
+                        android:textSize="@dimen/font_14" />
+
+                    <TextView
+                        android:id="@+id/emailIsVerifiedTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/lbl_verified"
+                        android:textColor="@color/white"
+                        android:background="@drawable/bg_rounded_verified"
+                        android:paddingVertical="@dimen/dimen_5"
+                        android:paddingHorizontal="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_12"
+                        android:textSize="@dimen/font_14" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_edit"
+                    app:endIconContentDescription="@string/lbl_edit_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/bg_edittext"
+                    app:boxStrokeWidth="@dimen/dimen_0"
+                    app:boxBackgroundColor="@color/bg_edittext"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:fontFamily="@font/inter_semibold"
+                        android:text="@string/loading"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/font_14"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_14"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/dimen_10"
-                    android:paddingEnd="@dimen/dimen_10"
-                    android:text="@string/lvl_verified"
-                    android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_14" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/lbl_contact_number"
+                        android:textColor="@color/commons_lbl"
+                        android:textSize="@dimen/font_14" />
+
+                    <TextView
+                        android:id="@+id/phoneIsVerifiedTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/lbl_verified"
+                        android:textColor="@color/white"
+                        android:background="@drawable/bg_rounded_verified"
+                        android:paddingVertical="@dimen/dimen_5"
+                        android:paddingHorizontal="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_12"
+                        android:textSize="@dimen/font_14" />
+
+                </LinearLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_edit"
+                    app:endIconContentDescription="@string/lbl_edit_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/bg_edittext"
+                    app:boxStrokeWidth="@dimen/dimen_0"
+                    app:boxBackgroundColor="@color/bg_edittext"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:fontFamily="@font/inter_semibold"
+                        android:text="@string/loading"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/font_14"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:layout_marginTop="@dimen/dimen_12"
+                    android:background="@color/line"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/lions_club_international_membership"
+                    android:textColor="@color/color_primaryDark"
+                    android:textSize="@dimen/font_16" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/dimen_32"
+                        android:layout_height="@dimen/dimen_32"
+                        android:src="@drawable/logo_lion_club"/>
+                    <TextView
+                        android:id="@+id/lionsClubTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_12"
+                        android:fontFamily="@font/inter_semibold"
+                        android:text="@string/loading"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/font_16"
+                     />
+                </LinearLayout>
+
+
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_email_address"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/emailTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/inter_regular"
-                    android:gravity="center_vertical"
-                    android:hint="@string/lbl_email_address"
-                    android:textColor="@color/black_text"
-                    android:textSize="@dimen/font_14" />
-
-                <TextView
-                    android:id="@+id/emailVerifyTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/inter_bold"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/dimen_10"
-                    android:paddingEnd="@dimen/dimen_10"
-                    android:text="@string/lvl_verify"
-                    android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_14" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_60"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_province"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/provinceTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/lbl_province"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_city_municipality"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/cityTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/lbl_city_municipality"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_barangay"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/barangayTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/lbl_barangay"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:background="@color/light_gray_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_street"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/streetTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/lbl_street"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1"
-                android:layout_marginBottom="@dimen/dimen_100"
-                android:background="@color/light_gray_line" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
