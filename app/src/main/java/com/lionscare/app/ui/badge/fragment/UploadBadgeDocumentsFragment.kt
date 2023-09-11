@@ -92,7 +92,6 @@ class UploadBadgeDocumentsFragment : Fragment() {
                 }
             }
 
-            CommonLogger.sysLogE("Hat", doc1)
 //            viewModel.getBadgeStatus()
             viewModel.doRequestBadge(
                 BadgeRequest(

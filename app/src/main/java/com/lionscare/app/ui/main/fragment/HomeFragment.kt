@@ -4,6 +4,8 @@ import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.annotation.SuppressLint
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +26,7 @@ import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.group.response.GroupListData
+import com.lionscare.app.data.repositories.profile.response.BadgeStatus
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.group.activity.GroupActivity
@@ -79,7 +82,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         setUpAnimation()
         onResume()
         viewModel.getProfileDetails()
-        viewModel.getBadgeStatus()
         iFViewModel.getImmediateFamily()
     }
 
@@ -116,46 +118,66 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                     viewState.errorCode,
                     viewState.message
                 )*/
+
+                //***** -VON
+                //response of badge status returns an error of not found
+                //so always remove the views if this gets triggered
+                //since it'll always get overridden if the popup error comes from another api call
+                // this is for if it returned not found then do the ff.
+                binding.mainLayout.badgeImageView.visibility = View.GONE //remove badge on picture as it is still pending
+                binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.VISIBLE// whole reqest badge show
+                binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout.visibility = View.GONE //remove whole badge
+                binding.mainLayout.badgeImageView.visibility = View.GONE //dont show badge on picture as it is still pending
+                binding.mainLayout.badgeIdStatus.visibility = View.GONE //badge gone
+                binding.mainLayout.badgeIdStatus.visibility = View.GONE // bdage pill dont show
             }
 
             is SettingsViewState.InputError -> Unit
             is SettingsViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
+                //Only get badge status after getting success info
+                viewModel.getBadgeStatus()
                 setView(viewState.userModel)
             }
             is SettingsViewState.SuccessGetBadgeStatus -> {
                 hideLoadingDialog()
-//                when(viewState.badgeStatus?.status){
-//                    "pending" -> {
-//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
-//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
-//
-//                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.baseline_access_time_filled_24))
-//                        binding.mainLayout.statusVerifiedBadgeTextView.text = "Pending: ${formatBadgeType(viewState.badgeStatusResponse.data.badge_type)}"
-//                        binding.mainLayout.statusDateVerifiedBadgeTextView.text = "Submitted on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
-//                    }
-//                    "approved" -> {
-//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
-//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.VISIBLE
-//
-//                        binding.mainLayout.statusVerifiedBadgeImageView.setImageDrawable(
-//                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_check)
-//                                ?.mutate()
-//                                ?.apply {
-//                                    setColorFilter(
-//                                        ContextCompat.getColor(requireContext(), R.color.color_primary),
-//                                        PorterDuff.Mode.SRC_IN
-//                                    )
-//                                }
-//                        )
-//                        binding.mainLayout.statusVerifiedBadgeTextView.text = formatBadgeType(viewState.badgeStatusResponse.data.badge_type)
-//                        binding.mainLayout.statusDateVerifiedBadgeTextView.text =  "Approved on: ${viewState.badgeStatusResponse.data.submitted_date?.date_only}"
-//                    }
-//                    else -> {
-//                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.VISIBLE
-//                        binding.mainLayout.statusVerifiedBadgeLinearLayout.visibility = View.GONE
-//                    }
-//                }
+                when(viewState.badgeStatus?.status){
+                    "pending" -> {
+                        binding.mainLayout.badgeIdStatus.visibility = View.GONE // bdage pill dont show
+                        binding.mainLayout.badgeImageView.visibility = View.GONE //remove badge on picture as it is still pending\
+                        showProperBadgeStatus(viewState.badgeStatus)
+                    }
+                    "approved" -> {
+                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE//remove whole reqest badge
+                        binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout.visibility = View.GONE //remove whole badge
+                        binding.mainLayout.badgeIdStatus.visibility = View.VISIBLE // bdage pill show
+                        binding.mainLayout.badgeIdStatus.text = formatBadgeType(viewState.badgeStatus.badge_type)
+
+                        //change icon of avatar badge
+                        when(viewState.badgeStatus.badge_type){
+                            "non_government_Organization" -> {
+                                binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
+                                binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
+                            }
+                            "influencer" -> {
+                                binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
+                                binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_influencer)
+                            }
+                            "public_servant" -> {
+                                binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
+                                binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_public_servant)
+                            }
+                        }
+                    }
+                    else -> {
+                        binding.mainLayout.badgeImageView.visibility = View.GONE //remove badge on picture as it is still pending
+                        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.VISIBLE// whole reqest badge show
+                        binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout.visibility = View.GONE //remove whole badge
+                        binding.mainLayout.badgeImageView.visibility = View.GONE //dont show badge on picture as it is still pending
+                        binding.mainLayout.badgeIdStatus.visibility = View.GONE //badge gone
+                        binding.mainLayout.badgeIdStatus.visibility = View.GONE // bdage pill dont show
+                    }
+                }
             }
 
 
@@ -163,6 +185,30 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun showProperBadgeStatus(badgeStatus: BadgeStatus?){
+        binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
+        binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout.visibility = View.VISIBLE //show whole badge
+        binding.mainLayout.includeBadgeLayout.accountTypeRadioButton.visibility = View.GONE //remove radiobutton
+        binding.mainLayout.includeBadgeLayout.badgeIdStatus.visibility = View.VISIBLE
+        binding.mainLayout.includeBadgeLayout.dateTextView.visibility = View.VISIBLE
+
+        binding.mainLayout.includeBadgeLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_pending)
+        binding.mainLayout.includeBadgeLayout.badgeIdStatus.text = getString(R.string.lbl_pending)
+        binding.mainLayout.includeBadgeLayout.dateTextView.text = "Submitted on:\n${badgeStatus?.submitted_date?.datetime_ph}"
+        binding.mainLayout.includeBadgeLayout.accountTypeTextView.text = formatBadgeType( badgeStatus?.badge_type )
+        when(badgeStatus?.badge_type){
+            "non_government_Organization" -> {
+                binding.mainLayout.includeBadgeLayout.accountTypeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
+            }
+            "influencer" -> {
+                binding.mainLayout.includeBadgeLayout.accountTypeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
+            }
+            "public_servant" -> {
+                binding.mainLayout.includeBadgeLayout.accountTypeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
+            }
+        }
+    }
     private fun formatBadgeType(badge: String?) : String{
         var accountTypeFormmatted = ""
         when(badge){
@@ -214,6 +260,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         immediateFamilyLayout.referenceTextView.text = data.qrcode
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
         //main
         mainLayout.nameTextView.text = userModel?.name
@@ -232,11 +279,29 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
         if (userModel?.street_name?.isNotEmpty() == true) {
             mainLayout.addressTextView.text =
-                "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+                "${userModel.street_name}, ${userModel.brgy_name},\n${userModel.city_name}, ${userModel?.province_name}"
             idLayout.addressTextView.text =
-                "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+                "${userModel.street_name}, ${userModel.brgy_name},\n${userModel.city_name}, ${userModel.province_name}"
         }
 
+
+        //KYC status
+        when(userModel?.kyc_status){
+            "ongoing" -> {
+                // Change the status bar color
+                requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.pending)
+
+                binding.statusKYCTextView.text = getString(R.string.ongoing_verification)
+                binding.getVerifiedButton.text = getString(R.string.check_status)
+                binding.statusKYCImageView.colorFilter = PorterDuffColorFilter(
+                    ContextCompat.getColor(requireContext(), R.color.pending),
+                    PorterDuff.Mode.SRC_IN
+                )
+            }
+            "completed" -> {
+
+            }
+        }
         viewModel.userQrCode = userModel?.qrcode.orEmpty()
     }
 

@@ -9,11 +9,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxHeight="@dimen/dimen_530"
-        android:minWidth="@dimen/dimen_350"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen_20"
         android:background="@drawable/bg_rounded_outline"
+        android:maxHeight="@dimen/dimen_530"
+        android:minWidth="@dimen/dimen_350"
         android:orientation="vertical"
         android:padding="@dimen/dimen_20">
 
@@ -54,14 +54,33 @@
                 android:id="@+id/badgeImageView"
                 android:layout_width="@dimen/dimen_30"
                 android:layout_height="@dimen/dimen_30"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_verified"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_circle"
                 android:padding="@dimen/dimen_6"
-                android:background="@drawable/bg_circle"/>
+                android:src="@drawable/ic_verified" />
 
         </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/badgeIdStatus"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_influencer"
+            android:fontFamily="@font/inter_regular"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:paddingStart="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingEnd="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_5"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12"
+            android:text="@string/account_type_influencer_text"
+            android:visibility="gone" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,9 +109,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/home_name_text"
-                android:layout_marginTop="@dimen/dimen_10"
                 android:textColor="@color/commons_lbl"
                 android:textSize="@dimen/font_14" />
 
@@ -187,110 +206,65 @@
 
         </LinearLayout>
 
+<!--        initial request badge butto-->
         <LinearLayout
             android:id="@+id/requestVerifiedBadgeLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/dimen_16"
-            android:paddingHorizontal="@dimen/dimen_12"
             android:layout_marginTop="@dimen/dimen_16"
-            android:gravity="center"
             android:background="@drawable/bg_rounded"
             android:backgroundTint="@color/color_accent"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dimen_12"
+            android:paddingVertical="@dimen/dimen_18">
 
             <ImageView
                 android:id="@+id/requestVerifiedBadgeImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_request_badge"
-                android:layout_marginEnd="@dimen/dimen_10"/>
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:src="@drawable/ic_request_badge" />
 
             <LinearLayout
                 android:id="@+id/textHolderLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/requestVerifiedBadgeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
                     android:fontFamily="@font/inter_semibold"
                     android:text="@string/home_membership_card_text"
+                    android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_16"/>
+                    android:textSize="@dimen/font_16" />
+
                 <TextView
                     android:id="@+id/dateRequestVerifiedBadgeTextView"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/inter_regular"
                     android:layout_marginTop="@dimen/dimen_6"
-                    android:text="@string/home_membership_card_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_12"/>
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/statusVerifiedBadgeLinearLayout"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/dimen_16"
-            android:paddingHorizontal="@dimen/dimen_12"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:gravity="center"
-            android:background="@drawable/bg_rounded"
-            android:backgroundTint="@color/color_accent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/statusVerifiedBadgeImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_request_badge"
-                android:layout_marginEnd="@dimen/dimen_10"/>
-
-            <LinearLayout
-                android:id="@+id/statusTextHolderLinearLayout"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/statusVerifiedBadgeTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/inter_semibold"
-                    android:text="@string/home_membership_card_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_16"/>
-                <TextView
-                    android:id="@+id/statusDateVerifiedBadgeTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
                     android:fontFamily="@font/inter_regular"
-                    android:layout_marginTop="@dimen/dimen_2"
                     android:text="@string/home_membership_card_text"
+                    android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12"
+                    android:visibility="gone" />
 
             </LinearLayout>
-
-
         </LinearLayout>
 
+<!--        for status button-->
+    <include
+        android:layout_marginTop="@dimen/dimen_16"
+        android:id="@+id/includeBadgeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/adapter_account_type"/>
     </LinearLayout>
-
-
 </LinearLayout>

@@ -49,6 +49,15 @@ data class UserLocalData(
     val avatar_full_path: String? = null,
     val avatar_thumb_path: String? = null,
 
+    var badge_type : String? = null,
+    val badge_type_date_db: String? = null,
+    val badge_type_date_only: String? = null,
+    val badge_type_time_passed: String? = null,
+    val badge_type_timestamp: String? = null,
+    val badge_type_iso_format: String? = null,
+    val badge_type_month_year: String? = null,
+    var kyc_status : String? = null,
+
     val access_token: String? = null
 ){
     fun getFullName() = "$firstname $middlename $lastname"
