@@ -113,7 +113,7 @@ class ChooseKYCProcessFragment : Fragment() {
                     "approved" -> {
                         binding.badgeIdStatus.visibility = View.GONE
                         binding.validIdLinearLayout.isClickable = false
-                        binding.validIdDateTextView.text = "${viewState.profileVerificationResponse.data.id_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
+                        binding.validIdDateTextView.text = "Verified on:\n${viewState.profileVerificationResponse.data.id_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
                         binding.validIdDateTextView.visibility = View.VISIBLE
                         binding.idArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_check))
                     }
@@ -146,8 +146,8 @@ class ChooseKYCProcessFragment : Fragment() {
                     "approved" -> {
                         binding.badgeAddressStatus.visibility = View.GONE
                         binding.addressLinearLayout.isClickable = false
-                        binding.addressDateTextView.text =  "${viewState.profileVerificationResponse.data.address_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
-                        binding.validIdDateTextView.visibility = View.VISIBLE
+                        binding.addressDateTextView.text =  "Verified on:\n${viewState.profileVerificationResponse.data.address_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
+                        binding.addressDateTextView.visibility = View.VISIBLE
                         binding.addressArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_check))
                     }
                     else -> {

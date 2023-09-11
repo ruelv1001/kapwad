@@ -160,6 +160,20 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             streetTextInputLayout.error = ""
         }
 
+        regionEditText.doOnTextChanged {
+                text, start, before, count ->
+            regionTextInputLayout.error = ""
+        }
+        zoneEditText.doOnTextChanged {
+                text, start, before, count ->
+            zoneTextInputLayout.error = ""
+        }
+        clusterEditText.doOnTextChanged {
+                text, start, before, count ->
+            clusterTextInputLayout.error = ""
+        }
+
+
         firstNameEditText.setText(userModel?.firstname)
         middleNameEditText.setText(userModel?.middlename)
         lastNameEditText.setText(userModel?.lastname)

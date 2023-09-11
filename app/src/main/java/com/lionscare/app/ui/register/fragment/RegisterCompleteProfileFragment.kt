@@ -152,6 +152,19 @@ class RegisterCompleteProfileFragment: Fragment() {
             streetTextInputLayout.error = ""
         }
 
+        regionEditText.doOnTextChanged {
+                text, start, before, count ->
+            regionTextInputLayout.error = ""
+        }
+        zoneEditText.doOnTextChanged {
+                text, start, before, count ->
+            zoneTextInputLayout.error = ""
+        }
+        clusterEditText.doOnTextChanged {
+                text, start, before, count ->
+            clusterTextInputLayout.error = ""
+        }
+
         cityEditText.isClickable = false
         barangayEditText.isClickable = false
     }
