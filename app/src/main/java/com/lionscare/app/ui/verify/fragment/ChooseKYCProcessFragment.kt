@@ -84,15 +84,21 @@ class ChooseKYCProcessFragment : Fragment() {
                 val addressDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.address_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
 
                 //for id
+                binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data?.id_status?.replaceFirstChar(Char::titlecase)}"
+                binding.validIdButtonTextView.text = idStatus
+                binding.validIdDateTextView.text = idDate
+
+                //for address
+                binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data?.address_status?.replaceFirstChar(Char::titlecase)}"
+                binding.addressButtonTextView.text = addressStatus
+                binding.addressDateTextView.text = addressDate
+
                 when( viewState.profileVerificationResponse.data?.id_status ){
                     "pending" -> {
                         binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_pending)
                         binding.badgeIdStatus.visibility = View.VISIBLE
-                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data.id_status?.replaceFirstChar(Char::titlecase)}"
-
                         binding.validIdLinearLayout.isClickable = false
-                        binding.validIdButtonTextView.text = idStatus
-                        binding.validIdDateTextView.text = idDate
+                        binding.validIdDateTextView.visibility = View.VISIBLE
                         binding.idArrowImageView.visibility = View.GONE
                     }
                     "declined" ->{
@@ -102,24 +108,20 @@ class ChooseKYCProcessFragment : Fragment() {
                         binding.validIdLinearLayout.isClickable = true
                         binding.validIdButtonTextView.text = idStatus
                         binding.validIdDateTextView.text = idDate
-                        binding.idArrowImageView.visibility = View.GONE
+                        binding.idArrowImageView.visibility = View.VISIBLE
                     }
                     "approved" -> {
-                        binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_approved)
                         binding.badgeIdStatus.visibility = View.GONE
-                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data.id_status?.replaceFirstChar(Char::titlecase)}"
                         binding.validIdLinearLayout.isClickable = false
-                        binding.validIdButtonTextView.text = idStatus
-                        binding.validIdDateTextView.text = idDate
+                        binding.validIdDateTextView.text = "${viewState.profileVerificationResponse.data.id_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
+                        binding.validIdDateTextView.visibility = View.VISIBLE
                         binding.idArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_check))
                     }
                     else -> {
-                        binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded)
                         binding.badgeIdStatus.visibility = View.GONE
-                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data?.id_status?.replaceFirstChar(Char::titlecase)}"
                         binding.validIdLinearLayout.isClickable = true
-                        binding.validIdButtonTextView.text = idStatus
-                        binding.validIdDateTextView.text = idDate
+                        binding.validIdButtonTextView.text = getString(R.string.account_verification_valid_id_text)
+                        binding.validIdDateTextView.visibility = View.GONE
                         binding.idArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_forward_arrow))
                     }
                 }
@@ -127,40 +129,32 @@ class ChooseKYCProcessFragment : Fragment() {
                 when( viewState.profileVerificationResponse.data?.address_status ){
                     "pending" -> {
                         binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded_pending)
-                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
                         binding.badgeAddressStatus.visibility = View.VISIBLE
                         binding.addressLinearLayout.isClickable = false
-                        binding.addressButtonTextView.text = addressStatus
-                        binding.addressDateTextView.text = addressDate
-                        binding.addressArrowImageView.setImageDrawable(null)
+                        binding.addressDateTextView.visibility = View.VISIBLE
                         binding.addressArrowImageView.visibility = View.GONE
                     }
                     "declined" ->{
                         binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded_declined)
-                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
                         binding.badgeAddressStatus.visibility = View.VISIBLE
+                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
                         binding.addressLinearLayout.isClickable = true
                         binding.addressButtonTextView.text = addressStatus
-                        binding.addressDateTextView.text = addressDate
-                        binding.addressArrowImageView.setImageDrawable(null)
-                        binding.addressArrowImageView.visibility = View.GONE
+                        binding.addressDateTextView.visibility = View.GONE
+                        binding.addressArrowImageView.visibility = View.VISIBLE
                     }
                     "approved" -> {
-                        binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded_approved)
                         binding.badgeAddressStatus.visibility = View.GONE
-                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
                         binding.addressLinearLayout.isClickable = false
-                        binding.addressButtonTextView.text = addressStatus
-                        binding.addressDateTextView.text = addressDate
+                        binding.addressDateTextView.text =  "${viewState.profileVerificationResponse.data.address_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
+                        binding.validIdDateTextView.visibility = View.VISIBLE
                         binding.addressArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_check))
                     }
                     else -> {
-                        binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded)
                         binding.badgeAddressStatus.visibility = View.GONE
-                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data?.id_status?.replaceFirstChar(Char::titlecase)}"
                         binding.addressLinearLayout.isClickable = true
-                        binding.addressButtonTextView.text = idStatus
-                        binding.addressDateTextView.text = idDate
+                        binding.addressButtonTextView.text = getString(R.string.account_verification_proof_of_address_title)
+                        binding.addressDateTextView.visibility = View.GONE
                         binding.addressArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_forward_arrow))
                     }
                 }
@@ -169,7 +163,7 @@ class ChooseKYCProcessFragment : Fragment() {
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
-                //do not show popup on first run or if nothing was sent yet
+                //do not show popup on first run or if nothing was sent yet that was part of kyc
                 //based on api flow
                 if ( viewState.errorCode != PopupErrorState.HttpError && viewState.message != "Record not found."){
                     showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)

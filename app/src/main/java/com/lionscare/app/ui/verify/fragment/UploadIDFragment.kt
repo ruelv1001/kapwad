@@ -188,7 +188,7 @@ class UploadIDFragment : Fragment() {
                 lovData: LOVData
             ) {
                 selectedIdType =  lovData.code.toString()
-                binding.idTypeSpinner.text = selectedIdType
+                binding.idTypeSpinner.text = lovData.name.toString()
                 dialog.dismiss()
             }
         })
