@@ -83,6 +83,11 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         onResume()
         viewModel.getProfileDetails()
         iFViewModel.getImmediateFamily()
+
+        //immediately make this view gone
+        //not done in xml as this is a reused layout
+        //Reason: so it wont show for a second after finishin api call
+        binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout. visibility = View.GONE
     }
 
     override fun onResume() {
