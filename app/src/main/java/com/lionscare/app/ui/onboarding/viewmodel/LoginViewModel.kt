@@ -34,7 +34,6 @@ class LoginViewModel @Inject constructor(
                 }
                 .catch { exception ->
                     onError(exception)
-                    CommonLogger.instance.sysLogE("LoginViewModel", exception.localizedMessage, exception)
                 }
                 .collect {
                     _loginSharedFlow.emit(
