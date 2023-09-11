@@ -53,18 +53,26 @@
 -keep class com.lionscare.app.data.repositories.address.request.* { *; }
 -keep class com.lionscare.app.data.repositories.address.response.* { *; }
 
+-keep class com.lionscare.app.data.repositories.admin.request.* { *; }
+
 -keep class com.lionscare.app.data.repositories.auth.request.* { *; }
 -keep class com.lionscare.app.data.repositories.auth.response.* { *; }
+
+-keep class com.lionscare.app.data.repositories.assistance.request.* { *; }
+-keep class com.lionscare.app.data.repositories.assistance.response.* { *; }
 
 -keep class com.lionscare.app.data.repositories.baseresponse.* { *; }
 
 -keep class com.lionscare.app.data.repositories.group.request.* { *; }
 -keep class com.lionscare.app.data.repositories.group.response.* { *; }
 
+-keep class com.lionscare.app.data.repositories.generalsetting.response.* { *; }
+
 -keep class com.lionscare.app.data.repositories.member.request.* { *; }
 -keep class com.lionscare.app.data.repositories.member.response.* { *; }
 
 -keep class com.lionscare.app.data.repositories.profile.request.* { *; }
+-keep class com.lionscare.app.data.repositories.profile.response.* { *; }
 
 -keep class com.lionscare.app.data.repositories.registration.request.* { *; }
 
