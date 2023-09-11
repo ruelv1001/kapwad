@@ -287,7 +287,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                     clusterEditText.setText(data.value)
                     setClickableLionsClub()
                 }
-            }, zone= lc_zone_id, region = lc_region_id).show(childFragmentManager, BrgyDialog.TAG)
+            }, zone= lc_zone_id, region = lc_region_id ).show(childFragmentManager, BrgyDialog.TAG)
         }
 
 
