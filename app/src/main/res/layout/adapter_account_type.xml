@@ -19,19 +19,52 @@
         android:layout_marginEnd="@dimen/dimen_10"
         android:src="@drawable/ic_thumbs_up"/>
 
-    <TextView
-        android:id="@+id/accountTypeTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
+    <LinearLayout
         android:layout_weight="1"
-        tools:text="@string/account_type_influencer_text" />
+        android:layout_width="@dimen/dimen_0"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/accountTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="@dimen/font_16"
+            tools:text="@string/account_type_influencer_text" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            tools:text="@string/account_type_influencer_text" />
+    </LinearLayout>
 
     <RadioButton
         android:id="@+id/accountTypeRadioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/color_primary"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/badgeIdStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:background="@drawable/bg_rounded_pending"
+        android:fontFamily="@font/inter_regular"
+        android:paddingStart="@dimen/dimen_10"
+        android:paddingTop="@dimen/dimen_5"
+        android:paddingEnd="@dimen/dimen_10"
+        android:paddingBottom="@dimen/dimen_5"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_12"
+        android:visibility="gone" />
+
 
 </LinearLayout>

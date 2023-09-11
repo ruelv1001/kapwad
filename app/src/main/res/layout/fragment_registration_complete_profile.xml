@@ -81,142 +81,40 @@
                     android:layout_height="@dimen/dimen_32"
                     app:srcCompat="@drawable/baseline_account_circle_24" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/firstNameTextInputLayout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_8"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/lbl_first_name"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintAnimationEnabled="true"
-                    app:hintEnabled="true"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/firstNameEditText"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/birthdateTextInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:startIconDrawable="@drawable/baseline_calendar_month_24"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_8"
                         android:fontFamily="@font/inter_regular"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/commons_text_hint"
-                        android:textSize="@dimen/font_14" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:hint="@string/date_of_birth"
+                        app:boxBackgroundColor="@color/white"
+                        app:hintAnimationEnabled="true"
+                        app:hintEnabled="true"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/birthdateEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:singleLine="true"
+                            android:text="@string/mm_dd_yyyy"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/commons_text_hint"
+                            android:textSize="@dimen/font_14" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginVertical="@dimen/dimen_4"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/middleNameTextInputLayout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_40"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/lbl_middle_name"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintAnimationEnabled="true"
-                    app:hintEnabled="true"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/middleNameEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/commons_text_hint"
-                        android:textSize="@dimen/font_14" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginVertical="@dimen/dimen_4"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lastNameTextInputLayout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_40"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/lbl_last_name"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintAnimationEnabled="true"
-                    app:hintEnabled="true"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/lastNameEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/commons_text_hint"
-                        android:textSize="@dimen/font_14" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginVertical="@dimen/dimen_4"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/birthdateTextInputLayout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/baseline_calendar_month_24"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_40"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/date_of_birth"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintAnimationEnabled="true"
-                    app:hintEnabled="true"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/birthdateEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:imeOptions="actionNext"
-                        android:inputType="none"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:cursorVisible="false"
-                        android:singleLine="true"
-                        android:text="@string/mm_dd_yyyy"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/commons_text_hint"
-                        android:textSize="@dimen/font_14" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
 
             <!--           ===================== ADDRESS ===================-->
             <TextView

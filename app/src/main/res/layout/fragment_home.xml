@@ -42,12 +42,14 @@
                     android:layout_height="@dimen/dimen_130">
 
                     <ImageView
+                        android:id="@+id/statusKYCImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/bg_login"
                         android:scaleType="centerCrop"/>
 
                     <TextView
+                        android:id="@+id/statusKYCTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_semibold"
@@ -172,13 +174,14 @@
                         android:textAllCaps="false"
                         android:textSize="@dimen/font_14" />
 
-                    <include android:id="@+id/immediateFamilyLayout"
-                        android:layout_marginTop="@dimen/dimen_10"
+                    <include
+                        android:id="@+id/immediateFamilyLayout"
                         layout="@layout/adapter_group_your_group"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10"
                         android:layout_marginBottom="@dimen/dimen_20"
-                        android:visibility="gone"
-                        android:layout_height="wrap_content" />
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </LinearLayout>

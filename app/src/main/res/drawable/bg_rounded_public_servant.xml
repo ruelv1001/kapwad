@@ -3,7 +3,7 @@
 android:color="@color/light_gray">
 <item android:id="@+id/mask">
     <shape android:shape="rectangle">
-        <solid android:color="@color/declined" />
+        <solid android:color="@color/color_primary" />
         <corners android:radius="@dimen/dimen_5" />
     </shape>
 </item>
