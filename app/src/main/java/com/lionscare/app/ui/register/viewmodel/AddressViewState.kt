@@ -2,6 +2,8 @@ package com.lionscare.app.ui.register.viewmodel
 
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.address.response.AddressData
+import com.lionscare.app.data.repositories.profile.response.LOVData
+import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.utils.PopupErrorState
 
 sealed class AddressViewState{
@@ -16,5 +18,6 @@ sealed class AddressViewState{
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : AddressViewState()
     data class SuccessGetProvinceList(val provinceList: List<AddressData> = emptyList()) : AddressViewState()
     data class SuccessGetMunicipalityList(val provinceList: List<AddressData> = emptyList()) : AddressViewState()
+    data class SuccessGetLionsClubLOV(val lovResponse:  List<LOVData>) : AddressViewState()
     data class InputError(val errorData: ErrorsData? = null) : AddressViewState()
 }

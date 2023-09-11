@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
+import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +30,8 @@ class ProfileViewModel @Inject constructor(
     //holder for userModel
     var userModel : UserModel? = null
 
+    //holder for phonenumber
+    var phoneNumber : String? = null
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {
@@ -86,33 +89,9 @@ class ProfileViewModel @Inject constructor(
 
 
 
-    fun doUpdateProfile(province_sku: String,
-                        province_name: String,
-                        city_sku: String,
-                        city_name: String,
-                        brgy_sku: String,
-                        brgy_name: String,
-                        street_name: String,
-                        zipcode: String,
-                        firstname: String,
-                        lastname: String,
-                        middlename: String,
-                        email:String? = null
-    ) {
+    fun doUpdateProfile(request : UpdateInfoRequest ) {
         viewModelScope.launch {
-            profileRepository.doUpdateInfo(
-                province_sku,
-                province_name,
-                city_sku,
-                city_name,
-                brgy_sku,
-                brgy_name,
-                street_name,
-                zipcode,
-                firstname,
-                lastname,
-                middlename,
-                email)
+            profileRepository.doUpdateInfo(request)
                 .onStart {
                     _profileSharedFlow.emit(ProfileViewState.Loading)
                 }

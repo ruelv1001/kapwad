@@ -8,28 +8,34 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.address.request.ZoneRequest
 import com.lionscare.app.data.repositories.address.response.AddressData
+import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.DialogAddressBinding
 import com.lionscare.app.ui.register.adapter.AddressListAdapter
+import com.lionscare.app.ui.register.adapter.LionsClubLovListAdapter
 import com.lionscare.app.ui.register.viewmodel.AddressViewModel
 import com.lionscare.app.ui.register.viewmodel.AddressViewState
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class BrgyDialog : BottomSheetDialogFragment(), AddressListAdapter.AddressCallback {
+class ZoneDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.RegionCallback {
 
     private var viewBinding: DialogAddressBinding? = null
-    private var adapter: AddressListAdapter? = null
+    private var adapter: LionsClubLovListAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
     private val viewModel: AddressViewModel by viewModels()
-    private var callback: AddressCallBack? = null
-    private var reference = ""
+    private var callback: ZoneCallBack? = null
 
+    private var region_id: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,18 +58,20 @@ class BrgyDialog : BottomSheetDialogFragment(), AddressListAdapter.AddressCallba
         viewBinding = DialogAddressBinding.bind(view)
         setupList()
         observeProvinceList()
-        viewModel.getBrgyList(reference)
+        viewModel.getZoneList(ZoneRequest(region_id = region_id))
         setClickListener()
     }
 
     private fun setClickListener() {
-        viewBinding?.addressTitleTextView?.text = getString(R.string.lbl_barangay)
+        viewBinding?.addressTitleTextView?.text = getString(R.string.lbl_zone)
     }
 
     private fun observeProvinceList() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.addressSharedFlow.collect { viewState ->
-                handleViewState(viewState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.addressSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
             }
         }
     }
@@ -82,24 +90,18 @@ class BrgyDialog : BottomSheetDialogFragment(), AddressListAdapter.AddressCallba
                     viewState.message
                 )
             }
-            is AddressViewState.SuccessGetMunicipalityList -> {
+            is AddressViewState.SuccessGetLionsClubLOV -> {
                 viewBinding?.addressRecyclerView?.isVisible = true
                 viewBinding?.progressContainer?.isGone = true
-                adapter?.appendData(viewState.provinceList.toMutableList())
+                adapter?.differ?.submitList(viewState.lovResponse)
             }
-            is AddressViewState.SuccessGetProvinceList -> Unit
-            is AddressViewState.Idle -> Unit
-            is AddressViewState.Success -> Unit
-            is AddressViewState.InputError -> Unit
-            is AddressViewState.LoadingRegister -> Unit
-            is AddressViewState.SuccessRegister -> Unit
             else-> Unit
         }
     }
 
     private fun setupList() {
         viewBinding?.apply {
-            adapter = AddressListAdapter(requireActivity(), this@BrgyDialog)
+            adapter = LionsClubLovListAdapter(this@ZoneDialog)
             layoutManager = LinearLayoutManager(context)
             addressRecyclerView.layoutManager = layoutManager
             addressRecyclerView.adapter = adapter
@@ -111,22 +113,23 @@ class BrgyDialog : BottomSheetDialogFragment(), AddressListAdapter.AddressCallba
         viewBinding = null
     }
 
-    interface AddressCallBack {
-        fun onAddressClicked(brgyName: String, brgySku: String, zipCode: String)
+
+    interface ZoneCallBack {
+        fun onZoneClicked(data: LOVData)
     }
 
-    override fun onItemClicked(data: AddressData, position: Int) {
-        callback?.onAddressClicked(data.name.orEmpty(), data.code.orEmpty(),data.zipcode.orEmpty())
+    override fun onItemClicked(data: LOVData, position: Int) {
+        callback?.onZoneClicked(data)
         dismiss()
     }
 
     companion object {
-        fun newInstance(callback: AddressCallBack? = null, reference: String) = BrgyDialog()
+        fun newInstance(callback: ZoneCallBack? = null, region: String) = ZoneDialog()
             .apply {
                 this.callback = callback
-                this.reference = reference
+                this.region_id = region
             }
 
-        val TAG: String = BrgyDialog::class.java.simpleName
+        val TAG: String = ZoneDialog::class.java.simpleName
     }
 }
