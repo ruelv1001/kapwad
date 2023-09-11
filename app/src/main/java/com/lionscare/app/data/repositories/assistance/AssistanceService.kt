@@ -12,13 +12,13 @@ interface AssistanceService {
 
     @POST("api/group/assistance/create")
     suspend fun doCreateAssistance(@Body createAssistanceRequest: CreateAssistanceRequest): Response<GeneralResponse>
-    @POST("api/group/assistance/pending/all")
+    @POST("api/group/assistance/all")
     suspend fun doGetAllAssistanceRequestList(@Body assistanceRequest: AssistanceRequest): Response<GeneralResponse>
 
     @POST("api/group/assistance/info")
     suspend fun doGetAssistanceRequestInfo(@Body assistanceRequest: AssistanceRequest): Response<CreateAssistanceResponse>
 
-    @POST("api/group/assistance/pending/user")
+    @POST("api/group/assistance/owned")
     suspend fun doGetMyAssistanceRequestList(@Body assistanceRequest: AssistanceRequest): Response<GeneralResponse>
 
     @POST("api/group/assistance/pending/approve")
