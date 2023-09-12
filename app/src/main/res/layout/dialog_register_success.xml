@@ -38,7 +38,7 @@
         android:layout_marginEnd="@dimen/dimen_20"
         android:fontFamily="@font/inter_regular"
         android:maxLines="3"
-        android:text="@string/sample_lorem_ipsum"
+        android:text="@string/success_register_info"
         android:textAlignment="textStart"
         android:textColor="@color/commons_lbl"
         android:textSize="@dimen/font_14" />

@@ -202,6 +202,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setCalendarConstraints(constraintsBuilder.build())
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .setTitleText("Select date")
                     .build()
 
