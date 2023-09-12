@@ -474,7 +474,7 @@
                 android:fontFamily="@font/inter_semibold"
                 android:paddingTop="@dimen/dimen_15"
                 android:paddingBottom="@dimen/dimen_15"
-                android:text="@string/lbl_continue"
+                android:text="@string/lbl_submit"
                 android:textAllCaps="false"
                 android:textSize="@dimen/font_14" />
         </RelativeLayout>
