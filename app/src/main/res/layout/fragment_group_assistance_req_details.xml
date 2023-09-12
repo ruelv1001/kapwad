@@ -2,12 +2,13 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dimen_10"
         android:gravity="center"
         android:orientation="vertical">
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:fontFamily="@font/inter_semibold"
-            android:text="Zyla Valerie"
+            android:text="@string/loading"
             android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_20" />
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:fontFamily="@font/inter_regular"
-            android:text="@string/lbl_if_000001"
+            android:text="@string/loading"
             android:textAlignment="center"
             android:textSize="@dimen/font_14" />
 
@@ -57,7 +58,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_reason"
                 android:textColor="@color/black_text"
@@ -67,16 +68,16 @@
                 android:id="@+id/reasonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20"
+                android:layout_margin="@dimen/dimen_10"
                 android:fontFamily="@font/inter_regular"
-                android:text="@string/lbl_reason"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl__refid"
                 android:textColor="@color/black_text"
@@ -86,10 +87,10 @@
                 android:id="@+id/refIDTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20"
+                android:layout_margin="@dimen/dimen_10"
                 android:drawablePadding="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
-                android:text="003254300021"
+                android:text="@string/loading"
                 android:textColor="@color/color_primary"
                 android:textSize="@dimen/font_16"
                 app:drawableEndCompat="@drawable/ic_copy" />
@@ -97,7 +98,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_date_requested"
                 android:textColor="@color/black_text"
@@ -107,16 +108,16 @@
                 android:id="@+id/dateTimeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20"
+                android:layout_margin="@dimen/dimen_10"
                 android:fontFamily="@font/inter_regular"
-                android:text="2023-07-04 3:59 PM"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/lbl_amount"
                 android:textColor="@color/black_text"
@@ -126,18 +127,18 @@
                 android:id="@+id/amountTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20"
+                android:layout_margin="@dimen/dimen_10"
                 android:fontFamily="@font/inter_regular"
-                android:text="500.00"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_remarks"
+                android:text="@string/lbl_note"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -145,9 +146,9 @@
                 android:id="@+id/remarksTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20"
+                android:layout_margin="@dimen/dimen_10"
                 android:fontFamily="@font/inter_regular"
-                android:text="@string/sample_lorem_ipsum"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -162,7 +163,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_15"
                 android:background="@drawable/bg_shadow_top"
-                android:visibility="visible" />
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:background="@color/light_gray_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

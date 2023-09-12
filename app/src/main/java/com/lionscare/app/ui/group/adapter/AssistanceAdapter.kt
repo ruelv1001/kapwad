@@ -2,10 +2,14 @@ package com.lionscare.app.ui.group.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.data.repositories.member.response.MemberListData
@@ -14,7 +18,7 @@ import com.lionscare.app.databinding.AdapterGroupAssistanceBinding
 import com.lionscare.app.databinding.AdapterMembersBinding
 import com.lionscare.app.utils.currencyFormat
 
-class AssistanceAdapter(val clickListener: GroupCallback) :
+class AssistanceAdapter(val context: Context, val clickListener: GroupCallback) :
     PagingDataAdapter<CreateAssistanceData, AssistanceAdapter.AdapterViewHolder>(
         DIFF_CALLBACK
     ) {
@@ -46,10 +50,24 @@ class AssistanceAdapter(val clickListener: GroupCallback) :
 
         fun bind(data: CreateAssistanceData?) {
             data?.let {
-                binding.titleTextView.text = data.status.toString().replaceFirstChar (Char :: titlecase)
+                binding.titleTextView.text = data.reason
                 binding.requestByTextView.text = data.user?.name
                 binding.dateTextView.text = data.date_created?.datetime_ph
-                binding.refIDTextView.text = data.reference_id
+                binding.refIDTextView.text = data.status.toString().replaceFirstChar (Char :: titlecase)
+                when(data.status){
+                    "declined"-> {
+                        binding.refIDTextView.setTextColor(ContextCompat.getColor(context, R.color.red))
+                    }
+                    "cancelled"-> {
+                        binding.refIDTextView.setTextColor(ContextCompat.getColor(context, R.color.light_gray))
+                    }
+                    "approved" ->{
+                        binding.refIDTextView.setTextColor(ContextCompat.getColor(context, R.color.blue_text))
+                    }
+                    else-> { // pending
+                        binding.refIDTextView.setTextColor(ContextCompat.getColor(context, R.color.green))
+                    }
+                }
                 binding.amountTextView.text = currencyFormat(data.amount.toString())
 //            binding.articleImageView.loadImage(data.image?.thumb_path, context)
                 binding.adapterLinearLayout.setOnClickListener {

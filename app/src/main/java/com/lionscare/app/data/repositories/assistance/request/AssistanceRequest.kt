@@ -9,6 +9,5 @@ data class AssistanceRequest(
     var page: Int? = null,
     var per_page: Int? = null,
     var reference_id: String? = null,
-    var request_id: String? = null,
     var remarks: String? = null
 )

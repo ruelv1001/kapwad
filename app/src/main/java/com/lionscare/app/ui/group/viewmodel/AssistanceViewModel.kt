@@ -52,9 +52,9 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
-    fun cancelAssistance(requestId: String, groupId: String) {
+    fun cancelAssistance(referenceId: String, groupId: String) {
         viewModelScope.launch {
-            assistanceRepository.doCancelAssistanceRequest(requestId, groupId)
+            assistanceRepository.doCancelAssistanceRequest(referenceId, groupId)
                 .onStart {
                     _assistanceSharedFlow.emit(AssistanceViewState.Loading)
                 }
@@ -69,9 +69,9 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
-    fun approveAssistance(requestId: String, groupId: String, remarks: String? = null) {
+    fun approveAssistance(referenceId: String, groupId: String, remarks: String? = null) {
         viewModelScope.launch {
-            assistanceRepository.doApproveAssistanceRequest(requestId, groupId, remarks)
+            assistanceRepository.doApproveAssistanceRequest(referenceId, groupId, remarks)
                 .onStart {
                     _assistanceSharedFlow.emit(AssistanceViewState.Loading)
                 }
@@ -86,9 +86,9 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
-    fun declineAssistance(requestId: String, groupId: String, remarks: String? = null) {
+    fun declineAssistance(referenceId: String, groupId: String, remarks: String? = null) {
         viewModelScope.launch {
-            assistanceRepository.doDeclineAssistanceRequest(requestId, groupId, remarks)
+            assistanceRepository.doDeclineAssistanceRequest(referenceId, groupId, remarks)
                 .onStart {
                     _assistanceSharedFlow.emit(AssistanceViewState.Loading)
                 }
@@ -103,9 +103,9 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
-    fun getAssistanceInfo(requestId: String, groupId: String) {
+    fun getAssistanceInfo(referenceId: String, groupId: String) {
         viewModelScope.launch {
-            assistanceRepository.doGetAssistanceRequestInfo(requestId, groupId)
+            assistanceRepository.doGetAssistanceRequestInfo(referenceId, groupId)
                 .onStart {
                     _assistanceSharedFlow.emit(AssistanceViewState.Loading)
                 }

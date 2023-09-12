@@ -374,5 +374,6 @@
     <string name="uploading_your_avatar_please_wait">Uploading your avatar... Please wait</string>
     <string name="success_register_info">Congratulations! Your account has been successfully registered. Please complete your profile by providing the information needed afterwards login using your email and password provided on the Sign Up application.</string>
     <string name="no_email_has_been_set_yet">No email has been set yet</string>
+    <string name="lbl_note">Note</string>
 
 </resources>

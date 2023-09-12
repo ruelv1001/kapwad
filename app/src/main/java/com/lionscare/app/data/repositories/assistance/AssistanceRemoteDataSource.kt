@@ -60,11 +60,11 @@ class AssistanceRemoteDataSource @Inject constructor(private val assistanceServi
     }
 
     suspend fun doApproveAssistanceRequest(
-        requestId: String? = null,
+        referenceId: String? = null,
         groupId: String? = null,
         remarks: String? = null
     ): GeneralResponse {
-        val request = AssistanceRequest(request_id = requestId, group_id = groupId, remarks = remarks)
+        val request = AssistanceRequest(reference_id = referenceId, group_id = groupId, remarks = remarks)
         val response = assistanceService.doApproveAssistanceRequest(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
@@ -73,11 +73,11 @@ class AssistanceRemoteDataSource @Inject constructor(private val assistanceServi
     }
 
     suspend fun doDeclineAssistanceRequest(
-        requestId: String? = null,
+        referenceId: String? = null,
         groupId: String? = null,
         remarks: String? = null
     ): GeneralResponse {
-        val request = AssistanceRequest(request_id = requestId, group_id = groupId, remarks = remarks)
+        val request = AssistanceRequest(reference_id = referenceId, group_id = groupId, remarks = remarks)
         val response = assistanceService.doDeclineAssistanceRequest(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
@@ -86,10 +86,10 @@ class AssistanceRemoteDataSource @Inject constructor(private val assistanceServi
     }
 
     suspend fun doCancelAssistanceRequest(
-        requestId: String? = null,
+        referenceId: String? = null,
         groupId: String? = null
     ): GeneralResponse {
-        val request = AssistanceRequest(request_id = requestId, group_id = groupId)
+        val request = AssistanceRequest(reference_id = referenceId, group_id = groupId)
         val response = assistanceService.doCancelAssistanceRequest(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
