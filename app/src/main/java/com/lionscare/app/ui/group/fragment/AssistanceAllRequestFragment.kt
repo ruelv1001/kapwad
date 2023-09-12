@@ -4,25 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lionscare.app.data.repositories.article.response.ArticleData
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.lionscare.app.R
+import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupAssistanceBinding
+import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.AssistanceAdapter
+import com.lionscare.app.ui.group.dialog.FilterDialog
+import com.lionscare.app.ui.group.viewmodel.AssistanceViewModel
+import com.lionscare.app.ui.group.viewmodel.AssistanceViewState
+import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback {
+class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback,
+    SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentGroupAssistanceBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter: AssistanceAdapter? = null
     private var direction: NavDirections? = null
-
+    private val viewModel: AssistanceViewModel by viewModels()
+    private val activity by lazy { requireActivity() as GroupActivity }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,27 +61,73 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
         setupAdapter()
+        observeAssistance()
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = AssistanceAdapter( requireActivity(),this@AssistanceAllRequestFragment)
+        adapter = AssistanceAdapter(this@AssistanceAllRequestFragment)
+        swipeRefreshLayout.setOnRefreshListener(this@AssistanceAllRequestFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-        val model = listOf(
-            ArticleData(
-                name = "Zyla Valerie",
-                description = "2023-07-04 3:59 PM",
-                reference = "003254300012",
-                type = "200.00"
-            ),
-        )
-        adapter?.appendData(model)
+        adapter?.addLoadStateListener {
+            if (adapter?.hasData() == true) {
+                placeHolderTextView.isVisible = false
+                recyclerView.isVisible = true
+            } else {
+                placeHolderTextView.isVisible = true
+                recyclerView.isVisible = false
+            }
+        }
     }
 
     private fun setClickListeners() = binding.run {
+        activity.getFilterImageView().setOnSingleClickListener {
+            FilterDialog.newInstance(object : FilterDialog.FilterDialogListener {
+                override fun onFilter(filter: ArrayList<String>) {
+                    viewModel.refresh(activity.groupDetails?.id.toString(), filter)
+                }
 
+                override fun onCancel() {
+                    viewModel.refresh(activity.groupDetails?.id.toString(), emptyList())
+                }
+
+            }).show(childFragmentManager, FilterDialog.TAG)
+        }
+    }
+
+    private fun observeAssistance() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.assistanceSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: AssistanceViewState) {
+        when (viewState) {
+            is AssistanceViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is AssistanceViewState.SuccessGetAllListOfAssistance -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                showList(viewState.pagingData)
+            }
+            is AssistanceViewState.PopupError -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                showPopupError(requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message)
+            }
+            else -> Unit
+        }
+    }
+
+    private fun showList(createAssistanceData: PagingData<CreateAssistanceData>){
+        binding.swipeRefreshLayout.isRefreshing = false
+        adapter?.submitData(viewLifecycleOwner.lifecycle, createAssistanceData)
     }
 
     override fun onDestroyView() {
@@ -77,9 +143,16 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
         }
     }
 
-    override fun onItemClicked(data: ArticleData) {
+    override fun onItemClicked(data: CreateAssistanceData) {
         findNavController().navigate(direction!!)
     }
 
+    override fun onRefresh() {
+        viewModel.refresh(activity.groupDetails?.id.toString(), emptyList())
+    }
 
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
+    }
 }

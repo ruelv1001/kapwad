@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.databinding.FragmentGroupAssistanceBinding
 import com.lionscare.app.ui.group.adapter.AssistanceAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,20 +43,10 @@ class AssistanceRequestFragment : Fragment(), AssistanceAdapter.GroupCallback {
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = AssistanceAdapter( requireActivity(),this@AssistanceRequestFragment)
+        adapter = AssistanceAdapter(this@AssistanceRequestFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-
-        val model = listOf(
-            ArticleData(
-                name = "Zyla Valerie",
-                description = "2023-07-04 3:59 PM",
-                reference = "003254300013",
-                type = "500.00"
-            ),
-        )
-        adapter?.appendData(model)
     }
 
     private fun setClickListeners() = binding.run {
@@ -77,7 +67,7 @@ class AssistanceRequestFragment : Fragment(), AssistanceAdapter.GroupCallback {
         }
     }
 
-    override fun onItemClicked(data: ArticleData) {
+    override fun onItemClicked(data: CreateAssistanceData) {
         findNavController().navigate(actionNavigationGroupAssistanceReqDetails!!)
     }
 

@@ -66,19 +66,6 @@ class AssistanceFragment : Fragment() {
             findNavController().navigate(AssistanceFragmentDirections.actionNavigationGroupAssistanceCreate())
         }
 
-        activity.getFilterImageView().setOnSingleClickListener {
-            FilterDialog.newInstance(object : FilterDialog.FilterDialogListener {
-                override fun onFilter(filter: ArrayList<String>) {
-                    CommonLogger.devLog("FILTERS", filter)
-                }
-
-                override fun onCancel() {
-                    // set filter to all
-                }
-
-            }).show(childFragmentManager, FilterDialog.TAG)
-        }
-
         /*declineRelativeLayout.setOnSingleClickListener {
             setActiveTab(declineRelativeLayout)
             viewPager.currentItem = 2
