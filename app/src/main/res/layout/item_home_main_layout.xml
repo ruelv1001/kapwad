@@ -265,6 +265,7 @@
         android:id="@+id/includeBadgeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         layout="@layout/adapter_account_type"/>
     </LinearLayout>
 </LinearLayout>

@@ -370,5 +370,6 @@
     <string name="profile_details">Profile Details</string>
     <string name="ongoing_verification">Ongoing Verification</string>
     <string name="check_status">Check Status</string>
+    <string name="lbl_community">Community</string>
 
 </resources>

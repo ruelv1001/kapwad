@@ -114,6 +114,25 @@
                         android:textSize="@dimen/font_12"
                         android:visibility="gone" />
 
+                    <TextView
+                        android:id="@+id/typeComTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:background="@drawable/bg_round"
+                        android:backgroundTint="@color/blue_text"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/inter_regular"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/dimen_10"
+                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingEnd="@dimen/dimen_10"
+                        android:paddingBottom="@dimen/dimen_5"
+                        android:text="@string/lbl_community"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_12"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
             </LinearLayout>

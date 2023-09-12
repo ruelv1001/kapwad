@@ -53,7 +53,6 @@ class GroupUpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
-        setUpSpinner()
         onResume()
         observerGroup()
         activity.groupDetails?.id?.let { viewModel.showGroup(it) }
@@ -64,11 +63,11 @@ class GroupUpdateFragment : Fragment() {
         activity.setTitlee(getString(R.string.lbl_update_group))
     }
 
-    private fun setUpSpinner() = binding.run {
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+    private fun setUpSpinner(items : ArrayList<String>) = binding.run {
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             requireActivity(),
-            R.array.group_type_items,
-            android.R.layout.simple_spinner_item
+            android.R.layout.simple_spinner_item,
+            items
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupTypeSpinner.adapter = adapter
@@ -86,8 +85,8 @@ class GroupUpdateFragment : Fragment() {
                 groupType = when (selectedItem) {
                     "Immediate Family" -> "immediate_family"
                     "Organization" -> "organization"
-                    "Clan" -> "clan"
-                    else -> "immediate_family"
+                    "Community" -> "community"
+                    else -> selectedItem
                 }
             }
 
@@ -197,13 +196,14 @@ class GroupUpdateFragment : Fragment() {
 
     private fun setDetails(data: GroupData) = binding.run {
         nameEditText.setText(data.name)
-        groupTypeSpinner.setSelection(
+        /*groupTypeSpinner.setSelection(
             when (data.type) {
                 "organization" -> 1
-                "clan" -> 2
+                "community" -> 2
                 else -> 0
             }
-        )
+        )*/
+        setUpSpinner(arrayListOf(data.type.toString().replaceFirstChar(Char::titlecase)))
         publicRadioButton.isChecked = data.privacy == "public"
         privateRadioButton.isChecked = data.privacy == "private"
         if (data.privacy == "private") {
