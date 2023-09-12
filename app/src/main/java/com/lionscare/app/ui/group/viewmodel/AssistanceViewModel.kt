@@ -142,6 +142,28 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
+    private suspend fun loadMyAssistanceRequest(groupId: String, filter : List<String>) {
+        assistanceRepository.doGetMyListOfAssistanceRequest(groupId = groupId, filter = filter)
+            .cachedIn(viewModelScope)
+            .onStart {
+                _assistanceSharedFlow.emit(AssistanceViewState.Loading)
+            }
+            .catch { exception ->
+                onError(exception)
+            }
+            .collect { pagingData ->
+                _assistanceSharedFlow.emit(
+                    AssistanceViewState.SuccessGetMyListOfAssistance(pagingData)
+                )
+            }
+    }
+
+    fun refreshMyList(groupId: String, filter : List<String>) {
+        viewModelScope.launch {
+            loadMyAssistanceRequest(groupId, filter)
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,

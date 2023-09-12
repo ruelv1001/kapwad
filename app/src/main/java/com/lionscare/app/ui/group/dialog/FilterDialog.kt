@@ -51,16 +51,16 @@ class FilterDialog : DialogFragment()  {
     private fun setClickListener() = viewBinding?.run {
         okButton.setOnSingleClickListener {
             if(approvedCheckBox.isChecked){
-                selectedCheckboxes.add(approvedCheckBox.text.toString())
+                selectedCheckboxes.add(approvedCheckBox.text.toString().replaceFirstChar(Char::lowercase))
             }
             if(cancelledCheckBox.isChecked){
-                selectedCheckboxes.add(cancelledCheckBox.text.toString())
+                selectedCheckboxes.add(cancelledCheckBox.text.toString().replaceFirstChar(Char::lowercase))
             }
             if(declinedCheckBox.isChecked){
-                selectedCheckboxes.add(declinedCheckBox.text.toString())
+                selectedCheckboxes.add(declinedCheckBox.text.toString().replaceFirstChar(Char::lowercase))
             }
             if(pendingCheckBox.isChecked){
-                selectedCheckboxes.add(pendingCheckBox.text.toString())
+                selectedCheckboxes.add(pendingCheckBox.text.toString().replaceFirstChar(Char::lowercase))
             }
             callback?.onFilter(selectedCheckboxes)
             dismiss()

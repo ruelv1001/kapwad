@@ -44,6 +44,20 @@ class AssistanceRepository @Inject constructor(
             .flowOn(ioDispatcher)
     }
 
+    fun doGetMyListOfAssistanceRequest(
+        pagingConfig: PagingConfig = getDefaultPageConfig(),
+        groupId: String,
+        filter: List<String>
+    ): Flow<PagingData<CreateAssistanceData>> {
+        val getMyListOfAssistanceRequestPagingSource =
+            GetMyListOfAssistanceRequestPagingSource(assistanceRemoteDataSource, groupId, filter)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getMyListOfAssistanceRequestPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
     fun doGetAssistanceRequestInfo(
         referenceId: String? = null,
         groupId: String? = null

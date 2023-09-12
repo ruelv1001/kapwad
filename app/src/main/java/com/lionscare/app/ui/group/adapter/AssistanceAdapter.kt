@@ -46,6 +46,7 @@ class AssistanceAdapter(val clickListener: GroupCallback) :
 
         fun bind(data: CreateAssistanceData?) {
             data?.let {
+                binding.titleTextView.text = data.status.toString().replaceFirstChar (Char :: titlecase)
                 binding.requestByTextView.text = data.user?.name
                 binding.dateTextView.text = data.date_created?.datetime_ph
                 binding.refIDTextView.text = data.reference_id

@@ -8,6 +8,7 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentAssistanceBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
@@ -24,6 +25,7 @@ class AssistanceFragment : Fragment() {
     private val binding get() = _binding!!
     private var pagerAdapter: CustomViewPagerAdapter? = null
     private val activity by lazy { requireActivity() as GroupActivity }
+    private var filterList = emptyList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +66,21 @@ class AssistanceFragment : Fragment() {
 
         createAssistanceFloatingActionButton.setOnSingleClickListener {
             findNavController().navigate(AssistanceFragmentDirections.actionNavigationGroupAssistanceCreate())
+        }
+
+        activity.getFilterImageView().setOnSingleClickListener {
+            FilterDialog.newInstance(object : FilterDialog.FilterDialogListener {
+                override fun onFilter(filter: ArrayList<String>) {
+                    filterList = filter
+                    applyOnFilterSelectedListener()
+                }
+
+                override fun onCancel() {
+                    filterList = emptyList()
+                    applyOnFilterSelectedListener()
+                }
+
+            }).show(childFragmentManager, FilterDialog.TAG)
         }
 
         /*declineRelativeLayout.setOnSingleClickListener {
@@ -131,6 +148,7 @@ class AssistanceFragment : Fragment() {
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager.offscreenPageLimit = 2
         viewPager.adapter = pagerAdapter
+
         viewPager.registerOnPageChangeCallback(viewPager2PageCallback())
 
     }
@@ -143,12 +161,27 @@ class AssistanceFragment : Fragment() {
                     1-> setActiveTab(binding.allRequestRelativeLayout)
                     //2-> setActiveTab(binding.declineRelativeLayout)
                 }
+                val currentFragment = getCurrentFragment(position)
+                if (currentFragment is FilterSelectedListener){
+                    currentFragment.onFilterSelected(filterList)
+                }
             }
+        }
+    }
+    private fun getCurrentFragment(position: Int): Fragment?{
+        return childFragmentManager.findFragmentByTag("f$position")
+    }
+
+    private fun applyOnFilterSelectedListener(){
+        val currentFragment = getCurrentFragment(binding.viewPager.currentItem)
+        if (currentFragment is FilterSelectedListener){
+            currentFragment.onFilterSelected(filterList)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.viewPager.unregisterOnPageChangeCallback(viewPager2PageCallback())
         _binding = null
     }
 
