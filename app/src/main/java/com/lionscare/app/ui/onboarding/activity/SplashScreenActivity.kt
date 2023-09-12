@@ -3,6 +3,7 @@ package com.lionscare.app.ui.onboarding.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -12,6 +13,7 @@ import com.lionscare.app.databinding.ActivitySplashscreenBinding
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.onboarding.viewmodel.SplashViewModel
 import com.lionscare.app.ui.onboarding.viewmodel.SplashViewState
+import com.lionscare.app.ui.profile.activity.ProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,9 +47,16 @@ class SplashScreenActivity : AppCompatActivity() {
             is SplashViewState.Loading -> Unit
             is SplashViewState.SuccessRefreshToken -> {
                 if (viewState.status){
+                    if(viewState.is_complete_profile){
                         val intent = MainActivity.getIntent(this)
                         startActivity(intent)
                         this.finishAffinity()
+                    }else{
+                        Toast.makeText(this,"Please complete your profile details.", Toast.LENGTH_LONG).show()
+                        val intent = ProfileActivity.getIntent(this, true)
+                        startActivity(intent)
+                        this.finishAffinity()
+                    }
                 }else{
                     val intent = LoginActivity.getIntent(this)
                     startActivity(intent)
