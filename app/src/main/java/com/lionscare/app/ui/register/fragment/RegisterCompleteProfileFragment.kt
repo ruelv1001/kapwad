@@ -332,9 +332,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                 lc_location_id = lc_location_id,
             )
 
-            CommonLogger.instance.sysLogE("HERE", request)
-
-//            viewModel.doUpdateProfile(request)
+            viewModel.doUpdateProfile(request)
         }
     }
 
