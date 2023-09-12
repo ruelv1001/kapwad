@@ -183,46 +183,96 @@
                     android:id="@+id/requestLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:visibility="gone">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/declineButton"
-                        style="@style/MyButtonStyle"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/messageTitleTextView"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_20"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:layout_marginEnd="@dimen/dimen_8"
-                        android:layout_marginBottom="@dimen/dimen_20"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/bg_red"
                         android:fontFamily="@font/inter_semibold"
-                        android:paddingTop="@dimen/dimen_15"
-                        android:paddingBottom="@dimen/dimen_15"
-                        android:text="@string/lbl_decline"
-                        android:textAllCaps="false"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/font_14" />
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:layout_marginHorizontal="@dimen/dimen_20"
+                        android:text="@string/wallet_message_title"
+                        android:textAlignment="center"
+                        android:textColor="@color/black_text"
+                        android:textSize="@dimen/font_16" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/approveButton"
-                        style="@style/MyButtonStyle"
-                        android:layout_width="0dp"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/messageTextInputLayout"
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_150"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="@dimen/dimen_20"
+                        android:fontFamily="@font/inter_regular"
+                        app:boxBackgroundColor="@color/white"
+                        app:hintAnimationEnabled="true"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/messageEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_150"
+                            android:background="@drawable/bg_edittext_selector"
+                            android:fontFamily="@font/inter_semibold"
+                            android:hint="@string/wallet_enter_your_message_hint"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:gravity="start"
+                            android:maxLines="5"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/commons_text_hint"
+                            android:textSize="@dimen/font_14" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_8"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:layout_marginEnd="@dimen/dimen_20"
-                        android:layout_marginBottom="@dimen/dimen_20"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/blue_text"
-                        android:fontFamily="@font/inter_semibold"
-                        android:paddingTop="@dimen/dimen_15"
-                        android:paddingBottom="@dimen/dimen_15"
-                        android:text="@string/lbl_approve"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_14" />
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/declineButton"
+                            style="@style/MyButtonStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_20"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_marginEnd="@dimen/dimen_8"
+                            android:layout_marginBottom="@dimen/dimen_20"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/bg_red"
+                            android:fontFamily="@font/inter_semibold"
+                            android:paddingTop="@dimen/dimen_15"
+                            android:paddingBottom="@dimen/dimen_15"
+                            android:text="@string/lbl_decline"
+                            android:textAllCaps="false"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/font_14" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/approveButton"
+                            style="@style/MyButtonStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_8"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_marginEnd="@dimen/dimen_20"
+                            android:layout_marginBottom="@dimen/dimen_20"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/blue_text"
+                            android:fontFamily="@font/inter_semibold"
+                            android:paddingTop="@dimen/dimen_15"
+                            android:paddingBottom="@dimen/dimen_15"
+                            android:text="@string/lbl_approve"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/font_14" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
