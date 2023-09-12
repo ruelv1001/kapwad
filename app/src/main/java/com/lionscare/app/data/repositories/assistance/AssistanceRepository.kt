@@ -70,36 +70,36 @@ class AssistanceRepository @Inject constructor(
     }
 
     fun doApproveAssistanceRequest(
-        requestId: String? = null,
+        referenceId: String? = null,
         groupId: String? = null,
         remarks: String? = null
     ): Flow<GeneralResponse> {
         return flow {
             val response =
-                assistanceRemoteDataSource.doApproveAssistanceRequest(requestId, groupId, remarks)
+                assistanceRemoteDataSource.doApproveAssistanceRequest(referenceId, groupId, remarks)
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
     fun doDeclineAssistanceRequest(
-        requestId: String? = null,
+        referenceId: String? = null,
         groupId: String? = null,
         remarks: String? = null
     ): Flow<GeneralResponse> {
         return flow {
             val response =
-                assistanceRemoteDataSource.doDeclineAssistanceRequest(requestId, groupId, remarks)
+                assistanceRemoteDataSource.doDeclineAssistanceRequest(referenceId, groupId, remarks)
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
     fun doCancelAssistanceRequest(
-        requestId: String? = null,
+        referenceId: String? = null,
         groupId: String? = null
     ): Flow<GeneralResponse> {
         return flow {
             val response =
-                assistanceRemoteDataSource.doCancelAssistanceRequest(requestId, groupId)
+                assistanceRemoteDataSource.doCancelAssistanceRequest(referenceId, groupId)
             emit(response)
         }.flowOn(ioDispatcher)
     }

@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:fontFamily="@font/inter_semibold"
-            android:text="Zyla Valerie"
+            android:text="@string/loading"
             android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_20" />
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:fontFamily="@font/inter_regular"
-            android:text="@string/lbl_if_000001"
+            android:text="@string/loading"
             android:textAlignment="center"
             android:textSize="@dimen/font_14" />
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_20"
                 android:fontFamily="@font/inter_regular"
-                android:text="@string/lbl_reason"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -89,7 +89,7 @@
                 android:layout_margin="@dimen/dimen_20"
                 android:drawablePadding="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
-                android:text="003254300021"
+                android:text="@string/loading"
                 android:textColor="@color/color_primary"
                 android:textSize="@dimen/font_16"
                 app:drawableEndCompat="@drawable/ic_copy" />
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_20"
                 android:fontFamily="@font/inter_regular"
-                android:text="2023-07-04 3:59 PM"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_20"
                 android:fontFamily="@font/inter_regular"
-                android:text="500.00"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_remarks"
+                android:text="@string/lbl_note"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_20"
                 android:fontFamily="@font/inter_regular"
-                android:text="@string/sample_lorem_ipsum"
+                android:text="@string/loading"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 

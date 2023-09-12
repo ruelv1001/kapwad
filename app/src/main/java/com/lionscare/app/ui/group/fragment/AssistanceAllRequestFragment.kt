@@ -63,7 +63,7 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = AssistanceAdapter(this@AssistanceAllRequestFragment)
+        adapter = AssistanceAdapter(activity,this@AssistanceAllRequestFragment)
         swipeRefreshLayout.setOnRefreshListener(this@AssistanceAllRequestFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
@@ -131,6 +131,7 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     override fun onItemClicked(data: CreateAssistanceData) {
+        activity.referenceId = data.reference_id.toString()
         findNavController().navigate(direction!!)
     }
 
