@@ -10,6 +10,9 @@ import com.bumptech.glide.request.RequestOptions
 
 // TODO Replace placeholder and error 'R.color.color_primary' to the app's default image resource
 
+/**
+ * Load with center fitCenter
+ */
 fun ImageView.loadAvatar(url: String?, context: Context) {
     val requestOption = RequestOptions()
         .placeholder(R.drawable.img_profile)
@@ -26,6 +29,9 @@ fun ImageView.loadAvatar(url: String?, context: Context) {
         .into(this)
 }
 
+/**
+ * Load with center crop
+ */
 fun ImageView.loadImage(url: String?, context: Context) {
     val requestOption = RequestOptions()
         .placeholder(R.color.color_primary)
