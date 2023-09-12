@@ -11,6 +11,7 @@ sealed class AssistanceViewState {
 
     object Loading : AssistanceViewState()
     data class SuccessGetAllListOfAssistance(val pagingData: PagingData<CreateAssistanceData>) : AssistanceViewState()
+    data class SuccessGetMyListOfAssistance(val pagingData: PagingData<CreateAssistanceData>) : AssistanceViewState()
     data class SuccessCreateAssistance(val message: String = ""): AssistanceViewState()
     data class SuccessCancelAssistance(val message: String = ""): AssistanceViewState()
     data class SuccessApproveDeclineAssistance(val message: String = ""): AssistanceViewState()

@@ -21,7 +21,7 @@ interface AssistanceService {
     suspend fun doGetAssistanceRequestInfo(@Body assistanceRequest: AssistanceRequest): Response<CreateAssistanceResponse>
 
     @POST("api/group/assistance/owned")
-    suspend fun doGetMyAssistanceRequestList(@Body assistanceRequest: AssistanceRequest): Response<GeneralResponse>
+    suspend fun doGetMyAssistanceRequestList(@Body assistanceRequest: AllAssistanceListRequest): Response<GetAllAssistanceRequestResponse>
 
     @POST("api/group/assistance/pending/approve")
     suspend fun doApproveAssistanceRequest(@Body assistanceRequest: AssistanceRequest): Response<GeneralResponse>

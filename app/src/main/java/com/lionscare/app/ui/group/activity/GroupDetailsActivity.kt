@@ -79,6 +79,7 @@ class GroupDetailsActivity : AppCompatActivity(),
         referenceTextView.text = data.qrcode
         membersTextView.text = data.member_count.toString()
         adminTextView.text = data.admin_only_count.toString()
+        assistanceTextView.text = data.pending_requests_count.toString()
         qrLayout.qrImageView.setImageBitmap(setQR(this@GroupDetailsActivity, data.qrcode_value))
         qrLayout.idNoTextView.text = data.code
         walletLayout.sendLinearLayout.isVisible = data.is_admin == true

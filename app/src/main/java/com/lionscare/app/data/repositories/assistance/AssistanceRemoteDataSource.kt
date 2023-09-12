@@ -46,9 +46,12 @@ class AssistanceRemoteDataSource @Inject constructor(private val assistanceServi
     }
 
     suspend fun doGetMyAssistanceRequestList(
-        per_page: Int? = null
-    ): GeneralResponse {
-        val request = AssistanceRequest(per_page = per_page)
+        groupId: String,
+        per_page: Int,
+        page : Int,
+        filter: List<String>
+    ): GetAllAssistanceRequestResponse {
+        val request = AllAssistanceListRequest(group_id = groupId, per_page = per_page, page = page , filter = filter)
         val response = assistanceService.doGetMyAssistanceRequestList(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)

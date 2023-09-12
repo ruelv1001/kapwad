@@ -18,14 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
-import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupAssistanceBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.AssistanceAdapter
 import com.lionscare.app.ui.group.dialog.FilterDialog
 import com.lionscare.app.ui.group.viewmodel.AssistanceViewModel
 import com.lionscare.app.ui.group.viewmodel.AssistanceViewState
-import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +32,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback,
-    SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener, FilterSelectedListener {
 
     private var _binding: FragmentGroupAssistanceBinding? = null
     private val binding get() = _binding!!
@@ -83,18 +81,7 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     private fun setClickListeners() = binding.run {
-        activity.getFilterImageView().setOnSingleClickListener {
-            FilterDialog.newInstance(object : FilterDialog.FilterDialogListener {
-                override fun onFilter(filter: ArrayList<String>) {
-                    viewModel.refresh(activity.groupDetails?.id.toString(), filter)
-                }
 
-                override fun onCancel() {
-                    viewModel.refresh(activity.groupDetails?.id.toString(), emptyList())
-                }
-
-            }).show(childFragmentManager, FilterDialog.TAG)
-        }
     }
 
     private fun observeAssistance() {
@@ -147,12 +134,23 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
         findNavController().navigate(direction!!)
     }
 
+    private fun clearList() {
+        adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+    }
+
     override fun onRefresh() {
+        clearList()
         viewModel.refresh(activity.groupDetails?.id.toString(), emptyList())
     }
 
     override fun onResume() {
         super.onResume()
         onRefresh()
+    }
+
+    override fun onFilterSelected(filter: List<String>) {
+        clearList()
+        binding.swipeRefreshLayout.isRefreshing = true
+        viewModel.refresh(activity.groupDetails?.id.toString(), filter)
     }
 }
