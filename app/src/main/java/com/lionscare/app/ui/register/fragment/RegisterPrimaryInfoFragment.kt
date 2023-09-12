@@ -95,11 +95,6 @@ class RegisterPrimaryInfoFragment: Fragment() {
         if (errorsData.phone_number?.get(0)?.isNotEmpty() == true) binding.contactTextInputLayout.error = errorsData.phone_number?.get(0)
     }
 
-    private fun isPasswordValid(password: String): Boolean {
-        val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$")
-        return regex.matches(password)
-    }
-
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_primary_info))
@@ -142,7 +137,6 @@ class RegisterPrimaryInfoFragment: Fragment() {
 
     private fun setClickListeners() = binding.run {
         continueButton.setOnSingleClickListener {
-            if (isPasswordValid(passwordEditText.text.toString())){
                 val data = RegistrationRequest()
                 data.firstname = firstNameEditText.text.toString()
                 data.middlename = middleNameEditText.text.toString()
@@ -155,9 +149,6 @@ class RegisterPrimaryInfoFragment: Fragment() {
                 otpRequest.phone_number = contactEditText.text.toString()
                 activity.otpModel = otpRequest
                 viewModel.doPreReg(data)
-            }else{
-                binding.passwordTextInputLayout.error = getString(R.string.strong_password_required)
-            }
         }
 
         passwordEditText.setOnFocusChangeListener { _, hasFocus ->

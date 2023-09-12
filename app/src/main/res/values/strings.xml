@@ -283,7 +283,7 @@
     <string name="lbl_nothing_to_show_txt">Nothing to show</string>
     <string name="lbl_edit_group">Edit Group</string>
     <string name="lbl_update_group">Update Group</string>
-    <string name="strong_password_required">Password must contain of at least 8 characters long with the combination of uppercase letters, lowercase letters, numbers, and symbols</string>
+    <string name="strong_password_required">Password must contain of at least 8 characters long with the combination of uppercase letters, lowercase letters, numbers, and symbols.</string>
     <string name="lbl_username">Username</string>
     <string name="password_visiblity_toggle">Password Visiblity Toggle</string>
     <string name="request_points_people_lbl">People</string>
@@ -326,7 +326,7 @@
     <string name="field_is_required">Field is required</string>
     <string name="lbl_cancel_join_request">Cancel Join Request</string>
     <string name="member_details_remove_txt">Remove</string>
-    <string name="save_changes_warning">Are you sure you want to save your changes? Make sure to double check all the details you entered as this will overwrite your previous information</string>
+    <string name="save_changes_warning">Are you sure you want to save your changes? Make sure to double check all the details you entered as this will overwrite your previous information.</string>
     <string name="lbl_date_requested">Date Requested</string>
     <string name="lbl_remarks">Remarks</string>
     <string-array name="assistance_purpose_items">
@@ -358,12 +358,12 @@
     <string name="lbl_zone">Zone</string>
     <string name="lbl_cluster_location">Cluster/Location</string>
     <string name="not_yet_a_member">Not yet a member</string>
-    <string name="phone_warning">Please type in your new phone number below. Make sure you have access to it as OTP code will be sent and later be needed for verification</string>
+    <string name="phone_warning">Please type in your new phone number below. Make sure you have access to it as OTP code will be sent and later be needed for verification.</string>
     <string name="update_contact_number">Update Contact Number</string>
     <string name="otp">OTP</string>
     <string name="update_email_address">Update Email Address</string>
-    <string name="email_warning">Please type in your desired email address to use. Make sure to have access to that email address as verification will be sent to that email address later after confirming</string>
-    <string name="check_email">Please check our email we sent to verify your email address</string>
+    <string name="email_warning">Please type in your desired email address to use. Make sure to have access to that email address as verification will be sent to that email address later after confirming.</string>
+    <string name="check_email">Please check our email we sent to verify your email address.</string>
     <string name="email_verification_sent">Email Verification Sent!</string>
     <string name="fields_cannot_be_empty">Fields cannot be empty</string>
     <string name="this_email_is_currently_your_email">This email is currently your email</string>
@@ -372,5 +372,6 @@
     <string name="check_status">Check Status</string>
     <string name="lbl_community">Community</string>
     <string name="uploading_your_avatar_please_wait">Uploading your avatar... Please wait</string>
+    <string name="success_register_info">Congratulations! Your account has been successfully registered. Please complete your profile by providing the information needed afterwards login using your email and password provided on the Sign Up application.</string>
 
 </resources>
