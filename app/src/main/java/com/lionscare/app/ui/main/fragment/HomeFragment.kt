@@ -275,6 +275,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         mainLayout.nameTextView.text = userModel?.name
         mainLayout.idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
         mainLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only
+        mainLayout.dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph
 
         //qr
         qrLayout.qrCodeTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
