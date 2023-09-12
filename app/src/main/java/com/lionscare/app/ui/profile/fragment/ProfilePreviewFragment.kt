@@ -150,7 +150,7 @@ class ProfilePreviewFragment : Fragment() {
             addressTextView.text = "Address Unavailable"
         }
 
-        emailEditText.setText(userModel?.email.orEmpty().ifEmpty { "Check your email for verification" })
+        emailEditText.setText(userModel?.email.orEmpty().ifEmpty { getString(R.string.no_email_has_been_set_yet)})
         if (userModel?.email_verified == true){
             emailIsVerifiedTextView.text = getString(R.string.lbl_verified)
             emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_verified)

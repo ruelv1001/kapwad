@@ -3,6 +3,7 @@ package com.lionscare.app.ui.register.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -41,6 +42,9 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    fun removeBackButton(){
+        binding.backImageView.visibility= View.GONE
+    }
     private fun setupNavigationComponent() {
         setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager
