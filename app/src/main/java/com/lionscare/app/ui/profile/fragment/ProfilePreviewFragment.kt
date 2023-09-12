@@ -222,7 +222,7 @@ class ProfilePreviewFragment : Fragment() {
 
     // Register an activity result launcher for cropping
     private val cropImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == Activity.RESULT_OK){
             val croppedUri = CropImage.getActivityResult(result.data).uri
 
             // You now have the cropped image URI (croppedUri)
