@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityProfileBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -23,10 +24,12 @@ class ProfileActivity : AppCompatActivity() {
     private var loadingDialog: CommonDialog? = null
 
     private val viewModel: ProfileViewModel by viewModels()
+    var isFromLogin = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         val view = binding.root
+        isFromLogin = intent.getBooleanExtra(EXTRA_IS_FROM_LOGIN, false)
         setContentView(view)
         setupNavigationComponent()
         setOnClickListener()
@@ -34,7 +37,13 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setOnClickListener() = binding.run {
         backImageView.setOnSingleClickListener {
-            onBackPressed()
+            if(isFromLogin){
+                val intent = MainActivity.getIntent(this@ProfileActivity)
+                startActivity(intent)
+                this@ProfileActivity.finishAffinity()
+            }else{
+                onBackPressed()
+            }
         }
     }
 
@@ -72,8 +81,11 @@ class ProfileActivity : AppCompatActivity() {
     companion object {
         private const val INVALID_ID = -1
         private const val EXTRA_START = "EXTRA_START"
-        fun getIntent(context: Context): Intent {
-            return Intent(context, ProfileActivity::class.java)
+        private const val EXTRA_IS_FROM_LOGIN = "EXTRA_IS_FROM_LOGIN"
+        fun getIntent(context: Context, isFromLogin: Boolean?= false): Intent {
+            val intent = Intent(context, ProfileActivity::class.java)
+            intent.putExtra(EXTRA_IS_FROM_LOGIN,isFromLogin)
+            return intent
         }
     }
 }

@@ -81,12 +81,14 @@ class GroupCreateFragment : Fragment() {
                 R.array.group_type_org,
                 android.R.layout.simple_spinner_item
             )
+            groupTypeSpinner.isEnabled = true
         } else {
             adapter = ArrayAdapter.createFromResource(
                 requireActivity(),
                 R.array.group_type_family,
                 android.R.layout.simple_spinner_item
             )
+            groupTypeSpinner.isEnabled = false
         }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupTypeSpinner.adapter = adapter

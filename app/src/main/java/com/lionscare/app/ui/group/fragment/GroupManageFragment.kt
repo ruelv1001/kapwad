@@ -78,10 +78,16 @@ class GroupManageFragment : Fragment() {
 
         if (activity.groupDetails?.type.equals("organization")) {
             typeFamTextView.isVisible = false
+            typeComTextView.isVisible = false
             typeOrgTextView.isVisible = true
-        } else {
-            typeFamTextView.isVisible = true
+        } else if (activity.groupDetails?.type.equals("community")) {
+            typeFamTextView.isVisible = false
             typeOrgTextView.isVisible = false
+            typeComTextView.isVisible = true
+        }else{
+            typeComTextView.isVisible = false
+            typeOrgTextView.isVisible = false
+            typeFamTextView.isVisible = true
         }
 
         editGroupImageView.isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
