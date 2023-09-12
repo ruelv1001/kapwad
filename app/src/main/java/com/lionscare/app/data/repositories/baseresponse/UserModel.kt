@@ -10,6 +10,7 @@ data class UserModel(
     var qrcode : String? = null,
     var qr_value : QrValue? = null,
     var qrcode_value : String ? = null,
+    var is_complete_profile : Boolean? = false,
     var name : String? = null,
     var avatar : Avatar? = null,
     var firstname: String? = null,

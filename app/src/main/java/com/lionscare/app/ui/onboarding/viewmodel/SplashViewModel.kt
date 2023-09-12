@@ -34,7 +34,7 @@ class SplashViewModel @Inject constructor(
                 }
                 .collect {
                     _splashStateFlow.emit(
-                        SplashViewState.SuccessRefreshToken(it.status ?: false)
+                        SplashViewState.SuccessRefreshToken(it.status ?: false, it.data?.is_complete_profile ?: false)
                     )
                 }
         }

@@ -27,6 +27,7 @@ import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.FragmentProfileUpdateBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
 import com.lionscare.app.ui.register.dialog.ProvinceDialog
@@ -93,7 +94,13 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             is ProfileViewState.Success -> {
                 hideLoadingDialog()
                 Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
-                findNavController().popBackStack()
+                if(activity.isFromLogin){
+                    val intent = MainActivity.getIntent(activity)
+                    startActivity(intent)
+                    activity.finishAffinity()
+                }else{
+                    findNavController().popBackStack()
+                }
             }
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
