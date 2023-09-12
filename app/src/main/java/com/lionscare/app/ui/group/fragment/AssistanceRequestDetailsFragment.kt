@@ -54,7 +54,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_request_details))
-        viewModel.getAssistanceInfo(activity.referenceId,activity.groupDetails?.id.toString())
+        viewModel.getAssistanceInfo(activity.referenceId, activity.groupDetails?.id.toString())
     }
 
     private fun setView(data: CreateAssistanceData) = binding.run {
@@ -66,35 +66,38 @@ class AssistanceRequestDetailsFragment : Fragment() {
         amountTextView.text = currencyFormat(data.amount.toString())
         remarksTextView.text = data.note
 
-        when (data.status){
-            "declined"-> {
+        when (data.status) {
+            "declined" -> {
                 cancelButton.visibility = View.GONE
                 requestLinearLayout.visibility = View.GONE
                 approvedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.GONE
                 declinedTextView.visibility = View.VISIBLE
             }
-            "cancelled"-> {
+
+            "cancelled" -> {
                 cancelButton.visibility = View.GONE
                 requestLinearLayout.visibility = View.GONE
                 approvedTextView.visibility = View.GONE
                 declinedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.VISIBLE
             }
-            "approved" ->{
+
+            "approved" -> {
                 cancelButton.visibility = View.GONE
                 requestLinearLayout.visibility = View.GONE
                 declinedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.GONE
                 approvedTextView.visibility = View.VISIBLE
             }
-            else->{ // pending
+
+            else -> { // pending
                 approvedTextView.visibility = View.GONE
                 declinedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.GONE
-                if(data.user?.id == viewModel.user.id){
+                if (data.user?.id == viewModel.user.id) {
                     cancelButton.isVisible = true
-                }else{
+                } else {
                     requestLinearLayout.isVisible = activity.groupDetails?.is_admin == true
                 }
             }
@@ -107,10 +110,18 @@ class AssistanceRequestDetailsFragment : Fragment() {
 //            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupAssistance())
 //        }
         approveButton.setOnSingleClickListener {
-
+            viewModel.approveAssistance(
+                activity.referenceId,
+                activity.groupDetails?.id.toString(),
+                messageEditText.text.toString()
+            )
         }
         declineButton.setOnSingleClickListener {
-
+            viewModel.declineAssistance(
+                activity.referenceId,
+                activity.groupDetails?.id.toString(),
+                messageEditText.text.toString()
+            )
         }
         cancelButton.setOnSingleClickListener {
             viewModel.cancelAssistance(activity.referenceId, activity.groupDetails?.id.toString())
@@ -137,7 +148,12 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 activity.hideLoadingDialog()
                 viewState.response?.data?.let { setView(it) }
             }
-            is AssistanceViewState.SuccessCancelAssistance ->{
+            is AssistanceViewState.SuccessApproveDeclineAssistance -> {
+                activity.hideLoadingDialog()
+                Toast.makeText(activity, viewState.message, Toast.LENGTH_SHORT).show()
+                onResume()
+            }
+            is AssistanceViewState.SuccessCancelAssistance -> {
                 activity.hideLoadingDialog()
                 Toast.makeText(activity, viewState.message, Toast.LENGTH_SHORT).show()
                 onResume()
