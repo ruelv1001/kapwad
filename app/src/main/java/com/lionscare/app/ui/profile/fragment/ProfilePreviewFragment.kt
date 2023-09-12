@@ -162,8 +162,10 @@ class ProfilePreviewFragment : Fragment() {
         phoneEditText.setText(userModel?.phone_number)
         if (userModel?.lc_member == true){
             lionsClubTextView.text = "${userModel.lc_group} (${userModel.lc_location_id})"
+            lionsClubLocationTextView.text = "Region ${userModel.lc_region_id}, Zone ${userModel.lc_zone_id}"
         }else{
             lionsClubTextView.text = getString(R.string.not_yet_a_member)
+            lionsClubLocationTextView.text = ""
         }
     }
 

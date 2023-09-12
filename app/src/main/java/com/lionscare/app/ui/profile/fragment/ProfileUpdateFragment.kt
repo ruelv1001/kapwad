@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.profile.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -149,6 +150,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         (requireActivity() as ProfileActivity).hideLoadingDialog()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run{
         provinceEditText.doOnTextChanged {
                 text, start, before, count ->
@@ -191,6 +193,16 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         zipcodeEditText.setText(userModel?.zipcode)
 
         birthdateEditText.setText(userModel?.birthdate?.date_only_ph)
+        regionEditText.setText(userModel?.lc_region_id?.takeIf { it.isNotEmpty() }
+            ?.let { "Region $it" }
+            ?: "")
+        zoneEditText.setText(userModel?.lc_zone_id?.takeIf { it.isNotEmpty() }
+            ?.let { "Zone $it" }
+            ?: "")
+        clusterEditText.setText(userModel?.lc_location_id?.takeIf { it.isNotEmpty() }
+            ?.let { "${userModel.lc_group} (${userModel.lc_location_id})" }
+            ?: "")
+
         setClickable()
     }
 
