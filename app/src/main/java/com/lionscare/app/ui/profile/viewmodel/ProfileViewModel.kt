@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeoutException
 import javax.inject.Inject
@@ -32,6 +33,9 @@ class ProfileViewModel @Inject constructor(
 
     //holder for phonenumber
     var phoneNumber : String? = null
+
+    //holder for avatar
+    var avatarFileHolder : File? = null
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {

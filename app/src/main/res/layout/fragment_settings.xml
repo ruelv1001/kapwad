@@ -141,7 +141,7 @@
                     android:id="@+id/profileDetailsImageView"
                     android:layout_width="@dimen/dimen_60"
                     android:layout_height="@dimen/dimen_60"
-                    android:src="@drawable/baseline_account_circle_24_colored" />
+                    android:src="@drawable/ic_profile_details" />
 
                 <TextView
                     android:layout_width="0dp"
