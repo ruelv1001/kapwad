@@ -34,8 +34,9 @@ fun ImageView.loadAvatar(url: String?, context: Context) {
  */
 fun ImageView.loadImage(url: String?, context: Context) {
     val requestOption = RequestOptions()
-        .placeholder(R.color.color_primary)
-        .error(R.color.color_primary)
+        .placeholder(R.drawable.img_profile)
+        .fallback(R.drawable.img_profile)
+        .error(R.drawable.img_profile)
         .centerCrop()
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
 

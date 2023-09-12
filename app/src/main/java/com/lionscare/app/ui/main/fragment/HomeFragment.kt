@@ -41,6 +41,7 @@ import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.copyToClipboard
+import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
@@ -159,7 +160,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                         binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout.visibility = View.GONE //remove whole badge
                         binding.mainLayout.badgeIdStatus.visibility = View.VISIBLE // bdage pill show
                         binding.mainLayout.badgeIdStatus.text = formatBadgeType(viewState.badgeStatus.badge_type)
-
+                        binding.mainLayout.badgeImageView.visibility = View.VISIBLE
                         //change icon of avatar badge
                         when(viewState.badgeStatus.badge_type){
                             "non_government_Organization" -> {
@@ -270,6 +271,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
         //main
+        mainLayout.profileImageView.loadImage(userModel?.avatar?.thumb_path, requireContext())
         mainLayout.nameTextView.text = userModel?.name
         mainLayout.idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
         mainLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only

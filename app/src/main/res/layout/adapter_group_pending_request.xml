@@ -80,15 +80,15 @@
             android:id="@+id/cancelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dimen_4"
+            android:layout_weight="1"
             android:background="@drawable/bg_rounded"
             android:paddingVertical="@dimen/dimen_10"
-            android:layout_weight="1"
-            android:layout_marginEnd="@dimen/dimen_4"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
+            android:text="@string/pending_cancel_text"
             android:textAlignment="center"
-            android:visibility="gone"
-            android:text="@string/pending_cancel_text"/>
+            android:textColor="@color/black"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/acceptTextView"

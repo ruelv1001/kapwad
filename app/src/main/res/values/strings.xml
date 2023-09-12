@@ -371,5 +371,6 @@
     <string name="ongoing_verification">Ongoing Verification</string>
     <string name="check_status">Check Status</string>
     <string name="lbl_community">Community</string>
+    <string name="uploading_your_avatar_please_wait">Uploading your avatar... Please wait</string>
 
 </resources>

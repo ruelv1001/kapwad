@@ -55,6 +55,7 @@ class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallbac
 
         fun bind(data: PendingMemberData?) {
             data?.let {
+                binding.imageView.loadImage(data.user?.avatar?.thumb_path, context)
                 binding.titleTextView.text = data.user?.name
                 binding.membersTextView.text = data.user?.qrcode
                 binding.referenceTextView.visibility = View.GONE

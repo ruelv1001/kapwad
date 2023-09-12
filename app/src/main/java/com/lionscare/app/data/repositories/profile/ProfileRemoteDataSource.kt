@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
@@ -196,6 +197,22 @@ class ProfileRemoteDataSource @Inject constructor(
             }
             emit(response.body() ?: throw NullPointerException("Response data is empty"))
         }.flowOn(ioDispatcher)
+    }
+
+    //========================upload avatar
+    suspend fun uploadAvatar(request : ProfileAvatarRequest): GeneralResponse {
+        val response = profileService.uploadAvatar(
+            MultipartBody.Part.createFormData(
+                "image",
+                request.image.name,
+                request.image.asNetWorkRequestBody(IMAGE_MIME_TYPE)
+            )
+        )
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
     companion object {
