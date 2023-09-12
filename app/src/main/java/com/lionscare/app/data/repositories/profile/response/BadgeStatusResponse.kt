@@ -15,7 +15,7 @@ data class BadgeStatusResponse(
 data class BadgeStatus(
     val activated_date: DateModel? = null,
     val badge_type: String? = null,
-    val id: Int? = 0,
+    val id: Long? = 0,
     val remarks: String? = null,
     val status: String? = null,
     val submitted_date: DateModel? = null

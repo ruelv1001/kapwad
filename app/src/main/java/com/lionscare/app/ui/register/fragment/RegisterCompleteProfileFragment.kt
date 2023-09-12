@@ -152,6 +152,19 @@ class RegisterCompleteProfileFragment: Fragment() {
             streetTextInputLayout.error = ""
         }
 
+        regionEditText.doOnTextChanged {
+                text, start, before, count ->
+            regionTextInputLayout.error = ""
+        }
+        zoneEditText.doOnTextChanged {
+                text, start, before, count ->
+            zoneTextInputLayout.error = ""
+        }
+        clusterEditText.doOnTextChanged {
+                text, start, before, count ->
+            clusterTextInputLayout.error = ""
+        }
+
         cityEditText.isClickable = false
         barangayEditText.isClickable = false
     }
@@ -287,7 +300,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                     clusterEditText.setText(data.value)
                     setClickableLionsClub()
                 }
-            }, zone= lc_zone_id, region = lc_region_id).show(childFragmentManager, BrgyDialog.TAG)
+            }, zone= lc_zone_id, region = lc_region_id ).show(childFragmentManager, BrgyDialog.TAG)
         }
 
 
@@ -308,7 +321,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                 birthdate = birthdateEditText.text.toString(),
                 lc_region_id = lc_region_id,
                 lc_zone_id = lc_zone_id,
-                lc_location_id = lc_zone_id,
+                lc_location_id = lc_location_id,
             )
 
             CommonLogger.instance.sysLogE("HERE", request)

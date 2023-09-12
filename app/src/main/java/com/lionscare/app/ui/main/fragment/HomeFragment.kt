@@ -83,11 +83,18 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         onResume()
         viewModel.getProfileDetails()
         iFViewModel.getImmediateFamily()
+
+        //immediately make this view gone
+        //not done in xml as this is a reused layout
+        //Reason: so it wont show for a second after finishin api call
+        binding.mainLayout.includeBadgeLayout.accountTypeLinearLayout. visibility = View.GONE
     }
 
     override fun onResume() {
         super.onResume()
         hideLoadingDialog()
+        //call profile  again to check if correct badge and kyc or get updated one
+        viewModel.getProfileDetails()
     }
 
     private fun observeAccount() {
@@ -299,7 +306,13 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 )
             }
             "completed" -> {
-
+                // Change the status bar color
+                requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.color_primary)
+                binding.notVerifiedRelativeLayout.visibility = View.GONE
+            }
+            "pending" -> {
+                // Change the status bar color
+                requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.color_primary)
             }
         }
         viewModel.userQrCode = userModel?.qrcode.orEmpty()
