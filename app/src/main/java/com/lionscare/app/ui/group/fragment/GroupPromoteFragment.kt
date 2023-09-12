@@ -62,7 +62,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback,
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(this@GroupPromoteFragment)
+        adapter = GroupMembersAdapter(requireContext(),this@GroupPromoteFragment)
         swipeRefreshLayout.setOnRefreshListener(this@GroupPromoteFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager

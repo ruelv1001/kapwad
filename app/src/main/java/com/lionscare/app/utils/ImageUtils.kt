@@ -32,6 +32,38 @@ fun getBitmapFromAsset(context: Context, imageName: String): Bitmap? {
     return bitmap
 }
 
+/**
+ * Custom method to get a File from a cropped Uri using library
+  */
+fun getFileFromCroppedUri(context: Context, uri: Uri): File? {
+    try {
+        val contentResolver = context.contentResolver
+
+        // Attempt to open an input stream for the URI
+        val inputStream = contentResolver.openInputStream(uri)
+
+        if (inputStream != null) {
+            // Create a temporary file to copy the content from the input stream
+            val tempFile = File.createTempFile("cropped_image", ".jpg")
+            val outputStream = FileOutputStream(tempFile)
+
+            // Copy the data from the input stream to the temporary file
+            inputStream.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            return tempFile
+        }
+    } catch (e: Exception) {
+        Log.e("GetFileUri Exception:", e.message ?: "")
+    }
+
+    return null
+}
+
+
 fun getFileFromUri(context: Context, uri: Uri?): File? {
     uri ?: return null
     val newUriString = uri.toString()

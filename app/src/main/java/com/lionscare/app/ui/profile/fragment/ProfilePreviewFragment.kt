@@ -12,6 +12,7 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -27,6 +28,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.databinding.FragmentProfilePreviewBinding
 import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
 import com.lionscare.app.ui.profile.activity.ProfileActivity
@@ -34,7 +36,9 @@ import com.lionscare.app.ui.profile.dialog.VerificationSuccessDialog
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.fragment.ProofOfAddressFragment
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.calculateAge
+import com.lionscare.app.utils.getFileFromCroppedUri
 import com.lionscare.app.utils.getFileFromUri
 import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.loadImage
@@ -89,10 +93,16 @@ class ProfilePreviewFragment : Fragment() {
     private fun handleViewState(viewState: ProfileViewState) {
         when (viewState){
             is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
+            is ProfileViewState.LoadingAvatar -> Unit // do not show anyloading
+
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
                 viewModel.userModel = viewState.userModel
                 setView(viewState.userModel)
+            }
+            is ProfileViewState.SuccessUploadAvatar -> {
+                hideLoadingDialog()
+                Toast.makeText(requireContext(), viewState.message, Toast.LENGTH_LONG).show()
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
@@ -126,6 +136,7 @@ class ProfilePreviewFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
+        profileImageView.loadImage(userModel?.avatar?.thumb_path,requireContext())
         nameTextView.text = userModel?.getFullName()
         dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph?.ifEmpty { "Not set "}
         ageTextView.text = userModel?.birthdate?.date_only_ph
@@ -139,7 +150,7 @@ class ProfilePreviewFragment : Fragment() {
             addressTextView.text = "Address Unavailable"
         }
 
-        emailEditText.setText(userModel?.email.orEmpty().ifEmpty { "Check your email for verification" })
+        emailEditText.setText(userModel?.email.orEmpty().ifEmpty { getString(R.string.no_email_has_been_set_yet)})
         if (userModel?.email_verified == true){
             emailIsVerifiedTextView.text = getString(R.string.lbl_verified)
             emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_verified)
@@ -151,8 +162,10 @@ class ProfilePreviewFragment : Fragment() {
         phoneEditText.setText(userModel?.phone_number)
         if (userModel?.lc_member == true){
             lionsClubTextView.text = "${userModel.lc_group} (${userModel.lc_location_id})"
+            lionsClubLocationTextView.text = "Region ${userModel.lc_region_id}, Zone ${userModel.lc_zone_id}"
         }else{
             lionsClubTextView.text = getString(R.string.not_yet_a_member)
+            lionsClubLocationTextView.text = ""
         }
     }
 
@@ -204,10 +217,8 @@ class ProfilePreviewFragment : Fragment() {
 
     private val singlePhotoPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri: Uri? ->
         imageUri?.let { uri ->
-            viewModel.avatarFileHolder = getFileFromUri(requireContext(), uri)
-            binding.profileImageView.loadImage(uri.toString(), requireContext())
-//            binding.proofOfAddressImageView.loadImage(uri.toString(),requireActivity())
-//            viewModel.frontImageFile = getFileFromUri(requireActivity(), uri)
+            // Launch the cropping activity with the ptured image URI
+            uri.let { startCropping(it) }
         }
     }
 
@@ -224,15 +235,18 @@ class ProfilePreviewFragment : Fragment() {
     private val cropImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK){
             val croppedUri = CropImage.getActivityResult(result.data).uri
-
-            // You now have the cropped image URI (croppedUri)
             // Use it as needed, e.g., display or save the cropped image
-            viewModel.avatarFileHolder = getFileFromUri(requireContext(), croppedUri)
+            //just save it in viewmodel in case
+            viewModel.avatarFileHolder = getFileFromCroppedUri(requireContext(), croppedUri)
+            viewModel.uploadAvatar(ProfileAvatarRequest(viewModel.avatarFileHolder!!)) // call api
+            showLoadingDialog(R.string.uploading_your_avatar_please_wait) // manually call loading dialog to show loading immediatley
+            //put to imageview
             binding.profileImageView.loadImage(croppedUri.toString(), requireContext())
         } else if (result.resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
             // Handle cropping error
             val error = CropImage.getActivityResult(result.data).error
             // Handle the error as needed
+            Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
         }
     }
 

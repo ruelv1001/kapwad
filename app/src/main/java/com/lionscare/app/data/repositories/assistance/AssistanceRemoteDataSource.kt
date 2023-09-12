@@ -1,8 +1,10 @@
 package com.lionscare.app.data.repositories.assistance
 
+import com.lionscare.app.data.repositories.assistance.request.AllAssistanceListRequest
 import com.lionscare.app.data.repositories.assistance.request.AssistanceRequest
 import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceResponse
+import com.lionscare.app.data.repositories.assistance.response.GetAllAssistanceRequestResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
@@ -18,11 +20,12 @@ class AssistanceRemoteDataSource @Inject constructor(private val assistanceServi
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
     suspend fun doGetAllAssistanceRequestList(
-        groupId: String? = null,
-        per_page: Int? = null,
-        filter: List<String>? = null
-    ): GeneralResponse {
-        val request = AssistanceRequest(group_id = groupId, per_page = per_page, filter = filter)
+        groupId: String,
+        per_page: Int,
+        page : Int,
+        filter: List<String>
+    ): GetAllAssistanceRequestResponse {
+        val request = AllAssistanceListRequest(group_id = groupId, per_page = per_page, page = page , filter = filter)
         val response = assistanceService.doGetAllAssistanceRequestList(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
@@ -43,9 +46,12 @@ class AssistanceRemoteDataSource @Inject constructor(private val assistanceServi
     }
 
     suspend fun doGetMyAssistanceRequestList(
-        per_page: Int? = null
-    ): GeneralResponse {
-        val request = AssistanceRequest(per_page = per_page)
+        groupId: String,
+        per_page: Int,
+        page : Int,
+        filter: List<String>
+    ): GetAllAssistanceRequestResponse {
+        val request = AllAssistanceListRequest(group_id = groupId, per_page = per_page, page = page , filter = filter)
         val response = assistanceService.doGetMyAssistanceRequestList(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)

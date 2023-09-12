@@ -1,9 +1,15 @@
 package com.lionscare.app.data.repositories.assistance
 
+import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.lionscare.app.data.repositories.admin.GetListOfAdminPagingSource
 import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
+import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceResponse
+import com.lionscare.app.data.repositories.assistance.response.GetAllAssistanceRequestResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +28,34 @@ class AssistanceRepository @Inject constructor(
                 assistanceRemoteDataSource.doCreateAssistance(request)
             emit(response)
         }.flowOn(ioDispatcher)
+    }
+
+    fun doGetAllListOfAssistanceRequest(
+        pagingConfig: PagingConfig = getDefaultPageConfig(),
+        groupId: String,
+        filter: List<String>
+    ): Flow<PagingData<CreateAssistanceData>> {
+        val getAllListOfAssistanceRequestPagingSource =
+            GetAllListOfAssistanceRequestPagingSource(assistanceRemoteDataSource, groupId, filter)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getAllListOfAssistanceRequestPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
+    fun doGetMyListOfAssistanceRequest(
+        pagingConfig: PagingConfig = getDefaultPageConfig(),
+        groupId: String,
+        filter: List<String>
+    ): Flow<PagingData<CreateAssistanceData>> {
+        val getMyListOfAssistanceRequestPagingSource =
+            GetMyListOfAssistanceRequestPagingSource(assistanceRemoteDataSource, groupId, filter)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getMyListOfAssistanceRequestPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
     }
 
     fun doGetAssistanceRequestInfo(

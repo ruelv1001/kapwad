@@ -9,6 +9,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.repositories.article.response.ArticleData
+import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.databinding.FragmentGroupAssistanceBinding
 import com.lionscare.app.ui.group.adapter.AssistanceAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,20 +44,10 @@ class AssistanceDeclineFragment : Fragment(), AssistanceAdapter.GroupCallback {
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = AssistanceAdapter( requireActivity(),this@AssistanceDeclineFragment)
+        adapter = AssistanceAdapter(this@AssistanceDeclineFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-
-        val model = listOf(
-            ArticleData(
-                name = "Zyla Valerie",
-                description = "2023-07-04 3:59 PM",
-                reference = "003254300011",
-                type = "100.00"
-            ),
-        )
-        adapter?.appendData(model)
     }
 
     private fun setClickListeners() = binding.run {
@@ -76,7 +67,7 @@ class AssistanceDeclineFragment : Fragment(), AssistanceAdapter.GroupCallback {
         }
     }
 
-    override fun onItemClicked(data: ArticleData) {
+    override fun onItemClicked(data: CreateAssistanceData) {
         findNavController().navigate(direction!!)
     }
 

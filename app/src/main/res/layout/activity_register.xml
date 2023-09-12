@@ -28,7 +28,8 @@
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
             android:padding="@dimen/dimen_5"
-            android:src="@drawable/ic_back_arrow" />
+            android:src="@drawable/ic_back_arrow"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/titleTextView"

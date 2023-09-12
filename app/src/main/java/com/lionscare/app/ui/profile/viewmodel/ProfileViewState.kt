@@ -11,6 +11,7 @@ import com.lionscare.app.utils.PopupErrorState
 
 sealed class ProfileViewState {
     object Loading : ProfileViewState()
+    object LoadingAvatar : ProfileViewState()
     object LoadingVerificationStatus : ProfileViewState()
     data class Success(val message: String = "") : ProfileViewState()
     data class SuccessGetUserInfo(val message: String = "",val userModel: UserModel? = UserModel()) : ProfileViewState()
@@ -20,6 +21,9 @@ sealed class ProfileViewState {
     data class SuccessLoadLOVProofOfAddress(val message : String = "", val lovResponse: LOVResponse? = LOVResponse()) : ProfileViewState()
     data class SuccessUploadId(val message : String = "") : ProfileViewState()
     data class SuccessUploadAddress(val message : String = "") : ProfileViewState()
+
+
+    data class SuccessUploadAvatar(val message : String = "") : ProfileViewState()
 
     data class SuccessGetVerificationStatus(val message : String = "", val profileVerificationResponse: ProfileVerificationResponse) : ProfileViewState()
 

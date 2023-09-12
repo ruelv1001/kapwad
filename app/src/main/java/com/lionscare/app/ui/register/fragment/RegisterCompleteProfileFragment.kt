@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -175,6 +176,13 @@ class RegisterCompleteProfileFragment: Fragment() {
     }
 
     private fun setClickListeners() = binding.run {
+        //remove backbbutton
+        activity.removeBackButton()
+
+        //remove hardware back button
+        requireActivity().onBackPressedDispatcher.addCallback {
+            null
+        }
         birthdateEditText.setOnSingleClickListener {
             val constraintsBuilder=CalendarConstraints.Builder()
                 .setValidator(DateValidatorPointBackward.now())
@@ -324,9 +332,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                 lc_location_id = lc_location_id,
             )
 
-            CommonLogger.instance.sysLogE("HERE", request)
-
-//            viewModel.doUpdateProfile(request)
+            viewModel.doUpdateProfile(request)
         }
     }
 
