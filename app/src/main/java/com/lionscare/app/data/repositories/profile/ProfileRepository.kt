@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
@@ -132,5 +133,14 @@ class ProfileRepository @Inject constructor(
                 }
         }.flowOn(ioDispatcher)
     }
+
+    //===================upload avatar
+    fun uploadAvatar(request: ProfileAvatarRequest): Flow<GeneralResponse> {
+        return flow {
+            val response = profileRemoteDataSource.uploadAvatar(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
 
 }
