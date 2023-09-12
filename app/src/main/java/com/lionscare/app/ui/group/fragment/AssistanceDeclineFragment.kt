@@ -44,7 +44,7 @@ class AssistanceDeclineFragment : Fragment(), AssistanceAdapter.GroupCallback {
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = AssistanceAdapter(this@AssistanceDeclineFragment)
+        adapter = AssistanceAdapter(requireActivity(),this@AssistanceDeclineFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter

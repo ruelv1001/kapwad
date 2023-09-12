@@ -61,7 +61,7 @@
                 android:fontFamily="@font/inter_regular"
                 android:maxLines="1"
                 android:text="@string/lbl_requested_by"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_14" />
 
             <TextView
                 android:id="@+id/requestByTextView"
@@ -72,7 +72,11 @@
                 android:maxLines="1"
                 android:text="Zyla Valerie"
                 android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
+                android:gravity="center_vertical"
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeMinTextSize="@dimen/font_4"
+                android:autoSizeMaxTextSize="@dimen/dimen_14"
+                android:autoSizeTextType="uniform" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,7 +85,7 @@
             android:layout_marginEnd="@dimen/dimen_10"
             android:orientation="horizontal">
 
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_5"
@@ -89,7 +93,7 @@
                 android:fontFamily="@font/inter_regular"
                 android:maxLines="1"
                 android:text="@string/lbl_refid"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_14" />-->
 
             <TextView
                 android:id="@+id/refIDTextView"
@@ -100,7 +104,11 @@
                 android:maxLines="1"
                 android:text="003254300013"
                 android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
+                android:gravity="center_vertical"
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeMinTextSize="@dimen/font_4"
+                android:autoSizeMaxTextSize="@dimen/dimen_14"
+                android:autoSizeTextType="uniform" />
         </LinearLayout>
 
         <TextView

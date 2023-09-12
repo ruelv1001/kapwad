@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.ActivityGroupBinding
@@ -31,6 +32,7 @@ class GroupActivity : AppCompatActivity() {
     private var assistanceDetailsType: String = ""
     private var memberCount: Int = 0
     var groupDetails: GroupData ?= null
+    var referenceId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

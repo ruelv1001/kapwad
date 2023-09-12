@@ -52,7 +52,6 @@ class SplashScreenActivity : AppCompatActivity() {
                         startActivity(intent)
                         this.finishAffinity()
                     }else{
-                        Toast.makeText(this,"Please complete your profile details.", Toast.LENGTH_LONG).show()
                         val intent = ProfileActivity.getIntent(this, true)
                         startActivity(intent)
                         this.finishAffinity()

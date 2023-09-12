@@ -15,7 +15,7 @@ sealed class AssistanceViewState {
     data class SuccessCreateAssistance(val message: String = ""): AssistanceViewState()
     data class SuccessCancelAssistance(val message: String = ""): AssistanceViewState()
     data class SuccessApproveDeclineAssistance(val message: String = ""): AssistanceViewState()
-    data class SuccessGetAssistanceInfo(val data : CreateAssistanceResponse?= null): AssistanceViewState()
+    data class SuccessGetAssistanceInfo(val response : CreateAssistanceResponse?= null): AssistanceViewState()
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : AssistanceViewState()
     data class InputError(val errorData: ErrorsData? = null) : AssistanceViewState()
 
