@@ -1,5 +1,8 @@
 package com.lionscare.app.data.repositories.assistance.request
 
+import androidx.annotation.Keep
+
+@Keep
 data class AllAssistanceListRequest (
     var filter: List<String>,
     var group_id: String,
