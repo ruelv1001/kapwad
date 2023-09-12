@@ -25,6 +25,7 @@ import com.lionscare.app.utils.ObservableWebView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.lionscare.app.utils.CommonLogger
 
 
 class WebviewDialog private constructor() : BottomSheetDialogFragment() {
@@ -141,6 +142,14 @@ class WebviewDialog private constructor() : BottomSheetDialogFragment() {
                     progressBar.progress = newProgress
                     super.onProgressChanged(view, newProgress)
                 }
+
+                override fun onReceivedTitle(view: WebView?, title: String?) {
+//                    CommonLogger.devLog("huhua","title : ${title.toString()}")
+                    if (title.toString() == "CONFIMATION PAGE"){
+                        listener?.onDissmiss()
+                    }
+                    super.onReceivedTitle(view, title)
+                }
             }
 
             dialog?.setOnCancelListener { dialog ->
@@ -195,6 +204,7 @@ class WebviewDialog private constructor() : BottomSheetDialogFragment() {
             listener: WebViewListener? = null,
         ) {
             WebviewDialog().apply {
+                this.listener = listener
                 arguments = bundleOf(EXTRA_URL to url)
                 this
             }
