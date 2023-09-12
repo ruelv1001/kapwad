@@ -7,10 +7,10 @@
     android:orientation="horizontal"
     android:padding="@dimen/dimen_10">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImageView"
-        android:layout_width="@dimen/dimen_50"
-        android:layout_height="@dimen/dimen_50"
+        android:layout_width="@dimen/dimen_55"
+        android:layout_height="@dimen/dimen_55"
         android:src="@drawable/img_profile" />
 
     <LinearLayout

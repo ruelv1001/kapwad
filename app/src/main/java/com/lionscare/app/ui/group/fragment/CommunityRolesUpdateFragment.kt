@@ -65,7 +65,7 @@ class CommunityRolesUpdateFragment: Fragment(), GroupMembersAdapter.MembersCallb
 
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(this@CommunityRolesUpdateFragment, isUpdating = true)
+        adapter = GroupMembersAdapter(requireContext(),this@CommunityRolesUpdateFragment, isUpdating = true)
         swipeRefreshLayout.setOnRefreshListener(this@CommunityRolesUpdateFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager

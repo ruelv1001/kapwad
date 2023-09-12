@@ -75,4 +75,10 @@ interface ProfileService {
     @POST("api/profile/setting/password")
     suspend fun doChangePass(@Body request : ChangePassRequest): Response<GeneralResponse>
 
+    //================= UPload profile avatar
+
+    @Multipart
+    @POST("api/profile/setting/update-avatar")
+    suspend fun uploadAvatar(@Part image: MultipartBody.Part): Response<GeneralResponse>
+
 }

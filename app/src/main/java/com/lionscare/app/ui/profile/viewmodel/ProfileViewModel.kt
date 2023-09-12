@@ -7,9 +7,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
+import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.utils.CommonLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -110,6 +112,25 @@ class ProfileViewModel @Inject constructor(
                 }
         }
     }
+
+    fun uploadAvatar(request : ProfileAvatarRequest ) {
+        viewModelScope.launch {
+            profileRepository.uploadAvatar(request)
+                .onStart {
+                    _profileSharedFlow.emit(ProfileViewState.LoadingAvatar)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _profileSharedFlow.emit(
+                        ProfileViewState.SuccessUploadAvatar(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+
 
 
     private suspend fun onError(exception: Throwable) {

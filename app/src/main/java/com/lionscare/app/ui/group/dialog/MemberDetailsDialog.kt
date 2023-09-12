@@ -10,6 +10,7 @@ import com.lionscare.app.R
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.DialogUserDetailsBinding
 import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,6 +46,7 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
     }
 
     private fun setView() = viewBinding?.run {
+        avatarImageView.loadImage(data.user?.avatar?.thumb_path, requireContext())
         nameTextView.text = data.user?.name
         idTextView.text = data.user?.qrcode?.replace("....".toRegex(), "$0 ")
         avatarImageView.loadAvatar(data.user?.avatar?.full_path.orEmpty(), requireActivity())
