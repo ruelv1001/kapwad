@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var loadingDialog: CommonDialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?)  {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
@@ -40,6 +40,13 @@ class MainActivity : AppCompatActivity() {
                 .findFragmentById(R.id.tabNavHostFragment) as NavHostFragment
             navController = navHostFragment.navController
             navView.setupWithNavController(navController)
+            if (intent.getStringExtra(EXTRA_GO_TO) != ""){
+                val navGraph =
+                    navController.navInflater.inflate(R.navigation.main_nav_graph)
+                val bundle = Bundle()
+                navGraph.setStartDestination(R.id.navigation_wallet)
+                navController.setGraph(navGraph, bundle)
+            }
             // code for adding badge
             //navView.getOrCreateBadge(R.id.navigation_groups).number = number_of_badge
         }
@@ -77,8 +84,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
+        private const val EXTRA_GO_TO = "EXTRA_GO_TO"
+        fun getIntent(
+            context: Context,
+            goTo: String = ""
+        ): Intent {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra(EXTRA_GO_TO, goTo)
+            return intent
         }
+
+
     }
 }

@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentPaymentMethodBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.dialog.WebviewDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -53,6 +55,7 @@ class PaymentMethodFragment : Fragment() {
         backImageView.setOnSingleClickListener {
             activity.onBackPressedDispatcher.onBackPressed()
         }
+
         continueButton.setOnSingleClickListener {
             viewModel.doTopupPoints(activity.amount.replace("," , ""))
         }
@@ -88,7 +91,9 @@ class PaymentMethodFragment : Fragment() {
             webUrl,
             object : WebviewDialog.WebViewListener {
                 override fun onDissmiss() {
-                    activity.finish()
+                    val intent = MainActivity.getIntent(activity,"asds")
+                    startActivity(intent)
+//                    CommonLogger.devLog("huhua","close webview")
                 }
             }
         )
