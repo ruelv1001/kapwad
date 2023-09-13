@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class VerifiedBadgeActivity  : AppCompatActivity() {
 
     private lateinit var binding: ActivityVerifiedBadgeBinding
-    var accountType = ""
+    var accountType  = ""
     var selectedPosition = RecyclerView.NO_POSITION
 
     override fun onCreate(savedInstanceState: Bundle?) {
