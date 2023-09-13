@@ -30,6 +30,7 @@ data class GroupData(
     var member_only_count: Int? = null,
     var admin_only_count: Int? = null,
     var pending_requests_count: Int? = null,
+    var request_assistance_count: Int? = null,
     var name: String? = null,
     var type: String? = null,
     var privacy: String? = null,

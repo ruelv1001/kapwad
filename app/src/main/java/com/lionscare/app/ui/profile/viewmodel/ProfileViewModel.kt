@@ -11,7 +11,6 @@ import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
-import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.utils.CommonLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -43,6 +42,8 @@ class ProfileViewModel @Inject constructor(
     //holder for avatar
     var avatarFileHolder : File? = null
 
+    //holder for email add
+    var email: String? = null
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {
