@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -326,12 +327,14 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
     }
 
     override fun onItemClicked(data: CreateAssistanceData) {
-        val intent = GroupActivity.getIntent(
-            this@GroupDetailsActivity,
-            start = START_ASSISTANCE_DETAILS,
-            groupData = groupDetails,
-            referenceId = data.reference_id.toString()
-        )
-        startActivity(intent)
+        if(groupDetails?.is_admin == true || data.user?.id == assistanceViewModel.user.id){
+            val intent = GroupActivity.getIntent(
+                this@GroupDetailsActivity,
+                start = START_ASSISTANCE_DETAILS,
+                groupData = groupDetails,
+                referenceId = data.reference_id.toString()
+            )
+            startActivity(intent)
+        }
     }
 }

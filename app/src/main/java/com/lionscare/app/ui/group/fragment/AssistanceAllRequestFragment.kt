@@ -124,8 +124,10 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     override fun onItemClicked(data: CreateAssistanceData) {
-        activity.referenceId = data.reference_id.toString()
-        findNavController().navigate(direction!!)
+        if(activity.groupDetails?.is_admin == true || data.user?.id == viewModel.user.id){
+            activity.referenceId = data.reference_id.toString()
+            findNavController().navigate(direction!!)
+        }
     }
 
     private fun clearList() {
