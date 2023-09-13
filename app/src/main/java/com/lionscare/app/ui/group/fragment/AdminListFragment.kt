@@ -23,6 +23,7 @@ import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
 import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,7 +82,7 @@ class AdminListFragment : Fragment(),
         ownerLinearLayout.isVisible = true
         groupOwnerLayout.nameTextView.text = activity.groupDetails?.owner?.name
         groupOwnerLayout.idNoTextView.text = activity.groupDetails?.owner?.qrcode
-        //groupOwnerLayout.profileImageView.loadAvatar(activity.groupDetails?.owner?.avatar?.thumb_path,requireActivity())
+        groupOwnerLayout.profileImageView.loadAvatar(activity.groupDetails?.owner?.avatar?.thumb_path,requireActivity())
 
         groupOwnerLayout.youTextView.isVisible = viewModel.user.id == activity.groupDetails?.owner_user_id
     }

@@ -105,7 +105,8 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             }
             is ProfileViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
-//                setView(viewState.userModel)
+                viewModel.userModel = viewState.userModel
+                setView(viewState.userModel)
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
@@ -137,9 +138,15 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
 
     override fun onResume() {
         super.onResume()
-        activity.setTitlee(getString(R.string.lbl_update_profile))
-        hideLoadingDialog()
-        setView(viewModel.userModel)
+        if(activity.isFromLogin){
+            activity.setTitlee(getString(R.string.lbl_reg_complete_profile))
+            viewModel.getProfileDetails()
+
+        }else{
+            activity.setTitlee(getString(R.string.lbl_update_profile))
+            hideLoadingDialog()
+            setView(viewModel.userModel)
+        }
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -302,7 +309,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 ) {
                     regionEditText.setText(data.value)
                     viewModel.userModel?.lc_region_id = data.code
-
+                    viewModel.lcRegionCode = data.code.orEmpty()
                     zoneEditText.setText("")
                     clusterEditText.setText("")
                     setClickableLionsClub()
@@ -319,11 +326,12 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 ) {
                     zoneEditText.setText(data.value)
                     viewModel.userModel?.lc_zone_id = data.code
+                    viewModel.lcZoneCode = data.code.orEmpty()
 
                     clusterEditText.setText("")
                     setClickableLionsClub()
                 }
-            }, region = viewModel.userModel?.lc_region_id.toString()).show(childFragmentManager, CityDialog.TAG)
+            }, region = viewModel.lcRegionCode).show(childFragmentManager, CityDialog.TAG)
         }
 
         clusterEditText.setOnSingleClickListener {
@@ -332,10 +340,11 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     data: LOVData
                 ) {
                     viewModel.userModel?.lc_location_id = data.code
+                    viewModel.lcClusterCode = data.code.orEmpty()
                     clusterEditText.setText(data.value)
                     setClickableLionsClub()
                 }
-            },region = viewModel.userModel?.lc_region_id.toString(), zone = viewModel.userModel?.lc_zone_id.toString()).show(childFragmentManager, BrgyDialog.TAG)
+            },region = viewModel.lcRegionCode, zone = viewModel.lcZoneCode).show(childFragmentManager, BrgyDialog.TAG)
         }
 
         saveButton.setOnSingleClickListener {
@@ -370,16 +379,17 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             brgy_sku = viewModel.userModel?.brgy_code.orEmpty(),
             brgy_name = barangayEditText.text.toString(),
             street_name =  streetEditText.text.toString(),
-            zipcode = viewModel.userModel?.zipcode.orEmpty(),
+            zipcode = zipcodeEditText.text.toString(),
             firstname = firstNameEditText.text.toString(),
             lastname = lastNameEditText.text.toString(),
             middlename = middleNameEditText.text.toString(),
             email = null,
             birthdate = birthdateEditText.text.toString(),
-            lc_region_id = viewModel.userModel?.lc_region_id.orEmpty(),
-            lc_zone_id = viewModel.userModel?.lc_zone_id.orEmpty(),
-            lc_location_id = viewModel.userModel?.lc_location_id.orEmpty(),
+            lc_region_id = viewModel.userModel?.lc_region_id,
+            lc_zone_id = viewModel.userModel?.lc_zone_id,
+            lc_location_id = viewModel.userModel?.lc_location_id,
         )
+        CommonLogger.instance.devLog("COMPLETE PROFILE", "data: ${viewModel.userModel}")
         viewModel.doUpdateProfile(request)
     }
 }

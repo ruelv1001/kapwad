@@ -47,7 +47,7 @@ class SplashScreenActivity : AppCompatActivity() {
             is SplashViewState.Loading -> Unit
             is SplashViewState.SuccessRefreshToken -> {
                 if (viewState.status){
-                    if(viewState.is_complete_profile){
+                    if(viewModel.isCompleteProfile == true){
                         val intent = MainActivity.getIntent(this)
                         startActivity(intent)
                         this.finishAffinity()

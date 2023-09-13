@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository,
+    private val profileRepository: ProfileRepository
 ) : ViewModel() {
 
     private val _profileSharedFlow = MutableSharedFlow<ProfileViewState>()
@@ -35,9 +35,15 @@ class ProfileViewModel @Inject constructor(
 
     //holder for phonenumber
     var phoneNumber : String? = null
+    var lcRegionCode : String = ""
+    var lcZoneCode : String = ""
+    var lcClusterCode : String = ""
 
     //holder for avatar
     var avatarFileHolder : File? = null
+
+    //holder for email add
+    var email: String? = null
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {

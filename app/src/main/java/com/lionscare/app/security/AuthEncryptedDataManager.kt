@@ -85,6 +85,7 @@ class AuthEncryptedDataManager {
             putString(USER_BRGY_NAME, userInfo.brgy_name)
             putString(USER_BRGY_CODE, userInfo.brgy_code)
             putString(USER_ZIPCODE, userInfo.zipcode)
+            putBoolean(USER_IS_COMPLETE_PROFILE, userInfo.is_complete_profile?: false)
         }
     }
 
@@ -145,6 +146,7 @@ class AuthEncryptedDataManager {
                 brgy_name = sharedPreferences.getString(USER_BRGY_NAME, "")
                 brgy_code = sharedPreferences.getString(USER_BRGY_CODE, "")
                 zipcode = sharedPreferences.getString(USER_ZIPCODE, "")
+                is_complete_profile = sharedPreferences.getBoolean(USER_IS_COMPLETE_PROFILE, false)
             }
         }
         return inMemoryUserData ?: UserModel()
@@ -246,6 +248,7 @@ class AuthEncryptedDataManager {
         private const val USER_BRGY_CODE = "USER_BRGY_CODE"
         private const val USER_BRGY_NAME = "USER_BRGY_NAME"
         private const val USER_ZIPCODE = "USER_ZIPCODE"
+        private const val USER_IS_COMPLETE_PROFILE = "USER_IS_COMPLETE_PROFILE"
 
         private const val USER_AVATAR_FILENAME = "USER_AVATAR_FILENAME"
         private const val USER_AVATAR_PATH = "USER_AVATAR_PATH"

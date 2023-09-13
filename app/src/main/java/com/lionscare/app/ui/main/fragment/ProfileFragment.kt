@@ -30,7 +30,7 @@ import com.lionscare.app.ui.profile.activity.NotificationsActivity
 import com.lionscare.app.ui.profile.activity.ProfileActivity
 import com.lionscare.app.ui.profile.activity.UpdatePasswordActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
-import com.lionscare.app.utils.loadImage
+import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -108,7 +108,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setView(userModel: UserModel?)=binding.run {
-        profileImageView.loadImage(userModel?.avatar?.thumb_path, requireContext())
+        profileImageView.loadAvatar(userModel?.avatar?.thumb_path, requireContext())
         nameTextView.text = userModel?.name
         badgeTextView.isVisible = false
         idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")

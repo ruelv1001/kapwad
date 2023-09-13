@@ -13,7 +13,7 @@ import com.lionscare.app.data.repositories.member.response.PendingMemberData
 import com.lionscare.app.data.repositories.member.response.PendingMemberResponse
 import com.lionscare.app.databinding.AdapterGroupPendingRequestBinding
 import com.lionscare.app.databinding.AdapterMembersBinding
-import com.lionscare.app.utils.loadImage
+import com.lionscare.app.utils.loadAvatar
 
 class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallback, val isAdmin: Boolean? = false) :
     PagingDataAdapter<PendingMemberData, GroupsInvitesAdapter.AdapterViewHolder>(
@@ -55,7 +55,7 @@ class GroupsInvitesAdapter(val context: Context, val clickListener: GroupCallbac
 
         fun bind(data: PendingMemberData?) {
             data?.let {
-                binding.imageView.loadImage(data.user?.avatar?.thumb_path, context)
+                binding.imageView.loadAvatar(data.user?.avatar?.thumb_path, context)
                 binding.titleTextView.text = data.user?.name
                 binding.membersTextView.text = data.user?.qrcode
                 binding.referenceTextView.visibility = View.GONE
