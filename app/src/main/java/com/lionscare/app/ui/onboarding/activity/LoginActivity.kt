@@ -16,6 +16,7 @@ import com.lionscare.app.databinding.ActivityLoginBinding
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewModel
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
+import com.lionscare.app.ui.profile.activity.ProfileActivity
 import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -67,10 +68,16 @@ class LoginActivity : AppCompatActivity() {
             is LoginViewState.Loading -> showLoadingDialog(R.string.login_loading)
             is LoginViewState.Success -> {
                 hideLoadingDialog()
-                val intent = MainActivity.getIntent(this@LoginActivity)
-                startActivity(intent)
                 Toast.makeText(this, viewState.message, Toast.LENGTH_SHORT).show()
-                finishAffinity()
+                if(viewState.isCompleteProfile){
+                    val intent = MainActivity.getIntent(this)
+                    startActivity(intent)
+                    finishAffinity()
+                }else{
+                    val intent = ProfileActivity.getIntent(this, true)
+                    startActivity(intent)
+                    finishAffinity()
+                }
             }
             is LoginViewState.PopupError -> {
                 hideLoadingDialog()
