@@ -43,6 +43,7 @@ class AuthRepository @Inject constructor(
             val userInfo = response.data?: UserModel()
             val token = response.token.orEmpty()
             encryptedDataManager.setAccessToken(token)
+            encryptedDataManager.setUserBasicInfo(userInfo)
             authLocalDataSource.login(setUpUserLocalData(userInfo, token))
             emit(response)
         }.flowOn(ioDispatcher)
