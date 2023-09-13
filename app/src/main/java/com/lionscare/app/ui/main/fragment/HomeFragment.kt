@@ -41,7 +41,7 @@ import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.copyToClipboard
-import com.lionscare.app.utils.loadImage
+import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
@@ -165,14 +165,17 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                         when(viewState.badgeStatus.badge_type){
                             "non_government_Organization" -> {
                                 binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
+                                binding.idLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
                                 binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
                             }
                             "influencer" -> {
                                 binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
+                                binding.idLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
                                 binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_influencer)
                             }
                             "public_servant" -> {
                                 binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
+                                binding.idLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
                                 binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_public_servant)
                             }
                         }
@@ -271,7 +274,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
         //main
-        mainLayout.profileImageView.loadImage(userModel?.avatar?.thumb_path, requireContext())
+        mainLayout.profileImageView.loadAvatar(userModel?.avatar?.thumb_path, requireContext())
         mainLayout.nameTextView.text = userModel?.name
         mainLayout.idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
         mainLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only
@@ -286,6 +289,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         idLayout.idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
         idLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.qrcode_value))
         idLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only
+        idLayout.profileImageView.loadAvatar(userModel?.avatar?.thumb_path, requireContext())
+        idLayout.dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph
 
         if (userModel?.street_name?.isNotEmpty() == true) {
             mainLayout.addressTextView.text =

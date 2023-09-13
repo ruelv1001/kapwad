@@ -55,10 +55,10 @@
         <ImageView
             android:id="@+id/rolesImageView"
             android:layout_width="@dimen/dimen_30"
-            android:padding="@dimen/dimen_5"
-            android:visibility="gone"
             android:layout_height="@dimen/dimen_30"
-            android:src="@drawable/ic_edit_roles" />
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_edit_roles"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/filterImageView"
