@@ -222,8 +222,9 @@
                     android:layout_height="wrap_content"
                     app:boxStrokeColor="@color/bg_edittext"
                     app:boxStrokeWidth="@dimen/dimen_0"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:boxBackgroundColor="@color/bg_edittext"
-                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginTop="@dimen/dimen_4"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -233,6 +234,7 @@
                         android:clickable="true"
                         android:focusable="false"
                         android:inputType="none"
+                        android:cursorVisible="false"
                         android:fontFamily="@font/inter_semibold"
                         android:text="@string/loading"
                         android:textColor="@color/text_color"
@@ -245,7 +247,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_14"
+                    android:layout_marginTop="@dimen/dimen_16"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
                     <TextView
@@ -275,13 +277,14 @@
                 <com.google.android.material.textfield.TextInputLayout
                     app:endIconMode="custom"
                     app:endIconDrawable="@drawable/ic_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:endIconContentDescription="@string/lbl_edit_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:boxStrokeColor="@color/bg_edittext"
                     app:boxStrokeWidth="@dimen/dimen_0"
                     app:boxBackgroundColor="@color/bg_edittext"
-                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginTop="@dimen/dimen_4"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -291,6 +294,7 @@
                         android:clickable="true"
                         android:focusable="false"
                         android:inputType="none"
+                        android:cursorVisible="false"
                         android:fontFamily="@font/inter_semibold"
                         android:text="@string/loading"
                         android:textColor="@color/text_color"
