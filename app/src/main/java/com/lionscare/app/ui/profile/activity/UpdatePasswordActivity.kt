@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -54,12 +55,15 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
         oldPasswordEditText.doOnTextChanged { text, start, before, count ->
             oldPasswordTextInputLayout.error = ""
+            oldPasswordEditText.setError(null,null)
         }
         newPasswordEditText.doOnTextChanged { text, start, before, count ->
             newPasswordTextInputLayout.error = ""
+            newPasswordEditText.setError(null,null)
         }
         confirmPasswordEditText.doOnTextChanged { text, start, before, count ->
             confirmPasswordTextInputLayout.error = ""
+            confirmPasswordEditText.setError(null,null)
         }
     }
 
@@ -81,6 +85,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
                 Toast.makeText(this, viewState.message, Toast.LENGTH_SHORT).show()
                 this.finish()
             }
+
             is SettingsViewState.PopupError -> {
                 hideLoadingDialog()
                 showPopupError(
@@ -90,22 +95,43 @@ class UpdatePasswordActivity : AppCompatActivity() {
                     viewState.message
                 )
             }
+
             is SettingsViewState.InputError -> {
                 hideLoadingDialog()
-                handleInputError(viewState.errorData?: ErrorsData())
+                handleInputError(viewState.errorData ?: ErrorsData())
             }
+
             else -> Unit
         }
     }
 
-    private fun handleInputError(errorsData: ErrorsData) = binding.run{
-        if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.newPasswordTextInputLayout.error = errorsData.password?.get(0)
-        if (errorsData.current_password?.get(0)?.isNotEmpty() == true) binding.oldPasswordTextInputLayout.error = errorsData.current_password?.get(0)
-        if (errorsData.password_confirmation?.get(0)?.isNotEmpty() == true) binding.confirmPasswordTextInputLayout.error = errorsData.password_confirmation?.get(0)
+    private fun handleInputError(errorsData: ErrorsData) = binding.run {
+        val drawableError =
+            AppCompatResources.getDrawable(this@UpdatePasswordActivity, R.drawable.ic_error)
+        drawableError?.setBounds(
+            -60,
+            0,
+            drawableError.intrinsicWidth - 55,
+            drawableError.intrinsicHeight
+        )
+
+        if (errorsData.password?.get(0)?.isNotEmpty() == true) binding.newPasswordEditText.setError(
+            errorsData.password?.get(0),
+            drawableError
+        )
+        if (errorsData.current_password?.get(0)
+                ?.isNotEmpty() == true
+        ) binding.oldPasswordEditText.setError(errorsData.current_password?.get(0), drawableError)
+        if (errorsData.password_confirmation?.get(0)
+                ?.isNotEmpty() == true
+        ) binding.confirmPasswordEditText.setError(
+            errorsData.password_confirmation?.get(0),
+            drawableError
+        )
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
-        if (loadingDialog == null){
+        if (loadingDialog == null) {
             loadingDialog = CommonDialog.getLoadingDialogInstance(
                 message = getString(strId)
             )
