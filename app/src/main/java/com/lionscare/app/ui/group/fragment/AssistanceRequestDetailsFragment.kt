@@ -19,6 +19,7 @@ import com.lionscare.app.ui.group.viewmodel.AssistanceViewModel
 import com.lionscare.app.ui.group.viewmodel.AssistanceViewState
 import com.lionscare.app.utils.copyToClipboard
 import com.lionscare.app.utils.currencyFormat
+import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +66,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
         dateTimeTextView.text = data.date_created?.datetime_ph
         amountTextView.text = currencyFormat(data.amount.toString())
         remarksTextView.text = data.note
-
+        profileImageView.loadAvatar(data.user?.avatar?.thumb_path, requireActivity())
         when (data.status) {
             "declined" -> {
                 cancelButton.visibility = View.GONE

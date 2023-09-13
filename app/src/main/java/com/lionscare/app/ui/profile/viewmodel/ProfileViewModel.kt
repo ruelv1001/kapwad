@@ -39,6 +39,9 @@ class ProfileViewModel @Inject constructor(
     //holder for avatar
     var avatarFileHolder : File? = null
 
+    //holder for email add
+    var email: String? = null
+
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {
             profileRepository.changePhoneNumber(request)

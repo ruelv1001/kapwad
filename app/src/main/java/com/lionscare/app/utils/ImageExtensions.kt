@@ -16,8 +16,9 @@ import com.bumptech.glide.request.RequestOptions
 fun ImageView.loadAvatar(url: String?, context: Context) {
     val requestOption = RequestOptions()
         .placeholder(R.drawable.img_profile)
+        .fallback(R.drawable.img_profile)
         .error(R.drawable.img_profile)
-        .fitCenter()
+        .centerCrop()
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
 
     Glide.with(context)
@@ -34,9 +35,8 @@ fun ImageView.loadAvatar(url: String?, context: Context) {
  */
 fun ImageView.loadImage(url: String?, context: Context) {
     val requestOption = RequestOptions()
-        .placeholder(R.drawable.img_profile)
-        .fallback(R.drawable.img_profile)
-        .error(R.drawable.img_profile)
+        .placeholder(R.color.color_primary)
+        .error(R.color.color_primary)
         .centerCrop()
         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
 
