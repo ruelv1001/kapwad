@@ -245,11 +245,23 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/activityRecyclerView"
+                <TextView
+                    android:id="@+id/placeHolderTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dimen_50"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:gravity="center"
+                    android:text="@string/lbl_nothing_to_show_txt"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/font_14"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
                     tools:itemCount="3"
                     tools:listitem="@layout/adapter_notifications" />
 

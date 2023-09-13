@@ -9,7 +9,8 @@ import javax.inject.Inject
 class GetAllListOfAssistanceRequestPagingSource @Inject constructor(
     private val assistanceRequestRemoteDataSource: AssistanceRemoteDataSource,
     private val groupId: String,
-    private val filter: List<String>
+    private val filter: List<String>,
+    private val isLimited : Boolean?= false
 ) :
     PagingSource<Int, CreateAssistanceData>() {
     override fun getRefreshKey(state: PagingState<Int, CreateAssistanceData>): Int? {
@@ -30,11 +31,20 @@ class GetAllListOfAssistanceRequestPagingSource @Inject constructor(
                 filter = filter
             )
             if (response.data?.isNotEmpty() == true) {
-                LoadResult.Page(
-                    data = response.data.orEmpty(),
-                    prevKey = if (page > 1) page - 1 else null,
-                    nextKey = if ((response.total ?: 0) > page) page + 1 else null
-                )
+                if(isLimited == true){
+                    val limited = response.data?.take(3)
+                    LoadResult.Page(
+                        data = limited.orEmpty(),
+                        prevKey = if (page > 1) page - 1 else null,
+                        nextKey = if ((response.total ?: 0) > page) page + 1 else null
+                    )
+                }else{
+                    LoadResult.Page(
+                        data = response.data.orEmpty(),
+                        prevKey = if (page > 1) page - 1 else null,
+                        nextKey = if ((response.total ?: 0) > page) page + 1 else null
+                    )
+                }
             } else {
                 LoadResult.Error(NoSuchElementException("No more data available"))
             }

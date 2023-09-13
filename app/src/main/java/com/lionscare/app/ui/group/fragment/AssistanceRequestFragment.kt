@@ -81,7 +81,7 @@ class AssistanceRequestFragment : Fragment(), AssistanceAdapter.GroupCallback,
     }
 
     private fun observeAssistance() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.assistanceSharedFlow.collect { viewState ->
                     handleViewState(viewState)
@@ -119,6 +119,7 @@ class AssistanceRequestFragment : Fragment(), AssistanceAdapter.GroupCallback,
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter?.removeLoadStateListener { requireActivity() }
         _binding = null
     }
 

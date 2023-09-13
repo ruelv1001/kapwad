@@ -12,15 +12,23 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.data.repositories.group.response.CreateGroupResponse
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.ActivityGroupDetailsBinding
+import com.lionscare.app.ui.group.adapter.AssistanceAdapter
+import com.lionscare.app.ui.group.viewmodel.AssistanceViewModel
+import com.lionscare.app.ui.group.viewmodel.AssistanceViewState
 import com.lionscare.app.ui.group.viewmodel.GroupViewModel
 import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.GroupWalletViewModel
@@ -38,17 +46,17 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GroupDetailsActivity : AppCompatActivity(),
-    NotificationsAdapter.NotificationsCallback, SwipeRefreshLayout.OnRefreshListener {
+class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener,
+    AssistanceAdapter.GroupCallback {
 
     private lateinit var binding: ActivityGroupDetailsBinding
     private var loadingDialog: CommonDialog? = null
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var adapter : NotificationsAdapter? = null
-    private var dataList: List<SampleData> = emptyList()
+    private var adapter: AssistanceAdapter? = null
     private var groupId = ""
     private val viewModel: GroupViewModel by viewModels()
     private val walletViewModel: GroupWalletViewModel by viewModels()
+    private val assistanceViewModel: AssistanceViewModel by viewModels()
     private var groupDetails: GroupData? = null
     var frontAnim: AnimatorSet? = null
     var backAnim: AnimatorSet? = null
@@ -64,17 +72,28 @@ class GroupDetailsActivity : AppCompatActivity(),
         binding.swipeRefreshLayout.setOnRefreshListener(this)
         observeWallet()
         observeShowGroup()
+        observeAssistance()
         setUpAnimation()
     }
 
     private fun setUpAdapter() = binding.run {
-        adapter = NotificationsAdapter(this@GroupDetailsActivity)
+        adapter = AssistanceAdapter(this@GroupDetailsActivity, this@GroupDetailsActivity)
         linearLayoutManager = LinearLayoutManager(this@GroupDetailsActivity)
-        activityRecyclerView.layoutManager = linearLayoutManager
-        activityRecyclerView.adapter = adapter
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.adapter = adapter
+
+        adapter?.addLoadStateListener {
+            if (adapter?.hasData() == true) {
+                placeHolderTextView.isVisible = false
+                recyclerView.isVisible = true
+            } else {
+                placeHolderTextView.isVisible = true
+                recyclerView.isVisible = false
+            }
+        }
     }
 
-    private fun setDetails(data : GroupData) = binding.run {
+    private fun setDetails(data: GroupData) = binding.run {
         titleTextView.text = data.name
         referenceTextView.text = data.qrcode
         membersTextView.text = data.member_count.toString()
@@ -86,29 +105,34 @@ class GroupDetailsActivity : AppCompatActivity(),
         addImageView.isVisible = data.is_admin == true
     }
 
-    private fun setupClickListener() = binding.run{
+    private fun setupClickListener() = binding.run {
         addImageView.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_INVITE, groupDetails)
+            val intent =
+                GroupActivity.getIntent(this@GroupDetailsActivity, START_INVITE, groupDetails)
             startActivity(intent)
         }
         settingsImageView.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MANAGE, groupDetails)
+            val intent =
+                GroupActivity.getIntent(this@GroupDetailsActivity, START_MANAGE, groupDetails)
             startActivity(intent)
         }
         assistanceRequestsLinearLayout.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_ASSISTANCE, groupDetails)
+            val intent =
+                GroupActivity.getIntent(this@GroupDetailsActivity, START_ASSISTANCE, groupDetails)
             startActivity(intent)
         }
         membersLinearLayout.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP, groupDetails)
+            val intent =
+                GroupActivity.getIntent(this@GroupDetailsActivity, START_MEMBERSHIP, groupDetails)
             startActivity(intent)
         }
         adminLinearLayout.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(this@GroupDetailsActivity, START_ADMIN, groupDetails)
+            val intent =
+                GroupActivity.getIntent(this@GroupDetailsActivity, START_ADMIN, groupDetails)
             startActivity(intent)
         }
         backImageView.setOnSingleClickListener {
-          finish()
+            finish()
         }
         walletLayout.sendLinearLayout.setOnSingleClickListener {
             val intent = WalletActivity.getIntent(
@@ -133,6 +157,16 @@ class GroupDetailsActivity : AppCompatActivity(),
         }
         qrLayout.idNoTextView.setOnSingleClickListener {
             copyToClipboard(qrLayout.idNoTextView.text.toString())
+        }
+
+        viewAllTextView.setOnSingleClickListener {
+            val intent = GroupActivity.getIntent(
+                this@GroupDetailsActivity,
+                start = START_ASSISTANCE,
+                groupData = groupDetails,
+                assistanceType = ALL_REQUEST
+            )
+            startActivity(intent)
         }
     }
 
@@ -170,18 +204,20 @@ class GroupDetailsActivity : AppCompatActivity(),
                     viewState.message
                 )
             }
+
             is GroupViewState.SuccessShowGroup -> {
                 hideLoadingDialog()
                 groupDetails = viewState.createGroupResponse?.data
                 groupDetails?.let { setDetails(it) }
                 walletViewModel.getWalletBalance(viewState.createGroupResponse?.data?.id.orEmpty())
             }
+
             else -> Unit
         }
     }
 
     private fun observeWallet() {
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             walletViewModel.walletSharedFlow.collectLatest { viewState ->
                 handleViewState(viewState)
             }
@@ -195,6 +231,7 @@ class GroupDetailsActivity : AppCompatActivity(),
                 binding.swipeRefreshLayout.isRefreshing = false
                 binding.walletLayout.pointsTextView.text = viewState.balanceData?.value
             }
+
             is GroupWalletViewState.PopupError -> {
                 binding.swipeRefreshLayout.isRefreshing = false
                 showPopupError(this, supportFragmentManager, viewState.errorCode, viewState.message)
@@ -202,6 +239,43 @@ class GroupDetailsActivity : AppCompatActivity(),
 
             else -> Unit
         }
+    }
+
+    private fun observeAssistance() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                assistanceViewModel.assistanceSharedFlow.collect { viewState ->
+                    assistanceHandleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    private fun assistanceHandleViewState(viewState: AssistanceViewState) {
+        when (viewState) {
+            is AssistanceViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is AssistanceViewState.SuccessGetAllListOfAssistance -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                showList(viewState.pagingData)
+            }
+
+            is AssistanceViewState.PopupError -> {
+                binding.swipeRefreshLayout.isRefreshing = false
+                showPopupError(
+                    this@GroupDetailsActivity,
+                    supportFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+            }
+
+            else -> Unit
+        }
+    }
+
+    private fun showList(createAssistanceData: PagingData<CreateAssistanceData>) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        adapter?.submitData(lifecycle, createAssistanceData)
     }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
@@ -219,6 +293,7 @@ class GroupDetailsActivity : AppCompatActivity(),
     }
 
     override fun onDestroy() {
+        adapter?.removeLoadStateListener { this@GroupDetailsActivity }
         super.onDestroy()
         hideLoadingDialog()
     }
@@ -226,6 +301,7 @@ class GroupDetailsActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
         viewModel.showGroup(groupId)
+        assistanceViewModel.refresh(groupId, emptyList(), true)
     }
 
     companion object {
@@ -234,20 +310,28 @@ class GroupDetailsActivity : AppCompatActivity(),
         private const val START_ASSISTANCE = "START_ASSISTANCE"
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         private const val START_ADMIN = "START_ADMIN"
+        private const val START_ASSISTANCE_DETAILS = "START_ASSISTANCE_DETAILS"
         private const val GROUP_ID = "GROUP_ID"
         private const val GROUP_NAME = "GROUP_NAME"
+        private const val ALL_REQUEST = "ALL_REQUEST"
         fun getIntent(context: Context, group_id: String? = null): Intent {
             val intent = Intent(context, GroupDetailsActivity::class.java)
-            intent.putExtra(GROUP_ID,group_id)
+            intent.putExtra(GROUP_ID, group_id)
             return intent
         }
     }
 
-    override fun onItemClicked(data: SampleData) {
-
-    }
-
     override fun onRefresh() {
         viewModel.showGroup(groupId)
+    }
+
+    override fun onItemClicked(data: CreateAssistanceData) {
+        val intent = GroupActivity.getIntent(
+            this@GroupDetailsActivity,
+            start = START_ASSISTANCE_DETAILS,
+            groupData = groupDetails,
+            referenceId = data.reference_id.toString()
+        )
+        startActivity(intent)
     }
 }

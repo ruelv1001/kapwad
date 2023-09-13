@@ -85,7 +85,7 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     private fun observeAssistance() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.assistanceSharedFlow.collect { viewState ->
                     handleViewState(viewState)
@@ -99,6 +99,7 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
             is AssistanceViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
             is AssistanceViewState.SuccessGetAllListOfAssistance -> {
                 binding.swipeRefreshLayout.isRefreshing = false
+                clearList()
                 showList(viewState.pagingData)
             }
             is AssistanceViewState.PopupError -> {
@@ -113,21 +114,13 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     private fun showList(createAssistanceData: PagingData<CreateAssistanceData>){
-        binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(viewLifecycleOwner.lifecycle, createAssistanceData)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter?.removeLoadStateListener { requireActivity() }
         _binding = null
-    }
-
-    companion object {
-        fun newInstance(direction: NavDirections): AssistanceAllRequestFragment {
-            val fragment = AssistanceAllRequestFragment()
-            fragment.direction = direction
-            return fragment
-        }
     }
 
     override fun onItemClicked(data: CreateAssistanceData) {
@@ -140,7 +133,6 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     override fun onRefresh() {
-        clearList()
         viewModel.refresh(activity.groupDetails?.id.toString(), emptyList())
     }
 
@@ -153,5 +145,13 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
         clearList()
         binding.swipeRefreshLayout.isRefreshing = true
         viewModel.refresh(activity.groupDetails?.id.toString(), filter)
+    }
+
+    companion object {
+        fun newInstance(direction: NavDirections): AssistanceAllRequestFragment {
+            val fragment = AssistanceAllRequestFragment()
+            fragment.direction = direction
+            return fragment
+        }
     }
 }
