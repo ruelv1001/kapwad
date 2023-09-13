@@ -171,6 +171,7 @@ class ProfilePreviewFragment : Fragment() {
 
     private fun setClickListeners() = binding.run  {
         emailEditText.setOnSingleClickListener {
+            viewModel.email = emailEditText.text.toString()
             findNavController().navigate(ProfilePreviewFragmentDirections.actionNavigationProfilePreviewToProfileEditEmailaddress())
         }
         phoneEditText.setOnSingleClickListener {

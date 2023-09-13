@@ -165,14 +165,17 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                         when(viewState.badgeStatus.badge_type){
                             "non_government_Organization" -> {
                                 binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
+                                binding.idLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
                                 binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
                             }
                             "influencer" -> {
                                 binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
+                                binding.idLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
                                 binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_influencer)
                             }
                             "public_servant" -> {
                                 binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
+                                binding.idLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
                                 binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_public_servant)
                             }
                         }
@@ -286,6 +289,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         idLayout.idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
         idLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.qrcode_value))
         idLayout.dateIssuedTextView.text = userModel?.date_registered?.date_only
+        idLayout.profileImageView.loadImage(userModel?.avatar?.thumb_path, requireContext())
+        idLayout.dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph
 
         if (userModel?.street_name?.isNotEmpty() == true) {
             mainLayout.addressTextView.text =

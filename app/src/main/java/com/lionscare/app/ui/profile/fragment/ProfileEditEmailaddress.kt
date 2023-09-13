@@ -52,9 +52,9 @@ class ProfileEditEmailaddress: Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().setTitle(R.string.lbl_reg_otp)
         observeProfile()
         setClickListeners()
+        binding.emailEditText.setText(viewModel.email)
         activity.setTitlee(getString(R.string.update_email_address))
     }
 
