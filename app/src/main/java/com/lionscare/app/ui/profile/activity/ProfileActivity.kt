@@ -10,10 +10,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.ActivityProfileBinding
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
+import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.utils.dialog.CommonDialog
+import com.lionscare.app.utils.getParcelable
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,11 +41,9 @@ class ProfileActivity : AppCompatActivity() {
     private fun setOnClickListener() = binding.run {
         backImageView.setOnSingleClickListener {
             if(isFromLogin){
-                val intent = MainActivity.getIntent(this@ProfileActivity)
-                startActivity(intent)
                 this@ProfileActivity.finishAffinity()
             }else{
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
             }
         }
     }
@@ -52,9 +53,20 @@ class ProfileActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
+        val navGraph = navController.navInflater.inflate(R.navigation.profile_nav_graph)
+        if (isFromLogin){
+            navGraph.setStartDestination(R.id.navigation_profile_update)
+        }else{
+            navGraph.setStartDestination(R.id.navigation_profile_preview)
+        }
+        navController.setGraph(navGraph, null)
         val appBarConfig = AppBarConfiguration.Builder(INVALID_ID)
             .setFallbackOnNavigateUpListener {
-                onBackPressed()
+                if(isFromLogin){
+                    this@ProfileActivity.finishAffinity()
+                }else{
+                    onBackPressedDispatcher.onBackPressed()
+                }
                 true
             }.build()
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfig)

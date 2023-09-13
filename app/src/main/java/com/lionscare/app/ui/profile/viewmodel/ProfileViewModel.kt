@@ -11,6 +11,7 @@ import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.utils.CommonLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -23,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository,
+    private val profileRepository: ProfileRepository
 ) : ViewModel() {
 
     private val _profileSharedFlow = MutableSharedFlow<ProfileViewState>()
@@ -35,9 +36,13 @@ class ProfileViewModel @Inject constructor(
 
     //holder for phonenumber
     var phoneNumber : String? = null
+    var lcRegionCode : String = ""
+    var lcZoneCode : String = ""
+    var lcClusterCode : String = ""
 
     //holder for avatar
     var avatarFileHolder : File? = null
+
 
     fun changePhoneNumber(request : UpdatePhoneNumberRequest) {
         viewModelScope.launch {
