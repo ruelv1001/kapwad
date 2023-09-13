@@ -6,6 +6,7 @@ import com.lionscare.app.data.repositories.auth.AuthRepository
 import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lionscare.app.security.AuthEncryptedDataManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,12 +17,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val encryptedDataManager: AuthEncryptedDataManager
 ): ViewModel() {
 
     private val _splashStateFlow = MutableStateFlow<SplashViewState>(SplashViewState.Idle)
 
     val splashStateFlow: StateFlow<SplashViewState> = _splashStateFlow.asStateFlow()
+
+    val isCompleteProfile = encryptedDataManager.getUserBasicInfo().is_complete_profile
 
     fun doRefreshToken() {
         viewModelScope.launch {
