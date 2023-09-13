@@ -44,7 +44,11 @@ class AssistanceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpTabs()
         setClickListeners()
-        onResume()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity.setTitlee(getString(R.string.lbl_assistance))
         if(activity.getAssistanceDetailsType() == ALL_REQUEST){
             setActiveTab(binding.allRequestRelativeLayout)
             binding.viewPager.currentItem = 1
@@ -52,11 +56,6 @@ class AssistanceFragment : Fragment() {
             setActiveTab(binding.requestRelativeLayout)
             binding.viewPager.currentItem = 0
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity.setTitlee(getString(R.string.lbl_assistance))
     }
 
     private fun setClickListeners() = binding.run {

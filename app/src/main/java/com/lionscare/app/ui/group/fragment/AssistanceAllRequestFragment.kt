@@ -99,6 +99,7 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
             is AssistanceViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
             is AssistanceViewState.SuccessGetAllListOfAssistance -> {
                 binding.swipeRefreshLayout.isRefreshing = false
+                clearList()
                 showList(viewState.pagingData)
             }
             is AssistanceViewState.PopupError -> {
@@ -113,7 +114,6 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
     }
 
     private fun showList(createAssistanceData: PagingData<CreateAssistanceData>){
-        binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(viewLifecycleOwner.lifecycle, createAssistanceData)
     }
 
@@ -123,26 +123,16 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
         _binding = null
     }
 
-    companion object {
-        fun newInstance(direction: NavDirections): AssistanceAllRequestFragment {
-            val fragment = AssistanceAllRequestFragment()
-            fragment.direction = direction
-            return fragment
-        }
-    }
-
     override fun onItemClicked(data: CreateAssistanceData) {
         activity.referenceId = data.reference_id.toString()
         findNavController().navigate(direction!!)
     }
 
     private fun clearList() {
-        if(view != null)
-            adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+        adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
     }
 
     override fun onRefresh() {
-        clearList()
         viewModel.refresh(activity.groupDetails?.id.toString(), emptyList())
     }
 
@@ -155,5 +145,13 @@ class AssistanceAllRequestFragment : Fragment(), AssistanceAdapter.GroupCallback
         clearList()
         binding.swipeRefreshLayout.isRefreshing = true
         viewModel.refresh(activity.groupDetails?.id.toString(), filter)
+    }
+
+    companion object {
+        fun newInstance(direction: NavDirections): AssistanceAllRequestFragment {
+            val fragment = AssistanceAllRequestFragment()
+            fragment.direction = direction
+            return fragment
+        }
     }
 }
