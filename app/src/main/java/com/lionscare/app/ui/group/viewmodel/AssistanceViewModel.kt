@@ -120,8 +120,16 @@ class AssistanceViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadAllAssistanceRequest(groupId: String, filter : List<String>) {
-        assistanceRepository.doGetAllListOfAssistanceRequest(groupId = groupId, filter = filter)
+    private suspend fun loadAllAssistanceRequest(
+        groupId: String,
+        filter: List<String>,
+        isLimited: Boolean? = false
+    ) {
+        assistanceRepository.doGetAllListOfAssistanceRequest(
+            groupId = groupId,
+            filter = filter,
+            isLimited = isLimited
+        )
             .cachedIn(viewModelScope)
             .onStart {
                 _assistanceSharedFlow.emit(AssistanceViewState.Loading)
@@ -136,13 +144,13 @@ class AssistanceViewModel @Inject constructor(
             }
     }
 
-    fun refresh(groupId: String, filter : List<String>) {
+    fun refresh(groupId: String, filter: List<String>, isLimited: Boolean? = false) {
         viewModelScope.launch {
-            loadAllAssistanceRequest(groupId, filter)
+            loadAllAssistanceRequest(groupId, filter, isLimited)
         }
     }
 
-    private suspend fun loadMyAssistanceRequest(groupId: String, filter : List<String>) {
+    private suspend fun loadMyAssistanceRequest(groupId: String, filter: List<String>) {
         assistanceRepository.doGetMyListOfAssistanceRequest(groupId = groupId, filter = filter)
             .cachedIn(viewModelScope)
             .onStart {
@@ -158,7 +166,7 @@ class AssistanceViewModel @Inject constructor(
             }
     }
 
-    fun refreshMyList(groupId: String, filter : List<String>) {
+    fun refreshMyList(groupId: String, filter: List<String>) {
         viewModelScope.launch {
             loadMyAssistanceRequest(groupId, filter)
         }

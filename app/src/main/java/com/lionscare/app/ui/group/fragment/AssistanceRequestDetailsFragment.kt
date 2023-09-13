@@ -132,7 +132,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
     }
 
     private fun observeAssistance() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.assistanceSharedFlow.collect { viewState ->
                     handleViewState(viewState)

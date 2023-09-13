@@ -33,10 +33,11 @@ class AssistanceRepository @Inject constructor(
     fun doGetAllListOfAssistanceRequest(
         pagingConfig: PagingConfig = getDefaultPageConfig(),
         groupId: String,
-        filter: List<String>
+        filter: List<String>,
+        isLimited : Boolean?= false
     ): Flow<PagingData<CreateAssistanceData>> {
         val getAllListOfAssistanceRequestPagingSource =
-            GetAllListOfAssistanceRequestPagingSource(assistanceRemoteDataSource, groupId, filter)
+            GetAllListOfAssistanceRequestPagingSource(assistanceRemoteDataSource, groupId, filter, isLimited)
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = { getAllListOfAssistanceRequestPagingSource }

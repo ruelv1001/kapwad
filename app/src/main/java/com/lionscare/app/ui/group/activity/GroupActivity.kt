@@ -29,9 +29,9 @@ class GroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGroupBinding
     private var loadingDialog: CommonDialog? = null
     var start: String = ""
-    private var assistanceDetailsType: String = ""
+    private var assistanceDetailsType = ""
     private var memberCount: Int = 0
-    var groupDetails: GroupData ?= null
+    var groupDetails: GroupData? = null
     var referenceId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +42,8 @@ class GroupActivity : AppCompatActivity() {
         setupNavigationComponent()
         setOnClickListener()
         groupDetails = intent.getParcelable(GROUP_DATA)
+        assistanceDetailsType = intent.getStringExtra(ASSISTANCE_TYPE).toString()
+        referenceId = intent.getStringExtra(EXTRA_REF_ID).toString()
     }
 
     private fun setOnClickListener() = binding.run {
@@ -60,10 +62,18 @@ class GroupActivity : AppCompatActivity() {
         when (start) {
             START_INVITE -> navGraph.setStartDestination(R.id.navigation_group_invite)
             START_MANAGE -> navGraph.setStartDestination(R.id.navigation_group_manage)
-            START_ASSISTANCE -> navGraph.setStartDestination(R.id.navigation_group_assistance)
+            START_ASSISTANCE -> {
+                navGraph.setStartDestination(R.id.navigation_group_assistance)
+                if(assistanceDetailsType == ALL_REQUEST){
+                    setAssistanceDetailsType(ALL_REQUEST)
+                }else{
+                    setAssistanceDetailsType(REQUEST)
+                }
+            }
             START_MEMBERSHIP -> navGraph.setStartDestination(R.id.navigation_group_membership)
             START_ADMIN -> navGraph.setStartDestination(R.id.navigation_group_admin_list)
             START_GROUP_SEARCH -> navGraph.setStartDestination(R.id.navigation_group_search)
+            START_ASSISTANCE_DETAILS -> navGraph.setStartDestination(R.id.navigation_group_assistance_req_details)
             else -> navGraph.setStartDestination(R.id.navigation_group_create)
         }
         navController.setGraph(navGraph, null)
@@ -89,22 +99,22 @@ class GroupActivity : AppCompatActivity() {
         loadingDialog = null
     }
 
-    fun getRolesView() : ImageView{
+    fun getRolesView(): ImageView {
         return binding.rolesImageView
     }
 
-    fun getFilterImageView() : ImageView{
+    fun getFilterImageView(): ImageView {
         return binding.filterImageView
     }
 
-    fun getScanImageView() : ImageView {
+    fun getScanImageView(): ImageView {
         return binding.scanImageView
     }
 
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
-        when(title){
-            getString(R.string.lbl_transactions) ->{
+        when (title) {
+            getString(R.string.lbl_transactions) -> {
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.VISIBLE
                 filterImageView.visibility = View.GONE
@@ -122,18 +132,21 @@ class GroupActivity : AppCompatActivity() {
                 filterImageView.visibility = View.VISIBLE
                 scanImageView.visibility = View.GONE
             }
+
             "Invite to ${groupDetails?.name}" -> {
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.GONE
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.VISIBLE
             }
+
             "Group Search" -> {
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.GONE
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.VISIBLE
             }
+
             else -> {
                 rolesImageView.visibility = View.GONE
                 searchImageView.visibility = View.GONE
@@ -142,18 +155,20 @@ class GroupActivity : AppCompatActivity() {
             }
         }
     }
+
     fun setAssistanceDetailsType(type: String) = binding.run {
         assistanceDetailsType = type
     }
 
-    fun getAssistanceDetailsType(): String{
+    fun getAssistanceDetailsType(): String {
         return assistanceDetailsType
     }
+
     fun setMemberCount(type: Int) = binding.run {
         memberCount = type
     }
 
-    fun getMemberCount(): Int{
+    fun getMemberCount(): Int {
         return memberCount
     }
 
@@ -166,11 +181,24 @@ class GroupActivity : AppCompatActivity() {
         private const val START_ASSISTANCE = "START_ASSISTANCE"
         private const val START_ADMIN = "START_ADMIN"
         private const val START_GROUP_SEARCH = "START_GROUP_SEARCH"
+        private const val START_ASSISTANCE_DETAILS = "START_ASSISTANCE_DETAILS"
         private const val GROUP_DATA = "GROUP_DATA"
-        fun getIntent(context: Context, start: String, groupData: GroupData? = null): Intent {
+        private const val ASSISTANCE_TYPE = "ASSISTANCE_TYPE"
+        private const val ALL_REQUEST = "ALL_REQUEST"
+        private const val REQUEST = "REQUEST"
+        private const val EXTRA_REF_ID = "EXTRA_REF_ID"
+        fun getIntent(
+            context: Context,
+            start: String,
+            groupData: GroupData? = null,
+            assistanceType: String? = null,
+            referenceId: String? = null
+        ): Intent {
             val intent = Intent(context, GroupActivity::class.java)
             intent.putExtra(GROUP_DATA, groupData)
             intent.putExtra(EXTRA_START, start)
+            intent.putExtra(ASSISTANCE_TYPE, assistanceType)
+            intent.putExtra(EXTRA_REF_ID,referenceId)
             return intent
         }
     }
