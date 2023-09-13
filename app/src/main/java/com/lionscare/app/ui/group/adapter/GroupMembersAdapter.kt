@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterMembersBinding
 import com.lionscare.app.utils.loadAvatar
-import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
 
 class GroupMembersAdapter(val context: Context, val clickListener: MembersCallback, val id: String? = null, var isUpdating: Boolean = false) :
@@ -61,7 +60,7 @@ class GroupMembersAdapter(val context: Context, val clickListener: MembersCallba
                     binding.youTextView.isGone = true
                 }
 
-                binding.profileImageView.loadImage(data.user?.avatar?.thumb_path, context)
+                binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path, context)
                 binding.nameTextView.text = data.user?.name
                 binding.idNoTextView.text = data.user?.qrcode
                 //binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path )

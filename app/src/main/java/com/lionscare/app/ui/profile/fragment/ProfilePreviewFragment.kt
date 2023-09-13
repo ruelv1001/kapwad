@@ -41,7 +41,6 @@ import com.lionscare.app.utils.calculateAge
 import com.lionscare.app.utils.getFileFromCroppedUri
 import com.lionscare.app.utils.getFileFromUri
 import com.lionscare.app.utils.loadAvatar
-import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import com.theartofdev.edmodo.cropper.CropImage
@@ -136,7 +135,7 @@ class ProfilePreviewFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
-        profileImageView.loadImage(userModel?.avatar?.thumb_path,requireContext())
+        profileImageView.loadAvatar(userModel?.avatar?.thumb_path,requireContext())
         nameTextView.text = userModel?.getFullName()
         dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph?.ifEmpty { "Not set "}
         ageTextView.text = userModel?.birthdate?.date_only_ph
@@ -242,7 +241,7 @@ class ProfilePreviewFragment : Fragment() {
             viewModel.uploadAvatar(ProfileAvatarRequest(viewModel.avatarFileHolder!!)) // call api
             showLoadingDialog(R.string.uploading_your_avatar_please_wait) // manually call loading dialog to show loading immediatley
             //put to imageview
-            binding.profileImageView.loadImage(croppedUri.toString(), requireContext())
+            binding.profileImageView.loadAvatar(croppedUri.toString(), requireContext())
         } else if (result.resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
             // Handle cropping error
             val error = CropImage.getActivityResult(result.data).error
