@@ -23,9 +23,11 @@
 
         <TextView
             android:id="@+id/nameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="@font/inter_semibold"
+            android:maxLines="1"
             android:text="@string/home_name_hint"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_16" />
@@ -46,21 +48,21 @@
         android:id="@+id/youTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:fontFamily="@font/inter_semibold"
         android:text="@string/lbl_you"
         android:textAlignment="center"
         android:textColor="@color/light_gray"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:textSize="@dimen/font_16" />
+        android:textSize="@dimen/font_16"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/removeImageView"
         android:layout_width="@dimen/dimen_30"
         android:layout_height="@dimen/dimen_30"
-        android:visibility="gone"
         android:layout_gravity="center_vertical"
         android:padding="@dimen/dimen_5"
-        android:src="@drawable/ic_remove_eraser" />
+        android:src="@drawable/ic_remove_eraser"
+        android:visibility="gone" />
 
 </LinearLayout>
