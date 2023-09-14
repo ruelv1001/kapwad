@@ -60,7 +60,7 @@ class InboundOutboundAdapter(val clickListener: InboundOutboundCallback) :
                     binding.amountTextView.text = "-${data.value}"
                 }
 
-                binding.titleTextView.text = data.title
+                binding.titleTextView.text =  data.title
 
                 val received = data.remarks?.substringBefore("Refid : ")?.trim()
                 val refId = data.remarks?.substringAfter("Refid : ")?.substringBefore(" ")?.trim()
