@@ -153,6 +153,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                     "pending" -> {
                         binding.mainLayout.badgeIdStatus.visibility = View.GONE // bdage pill dont show
                         binding.mainLayout.badgeImageView.visibility = View.GONE //remove badge on picture as it is still pending\
+                        binding.idLayout.badgeImageView.visibility = View.GONE //remove flip card badge
                         showProperBadgeStatus(viewState.badgeStatus)
                     }
                     "approved" -> {
@@ -161,6 +162,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                         binding.mainLayout.badgeIdStatus.visibility = View.VISIBLE // bdage pill show
                         binding.mainLayout.badgeIdStatus.text = formatBadgeType(viewState.badgeStatus.badge_type)
                         binding.mainLayout.badgeImageView.visibility = View.VISIBLE
+                        binding.idLayout.badgeImageView.visibility = View.VISIBLE
                         //change icon of avatar badge
                         when(viewState.badgeStatus.badge_type){
                             "non_government_Organization" -> {
@@ -187,6 +189,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                         binding.mainLayout.badgeImageView.visibility = View.GONE //dont show badge on picture as it is still pending
                         binding.mainLayout.badgeIdStatus.visibility = View.GONE //badge gone
                         binding.mainLayout.badgeIdStatus.visibility = View.GONE // bdage pill dont show
+                        binding.idLayout.badgeImageView.visibility = View.GONE //remove flip card badge
                     }
                 }
             }

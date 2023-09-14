@@ -261,6 +261,7 @@
             android:src="@drawable/img_profile" />
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
             android:id="@+id/badgeImageView"
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
