@@ -314,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_12"
                     android:fontFamily="@font/inter_bold"
-                    android:text="@string/lions_club_international_membership"
+                    android:text="@string/lions_club_international"
                     android:textColor="@color/color_primaryDark"
                     android:textSize="@dimen/font_16" />
 
