@@ -38,5 +38,6 @@ data class  ErrorsData(
     var group_privacy: List<String>? = null,
     var group_approval: List<String>? = null,
     var group_passcode: List<String>? = null,
-    var passcode: List<String>? = null
+    var passcode: List<String>? = null,
+    var amount: List<String>? = null
 )
