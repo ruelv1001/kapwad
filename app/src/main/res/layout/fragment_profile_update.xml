@@ -389,6 +389,14 @@
                 android:textAlignment="center"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/lions_club_info"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/font_14" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -469,6 +477,7 @@
                         android:textSize="@dimen/font_14" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -352,11 +352,11 @@
     <string name="unverified">Unverified</string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="mm_dd_yyyy">MM / DD / YYYY</string>
-    <string name="lions_club_international">Lions Club International (Optional)</string>
-    <string name="lions_club_international_membership">Lions Club International Membership</string>
+    <string name="lions_club_international">Lions District</string>
+    <string name="lions_club_international_membership">Lions District Membership</string>
     <string name="lbl_region">Region</string>
     <string name="lbl_zone">Zone</string>
-    <string name="lbl_cluster_location">Cluster/Location</string>
+    <string name="lbl_cluster_location">Club</string>
     <string name="not_yet_a_member">Not yet a member</string>
     <string name="phone_warning">Please type in your new phone number below. Make sure you have access to it as OTP code will be sent and later be needed for verification.</string>
     <string name="update_contact_number">Update Contact Number</string>
@@ -375,5 +375,7 @@
     <string name="success_register_info">Congratulations! Your account has been successfully registered. Please complete your profile by providing the information needed afterwards login using your email and password provided on the Sign Up application.</string>
     <string name="no_email_has_been_set_yet">No email has been set yet</string>
     <string name="lbl_note">Note</string>
+    <string name="club">Club</string>
+    <string name="lions_club_info">Please enter your membership information if you\'re a LIONS CLUB member.</string>
 
 </resources>
