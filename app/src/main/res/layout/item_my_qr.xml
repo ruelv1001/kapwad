@@ -8,6 +8,7 @@
     android:maxWidth="@dimen/dimen_350"
     android:layout_gravity="center_horizontal"
     android:background="@drawable/bg_rounded_outline"
+    android:baselineAligned="false"
     android:orientation="vertical"
     android:padding="@dimen/dimen_20">
 
@@ -35,17 +36,21 @@
 
     <ImageView
         android:id="@+id/qrImageView"
-        android:layout_width="@dimen/dimen_350"
-        android:layout_height="@dimen/dimen_350"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="@dimen/dimen_350"
+        android:maxHeight="@dimen/dimen_350"
+        android:minWidth="@dimen/dimen_300"
+        android:minHeight="@dimen/dimen_300"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dimen_16"
+        android:baselineAligned="false"
+        android:layout_marginVertical="@dimen/dimen_16"
         android:src="@drawable/ic_qr" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dimen_16"
         android:gravity="center"
         android:orientation="horizontal">
 
