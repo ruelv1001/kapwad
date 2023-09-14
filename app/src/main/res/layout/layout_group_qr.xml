@@ -31,6 +31,7 @@
                     android:layout_height="@dimen/dimen_30"
                     android:layout_gravity="end"
                     android:src="@drawable/ic_wallet"
+                    android:layout_marginEnd="@dimen/dimen_20"
                     app:tint="@color/white" />
 
             <ImageView
