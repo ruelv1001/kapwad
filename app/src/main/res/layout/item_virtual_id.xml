@@ -18,6 +18,7 @@
         android:gravity="end"
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/dimen_10"
+        android:paddingBottom="@dimen/dimen_10"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,9 +43,10 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_20"
         android:orientation="vertical"
         android:rotation="90"
+        android:baselineAligned="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonsLinearLayout">
@@ -53,6 +55,7 @@
             android:id="@+id/logoLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_20"
             android:layout_gravity="center"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +74,10 @@
                 android:text="@string/app_name"
                 android:textAllCaps="true"
                 android:textColor="@color/black_text"
-                android:textSize="@dimen/font_24" />
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_6"
+                android:autoSizeMaxTextSize="@dimen/font_24" />
 
         </LinearLayout>
 
@@ -79,8 +85,9 @@
             android:id="@+id/detailsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_8"
             android:orientation="vertical"
+            android:baselineAligned="false"
             app:layout_constraintTop_toBottomOf="@id/logoLinearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -91,60 +98,78 @@
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/home_id_no_text"
                 android:textColor="@color/commons_lbl"
-                android:textSize="@dimen/font_14" />
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_4"
+                android:autoSizeMaxTextSize="@dimen/font_14" />
 
             <TextView
                 android:id="@+id/idNoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_6"
+                android:layout_marginTop="@dimen/dimen_4"
                 android:fontFamily="@font/inter_bold"
                 android:text="@string/home_id_no_hint"
                 android:textColor="@color/green"
-                android:textSize="@dimen/font_22" />
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_6"
+                android:autoSizeMaxTextSize="@dimen/font_22"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_6"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/home_name_text"
                 android:textColor="@color/commons_lbl"
-                android:textSize="@dimen/font_14" />
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_4"
+                android:autoSizeMaxTextSize="@dimen/font_14"/>
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_6"
+                android:layout_marginTop="@dimen/dimen_4"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/home_name_hint"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/font_16" />
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_6"
+                android:autoSizeMaxTextSize="@dimen/font_16" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_6"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/home_address_text"
                 android:textColor="@color/commons_lbl"
-                android:textSize="@dimen/font_14" />
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_4"
+                android:autoSizeMaxTextSize="@dimen/font_14"/>
 
             <TextView
                 android:id="@+id/addressTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_6"
+                android:layout_marginTop="@dimen/dimen_4"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/home_address_hint"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/font_16" />
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_6"
+                android:autoSizeMaxTextSize="@dimen/font_16" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_6"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -160,17 +185,23 @@
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/home_date_issued_text"
                         android:textColor="@color/commons_lbl"
-                        android:textSize="@dimen/font_14" />
+                        android:autoSizeStepGranularity="@dimen/font_1"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="@dimen/font_4"
+                        android:autoSizeMaxTextSize="@dimen/font_14"/>
 
                     <TextView
                         android:id="@+id/dateIssuedTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_6"
+                        android:layout_marginTop="@dimen/dimen_4"
                         android:fontFamily="@font/inter_semibold"
                         android:text="@string/home_date_issued_hint"
                         android:textColor="@color/text_color"
-                        android:textSize="@dimen/font_16" />
+                        android:autoSizeStepGranularity="@dimen/font_1"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="@dimen/font_6"
+                        android:autoSizeMaxTextSize="@dimen/font_16" />
 
                 </LinearLayout>
 
@@ -186,17 +217,23 @@
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/home_date_of_birth_text"
                         android:textColor="@color/commons_lbl"
-                        android:textSize="@dimen/font_14" />
+                        android:autoSizeStepGranularity="@dimen/font_1"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="@dimen/font_4"
+                        android:autoSizeMaxTextSize="@dimen/font_14"/>
 
                     <TextView
                         android:id="@+id/dateOfBirthTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_6"
+                        android:layout_marginTop="@dimen/dimen_4"
                         android:fontFamily="@font/inter_semibold"
                         android:text="@string/home_date_of_birth_hint"
                         android:textColor="@color/text_color"
-                        android:textSize="@dimen/font_16" />
+                        android:autoSizeStepGranularity="@dimen/font_1"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="@dimen/font_6"
+                        android:autoSizeMaxTextSize="@dimen/font_16" />
 
                 </LinearLayout>
 
@@ -241,11 +278,11 @@
         android:layout_width="@dimen/dimen_110"
         android:layout_height="@dimen/dimen_110"
         android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginBottom="@dimen/dimen_10"
         android:rotation="90"
         android:src="@drawable/ic_qr"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/profileRelativeLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
