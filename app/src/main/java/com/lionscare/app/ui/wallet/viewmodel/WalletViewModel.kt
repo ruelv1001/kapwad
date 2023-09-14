@@ -40,6 +40,7 @@ class WalletViewModel @Inject constructor(
                     _walletSharedFlow.emit(WalletViewState.Loading)
                 }
                 .catch { exception ->
+                    CommonLogger.sysLogE("wallet", exception.localizedMessage, exception)
                     onError(exception)
                 }
                 .collect {

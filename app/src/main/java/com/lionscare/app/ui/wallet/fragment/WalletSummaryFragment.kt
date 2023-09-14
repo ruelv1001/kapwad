@@ -19,6 +19,7 @@ import com.lionscare.app.ui.group.viewmodel.GroupWalletViewState
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
+import com.lionscare.app.utils.PopupErrorState
 import com.lionscare.app.utils.currencyFormat
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -102,7 +103,10 @@ class WalletSummaryFragment : Fragment() {
                 activity.hideLoadingDialog()
                 showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
             }
-
+            is WalletViewState.InputError -> {
+                activity.hideLoadingDialog()
+                showPopupError(requireActivity(), childFragmentManager,PopupErrorState.HttpError, viewState.errorData?.amount?.get(0).orEmpty())
+            }
             else -> Unit
         }
     }

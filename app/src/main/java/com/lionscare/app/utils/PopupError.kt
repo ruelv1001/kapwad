@@ -14,7 +14,7 @@ fun showPopupError(
     val message = when (errorCode) {
         PopupErrorState.NetworkError -> context.getString(R.string.common_network_msg)
         PopupErrorState.HttpError -> errorMessage
-        else -> context.getString(R.string.common_something_went_wrong_msg)
+        else -> errorMessage
     }
 
     CommonsErrorDialog.openDialog(
