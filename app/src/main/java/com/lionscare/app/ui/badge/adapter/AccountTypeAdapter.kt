@@ -3,6 +3,7 @@ package com.lionscare.app.ui.badge.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.model.AccountTypeModel
 import com.lionscare.app.databinding.AdapterAccountTypeBinding
@@ -69,10 +70,17 @@ class AccountTypeAdapter(
             binding.accountTypeLinearLayout.isSelected = data.isSelected == true
             binding.accountTypeRadioButton.isChecked = selectedPosition == position
 
+            //both the container and the  button
+            //is both clickable to achieve the same thing
+            binding.accountTypeRadioButton.setOnSingleClickListener {
+                setSelectedPosition(position)
+                clickListener.onItemClicked(data, position)
+            }
             binding.accountTypeLinearLayout.setOnSingleClickListener {
                 setSelectedPosition(position)
                 clickListener.onItemClicked(data, position)
             }
+
         }
     }
 
