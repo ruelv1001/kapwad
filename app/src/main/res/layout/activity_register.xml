@@ -27,6 +27,7 @@
             android:id="@+id/backImageView"
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_25"
             android:padding="@dimen/dimen_5"
             android:src="@drawable/ic_back_arrow"
             android:visibility="visible" />
@@ -36,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:paddingStart="@dimen/dimen_25"
             android:paddingEnd="@dimen/dimen_0"
             android:textAlignment="textStart"
             android:text="@string/lbl_primary_info"
