@@ -63,10 +63,12 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeLogoutAccount()
         setClickListeners()
-
-        viewModel.getProfileDetails()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getProfileDetails()
+    }
     private fun observeLogoutAccount() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -80,6 +82,7 @@ class ProfileFragment : Fragment() {
     private fun handleViewState(viewState: SettingsViewState) {
         when (viewState) {
             is SettingsViewState.Loading -> showLoadingDialog(R.string.logout_loading)
+            is SettingsViewState.LoadingProfile -> showLoadingDialog(R.string.loading) //so it wont show "logging out" on get profile
             is SettingsViewState.Success -> {
                 hideLoadingDialog()
                 Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
