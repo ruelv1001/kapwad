@@ -184,14 +184,17 @@ class ProfileFragment : Fragment() {
             when(data?.badge_type){
                 "non_government_Organization" -> {
                     binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
+                    binding.badgeIdStatus.text = getString(R.string.account_type_npo_text)
                     binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
                 }
                 "influencer" -> {
                     binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
+                    binding.badgeIdStatus.text = getString(R.string.account_type_influencer_text)
                     binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_influencer)
                 }
                 "public_servant" -> {
                     binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
+                    binding.badgeIdStatus.text = getString(R.string.account_type_public_servant_text)
                     binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_public_servant)
                 }
             }
