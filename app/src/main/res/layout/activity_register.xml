@@ -38,6 +38,7 @@
             android:fontFamily="@font/inter_semibold"
             android:paddingStart="@dimen/dimen_25"
             android:paddingEnd="@dimen/dimen_0"
+            android:textAlignment="textStart"
             android:text="@string/lbl_primary_info"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_22" />
