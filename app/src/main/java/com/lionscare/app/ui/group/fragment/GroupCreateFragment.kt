@@ -53,13 +53,8 @@ class GroupCreateFragment : Fragment() {
         setClickListeners()
         setView()
         setUpSpinner()
-        onResume()
         observerGroup()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity.setTitlee(getString(R.string.lbl_create_group))
+        binding.publicRadioButton.isChecked = true
     }
 
     private fun setView() = binding.run {
@@ -82,6 +77,7 @@ class GroupCreateFragment : Fragment() {
                 android.R.layout.simple_spinner_item
             )
             groupTypeSpinner.isEnabled = true
+            activity.setTitlee(getString(R.string.lbl_create_group))
         } else {
             adapter = ArrayAdapter.createFromResource(
                 requireActivity(),
@@ -89,6 +85,7 @@ class GroupCreateFragment : Fragment() {
                 android.R.layout.simple_spinner_item
             )
             groupTypeSpinner.isEnabled = false
+            activity.setTitlee(getString(R.string.lbl_create_family))
         }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupTypeSpinner.adapter = adapter
@@ -116,10 +113,10 @@ class GroupCreateFragment : Fragment() {
     private fun setClickListeners() = binding.run {
         continueButton.setOnSingleClickListener {
 
-            val groupPrivacy = if (publicRadioButton.isChecked) {
-                "public"
-            } else {
+            val groupPrivacy = if (privateRadioButton.isChecked) {
                 "private"
+            } else {
+                "public"
             }
 
             val approval = if (approvalSwitch.isChecked) {
@@ -200,7 +197,7 @@ class GroupCreateFragment : Fragment() {
     }
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
-        if (errorsData.group_name?.get(0)?.isNotEmpty() == true) nameTextInputLayout.error = errorsData.group_name?.get(0)
+        if (errorsData.name?.get(0)?.isNotEmpty() == true) nameTextInputLayout.error = errorsData.name?.get(0)
         if (errorsData.group_passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error = errorsData.group_passcode?.get(0)
         if (errorsData.passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error = errorsData.passcode?.get(0)
     }
