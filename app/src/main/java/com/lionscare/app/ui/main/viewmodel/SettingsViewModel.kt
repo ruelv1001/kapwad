@@ -49,7 +49,7 @@ class SettingsViewModel @Inject constructor (
         viewModelScope.launch {
             profileRepository.getProfileInfo()
                 .onStart {
-                    _loginSharedFlow.emit(SettingsViewState.Loading)
+                    _loginSharedFlow.emit(SettingsViewState.LoadingProfile)
                 }
                 .catch { exception ->
                     onError(exception)
