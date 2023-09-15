@@ -24,6 +24,7 @@ import com.lionscare.app.ui.group.dialog.SaveSuccessDialog
 import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
+import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,6 +85,8 @@ class CommunityRolesUpdateFragment: Fragment(), GroupMembersAdapter.MembersCallb
     private fun setView() = binding.run{
         groupOwnerLayout.nameTextView.text = activity.groupDetails?.owner?.name
         groupOwnerLayout.idNoTextView.text = activity.groupDetails?.owner?.qrcode
+        groupOwnerLayout.profileImageView.loadAvatar(activity?.groupDetails?.owner?.avatar?.thumb_path, requireActivity())
+
     }
 
     private fun setClickListeners() = binding.run {
