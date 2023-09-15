@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_influencer"
             android:fontFamily="@font/inter_regular"
-            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginTop="@dimen/dimen_10"
             android:paddingStart="@dimen/dimen_10"
             android:paddingTop="@dimen/dimen_5"
             android:paddingEnd="@dimen/dimen_10"
