@@ -82,7 +82,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         setClickListeners()
         setUpAnimation()
         onResume()
-        viewModel.getProfileDetails()
         iFViewModel.getImmediateFamily()
 
         //immediately make this view gone
