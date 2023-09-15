@@ -112,7 +112,7 @@ class GroupUpdateFragment : Fragment() {
             val createGroupRequest = CreateGroupRequest(
                 group_id = groupId,
                 name = nameEditText.text.toString(),
-                type = groupType,
+                type = groupType.lowercase(),
                 privacy = groupPrivacy,
                 passcode = passwordEditText.text.toString(),
                 with_approval = approval
