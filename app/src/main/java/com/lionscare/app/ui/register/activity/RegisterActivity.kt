@@ -78,6 +78,9 @@ class RegisterActivity : AppCompatActivity() {
         titleTextView.text = title
     }
 
+    fun  alignTitleToCenter(){
+        binding.titleTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+    }
     companion object {
         private const val INVALID_ID = -1
         private const val EXTRA_CODE = "EXTRA_CODE"
