@@ -65,7 +65,7 @@
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
             app:tint="@color/color_primary"
-            android:src="@drawable/outline_info_24" />
+            android:src="@drawable/ic_settings" />
 
     </LinearLayout>
 
