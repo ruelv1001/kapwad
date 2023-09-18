@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -66,6 +67,13 @@ class UploadBadgeDocumentsFragment : Fragment() {
     }
 
     private fun setupClickListener() = binding.run {
+        supporting1EditText.doOnTextChanged { text, start, before, count ->
+            supporting1TextInputLayout.error = ""
+        }
+        supporting2EditText.doOnTextChanged { text, start, before, count ->
+            supporting2TextInputLayout.error = ""
+        }
+
         accountTypeEditText.setText(activity.accountType)
         backImageView.setOnSingleClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -93,13 +101,23 @@ class UploadBadgeDocumentsFragment : Fragment() {
             }
 
 //            viewModel.getBadgeStatus()
-            viewModel.doRequestBadge(
-                BadgeRequest(
-                    doc1 = doc1!!,
-                    doc2 = doc2!!,
-                    type = accountTypeFormmatted
+            if (supporting1EditText.text.toString().isNotEmpty() && supporting2EditText.text.toString().isNotEmpty()){
+                viewModel.doRequestBadge(
+                    BadgeRequest(
+                        doc1 = doc1!!,
+                        doc2 = doc2!!,
+                        type = accountTypeFormmatted
+                    )
                 )
-            )
+            } else {
+                if (supporting1EditText.text.toString().isEmpty()){
+                    supporting1TextInputLayout.error = "This field is required!"
+                }
+                if (supporting2EditText.text.toString().isEmpty()){
+                    supporting2TextInputLayout.error = "This field is required!"
+                }
+            }
+
         }
     }
 
@@ -176,7 +194,7 @@ class UploadBadgeDocumentsFragment : Fragment() {
         _binding = null
     }
 
-    private fun openFilePicker(editText: TextInputEditText, file: String) {
+    private fun openFilePicker(editText: TextInputEditText, file: String) = binding.run {
         focusedEditTextId = editText.id
         selectedFile = file
 
