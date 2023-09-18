@@ -60,8 +60,6 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
         setupAdapter()
         observeGroupList()
         observeImmediateFamily()
-        viewModel.refreshAll()
-        iFViewModel.getImmediateFamily()
     }
 
     private fun setupAdapter() = binding.run {
@@ -178,6 +176,11 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
         binding.orgSwipeRefreshLayout.isRefreshing = true
         viewModel.refreshAll()
         iFViewModel.getImmediateFamily()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
     }
 
     override fun onItemClicked(data: GroupListData) {

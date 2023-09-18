@@ -22,7 +22,6 @@
         android:textSize="@dimen/font_14"
         android:layout_marginStart="@dimen/dimen_10"
         android:textColor="@color/black"
-        android:gravity="center"
         android:fontFamily="@font/inter_medium"/>
 
 </LinearLayout>

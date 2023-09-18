@@ -7,6 +7,7 @@ import com.lionscare.app.utils.PopupErrorState
 
 sealed class SettingsViewState{
     object Loading : SettingsViewState()
+    object LoadingProfile : SettingsViewState()
     object LoadingBadge : SettingsViewState()
     data class Success(val message: String = "") : SettingsViewState()
     data class SuccessGetUserInfo(val message: String = "",val userModel: UserModel? = UserModel()) : SettingsViewState()

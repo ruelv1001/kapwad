@@ -81,9 +81,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         observeImmediateFamily()
         setClickListeners()
         setUpAnimation()
-        onResume()
-        viewModel.getProfileDetails()
-        iFViewModel.getImmediateFamily()
 
         //immediately make this view gone
         //not done in xml as this is a reused layout
@@ -96,6 +93,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         hideLoadingDialog()
         //call profile  again to check if correct badge and kyc or get updated one
         viewModel.getProfileDetails()
+        iFViewModel.getImmediateFamily()
     }
 
     private fun observeAccount() {

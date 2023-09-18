@@ -123,6 +123,7 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
 
 
     private fun setView() = binding.run{
+        activity.alignTitleToCenter()
         //GenericTextWatcher here works only for moving to next EditText when a number is entered
 //first parameter is the current EditText and second parameter is next EditText
         otpFirstEdittext.addTextChangedListener(GenericTextWatcher(otpFirstEdittext, otpSecondEdittext))
