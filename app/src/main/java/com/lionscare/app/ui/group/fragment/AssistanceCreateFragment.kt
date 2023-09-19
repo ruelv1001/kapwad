@@ -74,37 +74,12 @@ class AssistanceCreateFragment : Fragment() {
 
     private fun setClickListeners() = binding.run {
         amountEditText.setAmountFormat()
-        othersEditText.doOnTextChanged { text, start, before, count ->
-            othersTextInputLayout.error = ""
-        }
         amountEditText.doOnTextChanged { text, start, before, count ->
             amountTextInputLayout.error = ""
         }
         proceedButton.setOnSingleClickListener {
-
-            if(reason.lowercase() == "other"){
-                if (othersEditText.text.toString().isEmpty()){
-                    othersTextInputLayout.error = "This field is required!"
-                    if (amountEditText.text.toString().isEmpty()){
-                        amountTextInputLayout.error = "This field is required!"
-                    }
-                } else {
-                    reason = "${reason} | ${othersEditText.text.toString()}"
-                    if (amountEditText.text.toString().isEmpty()){
-                        amountTextInputLayout.error = "This field is required!"
-                    } else {
-                        val request = CreateAssistanceRequest(
-                            group_id = activity.groupDetails?.id,
-                            amount = amountEditText.text.toString().replace(",",""),
-                            reason = reason,
-                            remarks = messageEditText.text.toString()
-                        )
-                        viewModel.createAssistance(request)
-                    }
-                }
-            } else {
                 if (amountEditText.text.toString().isEmpty()){
-                    amountTextInputLayout.error = "This field is required!"
+                    amountTextInputLayout.error = "This field is required."
                 } else {
                     val request = CreateAssistanceRequest(
                         group_id = activity.groupDetails?.id,
@@ -115,9 +90,8 @@ class AssistanceCreateFragment : Fragment() {
                     viewModel.createAssistance(request)
                 }
             }
-
         }
-    }
+
 
     private fun setUpSpinner(data: List<RequestAssistanceData>) = binding.run {
         val adapter = RequestAssistanceDataAdapter(requireActivity(), data)
@@ -132,7 +106,7 @@ class AssistanceCreateFragment : Fragment() {
                 val selectedItem = adapter.getItem(position)
                 val selectedValue = selectedItem?.name
                 reason = selectedItem?.code.toString()
-                othersTextInputLayout.isVisible = selectedValue == "Other"
+//                othersTextInputLayout.isVisible = selectedValue == "Other"
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
