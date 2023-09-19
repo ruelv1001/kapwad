@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -63,9 +64,10 @@ class AssistanceRequestDetailsFragment : Fragment() {
         referenceTextView.text = data.user?.qrcode
         reasonTextView.text = data.reason
         refIDTextView.text = data.reference_id
-        dateTimeTextView.text = data.date_created?.datetime_ph
+        dateTimeTextView.text = data.date_requested?.datetime_ph
         amountTextView.text = currencyFormat(data.amount.toString())
         remarksTextView.text = data.note
+        dateProcessedTextView.text = data.date_processed?.datetime_ph
         profileImageView.loadAvatar(data.user?.avatar?.thumb_path, requireActivity())
         when (data.status) {
             "declined" -> {
@@ -74,6 +76,8 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 approvedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.GONE
                 declinedTextView.visibility = View.VISIBLE
+                dateProcessedTextView.visibility = View.VISIBLE
+                dateProcessedTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.red))
             }
 
             "cancelled" -> {
@@ -82,6 +86,8 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 approvedTextView.visibility = View.GONE
                 declinedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.VISIBLE
+                dateProcessedTextView.visibility = View.VISIBLE
+                dateProcessedTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.light_gray))
             }
 
             "approved" -> {
@@ -90,12 +96,15 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 declinedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.GONE
                 approvedTextView.visibility = View.VISIBLE
+                dateProcessedTextView.visibility = View.VISIBLE
+                dateProcessedTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.blue_text))
             }
 
             else -> { // pending
                 approvedTextView.visibility = View.GONE
                 declinedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.GONE
+                dateProcessedTextView.visibility = View.GONE
                 if (data.user?.id == viewModel.user.id) {
                     cancelButton.isVisible = true
                 } else {

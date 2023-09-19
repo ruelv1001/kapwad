@@ -307,7 +307,7 @@
                     android:text="@string/lbl_approved"
                     android:textColor="@color/blue_text"
                     android:textSize="@dimen/font_16"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/declinedTextView"
@@ -338,6 +338,20 @@
                     android:textColor="@color/light_gray"
                     android:textSize="@dimen/font_16"
                     android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/dateProcessedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_54"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="center"
+                    android:textColor="@color/blue_text"
+                    android:textSize="@dimen/font_16"
+                    android:visibility="visible" />
             </RelativeLayout>
 
         </RelativeLayout>

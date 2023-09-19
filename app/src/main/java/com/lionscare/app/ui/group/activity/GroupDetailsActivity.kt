@@ -257,6 +257,7 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
             is AssistanceViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
             is AssistanceViewState.SuccessGetAllListOfAssistance -> {
                 binding.swipeRefreshLayout.isRefreshing = false
+                clearList()
                 showList(viewState.pagingData)
             }
 
@@ -305,6 +306,26 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
         assistanceViewModel.refresh(groupId, emptyList(), true)
     }
 
+    override fun onRefresh() {
+        viewModel.showGroup(groupId)
+    }
+
+    private fun clearList() {
+        adapter?.submitData(lifecycle, PagingData.empty())
+    }
+
+    override fun onItemClicked(data: CreateAssistanceData) {
+        if(groupDetails?.is_admin == true || data.user?.id == assistanceViewModel.user.id){
+            val intent = GroupActivity.getIntent(
+                this@GroupDetailsActivity,
+                start = START_ASSISTANCE_DETAILS,
+                groupData = groupDetails,
+                referenceId = data.reference_id.toString()
+            )
+            startActivity(intent)
+        }
+    }
+
     companion object {
         private const val START_INVITE = "START_INVITE"
         private const val START_MANAGE = "START_MANAGE"
@@ -322,19 +343,5 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
         }
     }
 
-    override fun onRefresh() {
-        viewModel.showGroup(groupId)
-    }
 
-    override fun onItemClicked(data: CreateAssistanceData) {
-        if(groupDetails?.is_admin == true || data.user?.id == assistanceViewModel.user.id){
-            val intent = GroupActivity.getIntent(
-                this@GroupDetailsActivity,
-                start = START_ASSISTANCE_DETAILS,
-                groupData = groupDetails,
-                referenceId = data.reference_id.toString()
-            )
-            startActivity(intent)
-        }
-    }
 }
