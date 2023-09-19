@@ -25,7 +25,7 @@
     <string name="menu_settings_title">Settings</string>
     <string name="login_to_your_account_lbl">Login to Your Account</string>
     <string name="lbl_forgot_pass">Forgot your password?</string>
-    <string name="lbl_password_reset">Password reset</string>
+    <string name="lbl_password_reset">Password reset.</string>
     <string name="lbl_register">Register</string>
     <string name="lbl_first_name">First Name</string>
     <string name="lbl_middle_name">Middle Name</string>
@@ -294,7 +294,7 @@
     <string name="lbl_others">Others</string>
     <string name="lbl_add_assistance">Add Assistance</string>
     <string name="lbl_proceed">Proceed</string>
-    <string name="assistance_create_please_indicate_your_purpose_text">Please indicate your purpose</string>
+    <string name="assistance_create_please_indicate_your_purpose_text">Please indicate your purpose.</string>
     <string name="lbl_invite_to_group">Invite to Group</string>
     <string name="search_user_send_txt">Send</string>
     <string name="search_user_apply_btn">Apply</string>
@@ -311,12 +311,12 @@
     <string name="lbl_co_admins">Co-Admins</string>
     <string name="lbl_leave_group">Leave Group</string>
     <string name="kyc_upload_id_error">Please upload an ID picture first</string>
-    <string name="kyc_upload_proof_of_address_error">Please upload an Proof of Address document first</string>
+    <string name="kyc_upload_proof_of_address_error">Please upload an Proof of Address document first.</string>
     <string name="nothing_to_show">Nothing to show</string>
     <string name="select_id_type">Select ID Type</string>
     <string name="select_proof_of_address">Select Proof of Address</string>
     <string name="please_select_id_type">Please select ID Type</string>
-    <string name="please_select_proof_of_address">Please select proof of address</string>
+    <string name="please_select_proof_of_address">Please select proof of address.</string>
     <string name="invalid_qr_code_msg">Invalid QR Code</string>
     <string name="lbl_loading">Loading . . .</string>
     <string name="lbl_you">You</string>
