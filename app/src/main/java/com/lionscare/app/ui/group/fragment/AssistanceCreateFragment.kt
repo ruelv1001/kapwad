@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -73,16 +74,24 @@ class AssistanceCreateFragment : Fragment() {
 
     private fun setClickListeners() = binding.run {
         amountEditText.setAmountFormat()
-        proceedButton.setOnSingleClickListener {
-            val request = CreateAssistanceRequest(
-                group_id = activity.groupDetails?.id,
-                amount = amountEditText.text.toString().replace(",",""),
-                reason = reason,
-                remarks = messageEditText.text.toString()
-            )
-            viewModel.createAssistance(request)
+        amountEditText.doOnTextChanged { text, start, before, count ->
+            amountTextInputLayout.error = ""
         }
-    }
+        proceedButton.setOnSingleClickListener {
+                if (amountEditText.text.toString().isEmpty()){
+                    amountTextInputLayout.error = "This field is required."
+                } else {
+                    val request = CreateAssistanceRequest(
+                        group_id = activity.groupDetails?.id,
+                        amount = amountEditText.text.toString().replace(",",""),
+                        reason = reason,
+                        remarks = messageEditText.text.toString()
+                    )
+                    viewModel.createAssistance(request)
+                }
+            }
+        }
+
 
     private fun setUpSpinner(data: List<RequestAssistanceData>) = binding.run {
         val adapter = RequestAssistanceDataAdapter(requireActivity(), data)
@@ -97,7 +106,7 @@ class AssistanceCreateFragment : Fragment() {
                 val selectedItem = adapter.getItem(position)
                 val selectedValue = selectedItem?.name
                 reason = selectedItem?.code.toString()
-                othersTextInputLayout.isVisible = selectedValue == "Other"
+//                othersTextInputLayout.isVisible = selectedValue == "Other"
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
