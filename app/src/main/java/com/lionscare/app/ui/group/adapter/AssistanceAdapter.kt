@@ -52,7 +52,7 @@ class AssistanceAdapter(val context: Context, val clickListener: GroupCallback) 
             data?.let {
                 binding.titleTextView.text = data.reason.toString().replaceFirstChar (Char :: titlecase)
                 binding.requestByTextView.text = data.user?.name
-                binding.dateTextView.text = data.date_created?.datetime_ph
+                binding.dateTextView.text = data.date_requested?.datetime_ph
                 binding.refIDTextView.text = data.status.toString().replaceFirstChar (Char :: titlecase)
                 when(data.status){
                     "declined"-> {
