@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -73,14 +74,48 @@ class AssistanceCreateFragment : Fragment() {
 
     private fun setClickListeners() = binding.run {
         amountEditText.setAmountFormat()
+        othersEditText.doOnTextChanged { text, start, before, count ->
+            othersTextInputLayout.error = ""
+        }
+        amountEditText.doOnTextChanged { text, start, before, count ->
+            amountTextInputLayout.error = ""
+        }
         proceedButton.setOnSingleClickListener {
-            val request = CreateAssistanceRequest(
-                group_id = activity.groupDetails?.id,
-                amount = amountEditText.text.toString().replace(",",""),
-                reason = reason,
-                remarks = messageEditText.text.toString()
-            )
-            viewModel.createAssistance(request)
+
+            if(reason.lowercase() == "other"){
+                if (othersEditText.text.toString().isEmpty()){
+                    othersTextInputLayout.error = "This field is required!"
+                    if (amountEditText.text.toString().isEmpty()){
+                        amountTextInputLayout.error = "This field is required!"
+                    }
+                } else {
+                    reason = "${reason} | ${othersEditText.text.toString()}"
+                    if (amountEditText.text.toString().isEmpty()){
+                        amountTextInputLayout.error = "This field is required!"
+                    } else {
+                        val request = CreateAssistanceRequest(
+                            group_id = activity.groupDetails?.id,
+                            amount = amountEditText.text.toString().replace(",",""),
+                            reason = reason,
+                            remarks = messageEditText.text.toString()
+                        )
+                        viewModel.createAssistance(request)
+                    }
+                }
+            } else {
+                if (amountEditText.text.toString().isEmpty()){
+                    amountTextInputLayout.error = "This field is required!"
+                } else {
+                    val request = CreateAssistanceRequest(
+                        group_id = activity.groupDetails?.id,
+                        amount = amountEditText.text.toString().replace(",",""),
+                        reason = reason,
+                        remarks = messageEditText.text.toString()
+                    )
+                    viewModel.createAssistance(request)
+                }
+            }
+
         }
     }
 

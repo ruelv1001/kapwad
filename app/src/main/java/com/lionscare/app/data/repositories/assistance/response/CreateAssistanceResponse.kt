@@ -18,7 +18,7 @@ data class CreateAssistanceResponse(
 @Keep
 data class CreateAssistanceData(
     var amount: String? = null,
-    var date_created: DateModel? = null,
+    var date_requested: DateModel? = null,
     var id: Int? = null,
     var note: String? = null,
     var reason: String? = null,

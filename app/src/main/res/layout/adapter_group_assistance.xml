@@ -26,20 +26,23 @@
 
             <TextView
                 android:id="@+id/titleTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:ellipsize="end"
                 android:fontFamily="@font/inter_bold"
+                android:maxLines="2"
                 android:text="@string/lbl_request"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_16" />
 
             <TextView
                 android:id="@+id/amountTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_bold"
-                android:layout_weight="1"
                 android:text="@string/lbl__0_00"
                 android:textAlignment="textEnd"
                 android:textColor="@color/light_red"
@@ -67,16 +70,16 @@
                 android:id="@+id/requestByTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autoSizeMaxTextSize="@dimen/dimen_14"
+                android:autoSizeMinTextSize="@dimen/font_4"
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
                 android:ellipsize="end"
                 android:fontFamily="@font/inter_semibold"
+                android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="Zyla Valerie"
-                android:textColor="@color/color_primary"
-                android:gravity="center_vertical"
-                android:autoSizeStepGranularity="@dimen/font_1"
-                android:autoSizeMinTextSize="@dimen/font_4"
-                android:autoSizeMaxTextSize="@dimen/dimen_14"
-                android:autoSizeTextType="uniform" />
+                android:textColor="@color/color_primary" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,16 +102,16 @@
                 android:id="@+id/refIDTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autoSizeMaxTextSize="@dimen/dimen_14"
+                android:autoSizeMinTextSize="@dimen/font_4"
+                android:autoSizeStepGranularity="@dimen/font_1"
+                android:autoSizeTextType="uniform"
                 android:ellipsize="end"
                 android:fontFamily="@font/inter_semibold"
+                android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="003254300013"
-                android:textColor="@color/color_primary"
-                android:gravity="center_vertical"
-                android:autoSizeStepGranularity="@dimen/font_1"
-                android:autoSizeMinTextSize="@dimen/font_4"
-                android:autoSizeMaxTextSize="@dimen/dimen_14"
-                android:autoSizeTextType="uniform" />
+                android:textColor="@color/color_primary" />
         </LinearLayout>
 
         <TextView

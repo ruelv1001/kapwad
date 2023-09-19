@@ -63,7 +63,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
         referenceTextView.text = data.user?.qrcode
         reasonTextView.text = data.reason
         refIDTextView.text = data.reference_id
-        dateTimeTextView.text = data.date_created?.datetime_ph
+        dateTimeTextView.text = data.date_requested?.datetime_ph
         amountTextView.text = currencyFormat(data.amount.toString())
         remarksTextView.text = data.note
         profileImageView.loadAvatar(data.user?.avatar?.thumb_path, requireActivity())
