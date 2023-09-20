@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -283,7 +284,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
         //qr
         qrLayout.qrCodeTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
-        qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.qrcode_value))
+        qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(),userModel?.qrcode_value.toString()))
 
         //id
         idLayout.nameTextView.text = userModel?.name
