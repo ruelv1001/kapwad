@@ -22,12 +22,15 @@ import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.adapter.GroupsGroupAdapter
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
@@ -64,7 +67,6 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_group_search))
-        activity.getScanImageView().visibility = View.GONE
     }
 
     private fun setupGroupAdapter() = binding.run {
@@ -83,8 +85,23 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         activity.getScanImageView().setOnSingleClickListener {
             ScannerDialog.newInstance( object : ScannerDialog.ScannerListener{
                 override fun onScannerSuccess(qrValue: String) {
-                    //TODO to be updated when QR value is already in QR
-                   // viewModel.doScanQr(qrValue)
+                    val jsonObject: JSONObject
+                    val res = qrValue.replace("\\", "")
+                    try {
+                        jsonObject = JSONObject(res)
+                        val type = jsonObject.getString("type")
+                        val value = jsonObject.getString("value")
+
+                            viewModel.doSearchGroupWithLoading(value)
+
+                    } catch (e: JSONException) {
+                        Toast.makeText(
+                            requireActivity(),
+                            getString(R.string.invalid_qr_code_msg),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        e.printStackTrace()
+                    }
                 }
             }, "Scan QR")
                 .show(childFragmentManager, ScannerDialog.TAG)
