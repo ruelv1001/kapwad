@@ -336,7 +336,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         (requireActivity() as MainActivity).hideLoadingDialog()
     }
 
-    private fun setUpAnimation() {
+    private fun setUpAnimation() = binding.run{
         frontAnim = AnimatorInflater.loadAnimator(
             requireContext(),
             R.animator.front_animator
@@ -345,9 +345,9 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             AnimatorInflater.loadAnimator(requireContext(), R.animator.back_animator) as AnimatorSet
 
         val scale = resources.displayMetrics.density * 8000
-        binding.mainLayout.mainLinearLayout.cameraDistance = scale
-        binding.idLayout.virtualIdLinearLayout.cameraDistance = scale
-        binding.qrLayout.qrLinearLayout.cameraDistance = scale
+        mainLayout.mainLinearLayout.cameraDistance = scale
+        idLayout.virtualIdLinearLayout.cameraDistance = scale
+        qrLayout.qrLinearLayout.cameraDistance = scale
     }
 
     private fun setClickListeners() = binding.run {

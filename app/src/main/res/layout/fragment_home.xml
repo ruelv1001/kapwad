@@ -103,6 +103,18 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone" />
 
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:maxWidth="@dimen/dimen_350"
+                        android:maxHeight="@dimen/dimen_600"
+                        android:minWidth="@dimen/dimen_350"
+                        android:orientation="vertical">
+
                         <include
                             android:id="@+id/idLayout"
                             android:visibility="gone"
@@ -110,12 +122,24 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:maxWidth="@dimen/dimen_350"
+                        android:maxHeight="@dimen/dimen_600"
+                        android:minWidth="@dimen/dimen_350"
+                        android:orientation="vertical">
+
                         <include
                             android:id="@+id/mainLayout"
-                            android:visibility="visible"
                             layout="@layout/item_home_main_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:visibility="visible" />
 
                     </LinearLayout>
 

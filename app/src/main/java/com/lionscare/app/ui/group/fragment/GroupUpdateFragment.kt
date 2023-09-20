@@ -221,10 +221,9 @@ class GroupUpdateFragment : Fragment() {
     }
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
-        if (errorsData.group_name?.get(0)?.isNotEmpty() == true) nameTextInputLayout.error =
-            errorsData.group_name?.get(0)
-        if (errorsData.group_passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error =
-            errorsData.group_passcode?.get(0)
+        if (errorsData.name?.get(0)?.isNotEmpty() == true) nameTextInputLayout.error = errorsData.name?.get(0)
+        if (errorsData.group_passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error = errorsData.group_passcode?.get(0)
+        if (errorsData.passcode?.get(0)?.isNotEmpty() == true) passwordTextInputLayout.error = errorsData.passcode?.get(0)
     }
 
     override fun onDestroyView() {

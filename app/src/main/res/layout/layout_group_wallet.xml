@@ -5,7 +5,6 @@
     app:cardCornerRadius="@dimen/dimen_20"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_270"
-    android:layout_marginTop="@dimen/dimen_16"
     android:elevation="@dimen/dimen_0">
 
     <RelativeLayout
