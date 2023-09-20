@@ -8,6 +8,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.StringTokenizer
 
 /**
  * Calculates Age based on date given
@@ -31,20 +32,6 @@ fun String.calculateAge(): Int {
     }
 
     return age
-}
-
-/**
- * Converts currencies or points into proer format with decimals
- * and comma separator
- */
-fun formatCurrency(text: String): String {
-    val decimalFormat = DecimalFormat("#,##0.00")
-    try {
-        val amount = decimalFormat.parse(text)?.toDouble() ?: 0.0
-        return decimalFormat.format(amount)
-    } catch (e: ParseException) {
-       throw e
-    }
 }
 
 /**
