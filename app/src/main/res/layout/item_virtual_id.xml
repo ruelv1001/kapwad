@@ -4,9 +4,7 @@
     android:id="@+id/virtualIdLinearLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen_20"
     android:minHeight="@dimen/dimen_500"
-    android:maxWidth="@dimen/dimen_350"
     android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
     android:background="@drawable/bg_id_layout"
@@ -22,7 +20,6 @@
         android:paddingBottom="@dimen/dimen_10"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/linearLayout"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView

@@ -83,32 +83,42 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/dimen_20"
+                    android:maxHeight="@dimen/dimen_600">
 
-                    <include
-                        android:id="@+id/qrLayout"
-                        layout="@layout/item_my_qr"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/dimen_20"
-                        android:visibility="visible" />
-
-                    <include
-                        android:id="@+id/idLayout"
-                        android:visibility="gone"
-                        layout="@layout/item_virtual_id"
                         android:layout_centerHorizontal="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:maxWidth="@dimen/dimen_350"
+                        android:maxHeight="@dimen/dimen_600"
+                        android:minWidth="@dimen/dimen_350"
+                        android:orientation="vertical">
 
-                    <include
-                        android:id="@+id/mainLayout"
-                        android:visibility="gone"
-                        layout="@layout/item_home_main_layout"
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        <include
+                            android:id="@+id/qrLayout"
+                            layout="@layout/item_my_qr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/idLayout"
+                            android:visibility="gone"
+                            layout="@layout/item_virtual_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <include
+                            android:id="@+id/mainLayout"
+                            android:visibility="visible"
+                            layout="@layout/item_home_main_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
 
                 </RelativeLayout>
 
