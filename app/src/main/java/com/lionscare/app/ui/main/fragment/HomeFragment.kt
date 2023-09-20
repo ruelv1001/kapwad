@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -283,7 +284,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
         //qr
         qrLayout.qrCodeTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
-        qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(), userModel?.qrcode_value))
+        qrLayout.qrImageView.setImageBitmap(setQR(requireActivity(),userModel?.qrcode_value.toString()))
 
         //id
         idLayout.nameTextView.text = userModel?.name
@@ -335,7 +336,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         (requireActivity() as MainActivity).hideLoadingDialog()
     }
 
-    private fun setUpAnimation() {
+    private fun setUpAnimation() = binding.run{
         frontAnim = AnimatorInflater.loadAnimator(
             requireContext(),
             R.animator.front_animator
@@ -344,9 +345,9 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             AnimatorInflater.loadAnimator(requireContext(), R.animator.back_animator) as AnimatorSet
 
         val scale = resources.displayMetrics.density * 8000
-        binding.mainLayout.mainLinearLayout.cameraDistance = scale
-        binding.idLayout.virtualIdLinearLayout.cameraDistance = scale
-        binding.qrLayout.qrLinearLayout.cameraDistance = scale
+        mainLayout.mainLinearLayout.cameraDistance = scale
+        idLayout.virtualIdLinearLayout.cameraDistance = scale
+        qrLayout.qrLinearLayout.cameraDistance = scale
     }
 
     private fun setClickListeners() = binding.run {
