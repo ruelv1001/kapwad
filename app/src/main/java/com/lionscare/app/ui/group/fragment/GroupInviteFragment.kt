@@ -23,7 +23,6 @@ import com.lionscare.app.databinding.FragmentGroupInviteBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.SearchInviteMemberAdapter
 import com.lionscare.app.ui.group.dialog.InviteMemberDetailsDialog
-import com.lionscare.app.ui.group.dialog.MemberDetailsDialog
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
@@ -220,7 +219,7 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
                 }
 
             }, data
-        ).show(childFragmentManager, MemberDetailsDialog.TAG)
+        ).show(childFragmentManager, InviteMemberDetailsDialog.TAG)
     }
 
 }

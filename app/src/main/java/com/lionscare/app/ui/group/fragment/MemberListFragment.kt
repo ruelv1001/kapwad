@@ -28,6 +28,7 @@ import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.wallet.activity.WalletActivity
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -158,8 +159,6 @@ class MemberListFragment : Fragment(),
         callMemberDetailDialog(data)
     }
 
-    override fun onRemoveClicked(data: MemberListData) = Unit
-
     private fun callMemberDetailDialog(data: MemberListData) {
         MemberDetailsDialog.newInstance(
             object : MemberDetailsDialog.MembershipCallback {
@@ -181,7 +180,7 @@ class MemberListFragment : Fragment(),
                     )
                     startActivity(intent)
                 }
-            }, data
+            }, data, activity.groupDetails?.is_admin == true
         ).show(childFragmentManager, MemberDetailsDialog.TAG)
     }
 

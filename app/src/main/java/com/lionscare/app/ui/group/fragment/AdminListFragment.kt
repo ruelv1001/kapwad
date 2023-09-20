@@ -63,8 +63,8 @@ class AdminListFragment : Fragment(),
         onRefresh()
     }
 
-    private fun setupAdapter(value : Boolean = false) = binding.run {
-        adapter = GroupMembersAdapter(requireContext(),this@AdminListFragment, viewModel.user.id,value)
+    private fun setupAdapter() = binding.run {
+        adapter = GroupMembersAdapter(requireContext(),this@AdminListFragment, viewModel.user.id)
         swipeRefreshLayout.setOnRefreshListener(this@AdminListFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
@@ -148,7 +148,4 @@ class AdminListFragment : Fragment(),
 //        TODO("Not yet implemented")
     }
 
-    override fun onRemoveClicked(data: MemberListData) {
-//        TODO("Not yet implemented")
-    }
 }
