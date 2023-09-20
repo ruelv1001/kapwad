@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentWalletInputBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
-import com.lionscare.app.utils.getDecimalFormat
 import com.lionscare.app.utils.removeCommas
 import com.lionscare.app.utils.setAmountFormat
 import com.lionscare.app.utils.setOnSingleClickListener
