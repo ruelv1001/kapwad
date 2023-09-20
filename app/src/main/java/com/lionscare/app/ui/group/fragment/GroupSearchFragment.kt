@@ -85,7 +85,6 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         activity.getScanImageView().setOnSingleClickListener {
             ScannerDialog.newInstance( object : ScannerDialog.ScannerListener{
                 override fun onScannerSuccess(qrValue: String) {
-                    CommonLogger.devLog("laliluu","qr : $qrValue")
                     val jsonObject: JSONObject
                     val res = qrValue.replace("\\", "")
                     try {
