@@ -35,39 +35,6 @@ fun String.calculateAge(): Int {
 }
 
 /**
- *  Function to format a number with thousand separators
- *  https://stackoverflow.com/questions/25823579/edittext-and-textview-formatted-with-thousands-separators-in-android
- */
-fun getDecimalFormat(value: String): String {
-    val lst = StringTokenizer(value, ".")
-    var str1 = value
-    var str2 = ""
-    if (lst.countTokens() > 1) {
-        str1 = lst.nextToken()
-        str2 = lst.nextToken()
-    }
-    var str3 = ""
-    var i = 0
-    var j = str1.length - 1
-    if (str1[j] == '.') {
-        j--
-        str3 = "."
-    }
-    for (k in j downTo 0) {
-        if (i == 3) {
-            str3 = ",$str3"
-            i = 0
-        }
-        str3 = str1[k] + str3
-        i++
-    }
-    if (str2.isNotEmpty()) {
-        str3 = "$str3.$str2"
-    }
-    return str3
-}
-
-/**
  * Remove commas from string
  */
 fun String.removeCommas(): String {
