@@ -13,11 +13,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
-import com.lionscare.app.data.model.SampleData
-import com.lionscare.app.data.repositories.member.response.MemberListData
-import com.lionscare.app.data.repositories.member.response.User
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupInviteBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
@@ -88,6 +86,16 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
                     viewState.errorCode,
                     viewState.message
                 )
+            }
+            is WalletViewState.SuccessScanQR -> {
+                activity.hideLoadingDialog() //hide dialog because it messes cycle stuff
+                Toast.makeText(requireContext(),
+                    getString(R.string.scan_completed_info), Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack() //get out of qr fragment
+
+                //get data returned from scanning QR then pass it to invite member
+                viewModel.inviteMember( viewState.scanQRData?.id.toString(),activity.groupDetails?.id.toString())
+
             }
 
             is WalletViewState.SuccessSearchUser -> {
