@@ -1,8 +1,6 @@
 package com.lionscare.app.ui.wallet.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentWalletInputBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
-import com.lionscare.app.utils.getDecimalFormat
 import com.lionscare.app.utils.removeCommas
 import com.lionscare.app.utils.setAmountFormat
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.util.Locale
-import java.util.StringTokenizer
 
 
 @AndroidEntryPoint

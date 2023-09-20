@@ -377,5 +377,6 @@
     <string name="club">Club</string>
     <string name="lions_club_info">Please enter your membership information if you\'re a LIONS CLUB member.</string>
     <string name="invalid_number_please_try_again">Invalid Number, please try again.</string>
+    <string name="scan_completed_info">Scan completed, please wait while finishing invitation</string>
 
 </resources>
