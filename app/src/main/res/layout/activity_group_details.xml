@@ -88,16 +88,34 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20">
 
-                    <include
-                        android:id="@+id/qrLayout"
-                        layout="@layout/layout_group_qr"/>
+                    <LinearLayout
+                        android:layout_width="@dimen/dimen_350"
+                        android:layout_height="@dimen/dimen_270"
+                        android:minWidth="@dimen/dimen_350"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
 
+                        <include
+                            android:id="@+id/qrLayout"
+                            layout="@layout/layout_group_qr"/>
 
-                    <include
-                        android:id="@+id/walletLayout"
-                        layout="@layout/layout_group_wallet"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dimen_350"
+                        android:layout_height="@dimen/dimen_270"
+                        android:minWidth="@dimen/dimen_350"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/walletLayout"
+                            layout="@layout/layout_group_wallet"/>
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 
