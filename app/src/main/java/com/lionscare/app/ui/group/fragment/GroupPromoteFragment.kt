@@ -57,7 +57,6 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback,
         setClickListeners()
         setView()
         observeMemberList()
-        onResume()
         onRefresh()
     }
 
@@ -179,10 +178,6 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback,
             title = "Promote Selected Member?",
             groupId = data.id.toString()
         ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
-    }
-
-    override fun onRemoveClicked(data: MemberListData) {
-//        TODO("Not yet implemented")
     }
 
     companion object {

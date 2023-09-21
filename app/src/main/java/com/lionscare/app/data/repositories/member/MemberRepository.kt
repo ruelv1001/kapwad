@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.request.AcceptDeclineRequest
 import com.lionscare.app.data.repositories.member.request.LeaveGroupRequest
@@ -26,8 +27,8 @@ class MemberRepository @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    fun doGetListOfMember(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String, include_admin: Boolean? = null): Flow<PagingData<MemberListData>> {
-        val getListOfMembersPagingSource = GetListOfMembersPagingSource(memberRemoteDataSource, groupId = groupId, include_admin = include_admin)
+    fun doGetListOfMember(pagingConfig: PagingConfig = getDefaultPageConfig(), groupId: String, include_admin: Boolean? = null, ownerInfo: UserModel? = null): Flow<PagingData<MemberListData>> {
+        val getListOfMembersPagingSource = GetListOfMembersPagingSource(memberRemoteDataSource, groupId = groupId, include_admin = include_admin, ownerInfo = ownerInfo)
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = { getListOfMembersPagingSource }
