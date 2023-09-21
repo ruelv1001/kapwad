@@ -84,6 +84,7 @@ class AuthEncryptedDataManager {
             putString(USER_CITY_CODE, userInfo.city_code)
             putString(USER_BRGY_NAME, userInfo.brgy_name)
             putString(USER_BRGY_CODE, userInfo.brgy_code)
+            putString(USER_QRCODE, userInfo.qrcode)
             putString(USER_ZIPCODE, userInfo.zipcode)
             putBoolean(USER_IS_COMPLETE_PROFILE, userInfo.is_complete_profile?: false)
         }
@@ -132,6 +133,7 @@ class AuthEncryptedDataManager {
             inMemoryUserData = UserModel().apply {
                 id = sharedPreferences.getString(USER_INFO_ID, "")
                 qrcode_value = sharedPreferences.getString(USER_QRCODE_VALUE, "")
+                qrcode = sharedPreferences.getString(USER_QRCODE, "")
                 name = sharedPreferences.getString(USER_NAME, "")
                 firstname = sharedPreferences.getString(USER_FIRST_NAME, "")
                 middlename = sharedPreferences.getString(USER_MIDDLE_NAME, "")
@@ -234,6 +236,7 @@ class AuthEncryptedDataManager {
 
         private const val USER_INFO_ID = "USER_INFO_ID"
         private const val USER_QRCODE_VALUE = "USER_QRCODE_VALUE"
+        private const val USER_QRCODE = "USER_QRCODE"
         private const val USER_NAME = "USER_NAME"
         private const val USER_FIRST_NAME = "USER_FIRST_NAME"
         private const val USER_LAST_NAME = "USER_LAST_NAME"

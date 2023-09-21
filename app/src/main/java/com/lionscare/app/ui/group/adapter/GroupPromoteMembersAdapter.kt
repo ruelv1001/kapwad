@@ -16,12 +16,13 @@ import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 
-class GroupMembersAdapter(
+class GroupPromoteMembersAdapter(
     val context: Context,
     val clickListener: MembersCallback,
-    val id: String? = null
+    val id: String? = null,
+    var isUpdating: Boolean = false
 ) :
-    PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
+    PagingDataAdapter<MemberListData, GroupPromoteMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {
 
@@ -80,10 +81,19 @@ class GroupMembersAdapter(
                 binding.idNoTextView.text = data.user?.qrcode
                 //binding.profileImageView.loadAvatar(data.user?.avatar?.thumb_path )
 
-
-                binding.membersLinearLayout.setOnClickListener {
-                    if (id != data.user?.id) { // the user must not be able to click himself/herself
-                        clickListener.onItemClicked(data)
+                if (data.role != "member") {
+                    if (isUpdating) {
+                        //binding.checkImageView.visibility = View.GONE
+                        binding.removeImageView.visibility = View.VISIBLE
+                        binding.removeImageView.setOnSingleClickListener {
+                            clickListener.onRemoveClicked(data)
+                        }
+                    }
+                } else {
+                    binding.membersLinearLayout.setOnClickListener {
+                        if (id != data.user?.id) { // the user must not be able to click himself/herself
+                            clickListener.onItemClicked(data)
+                        }
                     }
                 }
 
@@ -93,6 +103,7 @@ class GroupMembersAdapter(
 
     interface MembersCallback {
         fun onItemClicked(data: MemberListData)
+        fun onRemoveClicked(data: MemberListData)
     }
 
     fun hasData(): Boolean {

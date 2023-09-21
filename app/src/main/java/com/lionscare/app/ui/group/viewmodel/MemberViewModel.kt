@@ -1,11 +1,13 @@
 package com.lionscare.app.ui.group.viewmodel
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.member.MemberRepository
 import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
@@ -32,6 +34,8 @@ class MemberViewModel @Inject constructor(
 
     val user = encryptedDataManager.getUserBasicInfo()
     private val _memberSharedFlow = MutableSharedFlow<MemberViewState>()
+
+    var ownerInfo = UserModel()
 
     val memberSharedFlow: SharedFlow<MemberViewState> =
         _memberSharedFlow.asSharedFlow()
@@ -60,7 +64,11 @@ class MemberViewModel @Inject constructor(
     }
 
     private suspend fun loadListOfMembers(groupId: String, includeAdmin: Boolean? = null) {
-        memberRepository.doGetListOfMember(groupId = groupId, include_admin = includeAdmin)
+        memberRepository.doGetListOfMember(
+            groupId = groupId,
+            include_admin = includeAdmin,
+            ownerInfo = ownerInfo
+        )
             .cachedIn(viewModelScope)
             .onStart {
                 _memberSharedFlow.emit(MemberViewState.Loading)

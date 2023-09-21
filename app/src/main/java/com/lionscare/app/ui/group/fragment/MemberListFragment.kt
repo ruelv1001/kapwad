@@ -14,9 +14,11 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupMembershipReqBinding
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
 import com.lionscare.app.ui.group.dialog.MemberDetailsDialog
@@ -26,6 +28,7 @@ import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.wallet.activity.WalletActivity
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -43,6 +46,7 @@ class MemberListFragment : Fragment(),
     private val viewModel: MemberViewModel by viewModels()
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModelAdmin: AdminViewModel by viewModels()
+    private var isOwner = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +66,7 @@ class MemberListFragment : Fragment(),
         setClickListeners()
         setupAdapter()
         observeMemberList()
+        viewModel.ownerInfo = activity.groupDetails?.owner?: UserModel()
         viewModel.refreshListOfMembers(activity.groupDetails?.id.toString(), true)
     }
 
@@ -154,8 +159,6 @@ class MemberListFragment : Fragment(),
         callMemberDetailDialog(data)
     }
 
-    override fun onRemoveClicked(data: MemberListData) = Unit
-
     private fun callMemberDetailDialog(data: MemberListData) {
         MemberDetailsDialog.newInstance(
             object : MemberDetailsDialog.MembershipCallback {
@@ -177,7 +180,7 @@ class MemberListFragment : Fragment(),
                     )
                     startActivity(intent)
                 }
-            }, data
+            }, data, activity.groupDetails?.is_admin == true
         ).show(childFragmentManager, MemberDetailsDialog.TAG)
     }
 
