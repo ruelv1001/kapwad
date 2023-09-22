@@ -54,7 +54,10 @@ class ProfileEditEmailaddress: Fragment(){
         super.onViewCreated(view, savedInstanceState)
         observeProfile()
         setClickListeners()
-        binding.emailEditText.setText(viewModel.email)
+
+        if (viewModel.email != getString(R.string.no_email_has_been_set_yet)){
+            binding.emailEditText.setText(viewModel.email)
+        }
         activity.setTitlee(getString(R.string.update_email_address))
     }
 
@@ -64,10 +67,6 @@ class ProfileEditEmailaddress: Fragment(){
                 Toast.makeText(requireActivity(),
                     getString(R.string.fields_cannot_be_empty), Toast.LENGTH_LONG).show()
             }else{
-                if (emailEditText.text.toString() == viewModel.userModel?.email){
-                    Toast.makeText(requireActivity(),
-                        getString(R.string.this_email_is_currently_your_email), Toast.LENGTH_LONG).show()
-                }else{
                     val request = UpdateInfoRequest(
                         province_sku =  viewModel.userModel?.province_sku.orEmpty(),
                         province_name = viewModel.userModel?.province_name.orEmpty(),
@@ -88,8 +87,6 @@ class ProfileEditEmailaddress: Fragment(){
                     )
 
                     viewModel.doUpdateProfile(request) //the way to get email address is to pass email address in update profile
-
-                }
              }
         }
     }
