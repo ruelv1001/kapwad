@@ -357,8 +357,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             backAnim?.setTarget(idLayout.virtualIdLinearLayout)
             frontAnim?.start()
             backAnim?.start()
-            mainLayout.mainLinearLayout.visibility = View.VISIBLE
             idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
+            mainLayout.mainLinearLayout.visibility = View.GONE
         }
 
         idLayout.myMainLayout.setOnSingleClickListener {
@@ -367,8 +367,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             backAnim?.setTarget(mainLayout.mainLinearLayout)
             backAnim?.start()
             frontAnim?.start()
-            idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
             mainLayout.mainLinearLayout.visibility = View.VISIBLE
+            idLayout.virtualIdLinearLayout.visibility = View.GONE
         }
 
         mainLayout.myQrImageView.setOnSingleClickListener {
@@ -377,8 +377,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             backAnim?.setTarget(qrLayout.qrLinearLayout)
             backAnim?.start()
             frontAnim?.start()
-            mainLayout.mainLinearLayout.visibility = View.VISIBLE
             qrLayout.qrLinearLayout.visibility = View.VISIBLE
+            mainLayout.mainLinearLayout.visibility = View.GONE
         }
 
         idLayout.myQrImageView.setOnSingleClickListener {
@@ -387,8 +387,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             backAnim?.setTarget(qrLayout.qrLinearLayout)
             frontAnim?.start()
             backAnim?.start()
-            idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
             qrLayout.qrLinearLayout.visibility = View.VISIBLE
+            idLayout.virtualIdLinearLayout.visibility = View.GONE
         }
 
         qrLayout.myIdImageView.setOnSingleClickListener {
@@ -397,8 +397,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             backAnim?.setTarget(idLayout.virtualIdLinearLayout)
             backAnim?.start()
             frontAnim?.start()
-            qrLayout.qrLinearLayout.visibility = View.VISIBLE
             idLayout.virtualIdLinearLayout.visibility = View.VISIBLE
+            qrLayout.qrLinearLayout.visibility = View.GONE
         }
 
         qrLayout.myMainLayout.setOnSingleClickListener {
@@ -407,8 +407,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
             backAnim?.setTarget(mainLayout.mainLinearLayout)
             backAnim?.start()
             frontAnim?.start()
-            qrLayout.qrLinearLayout.visibility = View.VISIBLE
             mainLayout.mainLinearLayout.visibility = View.VISIBLE
+            qrLayout.qrLinearLayout.visibility = View.GONE
         }
 
         mainLayout.requestVerifiedBadgeLinearLayout.setOnSingleClickListener {

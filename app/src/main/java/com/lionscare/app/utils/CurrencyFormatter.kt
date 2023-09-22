@@ -3,14 +3,15 @@ package com.lionscare.app.utils
 import android.text.InputFilter
 import android.text.Spanned
 import android.widget.EditText
+import androidx.core.widget.doAfterTextChanged
 import java.text.DecimalFormat
 
-fun EditText.setAmountFormat(){
+fun EditText.setAmountFormat() {
     this.setOnFocusChangeListener { view, _ ->
         applyDecimalInputFilter(this)
-        val input = this.text.toString().replace(",","")
-        if(!view.isFocused){
-            if(input.isNotEmpty())
+        val input = this.text.toString().replace(",", "")
+        if (!view.isFocused) {
+            if (input.isNotEmpty())
                 this.setText(currencyFormat(input))
         }
     }
@@ -18,11 +19,11 @@ fun EditText.setAmountFormat(){
 
 
 fun currencyFormat(amount: String): String? {
-    if(amount.replace(",","").toDouble()==0.0){
+    if (amount.replace(",", "").toDouble() == 0.0) {
         return "0.00"
     }
     val formatter = DecimalFormat("###,###,###,###,###.00")
-    return formatter.format(amount.replace(",","").toBigDecimal())
+    return formatter.format(amount.replace(",", "").toBigDecimal())
 }
 
 

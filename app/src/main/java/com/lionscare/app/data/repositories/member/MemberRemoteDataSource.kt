@@ -68,7 +68,7 @@ class MemberRemoteDataSource @Inject constructor(private val memberService: Memb
     suspend fun doDeclineInvitation(pending_id: Long, group_id: String): JoinGroupResponse {
         val request = AcceptDeclineRequest(pending_id = pending_id, group_id = group_id)
         val response = memberService.doDeclineInvitation(request)
-        if (response.code() != HttpURLConnection.HTTP_CREATED) {
+        if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")

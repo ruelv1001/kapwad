@@ -14,10 +14,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
+import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupAssistanceReqDetailsBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.viewmodel.AssistanceViewModel
 import com.lionscare.app.ui.group.viewmodel.AssistanceViewState
+import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.utils.copyToClipboard
 import com.lionscare.app.utils.currencyFormat
 import com.lionscare.app.utils.loadAvatar
@@ -32,6 +34,8 @@ class AssistanceRequestDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModel: AssistanceViewModel by viewModels()
+    private var userId = ""
+    private var userName = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +72,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
         amountTextView.text = currencyFormat(data.amount.toString())
         remarksTextView.text = data.note
         dateProcessedTextView.text = data.date_processed?.datetime_ph
+        sendTextView.isVisible = data.status == "approved" && activity.groupDetails?.is_admin == true
         profileImageView.loadAvatar(data.user?.avatar?.thumb_path, requireActivity())
         when (data.status) {
             "declined" -> {
@@ -139,6 +144,21 @@ class AssistanceRequestDetailsFragment : Fragment() {
         refIDTextView.setOnSingleClickListener {
             activity.copyToClipboard(refIDTextView.text.toString())
         }
+        sendTextView.setOnSingleClickListener {
+            val intent = WalletActivity.getIntent(
+                requireActivity(),
+                "Send Points",
+                true,
+                activity.groupDetails?.id.orEmpty(),
+                QRData(
+                    id = userId,
+                    name = userName,
+                    amount = amountTextView.text.toString()
+                ),
+                "START_INPUT"
+            )
+            startActivity(intent)
+        }
     }
 
     private fun observeAssistance() {
@@ -157,6 +177,8 @@ class AssistanceRequestDetailsFragment : Fragment() {
             is AssistanceViewState.SuccessGetAssistanceInfo -> {
                 activity.hideLoadingDialog()
                 viewState.response?.data?.let { setView(it) }
+                userId = viewState.response?.data?.user?.id.toString()
+                userName = viewState.response?.data?.user?.name.toString()
             }
             is AssistanceViewState.SuccessApproveDeclineAssistance -> {
                 activity.hideLoadingDialog()
