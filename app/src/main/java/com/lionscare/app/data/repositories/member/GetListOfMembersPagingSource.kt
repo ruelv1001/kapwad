@@ -13,7 +13,7 @@ class GetListOfMembersPagingSource constructor(
     private val memberRemoteDataSource: MemberRemoteDataSource,
     private val groupId: String? = null,
     private val include_admin: Boolean? = null,
-    private val ownerInfo: UserModel? = null,
+    private val ownerInfo: UserModel? = null
 ) :
     PagingSource<Int, MemberListData>() {
     override fun getRefreshKey(state: PagingState<Int, MemberListData>): Int? {
@@ -33,7 +33,7 @@ class GetListOfMembersPagingSource constructor(
                 page = page.toString()
             )
             if (response.data?.isNotEmpty() == true) {
-                if (page == 1){
+                if (page == 1 && include_admin == true){
                     val newListData  = response.data?.toMutableList()
                     newListData?.add(0, ownerInfo())
 

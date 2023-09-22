@@ -101,7 +101,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
                 handleInputError(viewState.errorData ?: ErrorsData())
             }
 
-            else -> Unit
+            else ->  hideLoadingDialog()
         }
     }
 

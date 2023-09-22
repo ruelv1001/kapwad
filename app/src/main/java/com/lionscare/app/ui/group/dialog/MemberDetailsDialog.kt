@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
@@ -19,6 +20,7 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
     private var viewBinding: DialogUserDetailsBinding? = null
     private var callback: MembershipCallback? = null
     private var data = MemberListData()
+    private var isUserAdmin = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +51,7 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
         nameTextView.text = data.user?.name
         idTextView.text = data.user?.qrcode?.replace("....".toRegex(), "$0 ")
         avatarImageView.loadAvatar(data.user?.avatar?.full_path.orEmpty(), requireActivity())
+        removeButton.isVisible = isUserAdmin
     }
 
     private fun setClickListener() {
@@ -75,11 +78,13 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
     companion object {
         fun newInstance(
             callback: MembershipCallback? = null,
-            data: MemberListData = MemberListData()
+            data: MemberListData = MemberListData(),
+            isUserAdmin : Boolean
         ) = MemberDetailsDialog()
             .apply {
                 this.callback = callback
                 this.data = data
+                this.isUserAdmin = isUserAdmin
             }
 
         val TAG: String = MemberDetailsDialog::class.java.simpleName

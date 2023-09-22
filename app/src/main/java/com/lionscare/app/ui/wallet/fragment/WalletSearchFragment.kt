@@ -41,7 +41,7 @@ class WalletSearchFragment : Fragment(),
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
     private var groupLinearLayoutManager: LinearLayoutManager? = null
-    private var adapter : MembersAdapter? = null
+    private var adapter : MembersAdapter?  = null
     private var groupsAdapter : GroupsAdapter? = null
     private val activity by lazy { requireActivity() as WalletActivity }
     private val viewModel: WalletViewModel by viewModels()

@@ -1,6 +1,8 @@
 package com.lionscare.app.ui.wallet.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +18,9 @@ import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.adapter.AddFundsAdapter
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
+import com.lionscare.app.utils.currencyFormat
 import com.lionscare.app.utils.dialog.WebviewDialog
+import com.lionscare.app.utils.setAmountFormat
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +55,8 @@ class TopUpFragment : Fragment(), AddFundsAdapter.AddFundCallback {
     }
 
     private fun setupClickListener() = binding.run {
+        pointsEditText.setAmountFormat()
+
         backImageView.setOnSingleClickListener {
             activity.onBackPressedDispatcher.onBackPressed()
         }

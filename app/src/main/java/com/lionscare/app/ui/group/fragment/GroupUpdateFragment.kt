@@ -73,26 +73,15 @@ class GroupUpdateFragment : Fragment() {
         groupTypeSpinner.adapter = adapter
         //if coming from update, id should be existing therefore dropdown will not be enabled
         groupTypeSpinner.isEnabled = activity.groupDetails?.id == null
+        groupTypeSpinner.isVisible = false
+        typeInputLayout.isVisible = true
+        typeEditText.setText( when(items[0]) {
+            "immediate_family" -> "Immediate Family"
+            "organization" -> "Organization"
+            "community"  -> "Community"
+            else -> items[0]
+        })
 
-        groupTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                groupType = when (selectedItem) {
-                    "Immediate Family" -> "immediate_family"
-                    "Organization" -> "organization"
-                    "Community" -> "community"
-                    else -> selectedItem
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
     }
 
     private fun setClickListeners() = binding.run {
@@ -112,7 +101,7 @@ class GroupUpdateFragment : Fragment() {
             val createGroupRequest = CreateGroupRequest(
                 group_id = groupId,
                 name = nameEditText.text.toString(),
-                type = groupType.lowercase(),
+                type = if(typeEditText.text.toString().lowercase() == "immediate family") "immediate_family" else typeEditText.text.toString().lowercase(),
                 privacy = groupPrivacy,
                 passcode = passwordEditText.text.toString(),
                 with_approval = approval
@@ -203,7 +192,7 @@ class GroupUpdateFragment : Fragment() {
                 else -> 0
             }
         )*/
-        setUpSpinner(arrayListOf(data.type.toString().replaceFirstChar(Char::titlecase)))
+        setUpSpinner(arrayListOf(data.type.toString()))
         publicRadioButton.isChecked = data.privacy == "public"
         privateRadioButton.isChecked = data.privacy == "private"
         if (data.privacy == "private") {

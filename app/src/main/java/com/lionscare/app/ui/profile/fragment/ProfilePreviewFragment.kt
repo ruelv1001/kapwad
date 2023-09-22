@@ -75,7 +75,6 @@ class ProfilePreviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeProfile()
         setClickListeners()
-        viewModel.getProfileDetails()
     }
 
 
@@ -128,6 +127,7 @@ class ProfilePreviewFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.getProfileDetails()
         activity.setTitlee(getString(R.string.lbl_my_profile))
         requireActivity().title = getString(R.string.lbl_my_profile)
         hideLoadingDialog()

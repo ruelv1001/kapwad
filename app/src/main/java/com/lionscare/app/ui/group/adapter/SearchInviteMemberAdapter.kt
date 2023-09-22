@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.AdapterMembersBinding
+import com.lionscare.app.utils.loadImage
 
 class SearchInviteMemberAdapter (val context: Context, val clickListener: SearchCallback) :
     RecyclerView.Adapter<SearchInviteMemberAdapter.AdapterViewHolder>() {

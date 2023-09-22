@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -77,6 +78,7 @@ class GroupCreateFragment : Fragment() {
                 android.R.layout.simple_spinner_item
             )
             groupTypeSpinner.isEnabled = true
+            typeInputLayout.isVisible = false
             activity.setTitlee(getString(R.string.lbl_create_group))
         } else {
             adapter = ArrayAdapter.createFromResource(
@@ -85,6 +87,10 @@ class GroupCreateFragment : Fragment() {
                 android.R.layout.simple_spinner_item
             )
             groupTypeSpinner.isEnabled = false
+            groupTypeSpinner.isVisible = false
+            typeInputLayout.isVisible = true
+            typeEditText.setText(getString(R.string.home_immediate_family_group_text))
+            groupType = "immediate_family"
             activity.setTitlee(getString(R.string.lbl_create_family))
         }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

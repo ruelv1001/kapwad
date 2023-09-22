@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,7 +17,7 @@ import com.lionscare.app.R
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupCommunityRolesUpdateBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
-import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
+import com.lionscare.app.ui.group.adapter.GroupPromoteMembersAdapter
 import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
 import com.lionscare.app.ui.group.dialog.SaveSuccessDialog
 import com.lionscare.app.ui.group.viewmodel.AdminViewModel
@@ -32,12 +31,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CommunityRolesUpdateFragment: Fragment(), GroupMembersAdapter.MembersCallback,
+class CommunityRolesUpdateFragment: Fragment(), GroupPromoteMembersAdapter.MembersCallback,
     SwipeRefreshLayout.OnRefreshListener {
     private var _binding: FragmentGroupCommunityRolesUpdateBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
-    private var adapter : GroupMembersAdapter? = null
+    private var adapter : GroupPromoteMembersAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private val viewModel: AdminViewModel by viewModels()
 
@@ -58,7 +57,6 @@ class CommunityRolesUpdateFragment: Fragment(), GroupMembersAdapter.MembersCallb
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
         setView()
-        onResume()
         setupAdapter()
         observeMemberList()
         onRefresh()
@@ -66,7 +64,7 @@ class CommunityRolesUpdateFragment: Fragment(), GroupMembersAdapter.MembersCallb
 
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(requireContext(),this@CommunityRolesUpdateFragment, isUpdating = true)
+        adapter = GroupPromoteMembersAdapter(requireContext(),this@CommunityRolesUpdateFragment, isUpdating = true)
         swipeRefreshLayout.setOnRefreshListener(this@CommunityRolesUpdateFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
@@ -85,7 +83,7 @@ class CommunityRolesUpdateFragment: Fragment(), GroupMembersAdapter.MembersCallb
     private fun setView() = binding.run{
         groupOwnerLayout.nameTextView.text = activity.groupDetails?.owner?.name
         groupOwnerLayout.idNoTextView.text = activity.groupDetails?.owner?.qrcode
-        groupOwnerLayout.profileImageView.loadAvatar(activity?.groupDetails?.owner?.avatar?.thumb_path, requireActivity())
+        groupOwnerLayout.profileImageView.loadAvatar(activity.groupDetails?.owner?.avatar?.thumb_path, requireActivity())
 
     }
 

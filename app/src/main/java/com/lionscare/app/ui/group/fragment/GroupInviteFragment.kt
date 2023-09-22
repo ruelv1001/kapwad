@@ -9,25 +9,18 @@ import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
-import com.lionscare.app.data.model.SampleData
-import com.lionscare.app.data.repositories.member.response.MemberListData
-import com.lionscare.app.data.repositories.member.response.User
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupInviteBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.adapter.SearchInviteMemberAdapter
 import com.lionscare.app.ui.group.dialog.InviteMemberDetailsDialog
-import com.lionscare.app.ui.group.dialog.MemberDetailsDialog
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
-import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
-import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -45,7 +38,6 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
     private var adapter: SearchInviteMemberAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private val viewModel: MemberViewModel by viewModels()
-    private val walletViewModel: WalletViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,46 +59,6 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
         setView()
         onResume()
         observeMember()
-        observeWallet()
-    }
-
-    private fun observeWallet() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            walletViewModel.walletSharedFlow.collectLatest { viewState ->
-                handleViewStateWallet(viewState)
-            }
-        }
-    }
-
-    private fun handleViewStateWallet(viewState: WalletViewState) {
-        when (viewState) {
-            WalletViewState.Loading -> activity.showLoadingDialog(R.string.loading)
-            is WalletViewState.PopupError -> {
-                activity.hideLoadingDialog()
-                showPopupError(
-                    requireActivity(),
-                    childFragmentManager,
-                    viewState.errorCode,
-                    viewState.message
-                )
-            }
-
-            is WalletViewState.SuccessSearchUser -> {
-                activity.hideLoadingDialog()
-                adapter?.clear()
-                adapter?.appendData(viewState.listData)
-                if (adapter?.getData()?.size == 0) {
-                    binding.memberPlaceHolderTextView.isVisible = true
-                    binding.recyclerView.isGone = true
-                } else {
-                    binding.memberPlaceHolderTextView.isGone = true
-                    binding.recyclerView.isVisible = true
-                }
-            }
-
-            else -> Unit
-        }
-
     }
 
     private fun observeMember() {
@@ -162,7 +114,7 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
                         jsonObject = JSONObject(res)
                         val type = jsonObject.getString("type")
                         val value = jsonObject.getString("value")
-                        walletViewModel.doScanQr(value)
+                        viewModel.doSearchUser(value)
                     } catch (e: JSONException) {
                         Toast.makeText(
                             requireActivity(),
@@ -220,7 +172,7 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
                 }
 
             }, data
-        ).show(childFragmentManager, MemberDetailsDialog.TAG)
+        ).show(childFragmentManager, InviteMemberDetailsDialog.TAG)
     }
 
 }

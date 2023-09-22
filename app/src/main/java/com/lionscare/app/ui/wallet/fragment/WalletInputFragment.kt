@@ -1,8 +1,6 @@
 package com.lionscare.app.ui.wallet.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +13,6 @@ import com.lionscare.app.utils.removeCommas
 import com.lionscare.app.utils.setAmountFormat
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.util.Locale
-import java.util.StringTokenizer
 
 
 @AndroidEntryPoint
@@ -58,7 +52,12 @@ class WalletInputFragment : Fragment() {
                         activity.qrData.name
                     }
                 )
+                amountEditText.isEnabled = activity.qrData.amount == null
+                if(!amountEditText.isEnabled)
+                    amountEditText.setText(activity.qrData.amount)
             }
+
+            else -> Unit
         }
 
     }
