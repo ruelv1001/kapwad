@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.activity.TransactionsActivity
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.adapter.InboundOutboundAdapter
+import com.lionscare.app.ui.wallet.dialog.Scan2PayDialog
 import com.lionscare.app.ui.wallet.fragment.WalletSearchFragmentDirections
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
@@ -32,6 +34,8 @@ import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback,
@@ -96,6 +100,9 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             val intent = WalletActivity.getIntent(requireContext(), "Post Request")
             startActivity(intent)
         }
+        scan2PayLinearLayout.setOnSingleClickListener {
+            scanToPay()
+        }
     }
 
     private fun setUpAdapter() = binding.run {
@@ -152,6 +159,53 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
 
     }
 
+    private fun scanToPay() {
+        val scanDialog = ScannerDialog.newInstance(object : ScannerDialog.ScannerListener {
+            override fun onScannerSuccess(qrValue: String) {
+                val jsonObject: JSONObject
+                val res = qrValue.replace("\\", "")
+                try {
+                    jsonObject = JSONObject(res)
+                    val type = jsonObject.getString("type")
+                    val mid = jsonObject.getString("value")
+                    val businessName = jsonObject.getString("name")
+                    val amount = if (jsonObject.has("amount")) {
+                        jsonObject.getString("amount")
+                    } else {
+                        ""
+                    }
+                    val remarks = if (jsonObject.has("remarks")) {
+                        jsonObject.getString("remarks")
+                    } else {
+                        ""
+                    }
+                    if (type == PARTICIPANT) {
+                        Scan2PayDialog.newInstance(
+                            businessName,
+                            amount,
+                            remarks,
+                            object : Scan2PayDialog.Scan2PayListener {
+                                override fun onProceed(amount: String, remarks: String) {
+                                    //viewModel.doSendPoint(amount, mid, remarks)
+                                }
+                            }).show(childFragmentManager, ScannerDialog.TAG)
+                    } else {
+                        Toast.makeText(requireActivity(),
+                            getString(R.string.invalid_qr_code_msg),
+                            Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: JSONException) {
+                    Toast.makeText(requireActivity(),
+                        getString(R.string.invalid_qr_code_msg),
+                        Toast.LENGTH_SHORT).show()
+                    e.printStackTrace()
+                }
+            }
+
+        })
+        scanDialog.show(childFragmentManager, ScannerDialog.TAG)
+    }
+
     override fun onScannerSuccess(qrValue: String) {
         activity.data = SampleData(
             id = R.drawable.img_profile,
@@ -169,6 +223,10 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
 
     private fun clearList(){
         adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+    }
+
+    companion object{
+        private const val PARTICIPANT = "participant"
     }
 
 }
