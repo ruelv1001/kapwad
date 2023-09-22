@@ -7,6 +7,7 @@ import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.AdapterSearchUserBinding
+import com.lionscare.app.utils.loadAvatar
 
 class MembersAdapter(val context: Context, val clickListener: OnClickCallback) :
     RecyclerView.Adapter<MembersAdapter.AdapterViewHolder>() {
@@ -45,8 +46,7 @@ class MembersAdapter(val context: Context, val clickListener: OnClickCallback) :
 
             binding.nameTextView.text = data.name
             binding.idNoTextView.isGone = true
-
-
+            binding.profileImageView.loadAvatar(data.avatar?.thumb_path, context)
             binding.membersLinearLayout.setOnClickListener {
                 clickListener.onItemClickListener(data)
             }
