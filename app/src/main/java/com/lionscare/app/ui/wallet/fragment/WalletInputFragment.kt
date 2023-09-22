@@ -52,7 +52,12 @@ class WalletInputFragment : Fragment() {
                         activity.qrData.name
                     }
                 )
+                amountEditText.isEnabled = activity.qrData.amount == null
+                if(!amountEditText.isEnabled)
+                    amountEditText.setText(activity.qrData.amount)
             }
+
+            else -> Unit
         }
 
     }

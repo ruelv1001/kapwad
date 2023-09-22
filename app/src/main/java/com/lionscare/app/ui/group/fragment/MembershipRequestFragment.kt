@@ -215,4 +215,9 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
         clear()
         viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
     }
+
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
+    }
 }

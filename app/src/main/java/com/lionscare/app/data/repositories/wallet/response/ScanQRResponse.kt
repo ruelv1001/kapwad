@@ -18,5 +18,6 @@ data class ScanQRResponse(
 data class QRData(
     val id: String? = null,
     val name: String? = null,
-    val phone_number: String? = null
+    val phone_number: String? = null,
+    val amount: String? = null
 ): Parcelable
