@@ -19,6 +19,7 @@ import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.FragmentWalletBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.activity.TransactionsActivity
 import com.lionscare.app.ui.wallet.activity.WalletActivity
@@ -38,15 +39,14 @@ import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback,
-    ScannerDialog.ScannerListener, SwipeRefreshLayout.OnRefreshListener {
+class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback, SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter: InboundOutboundAdapter? = null
-    private val activity by lazy { requireActivity() as WalletActivity }
+    private val activity by lazy { requireActivity() as MainActivity }
     private val viewModel: WalletViewModel by viewModels()
 
 
@@ -92,10 +92,6 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             val intent = WalletActivity.getIntent(requireContext(), "Send Points")
             startActivity(intent)
         }
-        scan2PayLinearLayout.setOnSingleClickListener {
-            ScannerDialog.newInstance(this@WalletFragment, "Scan 2 Pay")
-                .show(childFragmentManager, ScannerDialog.TAG)
-        }
         postRequestLinearLayout.setOnSingleClickListener {
             val intent = WalletActivity.getIntent(requireContext(), "Post Request")
             startActivity(intent)
@@ -134,9 +130,16 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
     private fun handleViewState(viewState: WalletViewState) {
         when (viewState) {
             is WalletViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+            is WalletViewState.LoadingScan -> activity.showLoadingDialog(R.string.loading)
             is WalletViewState.SuccessTransactionList -> showTransactionList(viewState.pagingData)
             is WalletViewState.SuccessGetBalance -> binding.pointsTextView.text = viewState.balanceData?.value
+            is WalletViewState.SuccessScan2Pay -> {
+                activity.hideLoadingDialog()
+                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
+                onRefresh()
+            }
             is WalletViewState.PopupError -> {
+                activity.hideLoadingDialog()
                 showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
             }
 
@@ -186,7 +189,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
                             remarks,
                             object : Scan2PayDialog.Scan2PayListener {
                                 override fun onProceed(amount: String, remarks: String) {
-                                    //viewModel.doSendPoint(amount, mid, remarks)
+                                    viewModel.doScan2Pay(amount, mid, remarks)
                                 }
                             }).show(childFragmentManager, ScannerDialog.TAG)
                     } else {
@@ -204,15 +207,6 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
 
         })
         scanDialog.show(childFragmentManager, ScannerDialog.TAG)
-    }
-
-    override fun onScannerSuccess(qrValue: String) {
-        activity.data = SampleData(
-            id = R.drawable.img_profile,
-            title = "Romeo Dela Cruz",
-            amount = "LC-000001",
-        )
-        findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
     }
 
     override fun onRefresh() {
