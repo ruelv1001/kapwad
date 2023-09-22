@@ -74,6 +74,7 @@
     <string name="wallet_send_text">Send Points</string>
     <string name="wallet_points_text">Points</string>
     <string name="wallet_scan_text">Scan</string>
+    <string name="wallet_scan_2_text">Scan2Pay</string>
     <string name="wallet_2_pay_text">2 Pay</string>
     <string name="wallet_post_text">Post</string>
     <string name="wallet_request_text">Request</string>
@@ -377,5 +378,7 @@
     <string name="club">Club</string>
     <string name="lions_club_info">Please enter your membership information if you\'re a LIONS CLUB member.</string>
     <string name="invalid_number_please_try_again">Invalid Number, please try again.</string>
+    <string name="send_points_to_pay">Send Points to Pay</string>
+    <string name="pay_now">Pay now</string>
 
 </resources>
