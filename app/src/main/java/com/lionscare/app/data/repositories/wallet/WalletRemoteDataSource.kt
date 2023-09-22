@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.wallet
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.wallet.request.Scan2PayRequest
 import com.lionscare.app.data.repositories.wallet.request.ScanQRRequest
 import com.lionscare.app.data.repositories.wallet.request.SearchUserRequest
 import com.lionscare.app.data.repositories.wallet.request.SendPointsToUserRequest
@@ -13,6 +14,9 @@ import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import com.lionscare.app.data.repositories.wallet.response.SearchUserResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionDetailsResponse
 import com.lionscare.app.data.repositories.wallet.response.TransactionListResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -92,6 +96,15 @@ class WalletRemoteDataSource @Inject constructor(private val walletService: Wall
         val request = SearchUserRequest(keyword)
         val response = walletService.doSearchGroup(request)
 
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doScan2Pay(amount: String, mid: String, remarks: String = ""): GeneralResponse{
+        val request = Scan2PayRequest(amount, mid, remarks)
+        val response = walletService.doScan2Pay(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

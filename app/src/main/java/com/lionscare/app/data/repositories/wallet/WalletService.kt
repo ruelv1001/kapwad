@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.wallet
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.wallet.request.Scan2PayRequest
 import com.lionscare.app.data.repositories.wallet.request.ScanQRRequest
 import com.lionscare.app.data.repositories.wallet.request.SearchUserRequest
 import com.lionscare.app.data.repositories.wallet.request.SendPointsToUserRequest
@@ -42,4 +43,7 @@ interface WalletService {
 
     @POST("api/wallet/user/search/group")
     suspend fun doSearchGroup(@Body request: SearchUserRequest): Response<SearchGroupResponse>
+
+    @POST("api/wallet/user/pay")
+    suspend fun doScan2Pay(@Body request: Scan2PayRequest): Response<GeneralResponse>
 }

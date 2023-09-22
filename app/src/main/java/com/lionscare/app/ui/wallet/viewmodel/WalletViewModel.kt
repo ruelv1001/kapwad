@@ -192,6 +192,25 @@ class WalletViewModel @Inject constructor(
         }
     }
 
+    fun doScan2Pay(amount: String, mid: String, remarks: String = "") {
+        viewModelScope.launch {
+            walletRepository.doScan2Pay(amount, mid, remarks)
+                .onStart {
+                    _walletSharedFlow.emit(WalletViewState.LoadingScan)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _walletSharedFlow.emit(
+                        WalletViewState.SuccessScan2Pay(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+
     private suspend fun getTransactionList(perPage: Int) {
         val pageConfig = PagingConfig(pageSize = perPage, initialLoadSize = perPage,enablePlaceholders = false)
         walletRepository.getTransactionList(pageConfig)

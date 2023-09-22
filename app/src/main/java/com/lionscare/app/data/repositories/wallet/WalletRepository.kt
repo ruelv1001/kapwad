@@ -17,6 +17,7 @@ import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -89,6 +90,13 @@ class WalletRepository @Inject constructor(
     fun doSearchGroup(keyword: String): Flow<SearchGroupResponse> {
         return flow {
             val response = walletRemoteDataSource.doSearchGroup(keyword)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doScan2Pay(amount: String, mid: String, remarks: String = ""): Flow<GeneralResponse> {
+        return flow {
+            val response = walletRemoteDataSource.doScan2Pay(amount, mid, remarks)
             emit(response)
         }.flowOn(ioDispatcher)
     }

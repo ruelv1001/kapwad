@@ -15,9 +15,11 @@ sealed class WalletViewState{
 
     object Loading : WalletViewState()
     object LoadingScanGroup : WalletViewState()
+    object LoadingScan : WalletViewState()
     data class SuccessGetBalance(val balanceData: BalanceData? = null) : WalletViewState()
 
     data class SuccessTopup(val webUrl: String? = null) : WalletViewState()
+    data class SuccessScan2Pay(val message: String? = null) : WalletViewState()
 
     data class SuccessSendPoint(val data: TransactionData? = TransactionData()) : WalletViewState()
 
