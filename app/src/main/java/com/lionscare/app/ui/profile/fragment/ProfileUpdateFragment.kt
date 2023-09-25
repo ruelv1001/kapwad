@@ -5,13 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,13 +17,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
-import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.FragmentProfileUpdateBinding
 import com.lionscare.app.ui.main.activity.MainActivity
@@ -46,10 +41,8 @@ import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import java.util.TimeZone
 
 @AndroidEntryPoint
 class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDialogCallBack {
@@ -159,6 +152,19 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
 
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run{
+        firstNameEditText.doOnTextChanged { text, start, before, count ->
+            firstNameTextInputLayout.error = ""
+        }
+        middleNameEditText.doOnTextChanged { text, start, before, count ->
+            middleNameTextInputLayout.error = ""
+        }
+        lastNameEditText.doOnTextChanged { text, start, before, count ->
+            lastNameTextInputLayout.error = ""
+        }
+
+        birthdateEditText.doOnTextChanged { text, start, before, count ->
+            birthdateTextInputLayout.error = ""
+        }
         provinceEditText.doOnTextChanged {
                 text, start, before, count ->
             provinceTextInputLayout.error = ""
@@ -174,6 +180,9 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         streetEditText.doOnTextChanged {
                 text, start, before, count ->
             streetTextInputLayout.error = ""
+        }
+        zipcodeEditText.doOnTextChanged { text, start, before, count ->
+            zipcodeTextInputLayout.error = ""
         }
 
         regionEditText.doOnTextChanged {
@@ -244,7 +253,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 // Respond to dismiss events.
                 datePicker.dismiss()
             }
-            datePicker.show(childFragmentManager, "ProfileUpdateFragment");
+            datePicker.show(childFragmentManager, "ProfileUpdateFragment")
         }
 
         provinceEditText.setOnSingleClickListener {
