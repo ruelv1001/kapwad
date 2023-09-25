@@ -2,12 +2,10 @@ package com.lionscare.app.data.repositories.member
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.lionscare.app.data.repositories.baseresponse.Avatar
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.User
-import com.lionscare.app.security.AuthEncryptedDataManager
-import javax.inject.Inject
+import com.lionscare.app.utils.CommonLogger
 
 class GetListOfMembersPagingSource constructor(
     private val memberRemoteDataSource: MemberRemoteDataSource,
@@ -51,7 +49,18 @@ class GetListOfMembersPagingSource constructor(
                 }
 
             } else {
-                LoadResult.Error(NoSuchElementException("No more data available"))
+                if(page == 1 && include_admin == true){
+                    val newListData  = response.data?.toMutableList()
+                    newListData?.add(0, ownerInfo())
+
+                    LoadResult.Page(
+                        data = newListData.orEmpty(),
+                        prevKey = if (page > 1) page - 1 else null,
+                        nextKey = if ((response.total ?: 0) > page) page + 1 else null
+                    )
+                }else{
+                    LoadResult.Error(NoSuchElementException("No more data available"))
+                }
             }
         } catch (e: Exception) {
             LoadResult.Error(e)

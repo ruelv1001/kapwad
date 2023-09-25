@@ -3,7 +3,6 @@ package com.lionscare.app.ui.group.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -14,7 +13,6 @@ import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterMembersBinding
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.loadAvatar
-import com.lionscare.app.utils.setOnSingleClickListener
 
 class GroupMembersAdapter(
     val context: Context,

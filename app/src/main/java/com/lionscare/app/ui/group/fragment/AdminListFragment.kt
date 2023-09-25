@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -70,6 +71,26 @@ class AdminListFragment : Fragment(),
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
+        adapter?.addLoadStateListener { loadState ->
+            when {
+                loadState.source.refresh is LoadState.Loading -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = true
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.Error -> {
+                    placeHolderTextView.isVisible = true
+                    shimmerLayout.isVisible = false
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.NotLoading && adapter?.hasData() == true -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = false
+                    shimmerLayout.stopShimmer()
+                    recyclerView.isVisible = true
+                }
+            }
+        }
     }
 
     private fun setClickListeners() = binding.run {
@@ -91,16 +112,6 @@ class AdminListFragment : Fragment(),
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_group_community_roles))
         activity.getRolesView().isVisible = activity.groupDetails?.is_admin == true
-
-        adapter?.addLoadStateListener {
-            if(adapter?.hasData() == true){
-                binding.placeHolderTextView.isVisible = false
-                binding.recyclerView.isVisible = true
-            }else{
-                binding.placeHolderTextView.isVisible = true
-                binding.recyclerView.isVisible = false
-            }
-        }
     }
 
     private fun observeMemberList() {
