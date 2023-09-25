@@ -94,10 +94,10 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
             is GroupListViewState.LoadingAcceptDeclineInvitation -> showLoadingDialog(R.string.loading)
             is GroupListViewState.SuccessGetPendingRequestList -> {
                 binding.swipeRefreshLayout.isRefreshing = false
+                clearList()
                 showPending(viewState.pagingData)
             }
             is GroupListViewState.SuccessAcceptDeclineInvitation -> {
-                clearList()
                 viewModel.refreshPendingRequestList()
                 Toast.makeText(requireActivity(), viewState.msg, Toast.LENGTH_SHORT).show()
             }
