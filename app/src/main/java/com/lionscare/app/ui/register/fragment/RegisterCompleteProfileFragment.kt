@@ -11,7 +11,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -21,24 +20,20 @@ import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.FragmentRegistrationCompleteProfileBinding
 import com.lionscare.app.ui.main.activity.MainActivity
-import com.lionscare.app.ui.profile.dialog.ProfileConfirmationDialog
 import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.ui.register.dialog.BrgyDialog
 import com.lionscare.app.ui.register.dialog.CityDialog
 import com.lionscare.app.ui.register.dialog.ClusterDialog
 import com.lionscare.app.ui.register.dialog.ProvinceDialog
 import com.lionscare.app.ui.register.dialog.RegionDialog
-import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
 import com.lionscare.app.ui.register.dialog.ZoneDialog
 import com.lionscare.app.ui.register.viewmodel.RegisterViewModel
 import com.lionscare.app.ui.register.viewmodel.RegisterViewState
-import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -116,19 +111,13 @@ class RegisterCompleteProfileFragment: Fragment() {
     }
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
-        if (errorsData.email?.get(0)?.isNotEmpty() == true) binding.emailTextInputLayout.error =
-            errorsData.email?.get(0)
-        if (errorsData.province_name?.get(0)
-                ?.isNotEmpty() == true
-        ) binding.provinceTextInputLayout.error = errorsData.province_name?.get(0)
-        if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error =
-            errorsData.city_name?.get(0)
-        if (errorsData.brgy_name?.get(0)
-                ?.isNotEmpty() == true
-        ) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
-        if (errorsData.street_name?.get(0)
-                ?.isNotEmpty() == true
-        ) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
+        if (errorsData.email?.get(0)?.isNotEmpty() == true) binding.emailTextInputLayout.error =errorsData.email?.get(0)
+        if (errorsData.birthdate?.get(0)?.isNotEmpty() == true) binding.birthdateTextInputLayout.error = errorsData.birthdate?.get(0)
+        if (errorsData.province_name?.get(0)?.isNotEmpty() == true ) binding.provinceTextInputLayout.error = errorsData.province_name?.get(0)
+        if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error = errorsData.city_name?.get(0)
+        if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true ) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
+        if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
+        if (errorsData.zipcode?.get(0)?.isNotEmpty() == true) binding.zipcodeTextInputLayout.error = errorsData.zipcode?.get(0)
     }
 
     override fun onResume() {
@@ -139,6 +128,9 @@ class RegisterCompleteProfileFragment: Fragment() {
     private fun setView() = binding.run {
         emailEditText.doOnTextChanged { text, start, before, count ->
             emailTextInputLayout.error = ""
+        }
+        birthdateEditText.doOnTextChanged { text, start, before, count ->
+            birthdateTextInputLayout.error = ""
         }
         provinceEditText.doOnTextChanged { text, start, before, count ->
             provinceTextInputLayout.error = ""
@@ -151,6 +143,9 @@ class RegisterCompleteProfileFragment: Fragment() {
         }
         streetEditText.doOnTextChanged { text, start, before, count ->
             streetTextInputLayout.error = ""
+        }
+        zipcodeEditText.doOnTextChanged { text, start, before, count ->
+            zipcodeTextInputLayout.error = ""
         }
 
         regionEditText.doOnTextChanged {
@@ -170,10 +165,6 @@ class RegisterCompleteProfileFragment: Fragment() {
         barangayEditText.isClickable = false
     }
 
-    private fun setClickwListeners() = binding.run {
-
-
-    }
 
     private fun setClickListeners() = binding.run {
         //remove backbbutton
