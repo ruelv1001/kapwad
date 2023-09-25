@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,6 +24,7 @@ import com.lionscare.app.ui.group.adapter.GroupsInvitesAdapter
 import com.lionscare.app.ui.group.dialog.RequestInviteFilterDialog
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,13 +74,24 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
 
         ownerLinearLayout.isGone = true
 
-        adapter?.addLoadStateListener {
-            if (adapter?.hasData() == true) {
-                placeHolderTextView.isVisible = false
-                recyclerView.isVisible = true
-            } else {
-                placeHolderTextView.isVisible = true
-                recyclerView.isVisible = false
+        adapter?.addLoadStateListener { loadState ->
+            when {
+                loadState.source.refresh is LoadState.Loading -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = true
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.Error -> {
+                    placeHolderTextView.isVisible = true
+                    shimmerLayout.isVisible = false
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.NotLoading && adapter?.hasData() == true -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = false
+                    shimmerLayout.stopShimmer()
+                    recyclerView.isVisible = true
+                }
             }
         }
     }

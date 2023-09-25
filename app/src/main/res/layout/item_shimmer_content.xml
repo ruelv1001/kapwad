@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/membersLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_10">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="@dimen/dimen_55"
+        android:layout_height="@dimen/dimen_55"
+        android:src="@color/super_light_gray" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/dimen_16"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="@dimen/dimen_200"
+            android:layout_height="@dimen/dimen_16"
+            android:background="@drawable/bg_rounded"
+            android:backgroundTint="@color/super_light_gray"/>
+
+        <LinearLayout
+            android:layout_width="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_14"
+            android:background="@drawable/bg_rounded"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:backgroundTint="@color/super_light_gray"/>
+
+    </LinearLayout>
+
+</LinearLayout>
