@@ -247,16 +247,22 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
 
     private fun iFHandleViewState(viewState: ImmediateFamilyViewState) {
         when (viewState) {
-            ImmediateFamilyViewState.Loading -> Unit
-            is ImmediateFamilyViewState.PopupError -> {
-                //showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+            ImmediateFamilyViewState.Loading -> {
+                binding.createGroupButton.isGone = true
+                binding.famShimmerLayout.isVisible = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
+            }
+            is ImmediateFamilyViewState.PopupError -> {
                 binding.createGroupButton.isVisible = true
+                binding.famShimmerLayout.isGone = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
             }
 
             is ImmediateFamilyViewState.Success -> {
-                binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
                 binding.createGroupButton.isGone = true
+                binding.famShimmerLayout.isGone = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
+
                 viewState.immediateFamilyResponse?.data?.let { setImmediateFamily(it) }
                 immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }

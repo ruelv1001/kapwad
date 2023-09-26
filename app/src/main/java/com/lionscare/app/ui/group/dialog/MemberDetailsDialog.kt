@@ -51,7 +51,7 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
         nameTextView.text = data.user?.name
         idTextView.text = data.user?.qrcode?.replace("....".toRegex(), "$0 ")
         avatarImageView.loadAvatar(data.user?.avatar?.full_path.orEmpty(), requireActivity())
-        removeButton.isVisible = isUserAdmin
+        removeButton.isVisible = isUserAdmin && data.role != "admin"
     }
 
     private fun setClickListener() {

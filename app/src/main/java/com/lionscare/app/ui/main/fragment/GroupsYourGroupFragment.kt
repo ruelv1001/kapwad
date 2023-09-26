@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -69,13 +70,24 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
         organizationRecyclerView.layoutManager = linearLayoutManager
         organizationRecyclerView.adapter = orgAdapter
 
-        orgAdapter?.addLoadStateListener {
-            if(orgAdapter?.hasData() == true){
-                orgPlaceHolderTextView.isVisible = false
-                organizationRecyclerView.isVisible = true
-            }else{
-                orgPlaceHolderTextView.isVisible = true
-                organizationRecyclerView.isVisible = false
+        orgAdapter?.addLoadStateListener { loadState ->
+            when {
+                loadState.source.refresh is LoadState.Loading -> {
+                    orgPlaceHolderTextView.isVisible = false
+                    orgShimmerLayout.isVisible = true
+                    organizationRecyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.Error -> {
+                    orgPlaceHolderTextView.isVisible = true
+                    orgShimmerLayout.isVisible = false
+                    organizationRecyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.NotLoading && orgAdapter?.hasData() == true -> {
+                    orgPlaceHolderTextView.isVisible = false
+                    orgShimmerLayout.isVisible = false
+                    orgShimmerLayout.stopShimmer()
+                    organizationRecyclerView.isVisible = true
+                }
             }
         }
     }
@@ -117,16 +129,22 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
 
     private fun iFHandleViewState(viewState: ImmediateFamilyViewState) {
         when (viewState) {
-            ImmediateFamilyViewState.Loading -> Unit
+            ImmediateFamilyViewState.Loading -> {
+                binding.createGroupButton.isGone = true
+                binding.famShimmerLayout.isVisible = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
+            }
             is ImmediateFamilyViewState.PopupError -> {
-                //showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
                 binding.createGroupButton.isVisible = true
+                binding.famShimmerLayout.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
             }
 
             is ImmediateFamilyViewState.Success -> {
-                binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
                 binding.createGroupButton.isGone = true
+                binding.famShimmerLayout.isGone = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
+
                 viewState.immediateFamilyResponse?.data?.let { setImmediateFamily(it) }
                 immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }

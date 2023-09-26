@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -65,13 +66,24 @@ class AssistanceRequestFragment : Fragment(), AssistanceAdapter.GroupCallback,
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-        adapter?.addLoadStateListener {
-            if (adapter?.hasData() == true) {
-                placeHolderTextView.isVisible = false
-                recyclerView.isVisible = true
-            } else {
-                placeHolderTextView.isVisible = true
-                recyclerView.isVisible = false
+        adapter?.addLoadStateListener { loadState ->
+            when {
+                loadState.source.refresh is LoadState.Loading -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = true
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.Error -> {
+                    placeHolderTextView.isVisible = true
+                    shimmerLayout.isVisible = false
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.NotLoading && adapter?.hasData() == true -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = false
+                    shimmerLayout.stopShimmer()
+                    recyclerView.isVisible = true
+                }
             }
         }
     }
