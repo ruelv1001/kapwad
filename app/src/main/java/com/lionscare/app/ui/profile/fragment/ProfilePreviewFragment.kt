@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -38,13 +39,13 @@ import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.ui.verify.fragment.ProofOfAddressFragment
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.calculateAge
+import com.lionscare.app.utils.convertImageUriToFile
 import com.lionscare.app.utils.getFileFromCroppedUri
 import com.lionscare.app.utils.getFileFromUri
 import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
@@ -135,7 +136,12 @@ class ProfilePreviewFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run {
-        profileImageView.loadAvatar(userModel?.avatar?.thumb_path,requireContext())
+        if (viewModel.avatarURIHolder != null){
+            profileImageView.loadAvatar(viewModel.avatarURIHolder.toString(), requireContext())
+        }else{
+            profileImageView.loadAvatar(userModel?.avatar?.thumb_path,requireContext())
+        }
+
         nameTextView.text = userModel?.getFullName()
         dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph?.ifEmpty { "Not set "}
         ageTextView.text = userModel?.birthdate?.date_only_ph
@@ -211,42 +217,54 @@ class ProfilePreviewFragment : Fragment() {
         if (isSaved)
         {
             // Launch the cropping activity with the captured image URI
-            uriFilePath?.let { startCropping(it) }
+            uriFilePath?.let {
+                startCropping(it)
+            }
         }
     }
 
     private val singlePhotoPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri: Uri? ->
         imageUri?.let { uri ->
             // Launch the cropping activity with the ptured image URI
-            uri.let { startCropping(it) }
+            uri.let {
+                startCropping(it)
+            }
         }
     }
 
     private fun startCropping(uri: Uri) {
-        val intent = CropImage.activity(uri)
-            .setAspectRatio(1, 1) // Set the aspect ratio as desired
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .getIntent(requireContext())
-
-        cropImageLauncher.launch(intent)
+        val timestamp = (System.currentTimeMillis() / 100).toString()
+        viewModel.avatarURIHolder = Uri.fromFile(File(requireActivity().cacheDir, "$CROPPED_IMAGE_NAME$timestamp"))
+        viewModel.avatarURIHolder?.let { destinationUri ->
+            val crop = UCrop.of(uri,destinationUri )
+                .withOptions(UCrop.Options().also {
+                    it.setCircleDimmedLayer(true)
+                    it.setToolbarColor(getColor(requireContext(), R.color.color_primary))
+                    it.setStatusBarColor(getColor(requireContext(), R.color.color_primaryDark))
+                    it.setToolbarWidgetColor(getColor(requireContext(), R.color.white))
+                })
+//            crop.start(requireActivity())
+            //same with crop.start
+            cropImageLauncher.launch(crop.getIntent(requireActivity()))
+        }
     }
 
-    // Register an activity result launcher for cropping
-    private val cropImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+    private val cropImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if (result.resultCode == Activity.RESULT_OK){
-            val croppedUri = CropImage.getActivityResult(result.data).uri
+            val croppedUri = result.data?.let { UCrop.getOutput(it) }
             // Use it as needed, e.g., display or save the cropped image
             //just save it in viewmodel in case
-            viewModel.avatarFileHolder = getFileFromCroppedUri(requireContext(), croppedUri)
+            viewModel.avatarFileHolder = convertImageUriToFile(requireContext(), croppedUri!!)
             viewModel.uploadAvatar(ProfileAvatarRequest(viewModel.avatarFileHolder!!)) // call api
-            showLoadingDialog(R.string.uploading_your_avatar_please_wait) // manually call loading dialog to show loading immediatley
-            //put to imageview
-            binding.profileImageView.loadAvatar(croppedUri.toString(), requireContext())
-        } else if (result.resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+
+            viewModel.avatarURIHolder = croppedUri
+
+        } else if (result.resultCode == UCrop.RESULT_ERROR) {
             // Handle cropping error
-            val error = CropImage.getActivityResult(result.data).error
+            val error = result.data?.let { UCrop.getError(it) }
             // Handle the error as needed
-            Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), error?.message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -312,6 +330,7 @@ class ProfilePreviewFragment : Fragment() {
     companion object {
         private const val APPROVED = "APPROVED"
         private const val DECLINED = "DECLINED"
+        private const val CROPPED_IMAGE_NAME = "lionscare_avatar01"
         private const val REQUEST_IMAGE_CAPTURE = 1
     }
 }

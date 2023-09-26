@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.profile.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lionscare.app.utils.PopupErrorState
@@ -41,6 +42,7 @@ class ProfileViewModel @Inject constructor(
 
     //holder for avatar
     var avatarFileHolder : File? = null
+    var avatarURIHolder : Uri? = null
 
     //holder for email add
     var email: String? = null
