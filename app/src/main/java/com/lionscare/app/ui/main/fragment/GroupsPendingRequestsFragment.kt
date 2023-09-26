@@ -11,19 +11,16 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
-import com.lionscare.app.data.repositories.article.response.ArticleData
-import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.databinding.FragmentGroupsPendingRequestsBinding
 import com.lionscare.app.ui.main.adapter.GroupsPendingRequestsAdapter
 import com.lionscare.app.ui.main.viewmodel.GroupListViewModel
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
-import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
-import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,13 +66,24 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-        adapter?.addLoadStateListener {
-            if(adapter?.hasData() == true){
-                placeHolderTextView.isVisible = false
-                recyclerView.isVisible = true
-            }else{
-                placeHolderTextView.isVisible = true
-                recyclerView.isVisible = false
+        adapter?.addLoadStateListener { loadState ->
+            when {
+                loadState.source.refresh is LoadState.Loading -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = true
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.Error -> {
+                    placeHolderTextView.isVisible = true
+                    shimmerLayout.isVisible = false
+                    recyclerView.isVisible = false
+                }
+                loadState.source.refresh is LoadState.NotLoading && adapter?.hasData() == true -> {
+                    placeHolderTextView.isVisible = false
+                    shimmerLayout.isVisible = false
+                    shimmerLayout.stopShimmer()
+                    recyclerView.isVisible = true
+                }
             }
         }
     }

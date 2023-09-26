@@ -263,6 +263,24 @@
 
                 </LinearLayout>
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/item_shimmer_content" />
+                        <include layout="@layout/item_shimmer_content" />
+                        <include layout="@layout/item_shimmer_content" />
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
                 <TextView
                     android:id="@+id/placeHolderTextView"
                     android:layout_width="match_parent"
@@ -280,6 +298,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dimen_20"
                     android:layout_marginTop="@dimen/dimen_10"
+                    android:visibility="gone"
                     tools:itemCount="3"
                     tools:listitem="@layout/adapter_notifications" />
 
