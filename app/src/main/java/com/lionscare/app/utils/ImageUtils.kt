@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.net.Uri
+import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -31,6 +32,36 @@ fun getBitmapFromAsset(context: Context, imageName: String): Bitmap? {
 
     return bitmap
 }
+
+/**
+ * another way of converting image uri to file
+ */
+fun convertImageUriToFile(context: Context, uri: Uri?): File {
+    // Get the input stream from the content URI
+    val inputStream = uri?.let { context.contentResolver.openInputStream(it) }
+
+    // Generate a file name for the image
+    val fileName = "${System.currentTimeMillis()}.jpg"
+
+    // Get the directory where you want to save the image
+    val directory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+    // Create a new file in the directory with the generated file name
+    val file = File(directory, fileName)
+
+    // Create an output stream for the file
+    val outputStream = FileOutputStream(file)
+
+    // Copy the contents of the input stream to the output stream
+    inputStream?.copyTo(outputStream)
+
+    // Close the streams
+    inputStream?.close()
+    outputStream.close()
+
+    return file
+}
+
 
 /**
  * Custom method to get a File from a cropped Uri using library
