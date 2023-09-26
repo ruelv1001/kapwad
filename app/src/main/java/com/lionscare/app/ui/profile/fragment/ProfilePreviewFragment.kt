@@ -241,7 +241,7 @@ class ProfilePreviewFragment : Fragment() {
                     it.setCircleDimmedLayer(true)
                     it.setToolbarColor(getColor(requireContext(), R.color.color_primary))
                     it.setStatusBarColor(getColor(requireContext(), R.color.color_primaryDark))
-                    it.setToolbarWidgetColor(getColor(requireContext(), R.color.white))
+                    it.setToolbarWidgetColor(getColor(requireContext(), R.color.color_primaryDark))
                 })
 //            crop.start(requireActivity())
             //same with crop.start
