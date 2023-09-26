@@ -6,6 +6,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogSendPointsBinding
@@ -60,8 +62,15 @@ class Scan2PayDialog : DialogFragment() {
 
     private fun setupViews() = viewBinding?.run {
         establishmentTextView.text = businessName
-        amountEditText.setText(amount)
-        remarksEditText.setText(remarks)
+        if (amount.isNotEmpty()){
+            textViewLinearLayout.isVisible = true
+            editTextLinearLayout.isGone = true
+            amountTextView.text = amount
+            remarksTextView.text = remarks
+        }else{
+            textViewLinearLayout.isGone = true
+            editTextLinearLayout.isVisible = true
+        }
     }
 
     private fun setClickListener() {
@@ -69,10 +78,11 @@ class Scan2PayDialog : DialogFragment() {
             dismiss()
         }
         viewBinding?.sendButton?.setOnSingleClickListener {
-            callback?.onProceed(
-                viewBinding?.amountEditText?.text.toString(),
-                viewBinding?.remarksEditText?.text.toString()
-            )
+            if (amount.isEmpty()){
+                amount = viewBinding?.amountEditText?.text.toString()
+                remarks = viewBinding?.remarksEditText?.text.toString()
+            }
+            callback?.onProceed(amount, remarks)
             dismiss()
         }
     }
