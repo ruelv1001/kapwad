@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupInviteBinding
@@ -97,7 +100,7 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
             is MemberViewState.SuccessInviteMember -> {
                 activity.hideLoadingDialog()
                 activity.onBackPressedDispatcher.onBackPressed()
-                Toast.makeText(activity, viewState.data?.msg, Toast.LENGTH_LONG).show()
+                requireActivity().toastSuccess(viewState.data?.msg.toString(), CpmToast.LONG_DURATION)
             }
 
             else -> Unit
@@ -116,11 +119,7 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
                         val value = jsonObject.getString("value")
                         viewModel.doSearchUser(value)
                     } catch (e: JSONException) {
-                        Toast.makeText(
-                            requireActivity(),
-                            getString(R.string.invalid_qr_code_msg),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        requireActivity().toastError(getString(R.string.invalid_qr_code_msg), CpmToast.SHORT_DURATION)
                         e.printStackTrace()
                     }
                 }

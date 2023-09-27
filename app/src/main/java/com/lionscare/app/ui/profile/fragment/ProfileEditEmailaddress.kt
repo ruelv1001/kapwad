@@ -14,6 +14,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.google.android.material.snackbar.Snackbar
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -64,8 +67,7 @@ class ProfileEditEmailaddress: Fragment(){
     private fun setClickListeners() = binding.run  {
         confirmButton.setOnSingleClickListener {
             if (emailEditText.text?.isEmpty() == true){
-                Toast.makeText(requireActivity(),
-                    getString(R.string.fields_cannot_be_empty), Toast.LENGTH_LONG).show()
+                requireActivity().toastError(getString(R.string.fields_cannot_be_empty), CpmToast.LONG_DURATION)
             }else{
                     val request = UpdateInfoRequest(
                         province_sku =  viewModel.userModel?.province_sku.orEmpty(),
@@ -131,7 +133,7 @@ class ProfileEditEmailaddress: Fragment(){
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
         if (errorsData.email?.get(0)?.isNotEmpty() == true){
-            Toast.makeText(requireActivity(),errorsData.email?.get(0), Toast.LENGTH_LONG).show()
+            requireActivity().toastError(errorsData.email?.get(0).toString(), CpmToast.LONG_DURATION)
         }
     }
 

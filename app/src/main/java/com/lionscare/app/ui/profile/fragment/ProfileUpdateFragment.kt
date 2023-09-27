@@ -14,6 +14,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -87,7 +89,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
             is ProfileViewState.Success -> {
                 hideLoadingDialog()
-                Toast.makeText(requireActivity(),viewState.message,Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 if(activity.isFromLogin){
                     val intent = MainActivity.getIntent(activity)
                     startActivity(intent)

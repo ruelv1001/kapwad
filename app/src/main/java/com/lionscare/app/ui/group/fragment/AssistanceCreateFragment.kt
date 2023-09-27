@@ -16,6 +16,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
@@ -156,7 +158,7 @@ class AssistanceCreateFragment : Fragment() {
             is AssistanceViewState.Loading -> showLoadingDialog(R.string.loading)
             is AssistanceViewState.SuccessCreateAssistance -> {
                 hideLoadingDialog()
-                Toast.makeText(activity,viewState.message,Toast.LENGTH_LONG).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
                 activity.onBackPressedDispatcher.onBackPressed()
             }
             is AssistanceViewState.PopupError -> {

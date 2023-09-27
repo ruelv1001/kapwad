@@ -14,6 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.google.android.material.textfield.TextInputEditText
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -136,7 +138,7 @@ class UploadBadgeDocumentsFragment : Fragment() {
             is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
             is ProfileViewState.SuccessBadgeRequest -> {
                 hideLoadingDialog()
-                Toast.makeText(requireContext(), viewState.message, Toast.LENGTH_LONG).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
                 val intent = MainActivity.getIntent(requireActivity())
                 startActivity(intent)
                 requireActivity().finishAffinity()

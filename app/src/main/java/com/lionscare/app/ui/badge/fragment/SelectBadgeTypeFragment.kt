@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.AccountTypeModel
 import com.lionscare.app.databinding.FragmentSelectBadgeTypeBinding
@@ -75,7 +78,7 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
             if(hasSelected){
                 findNavController().navigate(SelectBadgeTypeFragmentDirections.actionNavigationSelectAccountTypeToNavigationVerifyAccountType())
             }else{
-                Toast.makeText(requireActivity(), getString(R.string.account_type_error_message_text), Toast.LENGTH_SHORT).show()
+                requireActivity().toastError(getString(R.string.account_type_error_message_text), CpmToast.LONG_DURATION)
             }
         }
     }
