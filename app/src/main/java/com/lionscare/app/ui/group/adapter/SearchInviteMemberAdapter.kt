@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.AdapterMembersBinding
+import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.loadImage
 
 class SearchInviteMemberAdapter (val context: Context, val clickListener: SearchCallback) :
@@ -44,7 +45,7 @@ class SearchInviteMemberAdapter (val context: Context, val clickListener: Search
         fun displayData(data: QRData) = with(itemView) {
             binding.nameTextView.text = data.name
             binding.idNoTextView.text = data.phone_number
-//            binding.profileImageView.loadImage(data.image?.thumb_path, context)
+            binding.profileImageView.loadAvatar(data.avatar?.thumb_path, context)
             binding.membersLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data)
             }
