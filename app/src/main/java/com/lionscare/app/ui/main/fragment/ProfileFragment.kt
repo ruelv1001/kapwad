@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.response.BadgeStatus
@@ -38,7 +39,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
@@ -63,6 +64,8 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeLogoutAccount()
         setClickListeners()
+
+        binding.swipeRefreshLayout.setOnRefreshListener(this@ProfileFragment)
     }
 
     override fun onResume() {
@@ -85,6 +88,7 @@ class ProfileFragment : Fragment() {
             is SettingsViewState.LoadingProfile -> showLoadingDialog(R.string.loading) //so it wont show "logging out" on get profile
             is SettingsViewState.Success -> {
                 hideLoadingDialog()
+                binding.swipeRefreshLayout.isRefreshing = false
                 Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
                 val intent = SplashScreenActivity.getIntent(requireActivity())
                 startActivity(intent)
@@ -222,6 +226,8 @@ class ProfileFragment : Fragment() {
             verifiedVATextView.visibility = View.GONE
             arrowVAImageView.visibility = View.VISIBLE
         }
+
+        swipeRefreshLayout.isEnabled = isAccountVerified != true || isBadgeVerified != true
     }
 
     override fun onDestroyView() {
@@ -238,6 +244,10 @@ class ProfileFragment : Fragment() {
         }
         builder.setNegativeButton(getString(R.string.logout_cancel_btn), null)
         builder.show()
+    }
+
+    override fun onRefresh() {
+        viewModel.getProfileDetails()
     }
 
 }

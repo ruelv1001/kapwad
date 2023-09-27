@@ -23,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
@@ -51,7 +52,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
+class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
+    SwipeRefreshLayout.OnRefreshListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -82,6 +84,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
         observeImmediateFamily()
         setClickListeners()
         setUpAnimation()
+        binding.swipeRefreshLayout.setOnRefreshListener(this@HomeFragment)
 
         //immediately make this view gone
         //not done in xml as this is a reused layout
@@ -145,6 +148,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 //Only get badge status after getting success info
                 viewModel.getBadgeStatus()
                 setView(viewState.userModel)
+                binding.swipeRefreshLayout.isRefreshing = false
             }
             is SettingsViewState.SuccessGetBadgeStatus -> {
                 hideLoadingDialog()
@@ -325,6 +329,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
                 // Change the status bar color
                 requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.color_primary)
                 binding.notVerifiedRelativeLayout.visibility = View.GONE
+                swipeRefreshLayout.isEnabled = false
             }
             "pending" -> {
                 // Change the status bar color
@@ -459,5 +464,9 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
     override fun onItemClicked(data: GroupListData) {
         val intent = GroupDetailsActivity.getIntent(requireActivity())
         startActivity(intent)
+    }
+
+    override fun onRefresh() {
+        viewModel.getProfileDetails()
     }
 }
