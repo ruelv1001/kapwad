@@ -15,6 +15,8 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.wallet.response.QRData
@@ -135,7 +137,7 @@ class MemberListFragment : Fragment(),
                 )
             }
             is AdminViewState.SuccessRemoveMember -> {
-                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 setupAdapter()
                 onRefresh()
             }

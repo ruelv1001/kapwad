@@ -12,6 +12,8 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.ActivityUpdatePasswordBinding
@@ -82,7 +84,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
             is SettingsViewState.Loading -> showLoadingDialog(R.string.change_pass_loading)
             is SettingsViewState.Success -> {
                 hideLoadingDialog()
-                Toast.makeText(this, viewState.message, Toast.LENGTH_SHORT).show()
+                toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 this.finish()
             }
 

@@ -27,6 +27,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
@@ -101,7 +104,7 @@ class ProfilePreviewFragment : Fragment() {
             }
             is ProfileViewState.SuccessUploadAvatar -> {
                 hideLoadingDialog()
-                Toast.makeText(requireContext(), viewState.message, Toast.LENGTH_LONG).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
@@ -265,7 +268,7 @@ class ProfilePreviewFragment : Fragment() {
             // Handle cropping error
             val error = result.data?.let { UCrop.getError(it) }
             // Handle the error as needed
-            Toast.makeText(requireContext(), error?.message, Toast.LENGTH_SHORT).show()
+            requireActivity().toastError(error?.message.toString(), CpmToast.SHORT_DURATION)
         }
     }
 

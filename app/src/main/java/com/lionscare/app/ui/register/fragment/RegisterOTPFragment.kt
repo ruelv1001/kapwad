@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.google.android.material.snackbar.Snackbar
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -76,10 +79,7 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
             is RegisterViewState.Loading -> showLoadingDialog(R.string.loading)
             is RegisterViewState.Success -> {
                 hideLoadingDialog()
-                val snackbar = Snackbar.make(binding.root, viewState.message, Snackbar.LENGTH_LONG)
-                snackbar.setTextMaxLines(3)
-                snackbar.view.translationY = -(binding.confirmButton.height + snackbar.view.height).toFloat()
-                snackbar.show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
             }
             is RegisterViewState.SuccessReg -> {
                 hideLoadingDialog()
@@ -104,7 +104,7 @@ class RegisterOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCall
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
         if (errorsData.otp?.get(0)?.isNotEmpty() == true){
-            Toast.makeText(requireActivity(),errorsData.otp?.get(0),Toast.LENGTH_SHORT).show()
+            requireActivity().toastError(errorsData.otp?.get(0).toString(), CpmToast.SHORT_DURATION)
         }
     }
 

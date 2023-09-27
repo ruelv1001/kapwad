@@ -82,7 +82,7 @@ class WalletDetailsFragment : Fragment() {
             requireActivity().finish()
         }
         copyImageView.setOnSingleClickListener {
-            requireContext().copyToClipboard(refidTextView.text)
+            requireActivity().copyToClipboard(refidTextView.text)
         }
     }
 

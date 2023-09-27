@@ -25,6 +25,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
@@ -103,8 +106,7 @@ class UploadIDFragment : Fragment() {
                     backImageFile = viewModel.backImageFile,
                 ))
             }else{
-                Toast.makeText(requireActivity(),
-                    getString(R.string.kyc_upload_id_error), Toast.LENGTH_LONG).show()
+                requireActivity().toastError(getString(R.string.kyc_upload_id_error), CpmToast.LONG_DURATION)
             }
         }
     }
@@ -125,8 +127,7 @@ class UploadIDFragment : Fragment() {
             is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
             is ProfileViewState.SuccessUploadId -> {
                 hideLoadingDialog()
-                Toast.makeText(requireContext(),
-                    viewState.message, Toast.LENGTH_LONG).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
                 findNavController().popBackStack()
             }
             is ProfileViewState.SuccessLoadLOVIds -> {

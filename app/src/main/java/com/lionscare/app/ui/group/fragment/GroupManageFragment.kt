@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupManageBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
@@ -145,7 +147,7 @@ class GroupManageFragment : Fragment() {
             }
             is MemberViewState.SuccessLeaveGroup -> {
                 hideLoadingDialog()
-                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_LONG).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
                 val intent = MainActivity.getIntent(activity)
                 startActivity(intent)
                 activity.finishAffinity()
