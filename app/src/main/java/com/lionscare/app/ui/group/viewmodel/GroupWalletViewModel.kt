@@ -54,14 +54,16 @@ class GroupWalletViewModel @Inject constructor(
         amount: String,
         groupId: String,
         receiverUserId: String = "",
-        receiverGroupId: String = ""
+        receiverGroupId: String = "",
+        assistanceId: String ?= null
     ) {
         viewModelScope.launch {
             walletRepository.doSendPoints(
                 amount = amount,
                 groupId = groupId,
                 receiverUserId = receiverUserId,
-                receiverGroupId = receiverGroupId
+                receiverGroupId = receiverGroupId,
+                assistanceId = assistanceId
             )
                 .onStart {
                     _walletSharedFlow.emit(GroupWalletViewState.Loading)

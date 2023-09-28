@@ -38,6 +38,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
     private val viewModel: AssistanceViewModel by viewModels()
     private var userId = ""
     private var userName = ""
+    private var assistanceId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,7 +75,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
         amountTextView.text = currencyFormat(data.amount.toString())
         remarksTextView.text = data.note
         dateProcessedTextView.text = data.date_processed?.datetime_ph
-        sendTextView.isVisible = data.status == "approved" && activity.groupDetails?.is_admin == true
+        sendTextView.isVisible = data.status == "approved" && activity.groupDetails?.is_admin == true && data.has_sent == false
         profileImageView.loadAvatar(data.user?.avatar?.thumb_path, requireActivity())
         when (data.status) {
             "declined" -> {
@@ -151,13 +152,14 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 requireActivity(),
                 "Send Points",
                 true,
-                activity.groupDetails?.id.orEmpty(),
-                QRData(
+                groupSenderId = activity.groupDetails?.id.orEmpty(),
+                assistanceId = assistanceId,
+                qrData = QRData(
                     id = userId,
                     name = userName,
                     amount = amountTextView.text.toString()
                 ),
-                "START_INPUT"
+                start = "START_INPUT"
             )
             startActivity(intent)
         }
@@ -181,6 +183,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 viewState.response?.data?.let { setView(it) }
                 userId = viewState.response?.data?.user?.id.toString()
                 userName = viewState.response?.data?.user?.name.toString()
+                assistanceId = viewState.response?.data?.reference_id.toString()
             }
             is AssistanceViewState.SuccessApproveDeclineAssistance -> {
                 activity.hideLoadingDialog()
