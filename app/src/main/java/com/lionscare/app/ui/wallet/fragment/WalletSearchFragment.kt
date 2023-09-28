@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.group.response.GroupData
@@ -186,11 +188,7 @@ class WalletSearchFragment : Fragment(),
                     }
 
                 } catch (e: JSONException) {
-                    Toast.makeText(
-                        requireActivity(),
-                        getString(R.string.invalid_qr_code_msg),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    requireActivity().toastError( getString(R.string.invalid_qr_code_msg), CpmToast.SHORT_DURATION)
                     e.printStackTrace()
                 }
             }

@@ -12,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupInviteBinding
@@ -99,7 +101,7 @@ class GroupPromoteFragment : Fragment(), GroupMembersAdapter.MembersCallback,
             }
             is AdminViewState.SuccessGetListOfAdmin -> showList(viewState.pagingData)
             is AdminViewState.SuccessPromoteMember -> {
-                Toast.makeText(requireActivity(),viewState.message, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 setupAdapter()
                 onRefresh()
             }

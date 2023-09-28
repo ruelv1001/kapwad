@@ -15,6 +15,8 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.data.repositories.member.response.PendingMemberData
@@ -138,20 +140,12 @@ class MembershipRequestFragment : Fragment(), GroupsInvitesAdapter.GroupCallback
                 binding.swipeRefreshLayout.isRefreshing = false
                 clear()
                 viewModel.refresh(activity.groupDetails?.id.toString(), filterType)
-                Toast.makeText(
-                    requireActivity(),
-                    viewState.message,
-                    Toast.LENGTH_LONG
-                ).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
             }
             is MemberViewState.SuccessApproveJoinRequest -> {
                 binding.swipeRefreshLayout.isRefreshing = false
                 clear()
-                Toast.makeText(
-                    requireActivity(),
-                    viewState.approveRequestResponse?.msg,
-                    Toast.LENGTH_LONG
-                ).show()
+                requireActivity().toastSuccess(viewState.approveRequestResponse?.msg.toString(), CpmToast.LONG_DURATION)
             }
             else -> Unit
         }

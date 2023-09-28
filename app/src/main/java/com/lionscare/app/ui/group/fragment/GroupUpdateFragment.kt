@@ -14,6 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
@@ -146,11 +148,7 @@ class GroupUpdateFragment : Fragment() {
 
             is GroupViewState.SuccessCreateGroup -> {
                 hideLoadingDialog()
-                Toast.makeText(
-                    requireActivity(),
-                    viewState.createGroupResponse?.msg,
-                    Toast.LENGTH_SHORT
-                ).show()
+                requireActivity().toastSuccess(viewState.createGroupResponse?.msg.toString(), CpmToast.SHORT_DURATION)
             }
 
             is GroupViewState.PopupError -> {
@@ -165,11 +163,7 @@ class GroupUpdateFragment : Fragment() {
 
             is GroupViewState.SuccessUpdateGroup -> {
                 hideLoadingDialog()
-                Toast.makeText(
-                    requireActivity(),
-                    viewState.createGroupResponse?.msg,
-                    Toast.LENGTH_LONG
-                ).show()
+                requireActivity().toastSuccess(viewState.createGroupResponse?.msg.toString(), CpmToast.LONG_DURATION)
                 requireActivity().finish()
             }
 

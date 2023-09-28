@@ -17,6 +17,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
@@ -89,7 +91,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             is SettingsViewState.Success -> {
                 hideLoadingDialog()
                 binding.swipeRefreshLayout.isRefreshing = false
-                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 val intent = SplashScreenActivity.getIntent(requireActivity())
                 startActivity(intent)
                 requireActivity().finishAffinity()

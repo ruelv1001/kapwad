@@ -11,6 +11,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -85,12 +88,11 @@ class RegisterCompleteProfileFragment: Fragment() {
             is RegisterViewState.Loading -> showLoadingDialog(R.string.loading)
             is RegisterViewState.SuccessProfileUpdate -> {
                 hideLoadingDialog()
-                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
                 val intent = MainActivity.getIntent(requireActivity())
                 startActivity(intent)
                 requireActivity().finishAffinity()
             }
-
             is RegisterViewState.PopupError -> {
                 hideLoadingDialog()
                 showPopupError(

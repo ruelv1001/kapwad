@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.data.repositories.wallet.response.QRData
@@ -185,12 +187,12 @@ class AssistanceRequestDetailsFragment : Fragment() {
             }
             is AssistanceViewState.SuccessApproveDeclineAssistance -> {
                 activity.hideLoadingDialog()
-                Toast.makeText(activity, viewState.message, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 onResume()
             }
             is AssistanceViewState.SuccessCancelAssistance -> {
                 activity.hideLoadingDialog()
-                Toast.makeText(activity, viewState.message, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 onResume()
             }
             is AssistanceViewState.PopupError -> {

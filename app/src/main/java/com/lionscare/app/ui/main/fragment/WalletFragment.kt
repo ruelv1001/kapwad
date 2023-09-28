@@ -15,6 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
@@ -135,7 +138,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             is WalletViewState.SuccessGetBalance -> binding.pointsTextView.text = viewState.balanceData?.value
             is WalletViewState.SuccessScan2Pay -> {
                 activity.hideLoadingDialog()
-                Toast.makeText(requireActivity(), viewState.message, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.message.toString(), CpmToast.SHORT_DURATION)
                 onRefresh()
             }
             is WalletViewState.PopupError -> {
@@ -193,14 +196,10 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
                                 }
                             }).show(childFragmentManager, ScannerDialog.TAG)
                     } else {
-                        Toast.makeText(requireActivity(),
-                            getString(R.string.invalid_qr_code_msg),
-                            Toast.LENGTH_SHORT).show()
+                        requireActivity().toastError(getString(R.string.invalid_qr_code_msg), CpmToast.SHORT_DURATION)
                     }
                 } catch (e: JSONException) {
-                    Toast.makeText(requireActivity(),
-                        getString(R.string.invalid_qr_code_msg),
-                        Toast.LENGTH_SHORT).show()
+                    requireActivity().toastError(getString(R.string.invalid_qr_code_msg), CpmToast.SHORT_DURATION)
                     e.printStackTrace()
                 }
             }

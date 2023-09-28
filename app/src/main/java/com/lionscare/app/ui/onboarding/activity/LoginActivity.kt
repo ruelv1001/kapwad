@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.ActivityLoginBinding
@@ -68,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
             is LoginViewState.Loading -> showLoadingDialog(R.string.login_loading)
             is LoginViewState.Success -> {
                 hideLoadingDialog()
-                Toast.makeText(this, viewState.message, Toast.LENGTH_SHORT).show()
+                toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 if(viewState.isCompleteProfile){
                     val intent = MainActivity.getIntent(this)
                     startActivity(intent)

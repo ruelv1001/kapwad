@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastInfo
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.FragmentGroupsGroupBinding
@@ -85,11 +87,11 @@ class GroupsGroupFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     }
 
     override fun onItemClicked(data: GroupData) {
-        Toast.makeText(requireActivity(),"CLICKED Title : ${data.name}", Toast.LENGTH_SHORT).show()
+        requireActivity().toastInfo("CLICKED Title : ${data.name}", CpmToast.SHORT_DURATION)
     }
 
     override fun onJoinClicked(data: GroupData) {
-        Toast.makeText(requireActivity(),"JOINED Title : ${data.name}", Toast.LENGTH_SHORT).show()
+        requireActivity().toastInfo("JOINED Title : ${data.name}", CpmToast.SHORT_DURATION)
     }
 
 }

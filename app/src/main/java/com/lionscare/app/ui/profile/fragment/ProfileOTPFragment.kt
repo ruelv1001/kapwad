@@ -16,6 +16,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.google.android.material.snackbar.Snackbar
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -81,16 +84,11 @@ class ProfileOTPFragment: Fragment(){
             is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
             is ProfileViewState.SuccessUpdatePhoneNumber -> {
                 hideLoadingDialog()
-                val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
-                snackbar.setTextMaxLines(3)
-                snackbar.view.translationY = -(binding.confirmButton.height + snackbar.view.height).toFloat()
-                snackbar.show()
+                requireActivity().toastSuccess(viewState.response.msg.toString(), CpmToast.LONG_DURATION)
             }
             is ProfileViewState.SuccessUpdatePhoneNumberWithOTP -> {
                 hideLoadingDialog()
-                val snackbar = Snackbar.make(binding.root, viewState.response.msg.toString(), Snackbar.LENGTH_LONG)
-                snackbar.setTextMaxLines(3)
-                snackbar.show()
+                requireActivity().toastSuccess(viewState.response.msg.toString(), CpmToast.LONG_DURATION)
                 findNavController().navigate(ProfileOTPFragmentDirections.actionProfileOTPFragmentToNavigationProfilePreview())
             }
             is ProfileViewState.PopupError -> {
@@ -111,10 +109,10 @@ class ProfileOTPFragment: Fragment(){
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
         if (errorsData.otp?.get(0)?.isNotEmpty() == true){
-        Toast.makeText(requireActivity(),errorsData.otp?.get(0),Toast.LENGTH_SHORT).show()
+            requireActivity().toastError(errorsData.otp?.get(0).toString(), CpmToast.SHORT_DURATION)
         }
         if (errorsData.phone_number?.get(0)?.isNotEmpty() == true){
-            Toast.makeText(requireActivity(),errorsData.phone_number?.get(0),Toast.LENGTH_SHORT).show()
+            requireActivity().toastError(errorsData.phone_number?.get(0).toString(), CpmToast.SHORT_DURATION)
         }
     }
 

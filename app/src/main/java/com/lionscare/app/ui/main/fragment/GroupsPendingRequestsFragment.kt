@@ -15,6 +15,8 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.databinding.FragmentGroupsPendingRequestsBinding
@@ -107,7 +109,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
             }
             is GroupListViewState.SuccessAcceptDeclineInvitation -> {
                 viewModel.refreshPendingRequestList()
-                Toast.makeText(requireActivity(), viewState.msg, Toast.LENGTH_SHORT).show()
+                requireActivity().toastSuccess(viewState.msg, CpmToast.SHORT_DURATION)
             }
             is GroupListViewState.PopupError -> {
                 showPopupError(
