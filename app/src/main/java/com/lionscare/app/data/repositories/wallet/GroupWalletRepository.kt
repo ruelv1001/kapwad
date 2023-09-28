@@ -38,14 +38,16 @@ class GroupWalletRepository @Inject constructor(
         amount: String,
         groupId: String,
         receiverUserId: String,
-        receiverGroupId: String
+        receiverGroupId: String,
+        assistanceId : String ?= null
     ): Flow<TransactionDetailsResponse> {
         return flow {
             val response = walletRemoteDataSource.doSendPoints(
                 amount,
                 groupId,
                 receiverUserId,
-                receiverGroupId
+                receiverGroupId,
+                assistanceId
             )
             emit(response)
         }.flowOn(ioDispatcher)

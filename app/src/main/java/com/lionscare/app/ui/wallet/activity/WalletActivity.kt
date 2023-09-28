@@ -37,6 +37,7 @@ class WalletActivity : AppCompatActivity() {
     var isFromGroupWallet = false
     var groupSenderId = ""
     var startInputScreen = ""
+    var assistanceId = ""
     private var loadingDialog: CommonDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class WalletActivity : AppCompatActivity() {
         setContentView(view)
         mode = intent.getStringExtra(MODE).toString()
         groupSenderId = intent.getStringExtra(GROUP_SENDER_ID).toString()
+        assistanceId = intent.getStringExtra(ASSISTANCE_ID).toString()
         isFromGroupWallet = intent.getBooleanExtra(IS_FROM_GROUP, false)
         startInputScreen = intent.getStringExtra(START_INPUT).orEmpty()
         setupNavigationComponent()
@@ -87,11 +89,13 @@ class WalletActivity : AppCompatActivity() {
         private const val GROUP_SENDER_ID = "GROUP_SENDER_ID"
         private const val START_INPUT = "START_INPUT"
         private const val EXTRA_QR_DATA = "EXTRA_QR_DATA"
+        private const val ASSISTANCE_ID = "ASSISTANCE_ID"
 
         fun getIntent(
             context: Context, mode : String? = null,
             isFromGroup: Boolean? = false,
             groupSenderId: String? = "",
+            assistanceId: String? = null,
             qrData: QRData = QRData(),
             start: String = ""
         ): Intent {
@@ -101,6 +105,7 @@ class WalletActivity : AppCompatActivity() {
             intent.putExtra(GROUP_SENDER_ID, groupSenderId)
             intent.putExtra(EXTRA_QR_DATA, qrData)
             intent.putExtra(START_INPUT, start)
+            intent.putExtra(ASSISTANCE_ID, assistanceId)
             return intent
         }
     }

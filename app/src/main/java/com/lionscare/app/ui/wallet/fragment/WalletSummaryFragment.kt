@@ -176,7 +176,8 @@ class WalletSummaryFragment : Fragment() {
             groupViewModel.doSendPoints(
                 groupId = activity.groupSenderId,
                 amount = activity.amount,
-                receiverUserId = activity.qrData.id.orEmpty()
+                receiverUserId = activity.qrData.id.orEmpty(),
+                assistanceId = activity.assistanceId
             )
         }
     }

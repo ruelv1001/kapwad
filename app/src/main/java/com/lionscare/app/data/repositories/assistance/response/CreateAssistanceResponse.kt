@@ -20,6 +20,7 @@ data class CreateAssistanceData(
     var amount: String? = null,
     var date_requested: DateModel? = null,
     var date_processed: DateModel? = null,
+    var has_sent : Boolean? = false,
     var id: Int? = null,
     var note: String? = null,
     var reason: String? = null,

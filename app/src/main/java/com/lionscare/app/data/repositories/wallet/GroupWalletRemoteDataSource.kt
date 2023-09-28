@@ -45,13 +45,15 @@ class GroupWalletRemoteDataSource @Inject constructor(private val walletService:
         amount: String,
         groupId: String,
         receiverUserId: String,
-        receiverGroupId: String
+        receiverGroupId: String,
+        assistanceId: String ?= null
     ): TransactionDetailsResponse {
         val request = GroupSendPointsRequest(
             amount = amount,
             group_id = groupId,
             receiver_user_id = receiverUserId,
-            receiver_group_id = receiverGroupId
+            receiver_group_id = receiverGroupId,
+            assistance_id = assistanceId
         )
         val response = walletService.doSendPoints(request)
         if (response.code() != HttpURLConnection.HTTP_CREATED) {

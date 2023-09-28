@@ -186,12 +186,12 @@ class MemberListFragment : Fragment(),
                         requireActivity(),
                         "Send Points",
                         true,
-                        activity.groupDetails?.id.orEmpty(),
-                        QRData(
+                        groupSenderId = activity.groupDetails?.id.orEmpty(),
+                        qrData = QRData(
                             data.user?.id,
                             data.user?.name,
                         ),
-                        "START_INPUT"
+                        start = "START_INPUT"
                     )
                     startActivity(intent)
                 }
