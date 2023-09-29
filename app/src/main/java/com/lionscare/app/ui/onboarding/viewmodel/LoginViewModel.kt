@@ -7,6 +7,7 @@ import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lionscare.app.utils.AppConstant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -83,7 +84,12 @@ class LoginViewModel @Inject constructor(
                 } else {
                     _loginSharedFlow.emit(
                         LoginViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

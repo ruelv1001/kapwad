@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -121,7 +122,12 @@ class GroupViewModel @Inject constructor(
                 } else {
                     _groupSharedFlow.emit(
                         GroupViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

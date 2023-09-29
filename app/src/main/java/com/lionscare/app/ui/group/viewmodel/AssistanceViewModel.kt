@@ -9,6 +9,7 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.assistance.AssistanceRepository
 import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
 import com.lionscare.app.security.AuthEncryptedDataManager
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -194,7 +195,12 @@ class AssistanceViewModel @Inject constructor(
                 } else {
                     _assistanceSharedFlow.emit(
                         AssistanceViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

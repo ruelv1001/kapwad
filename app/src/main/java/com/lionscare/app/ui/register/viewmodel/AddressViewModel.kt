@@ -12,6 +12,7 @@ import com.lionscare.app.data.repositories.address.request.LocationRequest
 import com.lionscare.app.data.repositories.address.request.MunicipalityListRequest
 import com.lionscare.app.data.repositories.address.request.RegistrationRequest
 import com.lionscare.app.data.repositories.address.request.ZoneRequest
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -189,7 +190,12 @@ class AddressViewModel @Inject constructor(
                 } else {
                     _addressSharedFlow.emit(
                         AddressViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

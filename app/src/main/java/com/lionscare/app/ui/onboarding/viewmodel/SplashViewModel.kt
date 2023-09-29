@@ -7,6 +7,8 @@ import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.security.AuthEncryptedDataManager
+import com.lionscare.app.ui.main.viewmodel.SettingsViewState
+import com.lionscare.app.utils.AppConstant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -62,7 +64,12 @@ class SplashViewModel @Inject constructor(
                 var errorResponse: com.lionscare.app.data.model.ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
                 _splashStateFlow.emit(
                     SplashViewState.PopupError(
-                        PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                        if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                            PopupErrorState.SessionError
+                        }else{
+                            PopupErrorState.HttpError
+                        }
+                        , errorResponse?.msg.orEmpty()
                     )
                 )
             }

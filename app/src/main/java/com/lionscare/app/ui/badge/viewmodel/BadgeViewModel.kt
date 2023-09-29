@@ -8,6 +8,7 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -67,13 +68,18 @@ class BadgeViewModel @Inject constructor(
                 val errorBody = exception.response()?.errorBody()
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
-                var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
+                val errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
                 if (errorResponse?.has_requirements == true) {
                     _badgeSharedFlow.emit(ProfileViewState.InputError(errorResponse.errors))
                 } else {
                     _badgeSharedFlow.emit(
                         ProfileViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

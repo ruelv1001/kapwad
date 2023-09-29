@@ -12,6 +12,8 @@ import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.registration.RegistrationRepository
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.utils.AppConstant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -125,7 +127,12 @@ class RegisterViewModel @Inject constructor(
                 } else {
                     _registerSharedFlow.emit(
                         RegisterViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

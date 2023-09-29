@@ -11,6 +11,7 @@ import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.member.MemberRepository
 import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -232,7 +233,12 @@ class MemberViewModel @Inject constructor(
                 } else {
                     _memberSharedFlow.emit(
                         MemberViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

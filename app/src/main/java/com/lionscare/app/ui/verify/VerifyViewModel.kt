@@ -8,6 +8,8 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.ui.register.viewmodel.AddressViewState
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -142,7 +144,12 @@ class VerifyViewModel @Inject constructor(
                 } else {
                     _kycSharedFlow.emit(
                         ProfileViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.wallet.GroupWalletRepository
 import com.lionscare.app.data.repositories.wallet.WalletRepository
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -124,7 +125,12 @@ class GroupWalletViewModel @Inject constructor(
                 } else {
                     _walletSharedFlow.emit(
                         GroupWalletViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

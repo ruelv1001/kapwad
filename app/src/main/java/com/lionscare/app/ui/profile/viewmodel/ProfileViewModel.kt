@@ -12,6 +12,8 @@ import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -162,7 +164,12 @@ class ProfileViewModel @Inject constructor(
                 } else {
                     _profileSharedFlow.emit(
                         ProfileViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }

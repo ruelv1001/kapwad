@@ -7,6 +7,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
+import com.lionscare.app.utils.AppConstant
+import com.lionscare.app.utils.AppConstant.NOT_FOUND
+import com.lionscare.app.utils.AppConstant.NO_IMMEDIATE_FAMILY
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -64,11 +67,24 @@ class ImmediateFamilyViewModel  @Inject constructor(private val groupRepository:
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
-                _getGroupSharedFlow.emit(
-                    ImmediateFamilyViewState.PopupError(
-                        PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                if (
+                    errorResponse?.status_code.orEmpty() != NOT_FOUND &&
+                    errorResponse?.status_code.orEmpty() != NO_IMMEDIATE_FAMILY
+                    ){
+                    _getGroupSharedFlow.emit(
+                        ImmediateFamilyViewState.PopupError(
+                            PopupErrorState.HttpError,
+                            errorResponse?.msg.orEmpty()
+                        )
                     )
-                )
+                }else if(AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                    _getGroupSharedFlow.emit(
+                        ImmediateFamilyViewState.PopupError(
+                            PopupErrorState.SessionError,
+                            errorResponse?.msg.orEmpty()
+                        )
+                    )
+                }
             }
             else -> _getGroupSharedFlow.emit(
                 ImmediateFamilyViewState.PopupError(
