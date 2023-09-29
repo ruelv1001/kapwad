@@ -84,11 +84,7 @@ class LoginViewModel @Inject constructor(
                 } else {
                     _loginSharedFlow.emit(
                         LoginViewState.PopupError(
-                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
-                                PopupErrorState.SessionError
-                            }else{
-                                PopupErrorState.HttpError
-                            }
+                            PopupErrorState.HttpError
                             , errorResponse?.msg.orEmpty()
                         )
                     )

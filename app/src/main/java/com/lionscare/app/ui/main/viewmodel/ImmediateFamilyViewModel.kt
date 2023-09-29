@@ -67,20 +67,21 @@ class ImmediateFamilyViewModel  @Inject constructor(private val groupRepository:
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
-                if (
+
+                if(AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                    _getGroupSharedFlow.emit(
+                        ImmediateFamilyViewState.PopupError(
+                            PopupErrorState.SessionError,
+                            errorResponse?.msg.orEmpty()
+                        )
+                    )
+                }else if (
                     errorResponse?.status_code.orEmpty() != NOT_FOUND &&
                     errorResponse?.status_code.orEmpty() != NO_IMMEDIATE_FAMILY
                     ){
                     _getGroupSharedFlow.emit(
                         ImmediateFamilyViewState.PopupError(
                             PopupErrorState.HttpError,
-                            errorResponse?.msg.orEmpty()
-                        )
-                    )
-                }else if(AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
-                    _getGroupSharedFlow.emit(
-                        ImmediateFamilyViewState.PopupError(
-                            PopupErrorState.SessionError,
                             errorResponse?.msg.orEmpty()
                         )
                     )
