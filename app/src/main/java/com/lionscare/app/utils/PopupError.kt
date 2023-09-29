@@ -27,6 +27,7 @@ fun showPopupError(
     ){
         //return to splash screen an delete all user data
         if (errorCode == PopupErrorState.SessionError){
+            CommonLogger.instance.sysLogE("EEE", errorCode)
             val intent = LoginActivity.getIntent(context)
             context.startActivity(intent)
             (context as Activity).finishAffinity()

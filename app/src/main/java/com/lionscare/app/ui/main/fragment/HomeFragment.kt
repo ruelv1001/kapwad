@@ -118,13 +118,13 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
             is SettingsViewState.LoadingBadge -> Unit
             is SettingsViewState.PopupError -> {
                 hideLoadingDialog()
+                binding.swipeRefreshLayout.isRefreshing = false
                 showPopupError(
                     requireActivity(),
                     childFragmentManager,
                     viewState.errorCode,
                     viewState.message
                 )
-
                 //***** -VON
                 //response of badge status returns an error of not found
                 //so always remove the views if this gets triggered
@@ -256,7 +256,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                 binding.createGroupButton.isVisible = true
                 binding.famShimmerLayout.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
-                showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
             }
 
             is ImmediateFamilyViewState.Success -> {
