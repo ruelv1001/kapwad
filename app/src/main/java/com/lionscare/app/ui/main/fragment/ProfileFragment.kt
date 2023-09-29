@@ -110,6 +110,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             is SettingsViewState.InputError -> Unit
             is SettingsViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
+                binding.swipeRefreshLayout.isRefreshing = false
                 setView(viewState.userModel)
             }
             else -> Unit
