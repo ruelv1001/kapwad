@@ -381,5 +381,6 @@
     <string name="scan_completed_info">Scan completed, please wait while finishing invitation</string>
     <string name="send_points_to_pay">Send Points to Pay</string>
     <string name="pay_now">Pay now</string>
+    <string name="lbl_sent">Sent</string>
 
 </resources>

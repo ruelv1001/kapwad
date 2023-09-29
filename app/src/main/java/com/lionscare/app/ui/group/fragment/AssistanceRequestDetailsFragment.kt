@@ -75,7 +75,17 @@ class AssistanceRequestDetailsFragment : Fragment() {
         amountTextView.text = currencyFormat(data.amount.toString())
         remarksTextView.text = data.note
         dateProcessedTextView.text = data.date_processed?.datetime_ph
-        sendTextView.isVisible = data.status == "approved" && activity.groupDetails?.is_admin == true && data.has_sent == false
+        sendTextView.isVisible = data.status == "approved" && activity.groupDetails?.is_admin == true
+        if(data.has_sent == true){
+            sendTextView.text = getString(R.string.lbl_sent)
+            sendTextView.isEnabled = false
+            sendTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.blue_text))
+            sendTextView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.white))
+        }else{
+            sendTextView.text = getString(R.string.search_user_send_txt)
+            sendTextView.isEnabled = true
+            sendTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
+        }
         profileImageView.loadAvatar(data.user?.avatar?.thumb_path, requireActivity())
         when (data.status) {
             "declined" -> {

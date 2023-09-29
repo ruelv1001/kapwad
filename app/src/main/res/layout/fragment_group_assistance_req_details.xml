@@ -147,6 +147,7 @@
                     android:visibility="gone"
                     android:text="@string/search_user_send_txt"
                     android:background="@drawable/bg_rounded_color_primary"
+                    android:fontFamily="@font/inter_medium"
                     android:textColor="@color/white"
                     android:paddingHorizontal="@dimen/dimen_16"
                     android:paddingVertical="@dimen/dimen_4"
