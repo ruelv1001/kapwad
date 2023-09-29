@@ -9,6 +9,8 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.admin.AdminRepository
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.security.AuthEncryptedDataManager
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -130,13 +132,16 @@ class AdminViewModel @Inject constructor(
                 } else {
                     _adminSharedFlow.emit(
                         AdminViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                                PopupErrorState.SessionError
+                            }else{
+                                PopupErrorState.HttpError
+                            }
+                            , errorResponse?.msg.orEmpty()
                         )
                     )
                 }
-
             }
-
             else -> _adminSharedFlow.emit(
                 AdminViewState.PopupError(
                     PopupErrorState.UnknownError

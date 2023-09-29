@@ -10,6 +10,7 @@ import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.member.MemberRepository
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -152,7 +153,12 @@ class GroupListViewModel @Inject constructor(
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
                 _getGroupSharedFlow.emit(
                     GroupListViewState.PopupError(
-                        PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                        if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                            PopupErrorState.SessionError
+                        }else{
+                            PopupErrorState.HttpError
+                        }
+                        , errorResponse?.msg.orEmpty()
                     )
                 )
             }

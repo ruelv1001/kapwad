@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.generalsetting.GeneralSettingRepository
 import com.lionscare.app.ui.group.viewmodel.GeneralSettingViewState
+import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -66,7 +67,12 @@ class GeneralSettingViewModel @Inject constructor(
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
                 _generalSettingSharedFlow.emit(
                     GeneralSettingViewState.PopupError(
-                        PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                        if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                            PopupErrorState.SessionError
+                        }else{
+                            PopupErrorState.HttpError
+                        }
+                        , errorResponse?.msg.orEmpty()
                     )
                 )
             }

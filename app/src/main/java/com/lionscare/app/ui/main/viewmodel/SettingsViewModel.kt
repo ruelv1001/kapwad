@@ -8,6 +8,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.utils.AppConstant
+import com.lionscare.app.utils.AppConstant.NOT_FOUND
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -126,13 +128,22 @@ class SettingsViewModel @Inject constructor (
                 if (errorResponse?.has_requirements == true) {
                     _loginSharedFlow.emit(SettingsViewState.InputError(errorResponse.errors))
                 } else {
-                    _loginSharedFlow.emit(
-                        SettingsViewState.PopupError(
-                            PopupErrorState.HttpError, errorResponse?.msg.orEmpty()
+                    if (errorResponse?.status_code.orEmpty() != NOT_FOUND){
+                        _loginSharedFlow.emit(
+                            SettingsViewState.PopupError(
+                                PopupErrorState.HttpError,
+                                errorResponse?.msg.orEmpty()
+                            )
                         )
-                    )
+                    }else if(AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                        _loginSharedFlow.emit(
+                            SettingsViewState.PopupError(
+                                PopupErrorState.SessionError,
+                                errorResponse?.msg.orEmpty()
+                            )
+                        )
+                    }
                 }
-
             }
 
             else -> _loginSharedFlow.emit(

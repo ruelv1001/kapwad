@@ -118,17 +118,12 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
             is SettingsViewState.LoadingBadge -> Unit
             is SettingsViewState.PopupError -> {
                 hideLoadingDialog()
-                /* tinanggal ko yung pop up
-                error para walang lumalabas
-                if wala pa syang badge
-                -josh
-                 */
-                /*showPopupError(
+                showPopupError(
                     requireActivity(),
                     childFragmentManager,
                     viewState.errorCode,
                     viewState.message
-                )*/
+                )
 
                 //***** -VON
                 //response of badge status returns an error of not found
@@ -261,6 +256,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                 binding.createGroupButton.isVisible = true
                 binding.famShimmerLayout.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
+                showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
             }
 
             is ImmediateFamilyViewState.Success -> {
