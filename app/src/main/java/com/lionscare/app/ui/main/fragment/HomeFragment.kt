@@ -315,7 +315,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                 // Change the status bar color
                 requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.pending)
 
-                binding.statusKYCTextView.text = getString(R.string.ongoing_verification)
+                binding.statusKYCTextView.text = getString(R.string.ongoing_kyc)
                 binding.getVerifiedButton.text = getString(R.string.check_status)
                 binding.statusKYCImageView.colorFilter = PorterDuffColorFilter(
                     ContextCompat.getColor(requireContext(), R.color.pending),
