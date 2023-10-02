@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentChooseKycProcessBinding
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
@@ -24,7 +25,7 @@ import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import kotlinx.coroutines.launch
 
-class ChooseKYCProcessFragment : Fragment() {
+class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener  {
 
     private var _binding: FragmentChooseKycProcessBinding? = null
     private val binding get() = _binding!!
@@ -54,7 +55,7 @@ class ChooseKYCProcessFragment : Fragment() {
         //show loading here immediately
         showLoadingDialog(R.string.loading)
         viewModel.getVerificationStatus()
-
+        binding.swipeRefreshLayout.setOnRefreshListener(this@ChooseKYCProcessFragment)
     }
 
 
@@ -77,6 +78,7 @@ class ChooseKYCProcessFragment : Fragment() {
                 showLoadingDialog(R.string.loading)
             }
             is ProfileViewState.SuccessGetVerificationStatus -> {
+                binding.swipeRefreshLayout.isRefreshing = false
                 val idStatus = "Valid ID"
                 val idDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.id_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
 
@@ -210,6 +212,9 @@ class ChooseKYCProcessFragment : Fragment() {
         addressLinearLayout.setOnSingleClickListener {
             findNavController().navigate(ChooseKYCProcessFragmentDirections.actionNavigationChooseKycToNavigationProofOfAddress())
         }
+    }
+    override fun onRefresh() {
+        viewModel.getVerificationStatus()
     }
 
     override fun onDestroyView() {

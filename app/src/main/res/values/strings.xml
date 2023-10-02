@@ -368,7 +368,7 @@
     <string name="fields_cannot_be_empty">Fields cannot be empty</string>
     <string name="this_email_is_currently_your_email">This email is currently your email</string>
     <string name="profile_details">Profile Details</string>
-    <string name="ongoing_verification">Ongoing Verification</string>
+    <string name="ongoing_kyc">Ongoing Verification</string>
     <string name="check_status">Check Status</string>
     <string name="lbl_community">Community</string>
     <string name="uploading_your_avatar_please_wait">Uploading your avatar... Please wait</string>

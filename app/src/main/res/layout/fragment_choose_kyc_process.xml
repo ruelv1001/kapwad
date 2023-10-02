@@ -1,171 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/dimen_20"
     tools:context=".ui.verify.fragment.ChooseKYCProcessFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/account_verification_upload_identification_title"
-        android:textAlignment="center"
-        android:textColor="@color/black_text"
-        android:textSize="@dimen/font_16" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/statusTextView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="@font/inter_semibold"-->
-<!--        android:text="Status"-->
-<!--        android:textColor="@color/color_primary"-->
-<!--        android:layout_marginTop="@dimen/dimen_16"-->
-<!--        android:textSize="@dimen/font_16" />-->
-
-    <TextView
-        android:id="@+id/instructionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/account_verification_note_text"
-        android:textColor="@color/light_gray"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:textSize="@dimen/font_16" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/verifyTextView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="@font/inter_regular"-->
-<!--        android:textColor="@color/light_gray"-->
-<!--        android:layout_marginTop="@dimen/dimen_16"-->
-<!--        android:textSize="@dimen/font_16" />-->
-<!--    <TextView-->
-<!--        android:id="@+id/verifyAddressTextView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="@font/inter_regular"-->
-<!--        android:textColor="@color/light_gray"-->
-<!--        android:layout_marginTop="@dimen/dimen_16"-->
-<!--        android:textSize="@dimen/font_16" />-->
-    <LinearLayout
-        android:id="@+id/validIdLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginHorizontal="@dimen/dimen_4"
-        android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/white"
-        android:elevation="@dimen/dimen_4"
-        android:gravity="center"
-        android:paddingVertical="@dimen/dimen_12"
-        android:paddingStart="@dimen/dimen_4"
-        android:paddingEnd="@dimen/dimen_8"
-        android:orientation="horizontal">
-    <LinearLayout
-        android:background="@color/transparent"
-        android:layout_weight="1"
-        android:paddingHorizontal="@dimen/dimen_8"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/validIdButtonTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/account_verification_valid_id_text"
-                android:textColor="@color/black_text"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_account_box"
-                android:textSize="@dimen/font_16"
-                android:drawablePadding="@dimen/dimen_16"
-                android:drawableTint="@color/color_primary"
-                tools:ignore="UseCompatTextViewDrawableXml" />
-
-<!--            <TextView-->
-<!--                android:id="@+id/badgeIdStatus"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="@font/inter_regular"-->
-<!--                android:textSize="@dimen/font_13"-->
-<!--                android:layout_marginStart="@dimen/dimen_12"-->
-<!--                android:padding="@dimen/dimen_4"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:text="Pending"-->
-<!--                />-->
-
         <TextView
-            android:id="@+id/validIdDateTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_4"
-            android:paddingStart="@dimen/dimen_40"
-            android:visibility="gone"
-            android:fontFamily="@font/inter_regular"
-            android:text="@string/account_verification_valid_id_text"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/account_verification_upload_identification_title"
+            android:textAlignment="center"
             android:textColor="@color/black_text"
-            android:layout_weight="1"
-            android:textSize="@dimen/font_13"
-            tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml" />
+            android:textSize="@dimen/font_16" />
 
-    </LinearLayout>
-
+        <!--    <TextView-->
+        <!--        android:id="@+id/statusTextView"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:fontFamily="@font/inter_semibold"-->
+        <!--        android:text="Status"-->
+        <!--        android:textColor="@color/color_primary"-->
+        <!--        android:layout_marginTop="@dimen/dimen_16"-->
+        <!--        android:textSize="@dimen/font_16" />-->
 
         <TextView
-            android:visibility="gone"
-            android:id="@+id/badgeIdStatus"
+            android:id="@+id/instructionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:textSize="@dimen/font_13"
-            android:layout_marginStart="@dimen/dimen_12"
-            android:paddingStart="@dimen/dimen_10"
-            android:paddingTop="@dimen/dimen_5"
-            android:paddingEnd="@dimen/dimen_10"
-            android:paddingBottom="@dimen/dimen_5"
-            android:textColor="@color/white"
-            android:text="Pending"
-            />
-        <ImageView
-            android:id="@+id/idArrowImageView"
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
-            android:src="@drawable/ic_forward_arrow"
-     />
+            android:text="@string/account_verification_note_text"
+            android:textColor="@color/light_gray"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:textSize="@dimen/font_16" />
 
+        <!--    <TextView-->
+        <!--        android:id="@+id/verifyTextView"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:fontFamily="@font/inter_regular"-->
+        <!--        android:textColor="@color/light_gray"-->
+        <!--        android:layout_marginTop="@dimen/dimen_16"-->
+        <!--        android:textSize="@dimen/font_16" />-->
+        <!--    <TextView-->
+        <!--        android:id="@+id/verifyAddressTextView"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:fontFamily="@font/inter_regular"-->
+        <!--        android:textColor="@color/light_gray"-->
+        <!--        android:layout_marginTop="@dimen/dimen_16"-->
+        <!--        android:textSize="@dimen/font_16" />-->
+        <LinearLayout
+            android:id="@+id/validIdLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginHorizontal="@dimen/dimen_4"
+            android:background="@drawable/bg_rounded"
+            android:backgroundTint="@color/white"
+            android:elevation="@dimen/dimen_4"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dimen_12"
+            android:paddingStart="@dimen/dimen_4"
+            android:paddingEnd="@dimen/dimen_8"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:background="@color/transparent"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/dimen_8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/validIdButtonTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="@string/account_verification_valid_id_text"
+                    android:textColor="@color/black_text"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_account_box"
+                    android:textSize="@dimen/font_16"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:drawableTint="@color/color_primary"
+                    tools:ignore="UseCompatTextViewDrawableXml" />
 
-    <LinearLayout
-        android:id="@+id/addressLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginHorizontal="@dimen/dimen_4"
-        android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/white"
-        android:elevation="@dimen/dimen_4"
-        android:gravity="center"
-        android:paddingVertical="@dimen/dimen_12"
-        android:paddingStart="@dimen/dimen_4"
-        android:paddingEnd="@dimen/dimen_8"
-        android:orientation="horizontal"
-    >
+                <!--            <TextView-->
+                <!--                android:id="@+id/badgeIdStatus"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:fontFamily="@font/inter_regular"-->
+                <!--                android:textSize="@dimen/font_13"-->
+                <!--                android:layout_marginStart="@dimen/dimen_12"-->
+                <!--                android:padding="@dimen/dimen_4"-->
+                <!--                android:textColor="@color/white"-->
+                <!--                android:text="Pending"-->
+                <!--                />-->
+
+                <TextView
+                    android:id="@+id/validIdDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:paddingStart="@dimen/dimen_40"
+                    android:visibility="gone"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/account_verification_valid_id_text"
+                    android:textColor="@color/black_text"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/font_13"
+                    tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml" />
+
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/badgeIdStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/font_13"
+                android:layout_marginStart="@dimen/dimen_12"
+                android:paddingStart="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingEnd="@dimen/dimen_10"
+                android:paddingBottom="@dimen/dimen_5"
+                android:textColor="@color/white"
+                android:text="Pending"
+                />
+            <ImageView
+                android:id="@+id/idArrowImageView"
+                android:layout_width="@dimen/dimen_24"
+                android:layout_height="@dimen/dimen_24"
+                android:src="@drawable/ic_forward_arrow"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
-            android:background="@color/transparent"
-            android:layout_weight="1"
-            android:paddingHorizontal="@dimen/dimen_8"
-            android:layout_width="0dp"
+            android:id="@+id/addressLinearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginHorizontal="@dimen/dimen_4"
+            android:background="@drawable/bg_rounded"
+            android:backgroundTint="@color/white"
+            android:elevation="@dimen/dimen_4"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dimen_12"
+            android:paddingStart="@dimen/dimen_4"
+            android:paddingEnd="@dimen/dimen_8"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:background="@color/transparent"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/dimen_8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/addressButtonTextView"
@@ -181,45 +184,47 @@
                     android:drawableTint="@color/color_primary"
                     tools:ignore="UseCompatTextViewDrawableXml" />
 
+                <TextView
+                    android:id="@+id/addressDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:paddingStart="@dimen/dimen_40"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/account_verification_valid_id_text"
+                    android:textColor="@color/black_text"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:textSize="@dimen/font_13"
+                    tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml" />
+
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/addressDateTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4"
-                android:paddingStart="@dimen/dimen_40"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/account_verification_valid_id_text"
-                android:textColor="@color/black_text"
-                android:layout_weight="1"
                 android:visibility="gone"
+                android:id="@+id/badgeAddressStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textSize="@dimen/font_13"
-                tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml" />
+                android:layout_marginStart="@dimen/dimen_12"
+                android:paddingStart="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingEnd="@dimen/dimen_10"
+                android:paddingBottom="@dimen/dimen_5"
+                android:textColor="@color/white"
+                android:text="Pending"
+                />
+            <ImageView
+                android:id="@+id/addressArrowImageView"
+                android:layout_width="@dimen/dimen_24"
+                android:layout_height="@dimen/dimen_24"
+                android:src="@drawable/ic_forward_arrow"
+                />
+
+
 
         </LinearLayout>
 
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/badgeAddressStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_regular"
-            android:textSize="@dimen/font_13"
-            android:layout_marginStart="@dimen/dimen_12"
-            android:paddingStart="@dimen/dimen_10"
-            android:paddingTop="@dimen/dimen_5"
-            android:paddingEnd="@dimen/dimen_10"
-            android:paddingBottom="@dimen/dimen_5"
-            android:textColor="@color/white"
-            android:text="Pending"
-            />
-        <ImageView
-            android:id="@+id/addressArrowImageView"
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
-            android:src="@drawable/ic_forward_arrow"
-            />
-
-
-
     </LinearLayout>
-</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
