@@ -1,30 +1,54 @@
 package com.lionscare.app.ui.group.fragment
 
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
+import com.lionscare.app.data.model.ErrorsData
+import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.databinding.FragmentGroupManageBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.dialog.RemoveConfirmationDialog
+import com.lionscare.app.ui.group.viewmodel.GroupViewModel
+import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.activity.MainActivity
+import com.lionscare.app.ui.profile.fragment.ProfilePreviewFragment
+import com.lionscare.app.utils.convertImageUriToFile
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
+import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.io.File
+import java.util.Calendar
 
 @AndroidEntryPoint
 class GroupManageFragment : Fragment() {
@@ -32,6 +56,9 @@ class GroupManageFragment : Fragment() {
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModel : MemberViewModel by viewModels()
+    private val groupViewModel: GroupViewModel by viewModels()
+
+    private var uriFilePath: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +78,7 @@ class GroupManageFragment : Fragment() {
         setClickListeners()
         setView()
         observeMember()
+        observeGroup()
         setDetails()
         onResume()
     }
@@ -124,6 +152,9 @@ class GroupManageFragment : Fragment() {
                 groupId = activity.groupDetails?.id
             ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
         }
+        imageView.setOnSingleClickListener {
+            openMediaOptionPicker()
+        }
     }
 
     private fun observeMember() {
@@ -156,12 +187,188 @@ class GroupManageFragment : Fragment() {
         }
     }
 
+    private fun observeGroup() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                groupViewModel.groupSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    private fun handleViewState(viewState: GroupViewState) {
+        when (viewState) {
+            is GroupViewState.Loading -> showLoadingDialog(R.string.loading)
+            is GroupViewState.InputError -> {
+                hideLoadingDialog()
+            }
+            is GroupViewState.SuccessUploadAvatar -> {
+                hideLoadingDialog()
+               // load avatar here
+            }
+            is GroupViewState.PopupError -> {
+                hideLoadingDialog()
+                showPopupError(requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message)
+            }
+            else -> Unit
+        }
+    }
+
     private fun showLoadingDialog(@StringRes strId: Int) {
         (requireActivity() as GroupActivity).showLoadingDialog(strId)
     }
 
     private fun hideLoadingDialog() {
         (requireActivity() as GroupActivity).hideLoadingDialog()
+    }
+
+    private fun openMediaOptionPicker() {
+        val choices = arrayOf("Camera", "Gallery")
+        val mBuilder = AlertDialog.Builder(requireActivity())
+        mBuilder.setTitle("Choose an action")
+        mBuilder.setSingleChoiceItems(choices, -1) { dialogInterface: DialogInterface, i: Int ->
+            if (choices[i] == "Camera") {
+                openCameraChecker()
+            } else {
+                openPhotoPicker()
+            }
+            dialogInterface.dismiss()
+        }
+        mBuilder.setNeutralButton("Cancel") { dialogInterface: DialogInterface, _: Int ->
+            dialogInterface.cancel()
+        }
+        val mDialog = mBuilder.create()
+        mDialog.show()
+    }
+
+    private fun openPhotoPicker(){
+        singlePhotoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
+        if (isSaved)
+        {
+            uriFilePath?.let {
+                startCropping(it)
+            }
+        }
+    }
+
+    private val singlePhotoPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri: Uri? ->
+        imageUri?.let { uri ->
+            startCropping(uri)
+        }
+    }
+
+    private fun startCropping(uri: Uri) {
+        val timestamp = (System.currentTimeMillis() / 100).toString()
+        groupViewModel.avatarURIHolder = Uri.fromFile(File(requireActivity().cacheDir, "${CROPPED_IMAGE_NAME}$timestamp"))
+        groupViewModel.avatarURIHolder?.let { destinationUri ->
+            val crop = UCrop.of(uri,destinationUri )
+                .withOptions(UCrop.Options().also {
+                    it.setCircleDimmedLayer(true)
+                    it.setToolbarColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.color_primary
+                        )
+                    )
+                    it.setStatusBarColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.color_primaryDark
+                        )
+                    )
+                    it.setToolbarWidgetColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.white
+                        )
+                    )
+                    it.setActiveControlsWidgetColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.color_primaryDark
+                        )
+                    )
+                })
+            cropImageLauncher.launch(crop.getIntent(requireActivity()))
+        }
+    }
+
+
+    private val cropImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            val croppedUri = result.data?.let { UCrop.getOutput(it) }
+            groupViewModel.avatarFileHolder = convertImageUriToFile(requireContext(), croppedUri!!)
+            groupViewModel.uploadGroupAvatar(
+                groupViewModel.avatarFileHolder!!,
+                activity.groupDetails?.id.toString()
+            )
+
+            groupViewModel.avatarURIHolder = croppedUri
+
+        } else if (result.resultCode == UCrop.RESULT_ERROR) {
+            val error = result.data?.let { UCrop.getError(it) }
+            requireActivity().toastError(error?.message.toString(), CpmToast.SHORT_DURATION)
+        }
+    }
+
+    private fun openCameraChecker() {
+        if (hasImageCapturePermissions(requireActivity())) {
+            val calendar = Calendar.getInstance()
+            val fileName = File.createTempFile(
+                "IMG_" + calendar.timeInMillis,
+                ".jpg",
+                requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            )
+
+            uriFilePath = FileProvider.getUriForFile(
+                requireActivity(),
+                "${requireActivity().packageName}.provider",
+                fileName
+            )
+
+            takePicture.launch(uriFilePath)
+
+        } else {
+            requestPermission()
+        }
+    }
+
+    private fun hasImageCapturePermissions(context: Activity): Boolean {
+        return !(ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.CAMERA
+        ) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            REQUEST_IMAGE_CAPTURE
+        )
+    }
+
+    override fun onRequestPermissionsResult (
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    )  = binding.run {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if (grantResults[0] == 0) {
+                openCameraChecker()
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -171,5 +378,7 @@ class GroupManageFragment : Fragment() {
 
     companion object {
         private const val START_MANAGE = "START_MANAGE"
+        private const val CROPPED_IMAGE_NAME = "groupAvatar"
+        private const val REQUEST_IMAGE_CAPTURE = 1
     }
 }
