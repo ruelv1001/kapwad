@@ -28,6 +28,10 @@ class RegisterViewModel @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : ViewModel() {
 
+    //default values
+    var countryCode = "+63"
+    var countryIso = "PH"
+
     private val _registerSharedFlow = MutableSharedFlow<RegisterViewState>()
 
     val registerSharedFlow: SharedFlow<RegisterViewState> =

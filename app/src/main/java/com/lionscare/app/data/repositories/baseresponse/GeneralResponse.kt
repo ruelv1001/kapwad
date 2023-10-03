@@ -7,7 +7,8 @@ data class GeneralResponse(
     val msg: String? = null,
     val status: Boolean? = false,
     val status_code: String? = null,
-    val web_checkout: String? = null
+    val web_checkout: String? = null,
+    var hint: String? = null
 )
 
 

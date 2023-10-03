@@ -1,6 +1,7 @@
 package com.lionscare.app.data.repositories.address
 
 import com.lionscare.app.BuildConfig
+import com.lionscare.app.data.repositories.address.request.CountryListRequest
 import com.lionscare.app.data.repositories.address.request.LocationRequest
 import com.lionscare.app.data.repositories.address.request.MunicipalityListRequest
 import com.lionscare.app.data.repositories.address.request.RegionRequest
@@ -14,6 +15,11 @@ import retrofit2.http.POST
 
 interface AddressService {
 
+    @POST("${BuildConfig.PSGC_URL}api/v1/psgc/country")
+    suspend fun doGetCountryList(
+        @Header("PSGC-Authorization") auth: String = BuildConfig.PSGC_AUTH,
+        @Body request: CountryListRequest
+    ): Response<AddressResponse>
 
     @POST("${BuildConfig.PSGC_URL}api/v1/psgc/province")
     suspend fun doGetProvinceList(

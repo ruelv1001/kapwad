@@ -14,6 +14,7 @@ data class AddressResponse(
 @Keep
 data class AddressData(
     var province_id: Int? = null,
+    var country_id: Int? = null,
     var name: String? = null,
     var sku: String? = null,
     var citymun_id: Int? = null,
@@ -23,6 +24,7 @@ data class AddressData(
     var citymun_code: Int? = null,
     var type: String? = null,
     var code: String? = null,
-    var zipcode: String? = null
+    var zipcode: String? = null,
+    var phone_code: String? = null
 )
 

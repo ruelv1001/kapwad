@@ -46,7 +46,23 @@ class AddressViewModel @Inject constructor(
 
     var resendEnable = false
 
+    fun getCountryList(displayAllowedCountries: Boolean = false) {
+        viewModelScope.launch {
+            addressRepository.getCountryList(displayAllowedCountries)
+                .onStart {
+                    _addressSharedFlow.emit(AddressViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
 
+                }
+                .collect {
+                    _addressSharedFlow.emit(
+                        AddressViewState.SuccessGetProvinceList(it.data.orEmpty())
+                    )
+                }
+        }
+    }
 
     fun getProvinceList() {
         viewModelScope.launch {

@@ -382,5 +382,5 @@
     <string name="send_points_to_pay">Send Points to Pay</string>
     <string name="pay_now">Pay now</string>
     <string name="lbl_sent">Sent</string>
-
+    <string name="address_country_hint">Country</string>
 </resources>
