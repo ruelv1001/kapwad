@@ -19,7 +19,12 @@ class AddressRepository @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-
+    fun getCountryList(displayAllowedCountries: Boolean): Flow<AddressResponse> {
+        return flow {
+            val response = regRemoteDataSource.getCountryList(displayAllowedCountries)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
     fun getProvinceList(): Flow<AddressResponse> {
         return flow {
             val response = regRemoteDataSource.getProvinceList()

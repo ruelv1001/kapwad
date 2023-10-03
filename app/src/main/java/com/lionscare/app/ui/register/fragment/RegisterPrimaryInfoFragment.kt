@@ -20,6 +20,7 @@ import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import com.lionscare.app.databinding.FragmentRegistrationPrimaryInfoBinding
 import com.lionscare.app.ui.register.activity.RegisterActivity
+import com.lionscare.app.ui.register.dialog.CountryDialog
 import com.lionscare.app.ui.register.viewmodel.RegisterViewModel
 import com.lionscare.app.ui.register.viewmodel.RegisterViewState
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -171,6 +172,16 @@ class RegisterPrimaryInfoFragment: Fragment() {
         confirmPasswordEditText.setOnSingleClickListener {
             // remove the error  on click so toggle password visibility would show
             confirmPasswordTextInputLayout.error = null
+        }
+
+        countryCodeTextView.setOnSingleClickListener {
+            CountryDialog.newInstance(object : CountryDialog.AddressCallBack {
+                override fun onAddressClicked(countryName: String, code: String, phone_code: String) {
+                    countryCodeTextView.text = phone_code
+                    viewModel.countryCode = phone_code //ex. +63
+                    viewModel.countryIso = code //ex. PH, US, VN, etc.
+                }
+            }, displayCountryCode = true).show(childFragmentManager, CountryDialog.TAG)
         }
     }
 

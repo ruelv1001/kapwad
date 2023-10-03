@@ -1,5 +1,6 @@
 package com.lionscare.app.data.repositories.address
 
+import com.lionscare.app.data.repositories.address.request.CountryListRequest
 import com.lionscare.app.data.repositories.address.request.LocationRequest
 import com.lionscare.app.data.repositories.address.request.MunicipalityListRequest
 import com.lionscare.app.data.repositories.address.request.RegionRequest
@@ -12,6 +13,14 @@ import javax.inject.Inject
 
 class AddressRemoteDataSource @Inject constructor(private val addressService: AddressService) {
 
+    suspend fun getCountryList(displayAllowedCountries: Boolean): AddressResponse {
+        val request = CountryListRequest(displayAllowedCountries)
+        val response = addressService.doGetCountryList(request = request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
 
     suspend fun getProvinceList(): AddressResponse {
         val response = addressService.doGetProvinceList()
