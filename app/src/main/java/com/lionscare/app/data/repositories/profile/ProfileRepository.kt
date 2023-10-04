@@ -3,6 +3,7 @@ package com.lionscare.app.data.repositories.profile
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
@@ -121,6 +122,28 @@ class ProfileRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    //================================= Badge Removal
+    fun requestBadgeRemoval(request: BadgeRemovalRequest): Flow<GeneralResponse> {
+        return flow {
+            val response = profileRemoteDataSource.requestBadgeRemoval(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getBadgeRemovalStatus(): Flow<GeneralResponse> {
+        return flow {
+            val response = profileRemoteDataSource.getBadgeRemovalStatus()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun cancelRequestBadgeRemoval(): Flow<GeneralResponse> {
+        return flow {
+            val response = profileRemoteDataSource.cancelRequestBadgeRemoval()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+    //======================= Change pass
     fun doChangePass(
         currentPass: String,
         newPass: String,

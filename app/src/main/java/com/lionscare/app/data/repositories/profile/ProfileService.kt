@@ -2,6 +2,7 @@ package com.lionscare.app.data.repositories.profile
 
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
@@ -80,5 +81,16 @@ interface ProfileService {
     @Multipart
     @POST("api/profile/setting/update-avatar")
     suspend fun uploadAvatar(@Part image: MultipartBody.Part): Response<GeneralResponse>
+
+
+    //============================= Cancel Badge
+    @POST("api/profile/badge/remove/request")
+    suspend fun requestBadgeRemoval(@Body request : BadgeRemovalRequest): Response<GeneralResponse>
+
+    @POST("api/profile/badge/remove/status")
+    suspend fun getBadgeRemovalStatus(): Response<GeneralResponse>
+
+    @POST("api/profile/badge/remove/cancel")
+    suspend fun cancelRequestBadgeRemoval(): Response<GeneralResponse>
 
 }
