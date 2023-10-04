@@ -2,6 +2,7 @@ package com.lionscare.app.data.repositories.group.response
 
 
 import androidx.annotation.Keep
+import com.lionscare.app.data.repositories.baseresponse.Avatar
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.Meta
 import com.lionscare.app.data.repositories.baseresponse.QrValue
@@ -36,5 +37,6 @@ data class Group(
     var qr_value: QrValue? = null,
     var qrcode: String? = null,
     var qrcode_value: String? = null,
-    var type: String? = null
+    var type: String? = null,
+    var avatar : Avatar? = null
 )

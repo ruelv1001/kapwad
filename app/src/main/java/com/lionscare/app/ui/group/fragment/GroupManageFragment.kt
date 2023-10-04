@@ -41,6 +41,8 @@ import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.profile.fragment.ProfilePreviewFragment
 import com.lionscare.app.utils.convertImageUriToFile
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import com.yalantis.ucrop.UCrop
@@ -98,6 +100,7 @@ class GroupManageFragment : Fragment() {
     private fun setDetails() = binding.run {
         titleTextView.text = activity.groupDetails?.name
         referenceTextView.text = activity.groupDetails?.qrcode
+        imageView.loadGroupAvatar(activity.groupDetails?.avatar?.thumb_path,requireActivity())
         membersTextView.text = context?.resources?.getQuantityString(
             R.plurals.member_plural,
             activity.groupDetails?.member_count?: 0,

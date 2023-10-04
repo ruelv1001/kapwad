@@ -383,4 +383,5 @@
     <string name="pay_now">Pay now</string>
     <string name="lbl_sent">Sent</string>
     <string name="address_country_hint">Country</string>
+    <string name="phone_number_is_invalid">Phone number is invalid.</string>
 </resources>

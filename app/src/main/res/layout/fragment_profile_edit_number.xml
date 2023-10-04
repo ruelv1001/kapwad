@@ -19,33 +19,52 @@
         android:textSize="@dimen/font_14"
    />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phoneTextInputLayout"
-        android:layout_marginTop="@dimen/dimen_30"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:hint="@string/lbl_contact_number"
-        app:boxStrokeColor="@color/color_primary"
-        app:boxBackgroundColor="@color/white"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        app:hintAnimationEnabled="true"
-        app:hintEnabled="true"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phoneEditText"
+        <TextView
+            android:id="@+id/countryCodeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:background="?selectableItemBackgroundBorderless"
+            android:drawablePadding="@dimen/dimen_4"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center_vertical"
+            android:text="+63"
+            android:textColor="@color/black"
+            app:drawableEndCompat="@drawable/ic_arrow_down"
+            app:drawableTint="@color/black" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberTextInputLayout"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:imeOptions="actionNext"
-            android:maxLength="11"
-            android:inputType="phone|number"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/commons_text_hint"
-            android:textSize="@dimen/font_14" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="@string/lbl_contact_number"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:maxLength="13"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:gravity="bottom"

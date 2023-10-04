@@ -36,6 +36,8 @@ class ProfileViewModel @Inject constructor(
     //holder for userModel
     var userModel : UserModel? = null
 
+    var countryCode = "+63"
+    var countryIso = "PH"
     //holder for phonenumber
     var phoneNumber : String? = null
     var lcRegionCode : String = ""

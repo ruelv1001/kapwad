@@ -23,6 +23,8 @@ import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewModel
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -152,6 +154,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     }
 
     private fun setImmediateFamily(data: GroupListData) = binding.run{
+        immediateFamilyLayout.imageView.loadGroupAvatar(data.avatar?.thumb_path,requireActivity())
         immediateFamilyLayout.titleTextView.text = data.name
         immediateFamilyLayout.membersTextView.text = if ((data.member_count ?: 0) > 1) {
             "${data.member_count} members"

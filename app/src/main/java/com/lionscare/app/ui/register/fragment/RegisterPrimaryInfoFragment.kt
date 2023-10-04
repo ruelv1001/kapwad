@@ -23,6 +23,7 @@ import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.ui.register.dialog.CountryDialog
 import com.lionscare.app.ui.register.viewmodel.RegisterViewModel
 import com.lionscare.app.ui.register.viewmodel.RegisterViewState
+import com.lionscare.app.utils.isPhoneNumberValid
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -138,18 +139,24 @@ class RegisterPrimaryInfoFragment: Fragment() {
 
     private fun setClickListeners() = binding.run {
         continueButton.setOnSingleClickListener {
+            val phoneNumber = "${viewModel.countryCode}${contactEditText.text.toString()}"
+            if (isPhoneNumberValid(phoneNumber, viewModel.countryIso)){
                 val data = RegistrationRequest()
                 data.firstname = firstNameEditText.text.toString()
                 data.middlename = middleNameEditText.text.toString()
                 data.lastname = lastNameEditText.text.toString()
-                data.phone_number = contactEditText.text.toString()
+                data.phone_number = phoneNumber
+                data.phone_number_country_code = viewModel.countryCode
                 data.password = passwordEditText.text.toString()
                 data.password_confirmation = confirmPasswordEditText.text.toString()
                 activity.requestModel = data
                 val otpRequest = OTPRequest()
-                otpRequest.phone_number = contactEditText.text.toString()
+                otpRequest.phone_number = phoneNumber
                 activity.otpModel = otpRequest
                 viewModel.doPreReg(data)
+            }else{
+                contactTextInputLayout.error = getString(R.string.phone_number_is_invalid)
+            }
         }
 
         passwordEditText.setOnFocusChangeListener { _, hasFocus ->
