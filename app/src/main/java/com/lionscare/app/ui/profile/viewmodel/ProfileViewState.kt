@@ -30,6 +30,7 @@ sealed class ProfileViewState {
     //BADGE
     data class SuccessGetBadgeStatus(val message : String = "", val badgeStatusResponse: BadgeStatusResponse) : ProfileViewState()
     data class SuccessBadgeRequest(val message : String = "", val badgeResponse: BadgeResponse) : ProfileViewState()
+    data class SuccessRequestBadgeRemoval(val message : String = "") : ProfileViewState()
 
 
     //PHONE NUMBER

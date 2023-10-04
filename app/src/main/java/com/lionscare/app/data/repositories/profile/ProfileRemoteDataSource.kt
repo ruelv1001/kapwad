@@ -2,6 +2,7 @@ package com.lionscare.app.data.repositories.profile
 
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
@@ -183,6 +184,35 @@ class ProfileRemoteDataSource @Inject constructor(
 
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
+
+    //=================================BADGE REMOVAL API
+    suspend fun requestBadgeRemoval(request : BadgeRemovalRequest): GeneralResponse {
+        val response = profileService.requestBadgeRemoval(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getBadgeRemovalStatus(): GeneralResponse {
+        val response = profileService.getBadgeRemovalStatus()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun cancelRequestBadgeRemoval(): GeneralResponse {
+        val response = profileService.cancelRequestBadgeRemoval()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+    //===================== Change password
 
     fun doChangePass(
         currentPass: String,

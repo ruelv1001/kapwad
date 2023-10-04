@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
+import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.AppConstant
@@ -37,11 +38,6 @@ class BadgeViewModel @Inject constructor(
                     _badgeSharedFlow.emit(ProfileViewState.Loading)
                 }
                 .catch { exception ->
-//                    CommonLogger.instance.sysLogE(
-//                        "222 BadgeViewModel",
-//                        exception.localizedMessage,
-//                        exception
-//                    )
                     onError(exception)
                 }
                 .collect {
@@ -53,6 +49,59 @@ class BadgeViewModel @Inject constructor(
         }
     }
 
+    fun requestBadgeRemoval(request : BadgeRemovalRequest) {
+        viewModelScope.launch {
+            profileRepository.requestBadgeRemoval(request)
+                .onStart {
+                    _badgeSharedFlow.emit(ProfileViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _badgeSharedFlow.emit(
+                        ProfileViewState.SuccessRequestBadgeRemoval(
+                            message = it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun getBadgeRemovalStatus() {
+        viewModelScope.launch {
+            profileRepository.getBadgeRemovalStatus()
+                .onStart {
+                    _badgeSharedFlow.emit(ProfileViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _badgeSharedFlow.emit(
+                        ProfileViewState.Success(
+                            message = it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun cancelRequestBadgeRemoval() {
+        viewModelScope.launch {
+            profileRepository.cancelRequestBadgeRemoval()
+                .onStart {
+                    _badgeSharedFlow.emit(ProfileViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _badgeSharedFlow.emit(
+                        ProfileViewState.Success(
+                            message = it.msg.orEmpty())
+                    )
+                }
+        }
+    }
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
