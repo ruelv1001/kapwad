@@ -14,6 +14,8 @@ import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.databinding.AdapterGroupPendingRequestBinding
 import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 
 class GroupsPendingRequestsAdapter (val context: Context, val clickListener: GroupCallback) :
     PagingDataAdapter<PendingGroupRequestData, GroupsPendingRequestsAdapter.AdapterViewHolder>(
@@ -55,6 +57,7 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
                     data.group?.member_count?: 0 //var arg
                 )
                 binding.referenceTextView.text = data.group?.qrcode
+                binding.imageView.loadGroupAvatar(data.group?.avatar?.thumb_path, context)
                 
                 binding.cancelTextView.text = context.getString(R.string.lbl_cancel_join_request)
 

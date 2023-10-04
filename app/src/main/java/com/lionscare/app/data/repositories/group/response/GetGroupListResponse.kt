@@ -2,6 +2,7 @@ package com.lionscare.app.data.repositories.group.response
 
 
 import androidx.annotation.Keep
+import com.lionscare.app.data.repositories.baseresponse.Avatar
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.Meta
 import com.lionscare.app.data.repositories.baseresponse.QrValue
@@ -35,6 +36,7 @@ data class GroupListData(
     var with_approval: Boolean? = false,
     var owner_user_id: String? = null,
     var date_created: DateModel? = null,
-    var owner: UserModel? = null
+    var owner: UserModel? = null,
+    var avatar : Avatar? = null
 )
 

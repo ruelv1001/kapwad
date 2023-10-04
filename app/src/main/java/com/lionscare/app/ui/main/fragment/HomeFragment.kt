@@ -45,6 +45,7 @@ import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.copyToClipboard
 import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
@@ -271,6 +272,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
     }
 
     private fun setImmediateFamily(data: GroupListData) = binding.run{
+        immediateFamilyLayout.imageView.loadGroupAvatar(data.avatar?.thumb_path,requireActivity())
         immediateFamilyLayout.titleTextView.text = data.name
         immediateFamilyLayout.membersTextView.text = if ((data.member_count ?: 0) > 1) {
             "${data.member_count} members"

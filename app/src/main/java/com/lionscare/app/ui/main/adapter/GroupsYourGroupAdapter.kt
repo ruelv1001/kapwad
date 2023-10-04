@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 
 class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCallback) :
     PagingDataAdapter<GroupListData, GroupsYourGroupAdapter.AdapterViewHolder>(
@@ -51,6 +53,7 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
                       data.member_count?: 0 //var arg
                   )
                   binding.referenceTextView.text = data.qrcode
+                binding.imageView.loadGroupAvatar(data.avatar?.thumb_path, context)
 
                 /*if (data.type.equals("FAM")){
                     binding.typeFamTextView.visibility = View.VISIBLE

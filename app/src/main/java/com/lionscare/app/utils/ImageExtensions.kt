@@ -30,6 +30,23 @@ fun ImageView.loadAvatar(url: String?, context: Context) {
         .into(this)
 }
 
+fun ImageView.loadGroupAvatar(url: String?, context: Context) {
+    val requestOption = RequestOptions()
+        .placeholder(R.color.color_accent)
+        .fallback(R.color.color_accent)
+        .error(R.color.color_accent)
+        .centerCrop()
+        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+
+    Glide.with(context)
+        .load(url)
+        .thumbnail(Glide.with(this)
+            .load(url)
+            .apply(requestOption))
+        .apply(requestOption)
+        .into(this)
+}
+
 /**
  * Load with center crop
  */
