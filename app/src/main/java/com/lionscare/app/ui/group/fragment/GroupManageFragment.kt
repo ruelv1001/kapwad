@@ -100,7 +100,7 @@ class GroupManageFragment : Fragment() {
     private fun setDetails() = binding.run {
         titleTextView.text = activity.groupDetails?.name
         referenceTextView.text = activity.groupDetails?.qrcode
-        imageView.loadGroupAvatar(activity.groupDetails?.avatar?.thumb_path,requireActivity())
+        imageView.loadGroupAvatar(activity.groupDetails?.avatar?.thumb_path)
         membersTextView.text = context?.resources?.getQuantityString(
             R.plurals.member_plural,
             activity.groupDetails?.member_count?: 0,
