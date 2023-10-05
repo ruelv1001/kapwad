@@ -75,10 +75,7 @@ class ImmediateFamilyViewModel  @Inject constructor(private val groupRepository:
                             errorResponse?.msg.orEmpty()
                         )
                     )
-                }else if (
-                    errorResponse?.status_code.orEmpty() != NOT_FOUND &&
-                    errorResponse?.status_code.orEmpty() != NO_IMMEDIATE_FAMILY
-                    ){
+                }else{
                     _getGroupSharedFlow.emit(
                         ImmediateFamilyViewState.PopupError(
                             PopupErrorState.HttpError,

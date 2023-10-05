@@ -257,7 +257,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                 binding.createGroupButton.isVisible = true
                 binding.famShimmerLayout.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
-                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
             }
 
             is ImmediateFamilyViewState.Success -> {
