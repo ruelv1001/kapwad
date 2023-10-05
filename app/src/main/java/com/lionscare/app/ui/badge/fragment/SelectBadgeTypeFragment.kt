@@ -50,7 +50,7 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
     private var accountTypeList = emptyList<AccountTypeModel>()
     private val activity by lazy { requireActivity() as VerifiedBadgeActivity }
     private val viewModel : BadgeViewModel by viewModels()
-    private var loadingDialog: CommonDialog? = null
+    private var loadingDialog: CommonDialog? =  null
 
     private var isBadgeRemovalRequestCancelled : Boolean = false
     override fun onCreateView(
