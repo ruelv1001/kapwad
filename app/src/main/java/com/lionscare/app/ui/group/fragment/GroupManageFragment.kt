@@ -156,6 +156,7 @@ class GroupManageFragment : Fragment() {
             ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
         }
         imageView.setOnSingleClickListener {
+            if(activity.groupDetails?.is_admin == true)
             openMediaOptionPicker()
         }
     }
