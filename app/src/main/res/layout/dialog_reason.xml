@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/reason_of_badge_removal"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_16" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginHorizontal="@dimen/dimen_16"
+        android:justificationMode="inter_word"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/badge_removal_warning"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_16" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/dimen_16"
+        android:hint="@string/reason">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:cursorVisible="true"
+            android:id="@+id/reasonTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_margin="@dimen/dimen_8"
+        app:backgroundTint="@color/color_primary"
+        android:id="@+id/removeBadgeButton"
+        style="@style/MyButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingTop="@dimen/dimen_15"
+        android:paddingBottom="@dimen/dimen_15"
+        android:text="@string/remove_badge"
+        android:textAllCaps="false"
+        android:textSize="@dimen/font_14"
+ />
+</LinearLayout>

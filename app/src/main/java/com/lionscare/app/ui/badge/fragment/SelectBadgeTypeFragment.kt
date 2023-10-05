@@ -1,11 +1,19 @@
 package com.lionscare.app.ui.badge.fragment
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +22,22 @@ import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.AccountTypeModel
+import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.databinding.FragmentSelectBadgeTypeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.badge.adapter.AccountTypeAdapter
+import com.lionscare.app.ui.badge.dialog.ReasonBottomSheetDialog
+import com.lionscare.app.ui.badge.viewmodel.BadgeViewModel
+import com.lionscare.app.ui.main.activity.MainActivity
+import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.utils.AppConstant.NOT_FOUND
+import com.lionscare.app.utils.CommonLogger
+import com.lionscare.app.utils.PopupErrorState
+import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
@@ -30,6 +49,8 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
     private var hasSelected = false
     private var accountTypeList = emptyList<AccountTypeModel>()
     private val activity by lazy { requireActivity() as VerifiedBadgeActivity }
+    private val viewModel : BadgeViewModel by viewModels()
+    private var loadingDialog: CommonDialog? =  null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +66,116 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupList()
+        observeProfile()
         setupClickListener()
+        viewModel.getBadgeRemovalStatus()
+        viewModel.getBadgeStatus()
+
+        setupList()
+    }
+
+    private fun observeProfile() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.badgeSharedFlow.collect { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun handleViewState(viewState: ProfileViewState) {
+        when (viewState) {
+            is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
+            is ProfileViewState.LoadingBadgeStatus -> Unit
+            is ProfileViewState.SuccessGetBadgeStatus -> {
+                when(viewState.badgeStatusResponse.data?.badge_type){
+                    "non_government_organization" -> {
+                        adapter?.changeIsBadgeRequestedBefore(true)
+                        binding.continueButton.isEnabled = false
+                        binding.removeBadgeButton.isEnabled = true
+                        //call the item clicked to display which has been seelcted prevously by the user
+                        onItemClicked( AccountTypeModel(getString(R.string.account_type_npo_text), R.drawable.ic_npo), 2)
+                    }
+                    "influencer" -> {
+                        adapter?.changeIsBadgeRequestedBefore(true)
+                        binding.continueButton.isEnabled = false
+                        binding.removeBadgeButton.isEnabled = true
+                        onItemClicked( AccountTypeModel(getString(R.string.account_type_influencer_text), R.drawable.ic_thumbs_up), 0)
+                    }
+                    "public_servant" -> {
+                        adapter?.changeIsBadgeRequestedBefore(true)
+                        binding.continueButton.isEnabled = false
+                        binding.removeBadgeButton.isEnabled = true
+                        onItemClicked(  AccountTypeModel(
+                            getString(R.string.account_type_public_servant_text),
+                            R.drawable.ic_public_servant
+                        ), 1)
+                    }
+                }
+            }
+            is ProfileViewState.Success -> { //cancel request of badge removal
+                hideLoadingDialog()
+                requireActivity().toastSuccess(message = viewState.message)
+                viewModel.setBadgeRemovalRequestCancelled(true)
+                binding.removeBadgeButton.isEnabled = true
+                binding.removeBadgeButton.text = getString(R.string.remove_badge)
+                binding.removeBadgeButton.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
+            }
+            is ProfileViewState.SuccessBadgeRemovalStatus -> {
+                hideLoadingDialog()
+                when(viewState.badgeRemovalStatus?.status){
+                    "pending" -> {
+                        viewModel.setBadgeRemovalRequestCancelled(false)
+                        binding.removeBadgeButton.isEnabled = true
+                        binding.removeBadgeButton.text = getString(R.string.cancel_badge_removal_request)
+                        binding.removeBadgeButton.backgroundTintList =
+                            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.pending))
+                    }
+                    "cancelled" -> {
+                        viewModel.setBadgeRemovalRequestCancelled(true)
+                        binding.removeBadgeButton.isEnabled = true
+                        binding.removeBadgeButton.text = getString(R.string.remove_badge)
+                        binding.removeBadgeButton.backgroundTintList =
+                            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
+                    }
+                    "declined" -> {
+                        viewModel.setBadgeRemovalRequestCancelled(true)
+                        binding.removeBadgeButton.isEnabled = true
+                        binding.removeBadgeButton.text = getString(R.string.remove_badge)
+                        binding.removeBadgeButton.backgroundTintList =
+                            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
+                    }
+                }
+
+            }
+            is ProfileViewState.SuccessRequestBadgeRemoval -> { //request to remove badge
+                hideLoadingDialog()
+                viewModel.setBadgeRemovalRequestCancelled(false)
+                requireActivity().toastSuccess(message = viewState.message)
+                binding.removeBadgeButton.isEnabled = true
+                binding.removeBadgeButton.text = getString(R.string.cancel_badge_removal_request)
+                binding.removeBadgeButton.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.commons_lbl_highlight))
+            }
+            is ProfileViewState.PopupError -> {
+                hideLoadingDialog()
+                if (viewState.badge == "badge_removal"){
+                    viewModel.setBadgeRemovalRequestCancelled(true)
+                }else if(viewState.badge == "badge"){
+                    adapter?.changeIsBadgeRequestedBefore(false)
+                    binding.continueButton.isEnabled = true
+                    binding.removeBadgeButton.isEnabled = false
+                }else{
+                    showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
+                }
+            }
+            else -> {
+                hideLoadingDialog()
+            }
+        }
     }
 
     private fun setupList() {
@@ -71,6 +200,25 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
     }
 
     private fun setupClickListener() = binding.run {
+        viewModel.isBadgeRemovalRequestCancelled.observe(viewLifecycleOwner){
+            removeBadgeButton.setOnSingleClickListener {
+                if (viewModel.isBadgeRemovalRequestCancelled.value == true){ // badge removal should be enabled if status is cancelled
+                    ReasonBottomSheetDialog.newInstance( callback = object : ReasonBottomSheetDialog.ReasonDialogCallback {
+                        @SuppressLint("SetTextI18n")
+                        override fun onRemoveBadgeButtonClicked(
+                            dialog: ReasonBottomSheetDialog,
+                            reason: String
+                        ) {
+                            viewModel.requestBadgeRemoval(request = BadgeRemovalRequest(reason = reason))
+
+                            dialog.dismiss()
+                        }
+                    }).show(childFragmentManager, ReasonBottomSheetDialog.TAG)
+                } else{
+                    viewModel.cancelRequestBadgeRemoval()
+                }
+            }
+        }
         backImageView.setOnSingleClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -105,4 +253,19 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
         adapter?.setSelectedPosition(position)
         hasSelected = true
     }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        if (loadingDialog == null){
+            loadingDialog = CommonDialog.getLoadingDialogInstance(
+                message = getString(strId)
+            )
+            loadingDialog?.show(childFragmentManager)
+        }
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+    }
+
 }
