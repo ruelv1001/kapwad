@@ -157,7 +157,7 @@ class GroupManageFragment : Fragment() {
         }
         imageView.setOnSingleClickListener {
             if(activity.groupDetails?.is_admin == true)
-            openMediaOptionPicker()
+                openMediaOptionPicker()
         }
     }
 
