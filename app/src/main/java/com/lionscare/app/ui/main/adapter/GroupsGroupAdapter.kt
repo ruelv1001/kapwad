@@ -8,6 +8,8 @@ import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.AdapterGroupGroupBinding
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 
 class GroupsGroupAdapter (val context: Context, val clickListener: GroupCallback) :
     RecyclerView.Adapter<GroupsGroupAdapter.AdapterViewHolder>() {
@@ -50,6 +52,7 @@ class GroupsGroupAdapter (val context: Context, val clickListener: GroupCallback
                 data.member_count?: 0 //var arg
             )
             binding.referenceTextView.text = data.qrcode
+            binding.imageView.loadGroupAvatar(data.avatar?.thumb_path, context)
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data)
             }

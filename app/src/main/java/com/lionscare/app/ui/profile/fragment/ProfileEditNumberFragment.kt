@@ -24,13 +24,15 @@ import com.lionscare.app.databinding.FragmentProfilePreviewBinding
 import com.lionscare.app.ui.profile.activity.ProfileActivity
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewModel
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
+import com.lionscare.app.ui.register.dialog.CountryDialog
+import com.lionscare.app.utils.isPhoneNumberValid
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ProfileEditNumberFragment: Fragment() {
+class ProfileEditNumberFragment : Fragment() {
     private var _binding: FragmentProfileEditNumberBinding? = null
     private val binding get() = _binding!!
 
@@ -59,15 +61,35 @@ class ProfileEditNumberFragment: Fragment() {
         viewModel.getProfileDetails()
     }
 
-    private fun setClickListeners() = binding.run  {
+    private fun setClickListeners() = binding.run {
         confirmButton.setOnSingleClickListener {
-            viewModel.changePhoneNumber(UpdatePhoneNumberRequest(phone_number = binding.phoneEditText.text.toString()))
+            val phoneNumber = "${viewModel.countryCode}${phoneNumberEditText.text.toString()}"
+            if (isPhoneNumberValid(phoneNumber, viewModel.countryIso)) {
+                viewModel.changePhoneNumber(
+                    UpdatePhoneNumberRequest(
+                        phone_number = phoneNumber,
+                        phone_number_country_code = viewModel.countryCode
+                    )
+                )
+            } else {
+                phoneNumberTextInputLayout.error = getString(R.string.phone_number_is_invalid)
+            }
+        }
+
+        countryCodeTextView.setOnSingleClickListener {
+            CountryDialog.newInstance(object : CountryDialog.AddressCallBack {
+                override fun onAddressClicked(countryName: String, code: String, phone_code: String) {
+                    countryCodeTextView.text = phone_code
+                    viewModel.countryCode = phone_code
+                    viewModel.countryIso = code
+                }
+            }, displayCountryCode = true).show(childFragmentManager, CountryDialog.TAG)
         }
     }
 
     private fun observeProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.profileSharedFlow.collect { viewState ->
                     handleViewState(viewState)
                 }
@@ -76,24 +98,31 @@ class ProfileEditNumberFragment: Fragment() {
     }
 
     private fun handleViewState(viewState: ProfileViewState) {
-        when (viewState){
+        when (viewState) {
             is ProfileViewState.Loading -> showLoadingDialog(R.string.loading)
             is ProfileViewState.SuccessUpdatePhoneNumber -> {
                 hideLoadingDialog()
-                requireActivity().toastSuccess(viewState.response.msg.toString(), CpmToast.LONG_DURATION)
-                viewModel.phoneNumber = binding.phoneEditText.text.toString()
+                requireActivity().toastSuccess(
+                    viewState.response.msg.toString(),
+                    CpmToast.LONG_DURATION
+                )
+                viewModel.phoneNumber = "${viewModel.countryCode}${binding.phoneNumberEditText.text.toString()}"
                 findNavController().navigate(ProfileEditNumberFragmentDirections.actionProfileEditNumberFragmentToProfileOTPFragment())
             }
+
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
-                showPopupError(requireActivity(),
+                showPopupError(
+                    requireActivity(),
                     childFragmentManager,
                     viewState.errorCode,
-                    viewState.message)
+                    viewState.message
+                )
             }
+
             is ProfileViewState.InputError -> {
                 hideLoadingDialog()
-                handleInputError(viewState.errorData?: ErrorsData())
+                handleInputError(viewState.errorData ?: ErrorsData())
             }
 
             else -> hideLoadingDialog()
@@ -102,11 +131,14 @@ class ProfileEditNumberFragment: Fragment() {
 
 
     private fun handleInputError(errorsData: ErrorsData) = binding.run {
-        if (errorsData.otp?.get(0)?.isNotEmpty() == true){
+        if (errorsData.otp?.get(0)?.isNotEmpty() == true) {
             requireActivity().toastError(errorsData.otp?.get(0).toString(), CpmToast.SHORT_DURATION)
         }
-        if (errorsData.phone_number?.get(0)?.isNotEmpty() == true){
-            requireActivity().toastError(errorsData.phone_number?.get(0).toString(), CpmToast.SHORT_DURATION)
+        if (errorsData.phone_number?.get(0)?.isNotEmpty() == true) {
+            requireActivity().toastError(
+                errorsData.phone_number?.get(0).toString(),
+                CpmToast.SHORT_DURATION
+            )
         }
     }
 

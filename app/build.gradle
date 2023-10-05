@@ -172,4 +172,5 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.6'
 
     implementation 'com.github.emrekotun:CpmToast:1.0.2'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.42'
 }
