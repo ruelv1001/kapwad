@@ -208,7 +208,8 @@ class GroupManageFragment : Fragment() {
             }
             is GroupViewState.SuccessUploadAvatar -> {
                 hideLoadingDialog()
-               // load avatar here
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
+                activity.onBackPressedDispatcher.onBackPressed()
             }
             is GroupViewState.PopupError -> {
                 hideLoadingDialog()
