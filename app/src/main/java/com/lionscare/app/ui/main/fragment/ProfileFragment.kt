@@ -189,7 +189,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             binding.badgeImageView.visibility = View.VISIBLE
             //change icon of avatar badge
             when(data?.badge_type){
-                "non_government_Organization" -> {
+                "non_government_organization" -> {
                     binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
                     binding.badgeIdStatus.text = getString(R.string.account_type_npo_text)
                     binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
@@ -206,8 +206,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 }
             }
 
-            requestBadgeLinearLayout.isClickable = false
-            requestBadgeImageView.setImageResource(R.drawable.ic_settings_request_badge_gray)
+            requestBadgeLinearLayout.isClickable = true
             verifiedRBTextView.visibility = View.VISIBLE
             arrowRBImageView.visibility = View.GONE
         }else{
@@ -221,7 +220,6 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         if(isAccountVerified == true){
-            verifyAccountImageView.setImageResource(R.drawable.ic_settings_verify_account_gray)
             verifiedVATextView.visibility = View.VISIBLE
             arrowVAImageView.visibility = View.GONE
         }else{

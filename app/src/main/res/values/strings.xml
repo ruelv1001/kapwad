@@ -256,6 +256,7 @@
     <string name="proof_of_address_select_document_type_title">Select Document Type</string>
     <string name="proof_of_address_note_text">We kindly request a photograph of an official document as proof of your address to proceed with the identity verification process.</string>
     <string name="lbl_pending_request">Pending Request</string>
+    <string name="lbl_pending_cancellation_request">Pending Badge Removal Request</string>
     <string name="logout_loading">Logging out…</string>
     <string name="lbl_nominate_passcode">Nominate Passcode</string>
     <string name="lbl_filter_by">Filter By:</string>
@@ -383,4 +384,9 @@
     <string name="pay_now">Pay now</string>
     <string name="lbl_sent">Sent</string>
     <string name="address_country_hint">Country</string>
+    <string name="remove_badge">Remove Badge</string>
+    <string name="cancel_badge_removal_request">Cancel Badge Removal Request</string>
+    <string name="reason">Reason</string>
+    <string name="reason_of_badge_removal">Reason of Badge Removal</string>
+    <string name="badge_removal_warning">Removing your badge will cancel and remove your badge regardless if its approved or still pending from your account. Once removal of badge is approved, you will have to request and submit documents again to get another badge.</string>
 </resources>

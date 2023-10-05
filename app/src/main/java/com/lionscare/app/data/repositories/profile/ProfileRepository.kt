@@ -10,6 +10,7 @@ import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
@@ -130,7 +131,7 @@ class ProfileRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    fun getBadgeRemovalStatus(): Flow<GeneralResponse> {
+    fun getBadgeRemovalStatus(): Flow<BadgeRemovalStatusResponse> {
         return flow {
             val response = profileRemoteDataSource.getBadgeRemovalStatus()
             emit(response)

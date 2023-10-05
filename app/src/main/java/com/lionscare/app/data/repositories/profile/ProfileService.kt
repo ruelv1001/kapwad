@@ -8,6 +8,7 @@ import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
@@ -88,7 +89,7 @@ interface ProfileService {
     suspend fun requestBadgeRemoval(@Body request : BadgeRemovalRequest): Response<GeneralResponse>
 
     @POST("api/profile/badge/remove/status")
-    suspend fun getBadgeRemovalStatus(): Response<GeneralResponse>
+    suspend fun getBadgeRemovalStatus(): Response<BadgeRemovalStatusResponse>
 
     @POST("api/profile/badge/remove/cancel")
     suspend fun cancelRequestBadgeRemoval(): Response<GeneralResponse>

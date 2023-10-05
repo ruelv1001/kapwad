@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.model.AccountTypeModel
 import com.lionscare.app.databinding.AdapterAccountTypeBinding
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 
 class AccountTypeAdapter(
@@ -17,10 +19,15 @@ class AccountTypeAdapter(
 
     private val adapterData = mutableListOf<AccountTypeModel>()
     private var selectedPosition: Int = RecyclerView.NO_POSITION
+    private var isBadgeRequestedBefore : Boolean = false
 
     fun clear() {
         adapterData.clear()
         notifyDataSetChanged()
+    }
+
+    fun changeIsBadgeRequestedBefore(value: Boolean){
+        isBadgeRequestedBefore = value
     }
 
     fun appendData(newData: List<AccountTypeModel>) {
@@ -80,6 +87,17 @@ class AccountTypeAdapter(
                 setSelectedPosition(position)
                 clickListener.onItemClicked(data, position)
             }
+
+            if (isBadgeRequestedBefore){
+                binding.accountTypeLinearLayout.isClickable = false
+                binding.accountTypeRadioButton.isClickable = false
+                binding.accountTypeTextView.setTextColor(context.getColor(R.color.super_light_gray))
+            }else{
+                binding.accountTypeLinearLayout.isClickable = true
+                binding.accountTypeRadioButton.isClickable = true
+                binding.accountTypeTextView.setTextColor(context.getColor(R.color.black_text))
+            }
+
 
         }
     }

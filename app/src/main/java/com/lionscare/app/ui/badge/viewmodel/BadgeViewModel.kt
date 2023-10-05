@@ -49,6 +49,25 @@ class BadgeViewModel @Inject constructor(
         }
     }
 
+    fun getBadgeStatus() {
+        viewModelScope.launch {
+            profileRepository.getBadgeStatus()
+                .onStart {
+                    _badgeSharedFlow.emit(ProfileViewState.LoadingBadgeStatus)
+                }
+                .catch { exception ->
+                    onError(exception, "badge")
+                }
+                .collect {
+                    _badgeSharedFlow.emit(
+                        ProfileViewState.SuccessGetBadgeStatus(
+                            message = it.msg.orEmpty(), badgeStatusResponse = it)
+                    )
+                }
+        }
+    }
+
+
     fun requestBadgeRemoval(request : BadgeRemovalRequest) {
         viewModelScope.launch {
             profileRepository.requestBadgeRemoval(request)
@@ -74,12 +93,12 @@ class BadgeViewModel @Inject constructor(
                     _badgeSharedFlow.emit(ProfileViewState.Loading)
                 }
                 .catch { exception ->
-                    onError(exception)
+                    onError(exception, "badge_removal")
                 }
                 .collect {
                     _badgeSharedFlow.emit(
-                        ProfileViewState.Success(
-                            message = it.msg.orEmpty())
+                        ProfileViewState.SuccessBadgeRemovalStatus(
+                        badgeRemovalStatus = it.data)
                     )
                 }
         }
@@ -102,7 +121,7 @@ class BadgeViewModel @Inject constructor(
                 }
         }
     }
-    private suspend fun onError(exception: Throwable) {
+    private suspend fun onError(exception: Throwable, badge: String ="") {
         when (exception) {
             is IOException,
             is TimeoutException
@@ -121,16 +140,30 @@ class BadgeViewModel @Inject constructor(
                 if (errorResponse?.has_requirements == true) {
                     _badgeSharedFlow.emit(ProfileViewState.InputError(errorResponse.errors))
                 } else {
-                    _badgeSharedFlow.emit(
-                        ProfileViewState.PopupError(
-                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
-                                PopupErrorState.SessionError
-                            }else{
-                                PopupErrorState.HttpError
-                            }
-                            , errorResponse?.msg.orEmpty()
+                    if(AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                        _badgeSharedFlow.emit(
+                            ProfileViewState.PopupError(
+                                PopupErrorState.SessionError,
+                                errorResponse?.msg.orEmpty()
+                            )
                         )
-                    )
+                    }else if (errorResponse?.status_code.orEmpty() != AppConstant.NOT_FOUND){
+                        _badgeSharedFlow.emit(
+                            ProfileViewState.PopupError(
+                                PopupErrorState.HttpError,
+                                errorResponse?.msg.orEmpty(),
+                            )
+                        )
+                    }else if (errorResponse?.status_code.orEmpty() == AppConstant.NOT_FOUND){
+                        _badgeSharedFlow.emit(
+                            ProfileViewState.PopupError(
+                                PopupErrorState.HttpError,
+                                errorResponse?.msg.orEmpty(),
+                                badge
+                            )
+                        )
+                    }
+
                 }
             }
             else -> _badgeSharedFlow.emit(

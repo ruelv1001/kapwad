@@ -98,7 +98,7 @@ class UploadBadgeDocumentsFragment : Fragment() {
                     accountTypeFormmatted = "public_servant"
                 }
                 getString(R.string.account_type_npo_text) -> {
-                    accountTypeFormmatted = "non_government_Organization"
+                    accountTypeFormmatted = "non_government_organization"
                 }
             }
 

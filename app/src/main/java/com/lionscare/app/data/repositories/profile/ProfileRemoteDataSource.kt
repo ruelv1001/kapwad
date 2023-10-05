@@ -10,6 +10,7 @@ import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
@@ -195,7 +196,7 @@ class ProfileRemoteDataSource @Inject constructor(
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun getBadgeRemovalStatus(): GeneralResponse {
+    suspend fun getBadgeRemovalStatus(): BadgeRemovalStatusResponse {
         val response = profileService.getBadgeRemovalStatus()
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)

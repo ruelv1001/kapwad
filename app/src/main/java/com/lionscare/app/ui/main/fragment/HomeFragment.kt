@@ -164,7 +164,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                         binding.idLayout.badgeImageView.visibility = View.VISIBLE
                         //change icon of avatar badge
                         when(viewState.badgeStatus.badge_type){
-                            "non_government_Organization" -> {
+                            "non_government_organization" -> {
                                 binding.mainLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
                                 binding.idLayout.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
                                 binding.mainLayout.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
@@ -211,7 +211,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         binding.mainLayout.includeBadgeLayout.dateTextView.text = "Submitted on:\n${badgeStatus?.submitted_date?.datetime_ph}"
         binding.mainLayout.includeBadgeLayout.accountTypeTextView.text = formatBadgeType( badgeStatus?.badge_type )
         when(badgeStatus?.badge_type){
-            "non_government_Organization" -> {
+            "non_government_organization" -> {
                 binding.mainLayout.includeBadgeLayout.accountTypeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
             }
             "influencer" -> {
@@ -231,7 +231,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
             "public_servant" -> {
                 accountTypeFormmatted =   getString(R.string.account_type_public_servant_text)
             }
-            "non_government_Organization" -> {
+            "non_government_organization" -> {
                 accountTypeFormmatted =   getString(R.string.account_type_npo_text)
             }
         }
@@ -267,6 +267,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                 viewState.immediateFamilyResponse?.data?.let { setImmediateFamily(it) }
                 immediateFamilyId = viewState.immediateFamilyResponse?.data?.id.toString()
             }
+
+            else -> Unit
         }
     }
 
