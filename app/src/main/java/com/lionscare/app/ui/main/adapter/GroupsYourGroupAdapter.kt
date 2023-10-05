@@ -53,7 +53,7 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
                       data.member_count?: 0 //var arg
                   )
                   binding.referenceTextView.text = data.qrcode
-                binding.imageView.loadGroupAvatar(data.avatar?.thumb_path, context)
+                binding.imageView.loadGroupAvatar(data.avatar?.thumb_path)
 
                 /*if (data.type.equals("FAM")){
                     binding.typeFamTextView.visibility = View.VISIBLE

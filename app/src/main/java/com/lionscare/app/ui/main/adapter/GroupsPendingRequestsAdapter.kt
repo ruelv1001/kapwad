@@ -57,7 +57,7 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
                     data.group?.member_count?: 0 //var arg
                 )
                 binding.referenceTextView.text = data.group?.qrcode
-                binding.imageView.loadGroupAvatar(data.group?.avatar?.thumb_path, context)
+                binding.imageView.loadGroupAvatar(data.group?.avatar?.thumb_path)
                 
                 binding.cancelTextView.text = context.getString(R.string.lbl_cancel_join_request)
 

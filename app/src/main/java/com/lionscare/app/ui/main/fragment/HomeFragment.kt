@@ -274,7 +274,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
     }
 
     private fun setImmediateFamily(data: GroupListData) = binding.run{
-        immediateFamilyLayout.imageView.loadGroupAvatar(data.avatar?.thumb_path,requireActivity())
+        immediateFamilyLayout.imageView.loadGroupAvatar(data.avatar?.thumb_path)
         immediateFamilyLayout.titleTextView.text = data.name
         immediateFamilyLayout.membersTextView.text = if ((data.member_count ?: 0) > 1) {
             "${data.member_count} members"

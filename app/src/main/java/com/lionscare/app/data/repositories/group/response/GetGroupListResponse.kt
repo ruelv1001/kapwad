@@ -26,6 +26,8 @@ data class GroupListData(
     var qrcode: String? = null,
     var qr_value: QrValue? = null,
     var qrcode_vale: String? = null,
+    var is_member: Boolean? = false,
+    var is_admin: Boolean? = false,
     var member_count: Int? = null,
     var member_only_count: Int? = null,
     var admin_only_count: Int? = null,

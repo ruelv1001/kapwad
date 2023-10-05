@@ -156,6 +156,7 @@ class GroupManageFragment : Fragment() {
             ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
         }
         imageView.setOnSingleClickListener {
+            if(activity.groupDetails?.is_admin == true)
             openMediaOptionPicker()
         }
     }
@@ -208,7 +209,8 @@ class GroupManageFragment : Fragment() {
             }
             is GroupViewState.SuccessUploadAvatar -> {
                 hideLoadingDialog()
-               // load avatar here
+                requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
+                activity.onBackPressedDispatcher.onBackPressed()
             }
             is GroupViewState.PopupError -> {
                 hideLoadingDialog()
