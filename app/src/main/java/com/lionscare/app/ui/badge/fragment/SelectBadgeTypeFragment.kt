@@ -52,7 +52,6 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
     private val viewModel : BadgeViewModel by viewModels()
     private var loadingDialog: CommonDialog? =  null
 
-    private var isBadgeRemovalRequestCancelled : Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -119,7 +118,7 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
             is ProfileViewState.Success -> { //cancel request of badge removal
                 hideLoadingDialog()
                 requireActivity().toastSuccess(message = viewState.message)
-                isBadgeRemovalRequestCancelled = true
+                viewModel.setBadgeRemovalRequestCancelled(true)
                 binding.removeBadgeButton.isEnabled = true
                 binding.removeBadgeButton.text = getString(R.string.remove_badge)
                 binding.removeBadgeButton.backgroundTintList =
@@ -129,21 +128,21 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
                 hideLoadingDialog()
                 when(viewState.badgeRemovalStatus?.status){
                     "pending" -> {
-                        isBadgeRemovalRequestCancelled = false
+                        viewModel.setBadgeRemovalRequestCancelled(false)
                         binding.removeBadgeButton.isEnabled = true
                         binding.removeBadgeButton.text = getString(R.string.cancel_badge_removal_request)
                         binding.removeBadgeButton.backgroundTintList =
                             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.pending))
                     }
                     "cancelled" -> {
-                        isBadgeRemovalRequestCancelled = true
+                        viewModel.setBadgeRemovalRequestCancelled(true)
                         binding.removeBadgeButton.isEnabled = true
                         binding.removeBadgeButton.text = getString(R.string.remove_badge)
                         binding.removeBadgeButton.backgroundTintList =
                             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
                     }
                     "declined" -> {
-                        isBadgeRemovalRequestCancelled = true
+                        viewModel.setBadgeRemovalRequestCancelled(true)
                         binding.removeBadgeButton.isEnabled = true
                         binding.removeBadgeButton.text = getString(R.string.remove_badge)
                         binding.removeBadgeButton.backgroundTintList =
@@ -154,7 +153,7 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
             }
             is ProfileViewState.SuccessRequestBadgeRemoval -> { //request to remove badge
                 hideLoadingDialog()
-                isBadgeRemovalRequestCancelled = false
+                viewModel.setBadgeRemovalRequestCancelled(false)
                 requireActivity().toastSuccess(message = viewState.message)
                 binding.removeBadgeButton.isEnabled = true
                 binding.removeBadgeButton.text = getString(R.string.cancel_badge_removal_request)
@@ -164,7 +163,7 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
                 if (viewState.badge == "badge_removal"){
-                    isBadgeRemovalRequestCancelled = true
+                    viewModel.setBadgeRemovalRequestCancelled(true)
                 }else if(viewState.badge == "badge"){
                     adapter?.changeIsBadgeRequestedBefore(false)
                     binding.continueButton.isEnabled = true
@@ -201,23 +200,24 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
     }
 
     private fun setupClickListener() = binding.run {
-        removeBadgeButton.setOnSingleClickListener {
-            if (isBadgeRemovalRequestCancelled){ // badge removal should be enabled if status is cancelled
-                ReasonBottomSheetDialog.newInstance( callback = object : ReasonBottomSheetDialog.ReasonDialogCallback {
-                    @SuppressLint("SetTextI18n")
-                    override fun onRemoveBadgeButtonClicked(
-                        dialog: ReasonBottomSheetDialog,
-                        reason: String
-                    ) {
-                        viewModel.requestBadgeRemoval(request = BadgeRemovalRequest(reason = reason))
+        viewModel.isBadgeRemovalRequestCancelled.observe(viewLifecycleOwner){
+            removeBadgeButton.setOnSingleClickListener {
+                if (viewModel.isBadgeRemovalRequestCancelled.value == true){ // badge removal should be enabled if status is cancelled
+                    ReasonBottomSheetDialog.newInstance( callback = object : ReasonBottomSheetDialog.ReasonDialogCallback {
+                        @SuppressLint("SetTextI18n")
+                        override fun onRemoveBadgeButtonClicked(
+                            dialog: ReasonBottomSheetDialog,
+                            reason: String
+                        ) {
+                            viewModel.requestBadgeRemoval(request = BadgeRemovalRequest(reason = reason))
 
-                        dialog.dismiss()
-                    }
-                }).show(childFragmentManager, ReasonBottomSheetDialog.TAG)
-            } else{
-                viewModel.cancelRequestBadgeRemoval()
+                            dialog.dismiss()
+                        }
+                    }).show(childFragmentManager, ReasonBottomSheetDialog.TAG)
+                } else{
+                    viewModel.cancelRequestBadgeRemoval()
+                }
             }
-
         }
         backImageView.setOnSingleClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

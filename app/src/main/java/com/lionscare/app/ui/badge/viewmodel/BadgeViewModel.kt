@@ -1,5 +1,7 @@
 package com.lionscare.app.ui.badge.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -30,6 +32,14 @@ class BadgeViewModel @Inject constructor(
     private val _badgeSharedFlow = MutableSharedFlow<ProfileViewState>()
     val badgeSharedFlow: SharedFlow<ProfileViewState> =
         _badgeSharedFlow.asSharedFlow()
+
+
+    //make it an observable to notify changes, making it a STATE
+    private val _isBadgeRemovalRequestCancelled = MutableLiveData<Boolean>()
+    val isBadgeRemovalRequestCancelled : LiveData<Boolean?> = _isBadgeRemovalRequestCancelled
+    fun setBadgeRemovalRequestCancelled(value: Boolean) {
+        _isBadgeRemovalRequestCancelled.value = value
+    }
 
     fun doRequestBadge(request : BadgeRequest) {
         viewModelScope.launch {
