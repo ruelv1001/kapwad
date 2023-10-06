@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.AdapterSearchGroupBinding
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 
 class GroupsAdapter(val context: Context, val clickListener: OnClickCallback) :
     RecyclerView.Adapter<GroupsAdapter.AdapterViewHolder>() {
@@ -50,7 +52,7 @@ class GroupsAdapter(val context: Context, val clickListener: OnClickCallback) :
                 data.member_count?: 0, //quantity
                 data.member_count?: 0 //var arg
             )
-
+            binding.imageView.loadGroupAvatar(data.avatar?.thumb_path)
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onGroupItemClickListener(data)
             }

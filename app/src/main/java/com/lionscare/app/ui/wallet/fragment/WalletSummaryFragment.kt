@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.wallet.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,8 @@ import com.lionscare.app.ui.wallet.viewmodel.WalletViewModel
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.PopupErrorState
 import com.lionscare.app.utils.currencyFormat
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,6 +60,7 @@ class WalletSummaryFragment : Fragment() {
         observeGroupWallet()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupDetails() = binding.run {
         when(activity.mode){
             "Send Points" -> {
@@ -66,11 +70,13 @@ class WalletSummaryFragment : Fragment() {
                     recipientLayout.membersLinearLayout.isGone = true
                     recipientGroupLayout.titleTextView.text = activity.groupData.name
                     recipientGroupLayout.referenceTextView.text = activity.groupData.code
+                    recipientGroupLayout.imageView.loadGroupAvatar(activity.groupData.avatar?.thumb_path)
                     recipientGroupLayout.membersTextView.text = "${activity.groupData.member_count.toString()} members"
                 }else{
                     recipientGroupLayout.adapterLinearLayout.isGone = true
                     recipientLayout.membersLinearLayout.isVisible = true
                     recipientLayout.nameTextView.text = activity.qrData.name
+                    recipientLayout.profileImageView.loadAvatar(activity.qrData.avatar?.thumb_path, requireActivity())
                     //TODO to be updated when display id ready
                     recipientLayout.idNoTextView.isGone = true
                 }
