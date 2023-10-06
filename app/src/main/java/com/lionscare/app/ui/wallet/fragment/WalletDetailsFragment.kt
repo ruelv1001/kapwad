@@ -67,7 +67,6 @@ class WalletDetailsFragment : Fragment() {
                     recipientGroupLayout.imageView.loadGroupAvatar(activity.groupData.avatar?.thumb_path)
                     recipientGroupLayout.membersTextView.text = "${activity.groupData.member_count.toString()} members"
                 }else{
-                    CommonLogger.instance.sysLogI("SendPointDetails", activity.qrData)
                     recipientGroupLayout.adapterLinearLayout.isGone = true
                     recipientLayout.membersLinearLayout.isVisible = true
                     recipientLayout.nameTextView.text = activity.qrData.name
