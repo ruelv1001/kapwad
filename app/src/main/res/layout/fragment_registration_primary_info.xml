@@ -182,7 +182,7 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:drawablePadding="@dimen/dimen_4"
                     android:fontFamily="@font/inter_bold"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="+63"
                     android:textColor="@color/black"
                     app:drawableEndCompat="@drawable/ic_arrow_down"

@@ -157,6 +157,7 @@
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/home_address_hint"
                 android:textColor="@color/text_color"
+                android:baselineAligned="false"
                 android:autoSizeStepGranularity="@dimen/font_1"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="@dimen/font_6"
@@ -242,7 +243,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_30">
+        android:layout_marginTop="@dimen/dimen_40">
 
         <ImageView
             android:id="@+id/qrImageView"
