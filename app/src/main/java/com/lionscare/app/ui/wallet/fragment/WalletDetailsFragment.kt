@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.wallet.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,8 +13,12 @@ import androidx.core.view.isVisible
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentWalletDetailsBinding
 import com.lionscare.app.ui.wallet.activity.WalletActivity
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.copyToClipboard
 import com.lionscare.app.utils.currencyFormat
+import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.utils.loadGroupAvatar
+import com.lionscare.app.utils.loadImage
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,6 +47,7 @@ class WalletDetailsFragment : Fragment() {
         setupClickListener()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupDetails() = binding.run {
         activity.onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -58,11 +64,14 @@ class WalletDetailsFragment : Fragment() {
                     recipientLayout.membersLinearLayout.isGone = true
                     recipientGroupLayout.titleTextView.text = activity.groupData.name
                     recipientGroupLayout.referenceTextView.text = activity.groupData.code
+                    recipientGroupLayout.imageView.loadGroupAvatar(activity.groupData.avatar?.thumb_path)
                     recipientGroupLayout.membersTextView.text = "${activity.groupData.member_count.toString()} members"
                 }else{
+                    CommonLogger.instance.sysLogI("SendPointDetails", activity.qrData)
                     recipientGroupLayout.adapterLinearLayout.isGone = true
                     recipientLayout.membersLinearLayout.isVisible = true
                     recipientLayout.nameTextView.text = activity.qrData.name
+                    recipientLayout.profileImageView.loadAvatar(activity.qrData.avatar?.thumb_path, requireActivity())
                     //TODO to be updated when display id ready
                     recipientLayout.idNoTextView.isGone = true
                 }
