@@ -26,13 +26,17 @@
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:text="@string/inbound_title"
+                android:layout_weight="1"
                 android:textColor="@color/black_text"
-                android:textSize="@dimen/font_16" />
+                android:layout_marginEnd="@dimen/dimen_6"
+                android:autoSizeStepGranularity="@dimen/font_2"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="@dimen/font_8"
+                android:autoSizeMaxTextSize="@dimen/font_16" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/amountTextView"
