@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.address.response.AddressData
 import com.lionscare.app.data.repositories.profile.response.LOVData
 import com.lionscare.app.databinding.AdapterAddressBinding
@@ -44,6 +46,9 @@ class LionsClubLovListAdapter(val clickListener: LionsClubLovListAdapter.RegionC
     override fun onBindViewHolder(holder: LionsClubLovListAdapter.AdapterViewHolder, position: Int) {
         AdapterAddressBinding.bind(holder.itemView).apply {
             val lov = differ.currentList[position]
+            if(lov.code == "Deselect"){
+                addressTitleTextView.setTextColor(ContextCompat.getColor(this.root.context, R.color.red))
+            }
             addressTitleTextView.text = lov.value
 
             this.root.setOnClickListener {

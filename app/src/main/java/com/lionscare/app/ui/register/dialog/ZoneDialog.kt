@@ -93,7 +93,9 @@ class ZoneDialog : BottomSheetDialogFragment(), LionsClubLovListAdapter.RegionCa
             is AddressViewState.SuccessGetLionsClubLOV -> {
                 viewBinding?.addressRecyclerView?.isVisible = true
                 viewBinding?.progressContainer?.isGone = true
-                adapter?.differ?.submitList(viewState.lovResponse)
+                val list = mutableListOf<LOVData>(LOVData(code = "Deselect", name = "Deselect", value = "Deselect"))
+                list.addAll(viewState.lovResponse.map{it})
+                adapter?.differ?.submitList(list)
             }
             else-> Unit
         }
