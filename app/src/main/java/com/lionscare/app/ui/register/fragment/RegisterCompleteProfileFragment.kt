@@ -120,6 +120,9 @@ class RegisterCompleteProfileFragment: Fragment() {
         if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true ) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
         if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
         if (errorsData.zipcode?.get(0)?.isNotEmpty() == true) binding.zipcodeTextInputLayout.error = errorsData.zipcode?.get(0)
+        //custom error since API error is jargon to non-IT user
+        if (errorsData.lc_location_id?.get(0)?.isNotEmpty() == true) binding.clusterTextInputLayout.error = getString( R.string.location_required)
+        if (errorsData.lc_zone_id?.get(0)?.isNotEmpty() == true) binding.zoneTextInputLayout.error = getString( R.string.zone_required)
     }
 
     override fun onResume() {
@@ -129,38 +132,38 @@ class RegisterCompleteProfileFragment: Fragment() {
 
     private fun setView() = binding.run {
         emailEditText.doOnTextChanged { text, start, before, count ->
-            emailTextInputLayout.error = ""
+            emailTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         birthdateEditText.doOnTextChanged { text, start, before, count ->
-            birthdateTextInputLayout.error = ""
+            birthdateTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         provinceEditText.doOnTextChanged { text, start, before, count ->
-            provinceTextInputLayout.error = ""
+            provinceTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         cityEditText.doOnTextChanged { text, start, before, count ->
-            cityTextInputLayout.error = ""
+            cityTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         barangayEditText.doOnTextChanged { text, start, before, count ->
-            barangayTextInputLayout.error = ""
+            barangayTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         streetEditText.doOnTextChanged { text, start, before, count ->
-            streetTextInputLayout.error = ""
+            streetTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         zipcodeEditText.doOnTextChanged { text, start, before, count ->
-            zipcodeTextInputLayout.error = ""
+            zipcodeTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
 
         regionEditText.doOnTextChanged {
                 text, start, before, count ->
-            regionTextInputLayout.error = ""
+            regionTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         zoneEditText.doOnTextChanged {
                 text, start, before, count ->
-            zoneTextInputLayout.error = ""
+            zoneTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         clusterEditText.doOnTextChanged {
                 text, start, before, count ->
-            clusterTextInputLayout.error = ""
+            clusterTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
 
         cityEditText.isClickable = false
@@ -230,36 +233,41 @@ class RegisterCompleteProfileFragment: Fragment() {
         }
 
         cityEditText.setOnSingleClickListener {
-            CityDialog.newInstance(object : CityDialog.AddressCallBack {
-                override fun onAddressClicked(
-                    cityName: String,
-                    citySku: String,
-                    zipcode: String
-                ) {
-                    cityEditText.setText(cityName)
-                    cityCode = citySku
+            if(provinceEditText.text.toString().isNotEmpty()) {
+                CityDialog.newInstance(object : CityDialog.AddressCallBack {
+                    override fun onAddressClicked(
+                        cityName: String,
+                        citySku: String,
+                        zipcode: String
+                    ) {
+                        cityEditText.setText(cityName)
+                        cityCode = citySku
 
-                    barangayEditText.setText("")
-                    zipcodeEditText.setText("")
+                        barangayEditText.setText("")
+                        zipcodeEditText.setText("")
 
-                    setClickable()
-                }
-            }, reference).show(childFragmentManager, CityDialog.TAG)
+                        setClickable()
+                    }
+                }, reference).show(childFragmentManager, CityDialog.TAG)
+            }
+
         }
 
         barangayEditText.setOnSingleClickListener {
-            BrgyDialog.newInstance(object : BrgyDialog.AddressCallBack {
-                override fun onAddressClicked(
-                    cityName: String,
-                    citySku: String,
-                    zipCode: String
-                ) {
-                    brgyCode = citySku
-                    barangayEditText.setText(cityName)
-                    zipcodeEditText.setText(zipCode)
-                    setClickable()
-                }
-            }, cityCode).show(childFragmentManager, BrgyDialog.TAG)
+            if(cityEditText.text.toString().isNotEmpty()) {
+                BrgyDialog.newInstance(object : BrgyDialog.AddressCallBack {
+                    override fun onAddressClicked(
+                        cityName: String,
+                        citySku: String,
+                        zipCode: String
+                    ) {
+                        brgyCode = citySku
+                        barangayEditText.setText(cityName)
+                        zipcodeEditText.setText(zipCode)
+                        setClickable()
+                    }
+                }, cityCode).show(childFragmentManager, BrgyDialog.TAG)
+            }
         }
 
 //        ===================== LIONS CLUB INTL
@@ -268,40 +276,69 @@ class RegisterCompleteProfileFragment: Fragment() {
                 override fun onRegionClicked(
                     data: LOVData
                 ) {
-                    regionEditText.setText(data.value)
-                    lc_region_id = data.code.toString()
+                    if(data.code == "Deselect"){
+                        regionEditText.setText("")
+                        zoneEditText.setText("")
+                        clusterEditText.setText("")
+                        lc_region_id = ""
+                        lc_zone_id = ""
+                        lc_location_id = ""
+                    }else{
+                        regionEditText.setText(data.value)
+                        lc_region_id = data.code.toString()
 
-                    zoneEditText.setText("")
-                    clusterEditText.setText("")
-                    setClickableLionsClub()
+                        zoneEditText.setText("")
+                        clusterEditText.setText("")
+                        lc_zone_id = ""
+                        lc_location_id = ""
+                    }
+
                 }
             }).show(childFragmentManager, RegionDialog.TAG)
         }
 
         zoneEditText.setOnSingleClickListener {
-            ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
-                override fun onZoneClicked(
-                    data: LOVData
-                ) {
-                    zoneEditText.setText(data.value)
-                    lc_zone_id = data.code.toString()
+            if(regionEditText.text.toString().isNotEmpty()){
+                ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
+                    override fun onZoneClicked(
+                        data: LOVData
+                    ) {
+                        if(data.code == "Deselect"){
+                            zoneEditText.setText("")
+                            clusterEditText.setText("")
+                            lc_zone_id = ""
+                            lc_location_id = ""
+                        }else {
+                            zoneEditText.setText(data.value)
+                            lc_zone_id = data.code.toString()
 
-                    clusterEditText.setText("")
-                    setClickableLionsClub()
-                }
-            }, lc_region_id).show(childFragmentManager, CityDialog.TAG)
+                            clusterEditText.setText("")
+                            lc_location_id = ""
+                        }
+
+                    }
+                }, lc_region_id).show(childFragmentManager, CityDialog.TAG)
+            }
         }
 
         clusterEditText.setOnSingleClickListener {
-            ClusterDialog.newInstance(object : ClusterDialog.ClusterCallBack {
-                override fun onClusterClicked(
-                    data: LOVData
-                ) {
-                    lc_location_id = data.code.toString()
-                    clusterEditText.setText(data.value)
-                    setClickableLionsClub()
-                }
-            }, zone= lc_zone_id, region = lc_region_id ).show(childFragmentManager, BrgyDialog.TAG)
+            if(zoneEditText.text.toString().isNotEmpty()){
+                ClusterDialog.newInstance(object : ClusterDialog.ClusterCallBack {
+                    override fun onClusterClicked(
+                        data: LOVData
+                    ) {
+                        if(data.code == "Deselect"){
+                            clusterEditText.setText("")
+                            lc_location_id = ""
+                        }else{
+                            lc_location_id = data.code.toString()
+                            clusterEditText.setText(data.value)
+                        }
+
+                    }
+                }, zone= lc_zone_id, region = lc_region_id ).show(childFragmentManager, BrgyDialog.TAG)
+            }
+
         }
 
 
@@ -331,10 +368,6 @@ class RegisterCompleteProfileFragment: Fragment() {
 
 
 
-    private fun setClickableLionsClub() = binding.run {
-        zoneEditText.isClickable = regionEditText.text.toString().isNotEmpty()
-        clusterEditText.isClickable= zoneEditText.text.toString().isNotEmpty()
-    }
 
     private fun showLoadingDialog(@StringRes strId: Int) {
         (requireActivity() as RegisterActivity).showLoadingDialog(strId)

@@ -128,6 +128,9 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error = errorsData.city_name?.get(0)
         if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
         if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
+        //custom error since API error is jargon to non-IT user
+        if (errorsData.lc_location_id?.get(0)?.isNotEmpty() == true) binding.clusterTextInputLayout.error = getString( R.string.location_required)
+        if (errorsData.lc_zone_id?.get(0)?.isNotEmpty() == true) binding.zoneTextInputLayout.error = getString( R.string.zone_required)
     }
 
 
@@ -155,49 +158,49 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
     @SuppressLint("SetTextI18n")
     private fun setView(userModel: UserModel?) = binding.run{
         firstNameEditText.doOnTextChanged { text, start, before, count ->
-            firstNameTextInputLayout.error = ""
+            firstNameTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
         middleNameEditText.doOnTextChanged { text, start, before, count ->
-            middleNameTextInputLayout.error = ""
+            middleNameTextInputLayout.isErrorEnabled = false
         }
         lastNameEditText.doOnTextChanged { text, start, before, count ->
-            lastNameTextInputLayout.error = ""
+            lastNameTextInputLayout.isErrorEnabled = false
         }
 
         birthdateEditText.doOnTextChanged { text, start, before, count ->
-            birthdateTextInputLayout.error = ""
+            birthdateTextInputLayout.isErrorEnabled = false
         }
         provinceEditText.doOnTextChanged {
                 text, start, before, count ->
-            provinceTextInputLayout.error = ""
+            provinceTextInputLayout.isErrorEnabled = false
         }
         cityEditText.doOnTextChanged {
                 text, start, before, count ->
-            cityTextInputLayout.error = ""
+            cityTextInputLayout.isErrorEnabled = false
         }
         barangayEditText.doOnTextChanged {
                 text, start, before, count ->
-            barangayTextInputLayout.error = ""
+            barangayTextInputLayout.isErrorEnabled = false
         }
         streetEditText.doOnTextChanged {
                 text, start, before, count ->
-            streetTextInputLayout.error = ""
+            streetTextInputLayout.isErrorEnabled = false
         }
         zipcodeEditText.doOnTextChanged { text, start, before, count ->
-            zipcodeTextInputLayout.error = ""
+            zipcodeTextInputLayout.isErrorEnabled = false
         }
 
         regionEditText.doOnTextChanged {
                 text, start, before, count ->
-            regionTextInputLayout.error = ""
+            regionTextInputLayout.isErrorEnabled =  false
         }
         zoneEditText.doOnTextChanged {
                 text, start, before, count ->
-            zoneTextInputLayout.error = ""
+            zoneTextInputLayout.isErrorEnabled = false
         }
         clusterEditText.doOnTextChanged {
                 text, start, before, count ->
-            clusterTextInputLayout.error = ""
+            clusterTextInputLayout.isErrorEnabled =false
         }
 
 
@@ -209,7 +212,9 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         barangayEditText.setText(userModel?.brgy_name)
         streetEditText.setText(userModel?.street_name)
         zipcodeEditText.setText(userModel?.zipcode)
-
+        viewModel.lcRegionCode = userModel?.lc_region_id.toString()
+        viewModel.lcClusterCode = userModel?.lc_location_id.toString()
+        viewModel.lcZoneCode =userModel?.lc_zone_id.toString()
         birthdateEditText.setText(userModel?.birthdate?.date_only_ph)
         regionEditText.setText(userModel?.lc_region_id?.takeIf { it.isNotEmpty() }
             ?.let { "Region $it" }
@@ -329,6 +334,8 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                         viewModel.lcRegionCode = data.code.orEmpty()
                         zoneEditText.setText("")
                         clusterEditText.setText("")
+                        viewModel.lcClusterCode = ""
+                        viewModel.lcZoneCode = ""
                     }
                 }
             }).show(childFragmentManager, RegionDialog.TAG)
@@ -349,6 +356,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                             zoneEditText.setText(data.value)
                             viewModel.lcZoneCode = data.code.orEmpty()
                             clusterEditText.setText("")
+                            viewModel.lcClusterCode = ""
                         }
                     }
                 }, region = viewModel.lcRegionCode).show(childFragmentManager, CityDialog.TAG)
