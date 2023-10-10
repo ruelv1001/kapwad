@@ -39,5 +39,8 @@ data class  ErrorsData(
     var group_approval: List<String>? = null,
     var group_passcode: List<String>? = null,
     var passcode: List<String>? = null,
-    var amount: List<String>? = null
+    var amount: List<String>? = null,
+    var lc_location_id: List<String>? = null,
+    var lc_zone_id: List<String>? = null
+
 )
