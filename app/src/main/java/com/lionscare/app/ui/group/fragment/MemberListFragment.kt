@@ -196,6 +196,7 @@ class MemberListFragment : Fragment(),
                         ),
                         start = "START_INPUT"
                     )
+
                     startActivity(intent)
                 }
             }, data, activity.groupDetails?.is_admin == true
