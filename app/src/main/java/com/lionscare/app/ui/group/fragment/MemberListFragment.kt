@@ -192,6 +192,7 @@ class MemberListFragment : Fragment(),
                         qrData = QRData(
                             data.user?.id,
                             data.user?.name,
+                            avatar = data.user?.avatar
                         ),
                         start = "START_INPUT"
                     )
