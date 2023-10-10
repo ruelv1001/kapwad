@@ -6,6 +6,7 @@ import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.data.repositories.profile.request.NotificationListRequest
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
@@ -15,6 +16,8 @@ import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
+import com.lionscare.app.data.repositories.profile.response.UserNotificationListResponse
+import com.lionscare.app.data.repositories.profile.response.UserNotificationResponse
 import com.lionscare.app.utils.asNetWorkRequestBody
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -239,6 +242,26 @@ class ProfileRemoteDataSource @Inject constructor(
                 request.image.asNetWorkRequestBody(IMAGE_MIME_TYPE)
             )
         )
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getUserNotificationList(per_page: Int, page : Int): UserNotificationListResponse {
+        val request = NotificationListRequest(per_page = per_page, page = page)
+        val response = profileService.getUserNotificationList(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getUserNotificationInfo(notifId: String): UserNotificationResponse {
+        val request = NotificationListRequest(notif_id = notifId)
+        val response = profileService.getUserNotificationInfo(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

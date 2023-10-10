@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
+import com.lionscare.app.data.repositories.profile.request.NotificationListRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
@@ -13,6 +14,8 @@ import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
+import com.lionscare.app.data.repositories.profile.response.UserNotificationListResponse
+import com.lionscare.app.data.repositories.profile.response.UserNotificationResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -94,4 +97,9 @@ interface ProfileService {
     @POST("api/profile/badge/remove/cancel")
     suspend fun cancelRequestBadgeRemoval(): Response<GeneralResponse>
 
+    @POST("api/notification/user")
+    suspend fun getUserNotificationList(@Body request: NotificationListRequest): Response<UserNotificationListResponse>
+
+    @POST("api/notification/group/info")
+    suspend fun getUserNotificationInfo(@Body request: NotificationListRequest): Response<UserNotificationResponse>
 }
