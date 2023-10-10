@@ -220,8 +220,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         clusterEditText.setText(userModel?.lc_location_id?.takeIf { it.isNotEmpty() }
             ?.let { "${userModel.lc_group} (${userModel.lc_location_id})" }
             ?: "")
-
-        setClickable()
     }
 
     private fun setClickListeners() = binding.run {
@@ -271,45 +269,46 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     cityEditText.setText("")
                     barangayEditText.setText("")
                     zipcodeEditText.setText("")
-                    setClickable()
                 }
             }).show(childFragmentManager, ProvinceDialog.TAG)
         }
 
-        cityEditText.setOnSingleClickListener {
-            CityDialog.newInstance(object : CityDialog.AddressCallBack {
-                override fun onAddressClicked(
-                    cityName: String,
-                    citySku: String,
-                    zipcode: String
-                ) {
-                    cityEditText.setText(cityName)
-                    viewModel.userModel?.city_code = citySku
+        cityEditText.setOnSingleClickListener{
+            if(provinceEditText.text.toString().isNotEmpty()) {
+                CityDialog.newInstance(object : CityDialog.AddressCallBack {
+                    override fun onAddressClicked(
+                        cityName: String,
+                        citySku: String,
+                        zipcode: String
+                    ) {
+                        cityEditText.setText(cityName)
+                        viewModel.userModel?.city_code = citySku
 
-                    barangayEditText.setText("")
-                    zipcodeEditText.setText("")
-                    setClickable()
-                }
-            },  reference = viewModel.userModel?.province_sku.toString()).show(childFragmentManager, CityDialog.TAG)
+                        barangayEditText.setText("")
+                        zipcodeEditText.setText("")
+                    }
+                },  reference = viewModel.userModel?.province_sku.toString()).show(childFragmentManager, CityDialog.TAG)
+            }
         }
 
         barangayEditText.setOnSingleClickListener {
-            BrgyDialog.newInstance(object : BrgyDialog.AddressCallBack {
-                override fun onAddressClicked(
-                    brgyName: String,
-                    brgySku: String,
-                    zipCode: String
-                ) {
+            if(cityEditText.text.toString().isNotEmpty()){
+                BrgyDialog.newInstance(object : BrgyDialog.AddressCallBack {
+                    override fun onAddressClicked(
+                        brgyName: String,
+                        brgySku: String,
+                        zipCode: String
+                    ) {
 
 //                    brgyCode = citySku
-                    viewModel.userModel?.brgy_code = brgySku
-                    viewModel.userModel?.zipcode = zipCode
+                        viewModel.userModel?.brgy_code = brgySku
+                        viewModel.userModel?.zipcode = zipCode
 //                    zipCode = zipCodes
-                    barangayEditText.setText(brgyName)
-                    zipcodeEditText.setText(zipCode)
-                    setClickable()
-                }
-            }, viewModel.userModel?.city_code.toString()).show(childFragmentManager, BrgyDialog.TAG)
+                        barangayEditText.setText(brgyName)
+                        zipcodeEditText.setText(zipCode)
+                    }
+                }, viewModel.userModel?.city_code.toString()).show(childFragmentManager, BrgyDialog.TAG)
+            }
         }
 
 //        ===================== LIONS CLUB INTL
@@ -318,44 +317,60 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                 override fun onRegionClicked(
                     data: LOVData
                 ) {
-                    regionEditText.setText(data.value)
-                    viewModel.userModel?.lc_region_id = data.code
-                    viewModel.lcRegionCode = data.code.orEmpty()
-                    zoneEditText.setText("")
-                    clusterEditText.setText("")
-                    setClickableLionsClub()
+                    if(data.code == "Deselect"){
+                        regionEditText.setText("")
+                        zoneEditText.setText("")
+                        clusterEditText.setText("")
+                        viewModel.lcRegionCode = ""
+                        viewModel.lcClusterCode = ""
+                        viewModel.lcZoneCode = ""
+                    }else{
+                        regionEditText.setText(data.value)
+                        viewModel.lcRegionCode = data.code.orEmpty()
+                        zoneEditText.setText("")
+                        clusterEditText.setText("")
+                    }
                 }
             }).show(childFragmentManager, RegionDialog.TAG)
         }
 
         zoneEditText.setOnSingleClickListener {
-            CommonLogger.instance.sysLogE("gege",    viewModel.userModel?.lc_region_id)
-
-            ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
-                override fun onZoneClicked(
-                    data: LOVData
-                ) {
-                    zoneEditText.setText(data.value)
-                    viewModel.userModel?.lc_zone_id = data.code
-                    viewModel.lcZoneCode = data.code.orEmpty()
-
-                    clusterEditText.setText("")
-                    setClickableLionsClub()
-                }
-            }, region = viewModel.lcRegionCode).show(childFragmentManager, CityDialog.TAG)
+            if(regionEditText.text.toString().isNotEmpty()){
+                ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
+                    override fun onZoneClicked(
+                        data: LOVData
+                    ) {
+                        if(data.code == "Deselect"){
+                            zoneEditText.setText("")
+                            clusterEditText.setText("")
+                            viewModel.lcClusterCode = ""
+                            viewModel.lcZoneCode = ""
+                        }else {
+                            zoneEditText.setText(data.value)
+                            viewModel.lcZoneCode = data.code.orEmpty()
+                            clusterEditText.setText("")
+                        }
+                    }
+                }, region = viewModel.lcRegionCode).show(childFragmentManager, CityDialog.TAG)
+            }
         }
 
         clusterEditText.setOnSingleClickListener {
-            ClusterDialog.newInstance(object : ClusterDialog.ClusterCallBack {
-                override fun onClusterClicked(
-                    data: LOVData
-                ) {
-                    viewModel.userModel?.lc_location_id = data.code
-                    viewModel.lcClusterCode = data.code.orEmpty()
-                    clusterEditText.setText(data.value)
-                    setClickableLionsClub()
-                }
-            },region = viewModel.lcRegionCode, zone = viewModel.lcZoneCode).show(childFragmentManager, BrgyDialog.TAG)
+            if(zoneEditText.text.toString().isNotEmpty()){
+                ClusterDialog.newInstance(object : ClusterDialog.ClusterCallBack {
+                    override fun onClusterClicked(
+                        data: LOVData
+                    ) {
+                        if(data.code == "Deselect"){
+                            clusterEditText.setText("")
+                            viewModel.lcClusterCode = ""
+                        }else {
+                            viewModel.lcClusterCode = data.code.orEmpty()
+                            clusterEditText.setText(data.value)
+                        }
+                    }
+                },region = viewModel.lcRegionCode, zone = viewModel.lcZoneCode).show(childFragmentManager, BrgyDialog.TAG)
+            }
         }
 
         saveButton.setOnSingleClickListener {
@@ -363,17 +378,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                     .show(childFragmentManager, RegisterSuccessDialog.TAG)
         }
     }
-
-    private fun setClickable() = binding.run {
-        cityEditText.isClickable = provinceEditText.text.toString().isNotEmpty()
-        barangayEditText.isClickable= cityEditText.text.toString().isNotEmpty()
-    }
-
-    private fun setClickableLionsClub() = binding.run {
-        zoneEditText.isClickable = regionEditText.text.toString().isNotEmpty()
-        clusterEditText.isClickable= zoneEditText.text.toString().isNotEmpty()
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -396,11 +400,10 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             middlename = middleNameEditText.text.toString(),
             email = null,
             birthdate = birthdateEditText.text.toString(),
-            lc_region_id = viewModel.userModel?.lc_region_id,
-            lc_zone_id = viewModel.userModel?.lc_zone_id,
-            lc_location_id = viewModel.userModel?.lc_location_id,
+            lc_region_id = viewModel.lcRegionCode,
+            lc_zone_id = viewModel.lcZoneCode,
+            lc_location_id = viewModel.lcClusterCode,
         )
-        CommonLogger.instance.devLog("COMPLETE PROFILE", "data: ${viewModel.userModel}")
         viewModel.doUpdateProfile(request)
     }
 }
