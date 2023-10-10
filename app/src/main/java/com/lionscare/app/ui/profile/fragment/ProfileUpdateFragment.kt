@@ -386,7 +386,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
 
     override fun onMyAccountClicked(dialog: ProfileConfirmationDialog)=binding.run {
         dialog.dismiss()
-        val request = UpdateInfoRequest(
+        val request = UpdateInfoRequest (
             province_sku =  viewModel.userModel?.province_sku.orEmpty(),
             province_name = provinceEditText.text.toString(),
             city_sku =viewModel.userModel?.city_code.orEmpty(),
