@@ -1,5 +1,8 @@
 package com.lionscare.app.data.repositories.profile
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
@@ -15,6 +18,8 @@ import com.lionscare.app.data.repositories.profile.response.BadgeResponse
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
+import com.lionscare.app.data.repositories.profile.response.UserNotificationData
+import com.lionscare.app.data.repositories.profile.response.UserNotificationResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -166,5 +171,30 @@ class ProfileRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    fun getUserNotificationList(
+        pagingConfig: PagingConfig = getDefaultPageConfig(),
+        groupId: String
+    ): Flow<PagingData<UserNotificationData>> {
+        val getUserNotificationListPagingSource =
+            GetUserNotificationListPagingSource(profileRemoteDataSource, groupId)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getUserNotificationListPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
 
+    fun getUserNotificationInfo(
+        notifId: String
+    ): Flow<UserNotificationResponse> {
+        return flow {
+            val response =
+                profileRemoteDataSource.getUserNotificationInfo(notifId)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    private fun getDefaultPageConfig(): PagingConfig {
+        return PagingConfig(pageSize = 5, initialLoadSize = 5, enablePlaceholders = false)
+    }
 }
