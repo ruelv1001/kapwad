@@ -21,6 +21,7 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
     private var callback: MembershipCallback? = null
     private var data = MemberListData()
     private var isUserAdmin = false
+    private var isUserOwner = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +52,8 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
         nameTextView.text = data.user?.name
         idTextView.text = data.user?.qrcode?.replace("....".toRegex(), "$0 ")
         avatarImageView.loadAvatar(data.user?.avatar?.full_path.orEmpty(), requireActivity())
-        membersLinearLayout.isVisible = isUserAdmin && data.role != "admin"
+        membersLinearLayout.isVisible = (isUserAdmin && data.role != "admin") || isUserOwner
+        transferOwnershipButton.isVisible = isUserOwner
     }
 
     private fun setClickListener() {
@@ -61,6 +63,10 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
         }
         viewBinding?.sendPointsButton?.setOnSingleClickListener {
             callback?.onSendPoint(data)
+            dismiss()
+        }
+        viewBinding?.transferOwnershipButton?.setOnSingleClickListener {
+            callback?.onTransferOwnership(data)
             dismiss()
         }
     }
@@ -73,18 +79,21 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
     interface MembershipCallback {
         fun onRemoveMember(memberListData: MemberListData)
         fun onSendPoint(memberListData: MemberListData)
+        fun onTransferOwnership(memberListData: MemberListData)
     }
 
     companion object {
         fun newInstance(
             callback: MembershipCallback? = null,
             data: MemberListData = MemberListData(),
-            isUserAdmin : Boolean
+            isUserAdmin : Boolean,
+            isUserOwner: Boolean
         ) = MemberDetailsDialog()
             .apply {
                 this.callback = callback
                 this.data = data
                 this.isUserAdmin = isUserAdmin
+                this.isUserOwner = isUserOwner
             }
 
         val TAG: String = MemberDetailsDialog::class.java.simpleName

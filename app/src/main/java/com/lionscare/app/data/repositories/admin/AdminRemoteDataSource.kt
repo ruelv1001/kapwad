@@ -45,5 +45,13 @@ class AdminRemoteDataSource @Inject constructor(private val adminService: AdminS
         }
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
-    
+
+    suspend fun doTransferOwnership(groupId: String, userId: String): GeneralResponse {
+        val request = AdminRequest(group_id = groupId, user_id = userId)
+        val response = adminService.doTransferOwnership(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
 }
