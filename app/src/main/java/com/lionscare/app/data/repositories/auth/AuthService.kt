@@ -2,6 +2,7 @@ package com.lionscare.app.data.repositories.auth
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.auth.request.LoginRequest
+import com.lionscare.app.data.repositories.auth.request.ValidateEmailRequest
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,4 +17,7 @@ interface AuthService {
 
     @POST("api/auth/logout")
     suspend fun doLogout(): Response<GeneralResponse>
+
+    @POST("api/auth/reset-password")
+    suspend fun doForgotPass(@Body request: ValidateEmailRequest): Response<GeneralResponse>
 }

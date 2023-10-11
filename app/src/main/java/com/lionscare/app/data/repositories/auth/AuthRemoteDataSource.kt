@@ -2,6 +2,7 @@ package com.lionscare.app.data.repositories.auth
 
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.auth.request.LoginRequest
+import com.lionscare.app.data.repositories.auth.request.ValidateEmailRequest
 import com.lionscare.app.data.repositories.auth.response.LoginResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
@@ -38,6 +39,15 @@ class AuthRemoteDataSource @Inject constructor(private val authService: AuthServ
 
     suspend fun doLogout(): GeneralResponse {
         val response = authService.doLogout()
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doForgotPass(email: String): GeneralResponse{
+        val request = ValidateEmailRequest(email = email)
+        val response = authService.doForgotPass(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

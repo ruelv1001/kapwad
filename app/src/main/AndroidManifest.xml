@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.lionscare.app">
+    package="com.lionscare.app" >
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -30,7 +30,10 @@
         android:roundIcon="@drawable/img_lions_care_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".ui.onboarding.activity.ForgotPasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.profile.activity.UpdatePasswordActivity"
             android:exported="false" />
@@ -47,7 +50,7 @@
             android:name=".ui.onboarding.activity.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="userPortrait"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,13 +61,13 @@
         <activity
             android:name=".ui.onboarding.activity.LoginActivity"
             android:screenOrientation="userPortrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.register.activity.RegisterActivity"
             android:screenOrientation="userPortrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.wallet.activity.RequestPostedActivity"
             android:screenOrientation="userPortrait"
@@ -94,21 +97,20 @@
         <activity
             android:name=".ui.profile.activity.ProfileActivity"
             android:screenOrientation="userPortrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.profile.activity.NotificationsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
-
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:replace="android:theme"/>
+            tools:replace="android:theme" />
     </application>
 
 </manifest>
