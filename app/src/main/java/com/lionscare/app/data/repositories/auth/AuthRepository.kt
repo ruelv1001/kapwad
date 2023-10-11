@@ -114,4 +114,11 @@ class AuthRepository @Inject constructor(
             emit(response)
         }.flowOn(ioDispatcher)
     }
+
+    fun doForgotPass(email: String): Flow<GeneralResponse> {
+        return flow {
+            val response = authRemoteDataSource.doForgotPass(email)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
 }

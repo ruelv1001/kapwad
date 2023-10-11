@@ -54,6 +54,10 @@ class LoginActivity : AppCompatActivity() {
             val intent = RegisterActivity.getIntent(this@LoginActivity)
             startActivity(intent)
         }
+        resetPassTextView.setOnSingleClickListener {
+            val intent = ForgotPasswordActivity.getIntent(this@LoginActivity)
+            startActivity(intent)
+        }
     }
 
     private fun observeLogin(){
