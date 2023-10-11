@@ -17,7 +17,8 @@ import com.lionscare.app.utils.loadAvatar
 class GroupMembersAdapter(
     val context: Context,
     val clickListener: MembersCallback,
-    val id: String? = null
+    val id: String? = null,
+    val isInMemberList: Boolean? = true
 ) :
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
@@ -66,7 +67,7 @@ class GroupMembersAdapter(
                 } else if (id != data.user?.id && data.role == "owner") {
                     binding.youTextView.isVisible = true
                     binding.youTextView.text = "Owner"
-                } else if (id != data.user?.id && data.role == "admin") {
+                } else if (id != data.user?.id && data.role == "admin" && isInMemberList == true) {
                     binding.youTextView.isVisible = true
                     binding.youTextView.text = "Admin"
                 } else {

@@ -13,13 +13,15 @@ interface AdminService {
     @POST("api/group/member/admin")
     suspend fun doGetListOfAdmin(@Body listOfMembersRequest: ListOfMembersRequest): Response<ListOfMembersResponse>
 
-  @POST("api/group/member/remove?")
+    @POST("api/group/member/remove?")
     suspend fun doRemoveMember(@Body request: AdminRequest): Response<GeneralResponse>
 
-  @POST("api/group/member/demote")
+    @POST("api/group/member/demote")
     suspend fun doDemoteAdmin(@Body request: AdminRequest): Response<GeneralResponse>
 
-  @POST("api/group/member/promote")
+    @POST("api/group/member/promote")
     suspend fun doPromoteMember(@Body request: AdminRequest): Response<GeneralResponse>
 
+    @POST("api/group/member/transfer")
+    suspend fun doTransferOwnership(@Body request: AdminRequest): Response<GeneralResponse>
 }

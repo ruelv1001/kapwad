@@ -12,6 +12,7 @@ sealed class AdminViewState {
     data class SuccessRemoveMember(val message: String = ""): AdminViewState()
     data class SuccessPromoteMember(val message: String = ""): AdminViewState()
     data class SuccessDemoteAdmin(val message: String = ""): AdminViewState()
+    data class SuccessTransferOwnership(val message: String = ""): AdminViewState()
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : AdminViewState()
     data class InputError(val errorData: ErrorsData? = null) : AdminViewState()
 

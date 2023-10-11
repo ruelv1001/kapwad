@@ -53,4 +53,11 @@ class AdminRepository @Inject constructor(
             emit(response)
         }.flowOn(ioDispatcher)
     }
+
+    fun doTransferOwnership(groupId: String, userId: String) : Flow<GeneralResponse> {
+        return flow{
+            val response = adminRemoteDataSource.doTransferOwnership(groupId,userId)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
 }

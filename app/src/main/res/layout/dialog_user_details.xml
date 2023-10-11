@@ -130,6 +130,20 @@
                 android:textSize="@dimen/font_14" />
         </LinearLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/transferOwnershipButton"
+        style="@style/MyButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/light_blue"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingVertical="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:text="Transfer Ownership"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:textColor="@color/blue_text"
+        android:textSize="@dimen/font_14" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/inviteButton"

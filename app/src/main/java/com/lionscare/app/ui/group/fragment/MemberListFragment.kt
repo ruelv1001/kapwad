@@ -71,10 +71,11 @@ class MemberListFragment : Fragment(),
         observeMemberList()
         viewModel.ownerInfo = activity.groupDetails?.owner?: UserModel()
         viewModel.refreshListOfMembers(activity.groupDetails?.id.toString(), true)
+        isOwner = activity.groupDetails?.owner_user_id == viewModel.user.id
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(requireContext(),this@MemberListFragment, viewModel.user.id)
+        adapter = GroupMembersAdapter(requireContext(),this@MemberListFragment, viewModel.user.id, isInMemberList = true)
         swipeRefreshLayout.setOnRefreshListener(this@MemberListFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
@@ -142,6 +143,12 @@ class MemberListFragment : Fragment(),
                 onRefresh()
             }
 
+            is AdminViewState.SuccessTransferOwnership ->{
+                requireActivity().toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
+                setupAdapter()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+
             else -> Unit
         }
     }
@@ -199,7 +206,11 @@ class MemberListFragment : Fragment(),
 
                     startActivity(intent)
                 }
-            }, data, activity.groupDetails?.is_admin == true
+
+                override fun onTransferOwnership(memberListData: MemberListData) {
+                    viewModelAdmin.doTransferOwnership(activity.groupDetails?.id.toString(),data.user?.id.toString())
+                }
+            }, data, activity.groupDetails?.is_admin == true, isOwner
         ).show(childFragmentManager, MemberDetailsDialog.TAG)
     }
 
