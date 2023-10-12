@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.PopupErrorState
@@ -27,16 +29,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BadgeViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
     private val _badgeSharedFlow = MutableSharedFlow<ProfileViewState>()
     val badgeSharedFlow: SharedFlow<ProfileViewState> =
         _badgeSharedFlow.asSharedFlow()
 
+    //user info, make it null first to not consume call from sharedpref
+    //if not necessary
+    var user : UserModel? = null
+        private set
+
 
     //make it an observable to notify changes, making it a STATE
     private val _isBadgeRemovalRequestCancelled = MutableLiveData<Boolean>()
     val isBadgeRemovalRequestCancelled : LiveData<Boolean?> = _isBadgeRemovalRequestCancelled
+
+    fun getUserInfo(){
+        user = encryptedDataManager.getUserBasicInfo()
+    }
     fun setBadgeRemovalRequestCancelled(value: Boolean) {
         _isBadgeRemovalRequestCancelled.value = value
     }

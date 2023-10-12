@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.article.response.ArticleData
 import com.lionscare.app.data.repositories.baseresponse.UserModel
@@ -144,6 +145,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                 hideLoadingDialog()
                 //Only get badge status after getting success info
                 viewModel.getBadgeStatus()
+                viewModel.userKycStatus = viewState.userModel?.kyc_status.toString()
                 setView(viewState.userModel)
                 binding.swipeRefreshLayout.isRefreshing = false
             }
@@ -423,8 +425,13 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         }
 
         mainLayout.requestVerifiedBadgeLinearLayout.setOnSingleClickListener {
-            val intent = VerifiedBadgeActivity.getIntent(requireActivity())
-            startActivity(intent)
+            if(viewModel.userKycStatus != "completed"){
+                //do not allow users to request badge if kyc is not completed
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
+            }else{
+                val intent = VerifiedBadgeActivity.getIntent(requireActivity())
+                startActivity(intent)
+            }
         }
 
         getVerifiedButton.setOnSingleClickListener {

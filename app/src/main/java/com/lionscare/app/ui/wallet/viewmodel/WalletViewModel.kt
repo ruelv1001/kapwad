@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.data.repositories.wallet.WalletRepository
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
@@ -26,7 +27,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WalletViewModel @Inject constructor(
-    private val walletRepository: WalletRepository
+    private val walletRepository: WalletRepository,
+    encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
     private val _walletSharedFlow = MutableSharedFlow<WalletViewState>()
@@ -34,6 +36,8 @@ class WalletViewModel @Inject constructor(
     val walletSharedFlow: SharedFlow<WalletViewState> =
         _walletSharedFlow.asSharedFlow()
 
+    //user info
+    val user = encryptedDataManager.getUserBasicInfo()
     fun getWalletBalance() {
         viewModelScope.launch {
             walletRepository.getWalletBalance()
