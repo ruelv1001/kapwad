@@ -62,6 +62,24 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun doForgotPass(email: String) {
+        viewModelScope.launch {
+            authRepository.doForgotPass(email)
+                .onStart {
+                    _loginSharedFlow.emit(LoginViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _loginSharedFlow.emit(
+                        LoginViewState.SuccessForgotPassword(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {

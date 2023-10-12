@@ -109,6 +109,22 @@ class AdminViewModel @Inject constructor(
         }
     }
 
+    fun doTransferOwnership(groupId: String, userId: String) {
+        viewModelScope.launch {
+            adminRepository.doTransferOwnership(groupId,userId)
+                .onStart {
+                    _adminSharedFlow.emit(AdminViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _adminSharedFlow.emit(
+                        AdminViewState.SuccessTransferOwnership(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {
