@@ -18,10 +18,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.wallet.response.TransactionData
 import com.lionscare.app.databinding.FragmentWalletBinding
+import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.wallet.activity.TopUpPointsActivity
 import com.lionscare.app.ui.wallet.activity.TransactionsActivity
@@ -92,15 +94,25 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             startActivity(intent)
         }
         sendPointsLinearLayout.setOnSingleClickListener {
-            val intent = WalletActivity.getIntent(requireContext(), "Send Points")
-            startActivity(intent)
+            if(viewModel.user.kyc_status != "completed"){
+                //do not allow users kyc is not completed
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
+            }else{
+                val intent = WalletActivity.getIntent(requireContext(), "Send Points")
+                startActivity(intent)
+            }
         }
         postRequestLinearLayout.setOnSingleClickListener {
             val intent = WalletActivity.getIntent(requireContext(), "Post Request")
             startActivity(intent)
         }
         scan2PayLinearLayout.setOnSingleClickListener {
-            scanToPay()
+            if(viewModel.user.kyc_status != "completed"){
+                //do not allow users kyc is not completed
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
+            }else{
+                scanToPay()
+            }
         }
     }
 

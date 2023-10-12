@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.model.AccountTypeModel
 import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
@@ -202,21 +203,33 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
     private fun setupClickListener() = binding.run {
         viewModel.isBadgeRemovalRequestCancelled.observe(viewLifecycleOwner){
             removeBadgeButton.setOnSingleClickListener {
-                if (viewModel.isBadgeRemovalRequestCancelled.value == true){ // badge removal should be enabled if status is cancelled
-                    ReasonBottomSheetDialog.newInstance( callback = object : ReasonBottomSheetDialog.ReasonDialogCallback {
-                        @SuppressLint("SetTextI18n")
-                        override fun onRemoveBadgeButtonClicked(
-                            dialog: ReasonBottomSheetDialog,
-                            reason: String
-                        ) {
-                            viewModel.requestBadgeRemoval(request = BadgeRemovalRequest(reason = reason))
-
-                            dialog.dismiss()
-                        }
-                    }).show(childFragmentManager, ReasonBottomSheetDialog.TAG)
-                } else{
-                    viewModel.cancelRequestBadgeRemoval()
+                if(viewModel.user != null){
+                    viewModel.getUserInfo()
                 }
+                //doesn't necessarily needed since before going to this activity,
+                //it is being checked but, for double security purpose, check anyways
+                if(viewModel.user?.kyc_status != "completed"){
+                    //do not allow users kyc is not completed
+                    requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
+                }else{
+                    if (viewModel.isBadgeRemovalRequestCancelled.value == true){ // badge removal should be enabled if status is cancelled
+                        ReasonBottomSheetDialog.newInstance( callback = object : ReasonBottomSheetDialog.ReasonDialogCallback {
+                            @SuppressLint("SetTextI18n")
+                            override fun onRemoveBadgeButtonClicked(
+                                dialog: ReasonBottomSheetDialog,
+                                reason: String
+                            ) {
+                                viewModel.requestBadgeRemoval(request = BadgeRemovalRequest(reason = reason))
+
+                                dialog.dismiss()
+                            }
+                        }).show(childFragmentManager, ReasonBottomSheetDialog.TAG)
+                    } else{
+                        viewModel.cancelRequestBadgeRemoval()
+                    }
+                }
+
+
             }
         }
         backImageView.setOnSingleClickListener {

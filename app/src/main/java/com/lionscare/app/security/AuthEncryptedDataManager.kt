@@ -86,6 +86,7 @@ class AuthEncryptedDataManager {
             putString(USER_BRGY_CODE, userInfo.brgy_code)
             putString(USER_QRCODE, userInfo.qrcode)
             putString(USER_ZIPCODE, userInfo.zipcode)
+            putString(USER_KYC_STATUS, userInfo.kyc_status)
             putBoolean(USER_IS_COMPLETE_PROFILE, userInfo.is_complete_profile?: false)
         }
     }
@@ -148,6 +149,7 @@ class AuthEncryptedDataManager {
                 brgy_name = sharedPreferences.getString(USER_BRGY_NAME, "")
                 brgy_code = sharedPreferences.getString(USER_BRGY_CODE, "")
                 zipcode = sharedPreferences.getString(USER_ZIPCODE, "")
+                kyc_status = sharedPreferences.getString(USER_KYC_STATUS, "")
                 is_complete_profile = sharedPreferences.getBoolean(USER_IS_COMPLETE_PROFILE, false)
             }
         }
@@ -251,6 +253,7 @@ class AuthEncryptedDataManager {
         private const val USER_BRGY_CODE = "USER_BRGY_CODE"
         private const val USER_BRGY_NAME = "USER_BRGY_NAME"
         private const val USER_ZIPCODE = "USER_ZIPCODE"
+        private const val USER_KYC_STATUS = "USER_KYC_STATUS"
         private const val USER_IS_COMPLETE_PROFILE = "USER_IS_COMPLETE_PROFILE"
 
         private const val USER_AVATAR_FILENAME = "USER_AVATAR_FILENAME"

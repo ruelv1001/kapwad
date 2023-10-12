@@ -395,4 +395,5 @@
     <string name="onb_input_your_email_address_here_to_reset_your_password">Input your email address here to reset your password</string>
     <string name="proceed_btn_lbl">Proceed</string>
     <string name="login_email_only_hint">Email</string>
+    <string name="kyc_status_must_be_verified">You cannot do this action until you are a completely verified user</string>
 </resources>

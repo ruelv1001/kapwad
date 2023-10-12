@@ -20,6 +20,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.response.BadgeStatus
@@ -111,6 +112,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             is SettingsViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
                 binding.swipeRefreshLayout.isRefreshing = false
+                viewModel.userKycStatus = viewState.userModel?.kyc_status.toString()
                 setView(viewState.userModel)
             }
             else -> Unit
@@ -154,8 +156,13 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         requestBadgeLinearLayout.setOnSingleClickListener {
-            val intent = VerifiedBadgeActivity.getIntent(requireActivity())
-            startActivity(intent)
+            if(viewModel.userKycStatus != "completed"){
+                //do not allow users to request badge if kyc is not completed
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
+            }else{
+                val intent = VerifiedBadgeActivity.getIntent(requireActivity())
+                startActivity(intent)
+            }
         }
 
         verifyAccountLinearLayout.setOnSingleClickListener {

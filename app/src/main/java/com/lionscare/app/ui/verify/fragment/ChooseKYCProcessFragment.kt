@@ -113,6 +113,7 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                         binding.idArrowImageView.visibility = View.VISIBLE
                     }
                     "approved" -> {
+                        binding.idArrowImageView.visibility = View.VISIBLE
                         binding.badgeIdStatus.visibility = View.GONE
                         binding.validIdLinearLayout.isClickable = false
                         binding.validIdDateTextView.text = "Verified on:\n${viewState.profileVerificationResponse.data.id_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
@@ -146,6 +147,7 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                         binding.addressArrowImageView.visibility = View.VISIBLE
                     }
                     "approved" -> {
+                        binding.addressArrowImageView.visibility = View.VISIBLE
                         binding.badgeAddressStatus.visibility = View.GONE
                         binding.addressLinearLayout.isClickable = false
                         binding.addressDateTextView.text =  "Verified on:\n${viewState.profileVerificationResponse.data.address_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
