@@ -200,7 +200,7 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
         adapter?.appendData(accountTypeList)
     }
 
-    private fun setupClickListener() = binding.run {
+    private fun setupClickListener() =  binding.run {
         viewModel.isBadgeRemovalRequestCancelled.observe(viewLifecycleOwner){
             removeBadgeButton.setOnSingleClickListener {
                 if(viewModel.user != null){
