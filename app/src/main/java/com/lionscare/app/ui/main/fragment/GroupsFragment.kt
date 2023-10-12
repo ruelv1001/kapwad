@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
+import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupsBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.main.viewmodel.GroupsViewModel
 import com.lionscare.app.utils.adapter.CustomViewPagerAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +26,7 @@ class GroupsFragment : Fragment() {
     private val binding get() = _binding!!
     private var pagerAdapter: CustomViewPagerAdapter? = null
     private var menuItem: MenuItem ?= null
-
+    private val viewModel : GroupsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,10 +69,14 @@ class GroupsFragment : Fragment() {
         }
 
         createGroupFloatingActionButton.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(requireActivity(),START_CREATE_ORG)
-            startActivity(intent)
+            if(viewModel.user.kyc_status != "completed"){
+                //do not allow users kyc is not completed
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
+            }else{
+                val intent = GroupActivity.getIntent(requireActivity(),START_CREATE_ORG)
+                startActivity(intent)
+            }
         }
-
     }
 
     private fun setActiveTab(layout: RelativeLayout) = binding.run {

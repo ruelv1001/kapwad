@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupData
 import com.lionscare.app.databinding.FragmentGroupSearchBinding
@@ -95,7 +96,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                         val type = jsonObject.getString("type")
                         val value = jsonObject.getString("value")
 
-                            viewModel.doSearchGroupWithLoading(value)
+                        viewModel.doSearchGroupWithLoading(value)
 
                     } catch (e: JSONException) {
                         requireActivity().toastError(getString(R.string.invalid_qr_code_msg), CpmToast.LONG_DURATION)
@@ -198,11 +199,17 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     }
 
     override fun onJoinClicked(data: GroupData) {
-        JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
-            override fun onConfirm(group_id: String, privacy: String, passcode: String) {
-                memberViewModel.joinGroup(group_id, passcode)
-            }
-        }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
+        if (memberViewModel.user.kyc_status != "completed"){
+            //do not allow users kyc is not completed
+            requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
+        }else{
+            JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
+                override fun onConfirm(group_id: String, privacy: String, passcode: String) {
+                    memberViewModel.joinGroup(group_id, passcode)
+                }
+            }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
+        }
+
     }
 
 }
