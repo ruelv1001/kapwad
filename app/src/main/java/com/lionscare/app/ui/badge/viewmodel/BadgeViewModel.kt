@@ -38,7 +38,7 @@ class BadgeViewModel @Inject constructor(
 
     //user info, make it null first to not consume call from sharedpref
     //if not necessary
-    var user : UserModel? = null
+    var user : UserModel?  = null
         private set
 
 
