@@ -40,9 +40,9 @@ class ProfileViewModel @Inject constructor(
     var countryIso = "PH"
     //holder for phonenumber
     var phoneNumber : String? = null
-    var lcRegionCode : String = ""
-    var lcZoneCode : String = ""
-    var lcClusterCode : String = ""
+    var lcRegionCode : String? = null
+    var lcZoneCode : String? = null
+    var lcClusterCode : String? = null
 
     //holder for avatar
     var avatarFileHolder : File? = null

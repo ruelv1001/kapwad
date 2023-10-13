@@ -212,9 +212,9 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         barangayEditText.setText(userModel?.brgy_name)
         streetEditText.setText(userModel?.street_name)
         zipcodeEditText.setText(userModel?.zipcode)
-        viewModel.lcRegionCode = userModel?.lc_region_id.toString()
-        viewModel.lcClusterCode = userModel?.lc_location_id.toString()
-        viewModel.lcZoneCode =userModel?.lc_zone_id.toString()
+        viewModel.lcRegionCode = userModel?.lc_region_id
+        viewModel.lcClusterCode = userModel?.lc_location_id
+        viewModel.lcZoneCode =userModel?.lc_zone_id
         birthdateEditText.setText(userModel?.birthdate?.date_only_ph)
         regionEditText.setText(userModel?.lc_region_id?.takeIf { it.isNotEmpty() }
             ?.let { "Region $it" }
@@ -359,7 +359,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                             viewModel.lcClusterCode = ""
                         }
                     }
-                }, region = viewModel.lcRegionCode).show(childFragmentManager, CityDialog.TAG)
+                }, region = viewModel.lcRegionCode.orEmpty()).show(childFragmentManager, CityDialog.TAG)
             }
         }
 
@@ -377,7 +377,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
                             clusterEditText.setText(data.value)
                         }
                     }
-                },region = viewModel.lcRegionCode, zone = viewModel.lcZoneCode).show(childFragmentManager, BrgyDialog.TAG)
+                },region = viewModel.lcRegionCode.orEmpty(), zone = viewModel.lcZoneCode.orEmpty()).show(childFragmentManager, BrgyDialog.TAG)
             }
         }
 
@@ -408,9 +408,9 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             middlename = middleNameEditText.text.toString(),
             email = null,
             birthdate = birthdateEditText.text.toString(),
-            lc_region_id = viewModel.lcRegionCode,
-            lc_zone_id = viewModel.lcZoneCode,
-            lc_location_id = viewModel.lcClusterCode,
+            lc_region_id = viewModel.lcRegionCode.orEmpty(),
+            lc_zone_id = viewModel.lcZoneCode.orEmpty(),
+            lc_location_id = viewModel.lcClusterCode.orEmpty(),
         )
         viewModel.doUpdateProfile(request)
     }
