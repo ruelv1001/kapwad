@@ -20,6 +20,7 @@ import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
+import com.lionscare.app.data.repositories.registration.response.OnboardingScanQRData
 import com.lionscare.app.databinding.FragmentRegistrationPrimaryInfoBinding
 import com.lionscare.app.ui.register.activity.RegisterActivity
 import com.lionscare.app.ui.register.dialog.CountryDialog
@@ -35,7 +36,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class RegisterPrimaryInfoFragment: Fragment() {
+class OnboardingPrimaryInfoFragment: Fragment() {
     private var _binding: FragmentRegistrationPrimaryInfoBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as RegisterActivity }
@@ -75,11 +76,11 @@ class RegisterPrimaryInfoFragment: Fragment() {
             is RegisterViewState.Loading -> showLoadingDialog(R.string.loading)
             is RegisterViewState.Success -> {
                 hideLoadingDialog()
-                findNavController().navigate(RegisterPrimaryInfoFragmentDirections.actionNavigationOtp())
+                // must go to validate otp
             }
             is RegisterViewState.SuccessScanQR -> {
                 hideLoadingDialog()
-                // must proceed in onboarding primary info fragment
+                viewState.onboardingScanQRResponse.data?.let { setDetails(it) }
             }
             is RegisterViewState.PopupError -> {
                 hideLoadingDialog()
@@ -146,26 +147,27 @@ class RegisterPrimaryInfoFragment: Fragment() {
         }
     }
 
+    private fun setDetails(data : OnboardingScanQRData) = binding.run {
+        firstNameEditText.setText(data.firstname)
+        firstNameEditText.isEnabled = false
+
+        middleNameEditText.setText(data.middlename)
+        middleNameEditText.isEnabled = false
+
+        lastNameEditText.setText(data.lastname)
+        lastNameEditText.isEnabled = false
+
+        contactEditText.setText(data.phone_number?.replace(data.phone_country_code.toString(),""))
+        contactEditText.isEnabled = false
+
+        countryCodeTextView.text = data.phone_country_code
+        countryCodeTextView.isEnabled = false
+    }
+
     private fun setClickListeners() = binding.run {
         continueButton.setOnSingleClickListener {
-            val phoneNumber = "${viewModel.countryCode}${contactEditText.text.toString()}"
-            if (isPhoneNumberValid(phoneNumber, viewModel.countryIso)){
-                val data = RegistrationRequest()
-                data.firstname = firstNameEditText.text.toString()
-                data.middlename = middleNameEditText.text.toString()
-                data.lastname = lastNameEditText.text.toString()
-                data.phone_number = phoneNumber
-                data.phone_number_country_code = viewModel.countryCode
-                data.password = passwordEditText.text.toString()
-                data.password_confirmation = confirmPasswordEditText.text.toString()
-                activity.requestModel = data
-                val otpRequest = OTPRequest()
-                otpRequest.phone_number = phoneNumber
-                activity.otpModel = otpRequest
-                viewModel.doPreReg(data)
-            }else{
-                contactTextInputLayout.error = getString(R.string.phone_number_is_invalid)
-            }
+           viewModel.doPrevalidatePassword(password = passwordEditText.text.toString(),
+               passwordConfirmation = confirmPasswordEditText.text.toString())
         }
 
         passwordEditText.setOnFocusChangeListener { _, hasFocus ->
@@ -188,16 +190,6 @@ class RegisterPrimaryInfoFragment: Fragment() {
         confirmPasswordEditText.setOnSingleClickListener {
             // remove the error  on click so toggle password visibility would show
             confirmPasswordTextInputLayout.error = null
-        }
-
-        countryCodeTextView.setOnSingleClickListener {
-            CountryDialog.newInstance(object : CountryDialog.AddressCallBack {
-                override fun onAddressClicked(countryName: String, code: String, phone_code: String) {
-                    countryCodeTextView.text = phone_code
-                    viewModel.countryCode = phone_code //ex. +63
-                    viewModel.countryIso = code //ex. PH, US, VN, etc.
-                }
-            }, displayCountryCode = true).show(childFragmentManager, CountryDialog.TAG)
         }
 
         activity.getScanQRImageView().setOnSingleClickListener {
