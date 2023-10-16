@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
+import com.lionscare.app.data.repositories.registration.response.OnboardingScanQRResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ class RegistrationRepository @Inject constructor(
     private val registerRemoteDataSource: RegistrationRemoteDataSource,
     private val encryptedDataManager: AuthEncryptedDataManager,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-)  {
+) {
 
     fun doValidateFields(registrationRequest: RegistrationRequest): Flow<GeneralResponse> {
         return flow {
@@ -44,4 +45,47 @@ class RegistrationRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    fun doScanQR(code: String): Flow<OnboardingScanQRResponse> {
+        return flow {
+            val response = registerRemoteDataSource.doScanQR(code)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doPrevalidatePassword(
+        password: String,
+        passwordConfirmation: String
+    ): Flow<GeneralResponse> {
+        return flow {
+            val response = registerRemoteDataSource.doPrevalidatePassword(
+                password = password,
+                passwordConfirmation = passwordConfirmation
+            )
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doRequestOTP(code: String): Flow<GeneralResponse> {
+        return flow {
+            val response = registerRemoteDataSource.doRequestOTP(code)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doValidateAndSetPassword(
+        code: String,
+        password: String,
+        passwordConfirmation: String,
+        otp: String
+    ): Flow<GeneralResponse> {
+        return flow {
+            val response = registerRemoteDataSource.doValidateAndSetPassword(
+                code = code,
+                password = password,
+                passwordConfirmation = passwordConfirmation,
+                otp = otp
+            )
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
 }

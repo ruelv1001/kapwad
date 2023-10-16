@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -25,7 +27,6 @@ class RegisterActivity : AppCompatActivity() {
 
     var requestModel = RegistrationRequest()
     var otpModel = OTPRequest()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +77,11 @@ class RegisterActivity : AppCompatActivity() {
 
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
+        scanQRImageView.isVisible = title == getString(R.string.lbl_primary_info)
+    }
+
+    fun getScanQRImageView(): ImageView {
+        return binding.scanQRImageView
     }
 
     fun  alignTitleToCenter(){

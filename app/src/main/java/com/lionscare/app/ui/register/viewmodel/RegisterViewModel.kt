@@ -37,7 +37,7 @@ class RegisterViewModel @Inject constructor(
     val registerSharedFlow: SharedFlow<RegisterViewState> =
         _registerSharedFlow.asSharedFlow()
 
-    fun doPreReg(preRegRequest : RegistrationRequest) {
+    fun doPreReg(preRegRequest: RegistrationRequest) {
         viewModelScope.launch {
             regRepository.doValidateFields(preRegRequest)
                 .onStart {
@@ -55,7 +55,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun doRequestOTP(code : OTPRequest) {
+    fun doRequestOTP(code: OTPRequest) {
         viewModelScope.launch {
             regRepository.doRequestOTP(code)
                 .onStart {
@@ -73,7 +73,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun doReg(preRegRequest : RegistrationRequest) {
+    fun doReg(preRegRequest: RegistrationRequest) {
         viewModelScope.launch {
             regRepository.doRegister(preRegRequest)
                 .onStart {
@@ -109,6 +109,90 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    fun doScanQR(code: String) {
+        viewModelScope.launch {
+            regRepository.doScanQR(code)
+                .onStart {
+                    _registerSharedFlow.emit(RegisterViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _registerSharedFlow.emit(
+                        RegisterViewState.SuccessScanQR(it.msg.orEmpty(), it)
+                    )
+                }
+        }
+    }
+
+    fun doPrevalidatePassword(password: String, passwordConfirmation: String) {
+        viewModelScope.launch {
+            regRepository.doPrevalidatePassword(
+                password = password,
+                passwordConfirmation = passwordConfirmation
+            )
+                .onStart {
+                    _registerSharedFlow.emit(RegisterViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _registerSharedFlow.emit(
+                        RegisterViewState.Success(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun doRequestOTP(code: String) {
+        viewModelScope.launch {
+            regRepository.doRequestOTP(code)
+                .onStart {
+                    _registerSharedFlow.emit(RegisterViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _registerSharedFlow.emit(
+                        RegisterViewState.Success(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
+
+    fun doValidateAndSetPassword(
+        code: String,
+        password: String,
+        passwordConfirmation: String,
+        otp: String
+    ) {
+        viewModelScope.launch {
+            regRepository.doValidateAndSetPassword(
+                code = code,
+                password = password,
+                passwordConfirmation = passwordConfirmation,
+                otp = otp
+            )
+                .onStart {
+                    _registerSharedFlow.emit(RegisterViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+
+                }
+                .collect {
+                    _registerSharedFlow.emit(
+                        RegisterViewState.Success(it.msg.orEmpty())
+                    )
+                }
+        }
+    }
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {
@@ -121,27 +205,29 @@ class RegisterViewModel @Inject constructor(
                     )
                 )
             }
+
             is HttpException -> {
                 val errorBody = exception.response()?.errorBody()
                 val gson = Gson()
                 val type = object : TypeToken<com.lionscare.app.data.model.ErrorModel>() {}.type
-                var errorResponse: com.lionscare.app.data.model.ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
+                var errorResponse: com.lionscare.app.data.model.ErrorModel? =
+                    gson.fromJson(errorBody?.charStream(), type)
                 if (errorResponse?.has_requirements == true) {
                     _registerSharedFlow.emit(RegisterViewState.InputError(errorResponse.errors))
                 } else {
                     _registerSharedFlow.emit(
                         RegisterViewState.PopupError(
-                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())){
+                            if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())) {
                                 PopupErrorState.SessionError
-                            }else{
+                            } else {
                                 PopupErrorState.HttpError
-                            }
-                            , errorResponse?.msg.orEmpty()
+                            }, errorResponse?.msg.orEmpty()
                         )
                     )
                 }
 
             }
+
             else -> _registerSharedFlow.emit(
                 RegisterViewState.PopupError(
                     PopupErrorState.UnknownError
