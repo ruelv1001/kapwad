@@ -13,6 +13,11 @@
         <action
             android:id="@+id/action_navigation_otp"
             app:destination="@id/navigation_otp" />
+        <action
+            android:id="@+id/action_navigation_onboarding_primary_info"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/navigation_primary_info"
+            app:destination="@id/navigation_onboarding_primary_info" />
     </fragment>
 
     <fragment
@@ -31,5 +36,25 @@
         android:label=""
         tools:layout="@layout/fragment_registration_complete_profile"/>
 
+
+    <fragment
+        android:id="@+id/navigation_onboarding_primary_info"
+        android:name="com.lionscare.app.ui.register.fragment.OnboardingPrimaryInfoFragment"
+        android:label=""
+        tools:layout="@layout/fragment_registration_primary_info">
+        <action
+            android:id="@+id/action_navigation_onboarding_otp"
+            app:destination="@id/navigation_onboarding_otp" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_onboarding_otp"
+        android:name="com.lionscare.app.ui.register.fragment.OnboardingOTPFragment"
+        android:label=""
+        tools:layout="@layout/fragment_registration_otp">
+        <action
+            android:id="@+id/action_navigation_complete_profile"
+            app:destination="@id/navigation_complete_profile" />
+    </fragment>
 
 </navigation>

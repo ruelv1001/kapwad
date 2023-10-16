@@ -1,10 +1,12 @@
 package com.lionscare.app.data.repositories.registration.response
 
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.Meta
 import com.lionscare.app.data.repositories.baseresponse.QrValue
+import kotlinx.parcelize.Parcelize
 
 @Keep
 data class OnboardingScanQRResponse(
@@ -16,6 +18,7 @@ data class OnboardingScanQRResponse(
 )
 
 @Keep
+@Parcelize
 data class OnboardingScanQRData(
     var birthdate: DateModel? = null,
     var date_registered: DateModel? = null,
@@ -32,5 +35,5 @@ data class OnboardingScanQRData(
     var qr_value: QrValue? = null,
     var qrcode: String? = null,
     var qrcode_value: String? = null
-)
+) : Parcelable
 

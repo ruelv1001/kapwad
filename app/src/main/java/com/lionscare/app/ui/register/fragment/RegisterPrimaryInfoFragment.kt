@@ -79,7 +79,8 @@ class RegisterPrimaryInfoFragment: Fragment() {
             }
             is RegisterViewState.SuccessScanQR -> {
                 hideLoadingDialog()
-                // must proceed in onboarding primary info fragment
+                activity.onBoardingData = viewState.onboardingScanQRResponse.data!!
+                findNavController().navigate(RegisterPrimaryInfoFragmentDirections.actionNavigationOnboardingPrimaryInfo())
             }
             is RegisterViewState.PopupError -> {
                 hideLoadingDialog()
@@ -209,6 +210,7 @@ class RegisterPrimaryInfoFragment: Fragment() {
                         jsonObject = JSONObject(res)
                         val type = jsonObject.getString("type")
                         val value = jsonObject.getString("value")
+                        activity.code = value
                         viewModel.doScanQR(value)
                     } catch (e: JSONException) {
                         requireActivity().toastError(getString(R.string.invalid_qr_code_msg), CpmToast.SHORT_DURATION)
