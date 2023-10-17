@@ -60,6 +60,7 @@ class FaceScannerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFaceScannerBinding.inflate(layoutInflater)
         val view = binding.root
+        //
         setContentView(view)
         setupFaceScanner()
         setClickListener()
