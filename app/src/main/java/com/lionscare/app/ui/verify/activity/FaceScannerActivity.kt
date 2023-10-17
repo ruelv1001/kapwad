@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.SurfaceTexture
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.firebase.FirebaseApp
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
@@ -60,7 +62,11 @@ class FaceScannerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFaceScannerBinding.inflate(layoutInflater)
         val view = binding.root
-        //
+
+        //for dev release version, since it produces error of
+        //FirebaseApp must be initialized
+        FirebaseApp.initializeApp(this)
+
         setContentView(view)
         setupFaceScanner()
         setClickListener()
@@ -95,8 +101,15 @@ class FaceScannerActivity : AppCompatActivity() {
             .build()
         val detector = FirebaseVision.getInstance().getVisionFaceDetector(options)
 
+        //resolvess problem of camera preview suddenly crashing or not previewing anymore,
+        //also crashes on first permission request. this solves it by keeping an instance
+        // of the surface the holds the camera preview
+        //reference : https://stackoverflow.com/questions/23807086/surfacetexture-has-been-abandoned
+        var surfaceTexture: SurfaceTexture? = SurfaceTexture(CameraSource.DUMMY_TEXTURE_NAME);
+
+
         // To connect the camera resource with the detector
-        mCameraSource = CameraSource(this, binding.barcodeOverlay)
+        mCameraSource = CameraSource(this, binding.barcodeOverlay, surfaceTexture)
         mCameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
 
 

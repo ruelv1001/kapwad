@@ -46,7 +46,7 @@ public class CameraSource {
    * we can choose any ID we want here. The dummy surface texture is not a crazy hack - it is
    * actually how the camera team recommends using the camera without a preview.
    */
-  private static final int DUMMY_TEXTURE_NAME = 100;
+  public static final int DUMMY_TEXTURE_NAME = 100;
 
   /**
    * If the absolute difference between a preview size aspect ratio and a picture size aspect ratio
@@ -111,8 +111,9 @@ public class CameraSource {
   // @GuardedBy("processorLock")
   private VisionImageProcessor frameProcessor;
 
-  public CameraSource(Activity activity, GraphicOverlay overlay) {
+  public CameraSource(Activity activity, GraphicOverlay overlay, SurfaceTexture surfaceTexture) {
     this.activity = activity;
+    this.dummySurfaceTexture = surfaceTexture;
     graphicOverlay = overlay;
     graphicOverlay.clear();
     processingRunnable = new FrameProcessingRunnable();
@@ -279,7 +280,7 @@ public class CameraSource {
     }
 
     camera = createCamera();
-    dummySurfaceTexture = new SurfaceTexture(DUMMY_TEXTURE_NAME);
+//    dummySurfaceTexture = new SurfaceTexture(DUMMY_TEXTURE_NAME);
     camera.setPreviewTexture(dummySurfaceTexture);
     usingSurfaceTexture = true;
     camera.startPreview();
