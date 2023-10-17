@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
+import com.lionscare.app.data.repositories.registration.response.OnboardingScanQRData
 import com.lionscare.app.databinding.ActivityRegisterBinding
 import com.lionscare.app.utils.dialog.CommonDialog
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -27,6 +28,11 @@ class RegisterActivity : AppCompatActivity() {
 
     var requestModel = RegistrationRequest()
     var otpModel = OTPRequest()
+
+    var onBoardingData = OnboardingScanQRData()
+    var code = ""
+    var password = ""
+    var passwordConfirm = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

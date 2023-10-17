@@ -61,6 +61,7 @@ class OnboardingPrimaryInfoFragment: Fragment() {
         setClickListeners()
         setView()
         onResume()
+        setDetails(activity.onBoardingData)
     }
 
     private fun observeRegisterAccount() {
@@ -76,7 +77,9 @@ class OnboardingPrimaryInfoFragment: Fragment() {
             is RegisterViewState.Loading -> showLoadingDialog(R.string.loading)
             is RegisterViewState.Success -> {
                 hideLoadingDialog()
-                // must go to validate otp
+                activity.password = binding.passwordEditText.text.toString()
+                activity.passwordConfirm = binding.confirmPasswordEditText.text.toString()
+                findNavController().navigate(OnboardingPrimaryInfoFragmentDirections.actionNavigationOnboardingOtp())
             }
             is RegisterViewState.SuccessScanQR -> {
                 hideLoadingDialog()

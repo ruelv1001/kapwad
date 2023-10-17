@@ -148,7 +148,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun doRequestOTP(code: String) {
+    fun doRequestOnboardingOTP(code: String) {
         viewModelScope.launch {
             regRepository.doRequestOTP(code)
                 .onStart {
@@ -188,7 +188,7 @@ class RegisterViewModel @Inject constructor(
                 }
                 .collect {
                     _registerSharedFlow.emit(
-                        RegisterViewState.Success(it.msg.orEmpty())
+                        RegisterViewState.SuccessReg(it.msg.orEmpty())
                     )
                 }
         }
