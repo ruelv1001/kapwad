@@ -188,7 +188,7 @@ class RegisterViewModel @Inject constructor(
                 }
                 .collect {
                     _registerSharedFlow.emit(
-                        RegisterViewState.SuccessReg(it.msg.orEmpty())
+                        RegisterViewState.SuccessValidateAndSetPassword(it.msg.orEmpty(), it)
                     )
                 }
         }

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.lionscare.app.R
+import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.registration.request.OTPRequest
 import com.lionscare.app.data.repositories.registration.request.RegistrationRequest
 import com.lionscare.app.data.repositories.registration.response.OnboardingScanQRData
@@ -30,6 +31,7 @@ class RegisterActivity : AppCompatActivity() {
     var otpModel = OTPRequest()
 
     var onBoardingData = OnboardingScanQRData()
+    var onBoardingUserModel = UserModel()
     var code = ""
     var password = ""
     var passwordConfirm = ""
@@ -51,6 +53,11 @@ class RegisterActivity : AppCompatActivity() {
 
     fun removeBackButton(){
         binding.backImageView.visibility= View.GONE
+    }
+
+    override fun onBackPressed() {
+        if(binding.backImageView.isVisible)
+            super.onBackPressed()
     }
     private fun setupNavigationComponent() {
         setSupportActionBar(binding.toolbar)

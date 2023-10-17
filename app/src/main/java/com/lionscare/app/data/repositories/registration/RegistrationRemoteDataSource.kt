@@ -72,7 +72,7 @@ class RegistrationRemoteDataSource @Inject constructor(private val registrationS
         password: String,
         passwordConfirmation: String,
         otp: String
-    ): GeneralResponse {
+    ): LoginResponse {
         val request = OnboardingRequest(
             code = code,
             password = password,
@@ -80,7 +80,7 @@ class RegistrationRemoteDataSource @Inject constructor(private val registrationS
             otp = otp
         )
         val response = registrationService.doValidateAndSetPassword(request)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
+        if (response.code() != HttpURLConnection.HTTP_CREATED) {
             throw HttpException(response)
         }
         return response.body() ?: throw NullPointerException("Response data is empty")

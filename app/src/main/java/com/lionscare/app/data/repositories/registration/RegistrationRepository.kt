@@ -77,7 +77,7 @@ class RegistrationRepository @Inject constructor(
         password: String,
         passwordConfirmation: String,
         otp: String
-    ): Flow<GeneralResponse> {
+    ): Flow<LoginResponse> {
         return flow {
             val response = registerRemoteDataSource.doValidateAndSetPassword(
                 code = code,
@@ -85,6 +85,10 @@ class RegistrationRepository @Inject constructor(
                 passwordConfirmation = passwordConfirmation,
                 otp = otp
             )
+            val token = response.token.orEmpty()
+            val userInfo = response.data ?: UserModel()
+            encryptedDataManager.setAccessToken(token)
+            encryptedDataManager.setUserBasicInfo(userInfo)
             emit(response)
         }.flowOn(ioDispatcher)
     }

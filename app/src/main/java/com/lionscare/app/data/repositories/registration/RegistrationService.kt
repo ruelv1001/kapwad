@@ -31,5 +31,5 @@ interface RegistrationService {
     suspend fun doRequestOTP(@Body onboardingRequest: OnboardingRequest): Response<GeneralResponse>
 
     @POST("api/auth/onboarding/validate-otp")
-    suspend fun doValidateAndSetPassword(@Body onboardingRequest: OnboardingRequest): Response<GeneralResponse>
+    suspend fun doValidateAndSetPassword(@Body onboardingRequest: OnboardingRequest): Response<LoginResponse>
 }
