@@ -53,8 +53,14 @@
         android:label=""
         tools:layout="@layout/fragment_registration_otp">
         <action
-            android:id="@+id/action_navigation_complete_profile"
-            app:destination="@id/navigation_complete_profile" />
+            android:id="@+id/action_navigation_onboarding_complete_profile"
+            app:destination="@id/navigation_onboarding_complete_profile" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_onboarding_complete_profile"
+        android:name="com.lionscare.app.ui.register.fragment.OnboardingCompleteProfileFragment"
+        android:label=""
+        tools:layout="@layout/fragment_registration_complete_profile"/>
 
 </navigation>

@@ -81,8 +81,9 @@ class OnboardingOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCa
                 hideLoadingDialog()
                 requireActivity().toastSuccess(viewState.message, CpmToast.LONG_DURATION)
             }
-            is RegisterViewState.SuccessReg -> {
+            is RegisterViewState.SuccessValidateAndSetPassword -> {
                 hideLoadingDialog()
+                activity.onBoardingUserModel = viewState.loginResponse.data!!
                 RegisterSuccessDialog.newInstance(callback = this@OnboardingOTPFragment)
                     .show(childFragmentManager, RegisterSuccessDialog.TAG)
             }
@@ -191,6 +192,6 @@ class OnboardingOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCa
     }
 
     override fun onMyAccountClicked(cityName: String, citySku: String, zipCode: String) {
-        findNavController().navigate(RegisterOTPFragmentDirections.actionNavigationCompleteProfile())
+        findNavController().navigate(OnboardingOTPFragmentDirections.actionNavigationOnboardingCompleteProfile())
     }
 }
