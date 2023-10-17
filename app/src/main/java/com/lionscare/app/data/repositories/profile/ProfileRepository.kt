@@ -8,6 +8,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
+import com.lionscare.app.data.repositories.profile.request.FaceIDRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
@@ -73,6 +74,13 @@ class ProfileRepository @Inject constructor(
     fun doUploadProofAddress(request: KYCRequest): Flow<GeneralResponse> {
         return flow {
             val response = profileRemoteDataSource.doUploadProofOfAddress(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doUploadFacialId(request: FaceIDRequest): Flow<GeneralResponse> {
+        return flow {
+            val response = profileRemoteDataSource.doUploadFaceId(request)
             emit(response)
         }.flowOn(ioDispatcher)
     }

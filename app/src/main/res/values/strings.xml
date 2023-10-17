@@ -396,4 +396,22 @@
     <string name="proceed_btn_lbl">Proceed</string>
     <string name="login_email_only_hint">Email</string>
     <string name="kyc_status_must_be_verified">You cannot do this action until you are a completely verified user</string>
+
+    <string name="follow_the_instruction_to_enable_capture_button">Follow the instruction to enable capture button</string>
+    <string name="scanner_smile_lbl">Smile</string>
+    <string name="scanner_left_lbl">Look Left</string>
+    <string name="scanner_right_lbl">Look Right</string>
+    <string name="take_selfie">Take your selfie</string>
+    <string name="left_label">Left</string>
+    <string name="right_label">Right</string>
+    <string name="front_label">Front</string>
+    <string name="submit">Submit</string>
+    <string name="kyc_upload_left_selfie_error">Left Face image is required.</string>
+    <string name="kyc_upload_front_selfie_error">Front Face image is required.</string>
+    <string name="kyc_upload_right_selfie_error">Right Face image is required.</string>
+    <string name="view_kyc_verification">View KYC Verification</string>
+    <string name="bright_photo_label">Make sure to upload a bright photo.</string>
+    <string name="kyc_upload_selfie_loading">Uploading Selfie…</string>
+    <string name="facial_identification">Facial Identification</string>
+
 </resources>

@@ -5,6 +5,7 @@ import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.lionscare.app.data.repositories.profile.request.BadgeRequest
 import com.lionscare.app.data.repositories.profile.request.ChangePassRequest
+import com.lionscare.app.data.repositories.profile.request.FaceIDRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.data.repositories.profile.request.NotificationListRequest
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
@@ -111,6 +112,32 @@ class ProfileRemoteDataSource @Inject constructor(
 
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
+
+    suspend fun doUploadFaceId(request : FaceIDRequest): GeneralResponse {
+        val response = profileService.doUploadFacialId(
+            MultipartBody.Part.createFormData(
+                "front_image",
+                request.front_image.name,
+                request.front_image.asNetWorkRequestBody(IMAGE_MIME_TYPE)
+            ),
+            MultipartBody.Part.createFormData(
+                "left_image",
+                request.left_image.name,
+                request.left_image.asNetWorkRequestBody(IMAGE_MIME_TYPE)
+            ),
+            MultipartBody.Part.createFormData(
+                "right_image",
+                request.right_image.name,
+                request.right_image.asNetWorkRequestBody(IMAGE_MIME_TYPE)
+            )
+        )
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
 
     suspend fun getIdList(): LOVResponse {
         val response = profileService.getLOVIdList()
