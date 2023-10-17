@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
+import com.lionscare.app.data.repositories.profile.request.FaceIDRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.ui.register.viewmodel.AddressViewState
@@ -36,6 +37,8 @@ class VerifyViewModel @Inject constructor(
 
     var frontImageFile: File? = null
     var backImageFile: File? = null
+    var leftImageFile: File? = null
+    var rightImageFile: File? = null
 
     fun doUploadId(kycRequest: KYCRequest) {
         viewModelScope.launch {
@@ -76,6 +79,27 @@ class VerifyViewModel @Inject constructor(
                 }
         }
     }
+
+    fun doUploadFacialIds(kycRequest : FaceIDRequest) {
+        viewModelScope.launch {
+            profileRepository.doUploadFacialId(kycRequest)
+                .onStart {
+                    _kycSharedFlow.emit(ProfileViewState.Loading)
+                }
+                .catch { exception ->
+                    CommonLogger.instance.sysLogE(
+                        "KYCViewModel",
+                        exception.localizedMessage,
+                        exception
+                    )
+                    onError(exception)
+                }
+                .collect {
+                    _kycSharedFlow.emit(ProfileViewState.SuccessUploadFacialId(it.msg.orEmpty()))
+                }
+        }
+    }
+
 
     fun getIDLists(){
         viewModelScope.launch {

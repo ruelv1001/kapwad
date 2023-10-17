@@ -24,6 +24,7 @@ sealed class ProfileViewState {
     data class SuccessLoadLOVProofOfAddress(val message : String = "", val lovResponse: LOVResponse? = LOVResponse()) : ProfileViewState()
     data class SuccessUploadId(val message : String = "") : ProfileViewState()
     data class SuccessUploadAddress(val message : String = "") : ProfileViewState()
+    data class SuccessUploadFacialId(val message : String = "") : ProfileViewState()
 
 
     data class SuccessUploadAvatar(val message : String = "") : ProfileViewState()

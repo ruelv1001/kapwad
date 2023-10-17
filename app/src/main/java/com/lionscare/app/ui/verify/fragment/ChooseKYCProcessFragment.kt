@@ -85,6 +85,10 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                 val addressStatus = "Proof of Address"
                 val addressDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.address_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
 
+
+                val facialStatus = "Facial Identification"
+                val facialDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.facial_id_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
+
                 //for id
                 binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data?.id_status?.replaceFirstChar(Char::titlecase)}"
                 binding.validIdButtonTextView.text = idStatus
@@ -94,6 +98,11 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                 binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data?.address_status?.replaceFirstChar(Char::titlecase)}"
                 binding.addressButtonTextView.text = addressStatus
                 binding.addressDateTextView.text = addressDate
+
+                //for facial
+                binding.badgeFacialStatus.text = "${viewState.profileVerificationResponse.data?.facial_id_status?.replaceFirstChar(Char::titlecase)}"
+                binding.facialButtonTextView.text = facialStatus
+                binding.facialDateTextView.text = facialDate
 
                 when( viewState.profileVerificationResponse.data?.id_status ){
                     "pending" -> {
@@ -106,7 +115,7 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                     "declined" ->{
                         binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_declined)
                         binding.badgeIdStatus.visibility = View.VISIBLE
-                        binding.badgeIdStatus.text = "${viewState.profileVerificationResponse.data.id_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.badgeIdStatus.text = viewState.profileVerificationResponse.data.id_status.replaceFirstChar(Char::titlecase)
                         binding.validIdLinearLayout.isClickable = true
                         binding.validIdButtonTextView.text = idStatus
                         binding.validIdDateTextView.text = idDate
@@ -140,7 +149,7 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                     "declined" ->{
                         binding.badgeAddressStatus.setBackgroundResource(R.drawable.bg_rounded_declined)
                         binding.badgeAddressStatus.visibility = View.VISIBLE
-                        binding.badgeAddressStatus.text = "${viewState.profileVerificationResponse.data.address_status?.replaceFirstChar(Char::titlecase)}"
+                        binding.badgeAddressStatus.text = viewState.profileVerificationResponse.data.address_status.replaceFirstChar(Char::titlecase)
                         binding.addressLinearLayout.isClickable = true
                         binding.addressButtonTextView.text = addressStatus
                         binding.addressDateTextView.visibility = View.GONE
@@ -160,6 +169,40 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                         binding.addressButtonTextView.text = getString(R.string.account_verification_proof_of_address_title)
                         binding.addressDateTextView.visibility = View.GONE
                         binding.addressArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_forward_arrow))
+                    }
+                }
+                //for facial TODO
+                when( viewState.profileVerificationResponse.data?.facial_id_status) {
+                    "pending" -> {
+                        binding.badgeFacialStatus.setBackgroundResource(R.drawable.bg_rounded_pending)
+                        binding.badgeFacialStatus.visibility = View.VISIBLE
+                        binding.facialLinearLayout.isClickable = false
+                        binding.facialDateTextView.visibility = View.VISIBLE
+                        binding.facialArrowImageView.visibility = View.GONE
+                    }
+                    "declined" ->{
+                        binding.badgeFacialStatus.setBackgroundResource(R.drawable.bg_rounded_declined)
+                        binding.badgeFacialStatus.visibility = View.VISIBLE
+                        binding.badgeFacialStatus.text = viewState.profileVerificationResponse.data.facial_id_status.replaceFirstChar(Char::titlecase)
+                        binding.facialLinearLayout.isClickable = true
+                        binding.facialButtonTextView.text = facialStatus
+                        binding.facialDateTextView.visibility = View.GONE
+                        binding.facialArrowImageView.visibility = View.VISIBLE
+                    }
+                    "approved" -> {
+                        binding.facialArrowImageView.visibility = View.VISIBLE
+                        binding.badgeFacialStatus.visibility = View.GONE
+                        binding.facialLinearLayout.isClickable = false
+                        binding.facialDateTextView.text =  "Verified on:\n${viewState.profileVerificationResponse.data.facial_id_verified_date?.date_db?.ifEmpty { "Not applicable" }}"   /// activated date
+                        binding.facialDateTextView.visibility = View.VISIBLE
+                        binding.facialArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_check))
+                    }
+                    else -> {
+                        binding.badgeFacialStatus.visibility = View.GONE
+                        binding.facialLinearLayout.isClickable = true
+                        binding.facialButtonTextView.text = getString(R.string.facial_identification)
+                        binding.facialDateTextView.visibility = View.GONE
+                        binding.facialArrowImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_forward_arrow))
                     }
                 }
                 hideLoadingDialog()
@@ -213,6 +256,10 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
 
         addressLinearLayout.setOnSingleClickListener {
             findNavController().navigate(ChooseKYCProcessFragmentDirections.actionNavigationChooseKycToNavigationProofOfAddress())
+        }
+
+        facialLinearLayout.setOnSingleClickListener {
+            findNavController().navigate(ChooseKYCProcessFragmentDirections.actionNavigationChooseKycToUploadSelfieFragment())
         }
     }
     override fun onRefresh() {

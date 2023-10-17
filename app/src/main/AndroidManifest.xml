@@ -111,6 +111,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:replace="android:theme" />
+
+        <activity
+            android:name=".ui.verify.activity.FaceScannerActivity"
+            android:label=""
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
