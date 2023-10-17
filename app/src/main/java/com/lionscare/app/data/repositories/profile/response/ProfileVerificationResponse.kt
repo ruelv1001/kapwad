@@ -23,6 +23,10 @@ data class Verification (
     val id_status: String? = null,
     val id_submitted_date: DateModel? = null,
     val id_type: String? = null,
-    val id_verified_date: DateModel? = null
+    val id_verified_date: DateModel? = null,
+    val facial_id_remarks: String? = null,
+    val facial_id_status: String? = null,
+    val facial_id_submitted_date: DateModel? = null,
+    val facial_id_verified_date: DateModel? = null
 )
 

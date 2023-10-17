@@ -6,6 +6,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -66,14 +67,12 @@ android {
     productFlavors {
         dev {
             isDefault true
-            applicationIdSuffix ".dev"
             manifestPlaceholders = [appName: 'Dev - ' + rootProject.name]
             buildConfigField "String", "BASE_URL", "\"https://lionscare.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziademo.com/\""
             buildConfigField "String", "PSGC_AUTH", "\"HkCrJxGa5M8udwHYbDyMF2kscmzhSVtDwBxjXNPxLETScLAFf5P87zLUxqWTKQ3bRcvLCNd4e9n3xpNCwGxsrfgj6fMRtCsUuxWr6gRAj2kRcVwxKfH5TDx8YWF4r2cP\""
         }
         alpha {
-            applicationIdSuffix ".alpha"
             manifestPlaceholders = [appName: 'Alpha - ' + rootProject.name]
             buildConfigField "String", "BASE_URL", "\"https://lionscare.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziademo.com/\""
@@ -174,4 +173,11 @@ dependencies {
     implementation 'com.github.emrekotun:CpmToast:1.0.2'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.42'
     implementation("io.coil-kt:coil:2.4.0")
+
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    //noinspection OutdatedLibrary
+    implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'

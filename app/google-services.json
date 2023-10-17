@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "947225419985",
+    "project_id": "lionscare-b29db",
+    "storage_bucket": "lionscare-b29db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947225419985:android:b05284ffe2cad64e5765f0",
+        "android_client_info": {
+          "package_name": "com.lionscare.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEGAnU2BzMgcv66J5hdDKN6pDT3qwY2FY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

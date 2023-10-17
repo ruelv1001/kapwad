@@ -46,6 +46,15 @@ interface ProfileService {
         @Part proof_type: MultipartBody.Part
     ): Response<GeneralResponse>
 
+
+    @Multipart
+    @POST("api/profile/kyc/facial-id")
+    suspend fun doUploadFacialId(
+        @Part front_image: MultipartBody.Part,
+        @Part left_image: MultipartBody.Part,
+        @Part right_image: MultipartBody.Part,
+    ): Response<GeneralResponse>
+
     @POST("api/setting/lov/id")
     suspend fun getLOVIdList(): Response<LOVResponse>
 

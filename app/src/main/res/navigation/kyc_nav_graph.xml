@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_choose_kyc_to_navigation_proof_of_address"
             app:destination="@id/navigation_proof_of_address" />
+        <action
+            android:id="@+id/action_navigation_choose_kyc_to_uploadSelfieFragment"
+            app:destination="@id/uploadSelfieFragment" />
     </fragment>
 
     <fragment
@@ -37,5 +40,10 @@
             android:id="@+id/action_navigation_proof_of_address_to_navigation_choose_kyc"
             app:destination="@id/navigation_choose_kyc" />
     </fragment>
+    <fragment
+        android:id="@+id/uploadSelfieFragment"
+        tools:layout="@layout/fragment_upload_selfie"
+        android:name="com.lionscare.app.ui.verify.fragment.UploadSelfieFragment"
+        android:label="UploadSelfieFragment" />
 
 </navigation>
