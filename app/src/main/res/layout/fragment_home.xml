@@ -22,7 +22,7 @@
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                android:src="@drawable/img_lions_care_logo" />
+                android:src="@drawable/img_lionscare_logo" />
 
         </androidx.appcompat.widget.Toolbar>
 

@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="@dimen/dimen_20"
-        android:src="@drawable/img_lions_care_logo" />
+        android:src="@drawable/img_lionscare_logo" />
 
 </RelativeLayout>
