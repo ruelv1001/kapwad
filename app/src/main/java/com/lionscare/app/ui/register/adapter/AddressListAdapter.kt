@@ -20,7 +20,11 @@ class AddressListAdapter (val context: Context, val clickListener: AddressCallba
 
     fun appendData(newData: List<AddressData>) {
         val startAt = adapterData.size
-        adapterData.addAll(newData)
+        for(a : AddressData in newData){
+            if(!a.name.equals("N/A")){
+                adapterData.add(a)
+            }
+        }
         notifyItemRangeInserted(startAt, newData.size)
     }
 
