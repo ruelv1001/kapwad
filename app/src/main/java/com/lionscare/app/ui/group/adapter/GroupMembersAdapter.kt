@@ -69,7 +69,7 @@ class GroupMembersAdapter(
                     binding.youTextView.text = "Owner"
                 } else if (id != data.user?.id && data.role == "admin" && isInMemberList == true) {
                     binding.youTextView.isVisible = true
-                    binding.youTextView.text = "Admin"
+                    binding.youTextView.text = "Co-Admin"
                 } else {
                     binding.youTextView.isGone = true
                 }

@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupCommunityRolesBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.group.viewmodel.AdminViewModel
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,7 @@ class CommunityRolesFragment: Fragment() {
     private var _binding: FragmentGroupCommunityRolesBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as GroupActivity }
+    private val viewModel: AdminViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +49,7 @@ class CommunityRolesFragment: Fragment() {
     }
 
     private fun setView() = binding.run{
-        activity.getRolesView().isVisible = activity.groupDetails?.is_admin == true
+        activity.getRolesView().isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
     }
 
     private fun setClickListeners() = binding.run {
