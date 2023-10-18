@@ -142,6 +142,8 @@ class OnboardingOTPFragment: Fragment(), RegisterSuccessDialog.RegisterSuccessCa
         otpFourthEdittext.setOnKeyListener(GenericKeyEvent(otpFourthEdittext,otpThirdEdittext))
         otpFifthEdittext.setOnKeyListener(GenericKeyEvent(otpFifthEdittext,otpFourthEdittext))
         otpSixthEdittext.setOnKeyListener(GenericKeyEvent(otpSixthEdittext,otpFifthEdittext))
+
+        phoneNumberTextView.text = activity.onBoardingData.phone_number
     }
 
     private fun setClickListeners() = binding.run {

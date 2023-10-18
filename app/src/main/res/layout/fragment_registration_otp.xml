@@ -17,9 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_50"
-            android:layout_marginBottom="@dimen/dimen_30"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/lbl_code_has_been_sent_to_your_phone_number"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:id="@+id/phoneNumberTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/lbl_9xx_xxx_xxxx"
             android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_14" />
