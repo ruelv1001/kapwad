@@ -22,6 +22,7 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
     private var data = MemberListData()
     private var isUserAdmin = false
     private var isUserOwner = false
+    private var ownerId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +53,7 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
         nameTextView.text = data.user?.name
         idTextView.text = data.user?.qrcode?.replace("....".toRegex(), "$0 ")
         avatarImageView.loadAvatar(data.user?.avatar?.full_path.orEmpty(), requireActivity())
-        membersLinearLayout.isVisible = (isUserAdmin && data.role != "admin") || isUserOwner
+        membersLinearLayout.isVisible = ((isUserAdmin && data.role != "admin") || isUserOwner) && data.user?.id != ownerId
         transferOwnershipButton.isVisible = isUserOwner
     }
 
@@ -87,13 +88,15 @@ class MemberDetailsDialog : BottomSheetDialogFragment() {
             callback: MembershipCallback? = null,
             data: MemberListData = MemberListData(),
             isUserAdmin : Boolean,
-            isUserOwner: Boolean
+            isUserOwner: Boolean,
+            ownerId : String
         ) = MemberDetailsDialog()
             .apply {
                 this.callback = callback
                 this.data = data
                 this.isUserAdmin = isUserAdmin
                 this.isUserOwner = isUserOwner
+                this.ownerId = ownerId
             }
 
         val TAG: String = MemberDetailsDialog::class.java.simpleName

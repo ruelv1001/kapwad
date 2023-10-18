@@ -151,7 +151,7 @@ class CommunityRolesUpdateFragment: Fragment(), GroupPromoteMembersAdapter.Membe
                     viewModel.doDemoteAdmin(activity.groupDetails?.id!!,id.toInt())
                 }
             },
-            title = "Demote Selected Admin?",
+            title = "Demote Selected Co-Admin?",
             groupId = data.id.toString()
         ).show(childFragmentManager, RemoveConfirmationDialog.TAG)
     }

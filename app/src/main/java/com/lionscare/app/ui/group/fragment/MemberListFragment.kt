@@ -210,7 +210,7 @@ class MemberListFragment : Fragment(),
                 override fun onTransferOwnership(memberListData: MemberListData) {
                     viewModelAdmin.doTransferOwnership(activity.groupDetails?.id.toString(),data.user?.id.toString())
                 }
-            }, data, activity.groupDetails?.is_admin == true, isOwner
+            }, data, activity.groupDetails?.is_admin == true, isOwner, activity.groupDetails?.owner_user_id.toString()
         ).show(childFragmentManager, MemberDetailsDialog.TAG)
     }
 

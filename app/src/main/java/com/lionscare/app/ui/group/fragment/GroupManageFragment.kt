@@ -125,7 +125,6 @@ class GroupManageFragment : Fragment() {
 
         editGroupImageView.isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
         transactionLinearLayout.isVisible = activity.groupDetails?.is_admin == true
-        editGroupImageView.isVisible = activity.groupDetails?.is_admin == true
     }
 
     private fun setClickListeners() = binding.run {
