@@ -40,15 +40,15 @@ android {
         applicationId "com.lionscare.app"
         minSdk 23
         targetSdk 33
-        versionCode 26
-        versionName "0.0.26"
+        versionCode 28
+        versionName "0.0.28"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            debuggable false
+            debuggable true
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
