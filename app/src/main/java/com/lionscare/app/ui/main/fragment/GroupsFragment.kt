@@ -127,9 +127,18 @@ class GroupsFragment : Fragment(){
         }
 
         searchImageView.setOnSingleClickListener {
-            val intent = GroupActivity.getIntent(requireActivity(),
-                START_GROUP_SEARCH)
-            startActivity(intent)
+            if (viewModel.status  != "completed") {
+                if (activity.groupCount < 1) {
+                    val intent = GroupActivity.getIntent(requireActivity(),
+                        START_GROUP_SEARCH)
+                    startActivity(intent)
+                }else{
+                    requireActivity().toastWarning(
+                        getString(R.string.not_verified_group),
+                        5000
+                    )
+                }
+            }
         }
     }
 
