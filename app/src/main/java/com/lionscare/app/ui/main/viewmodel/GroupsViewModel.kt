@@ -9,5 +9,5 @@ import javax.inject.Inject
 class GroupsViewModel @Inject constructor (
     private val authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel()  {
-    val user = authEncryptedDataManager.getUserBasicInfo()
+    val status = authEncryptedDataManager.getKYCStatus()
 }

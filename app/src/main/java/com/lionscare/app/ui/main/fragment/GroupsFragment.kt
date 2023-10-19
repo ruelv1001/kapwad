@@ -14,19 +14,22 @@ import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupsBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.viewmodel.GroupsViewModel
 import com.lionscare.app.utils.adapter.CustomViewPagerAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GroupsFragment : Fragment() {
+class GroupsFragment : Fragment(){
 
     private var _binding: FragmentGroupsBinding? = null
     private val binding get() = _binding!!
     private var pagerAdapter: CustomViewPagerAdapter? = null
     private var menuItem: MenuItem ?= null
     private val viewModel : GroupsViewModel by viewModels()
+
+    private val activity by lazy { requireActivity() as MainActivity }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,12 +72,16 @@ class GroupsFragment : Fragment() {
         }
 
         createGroupFloatingActionButton.setOnSingleClickListener {
-            if(viewModel.user.kyc_status != "completed"){
-                //do not allow users kyc is not completed
-                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
-            }else{
-                val intent = GroupActivity.getIntent(requireActivity(),START_CREATE_ORG)
-                startActivity(intent)
+            if(viewModel.status != "completed") {
+                if (activity.groupCount < 1) {
+                    val intent = GroupActivity.getIntent(requireActivity(), START_CREATE_ORG)
+                    startActivity(intent)
+                } else {
+                    requireActivity().toastWarning(
+                        getString(R.string.not_verified_group),
+                        5000
+                    )
+                }
             }
         }
     }
@@ -130,7 +137,6 @@ class GroupsFragment : Fragment() {
         pagerAdapter = CustomViewPagerAdapter(childFragmentManager, lifecycle)
         pagerAdapter?.apply {
             addFragment(GroupsYourGroupFragment.newInstance())
-            //addFragment(GroupsGroupFragment.newInstance())
             addFragment(GroupsPendingRequestsFragment.newInstance())
         }
 

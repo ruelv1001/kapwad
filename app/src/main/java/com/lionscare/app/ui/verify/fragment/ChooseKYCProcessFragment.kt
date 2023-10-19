@@ -79,6 +79,14 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
             }
             is ProfileViewState.SuccessGetVerificationStatus -> {
                 binding.swipeRefreshLayout.isRefreshing = false
+
+                //if all kyc is completed, update sharedpref value
+                if (viewState.profileVerificationResponse.data?.id_status == "approved" &&
+                    viewState.profileVerificationResponse.data?.address_status  == "approved" &&
+                    viewState.profileVerificationResponse.data?.facial_id_status == "approved"){
+                    viewModel.updateKYCStatus("completed")
+                }
+
                 val idStatus = "Valid ID"
                 val idDate =  "Submitted on: \n${viewState.profileVerificationResponse.data?.id_submitted_date?.date_db?.ifEmpty { "Not applicable" }}"
 

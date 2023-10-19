@@ -57,6 +57,7 @@ class AuthEncryptedDataManager {
     private var inMemoryDateRegisteredData: DateModel? = null
     private var inMemoryQRValueData: QrValue? = null
     private var inMemoryAvatarData: Avatar? = null
+    private var inMemoryKYCStatusData: String? = null
 
     /**
      * Function to set user's basic info
@@ -123,6 +124,13 @@ class AuthEncryptedDataManager {
             putString(USER_AVATAR_DIRECTORY, dataValue.directory)
             putString(USER_AVATAR_FULL_PATH, dataValue.full_path)
             putString(USER_AVATAR_THUMB_PATH, dataValue.thumb_path)
+        }
+    }
+
+    fun setUserKYCStatus(kycStatus : String) {
+        inMemoryKYCStatusData = kycStatus
+        sharedPreferences.edit(true) {
+            putString(USER_KYC_STATUS, kycStatus)
         }
     }
 
@@ -195,6 +203,14 @@ class AuthEncryptedDataManager {
         return inMemoryAvatarData ?: Avatar()
     }
 
+    fun getKYCStatus(): String {
+        if (inMemoryKYCStatusData == null) {
+            inMemoryKYCStatusData = sharedPreferences.getString(USER_KYC_STATUS, "")
+        }
+        return inMemoryKYCStatusData ?: ""
+    }
+
+
     fun isLoggedIn(): Boolean {
         return getAccessToken().isNotEmpty()
     }
@@ -208,6 +224,7 @@ class AuthEncryptedDataManager {
         inMemoryDateRegisteredData = DateModel()
         inMemoryQRValueData = QrValue()
         inMemoryAvatarData = Avatar()
+        inMemoryKYCStatusData = ""
         setAccessToken("")
     }
 

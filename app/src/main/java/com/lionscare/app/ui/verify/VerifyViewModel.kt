@@ -8,6 +8,7 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.profile.ProfileRepository
 import com.lionscare.app.data.repositories.profile.request.FaceIDRequest
 import com.lionscare.app.data.repositories.profile.request.KYCRequest
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.ui.register.viewmodel.AddressViewState
 import com.lionscare.app.utils.AppConstant
@@ -28,7 +29,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VerifyViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    private val authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
     private val _kycSharedFlow = MutableSharedFlow<ProfileViewState>()
 
@@ -39,6 +41,10 @@ class VerifyViewModel @Inject constructor(
     var backImageFile: File? = null
     var leftImageFile: File? = null
     var rightImageFile: File? = null
+
+    fun updateKYCStatus(value: String){
+        authEncryptedDataManager.setUserKYCStatus(value)
+    }
 
     fun doUploadId(kycRequest: KYCRequest) {
         viewModelScope.launch {
