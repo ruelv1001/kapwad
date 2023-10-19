@@ -7,6 +7,7 @@ import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.repositories.profile.ProfileRepository
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.AppConstant.NOT_FOUND
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor (
     private val authRepository: AuthRepository,
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
     private val _loginSharedFlow = MutableSharedFlow<SettingsViewState>()
@@ -31,6 +33,9 @@ class SettingsViewModel @Inject constructor (
 
     var userQrCode = ""
     var userKycStatus = ""
+    fun updateKYCStatus(value: String){
+        encryptedDataManager.setUserKYCStatus(value)
+    }
     fun doLogoutAccount() {
         viewModelScope.launch {
             authRepository.doLogout()

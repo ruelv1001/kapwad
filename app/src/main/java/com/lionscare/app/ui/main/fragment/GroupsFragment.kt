@@ -82,6 +82,9 @@ class GroupsFragment : Fragment(){
                         5000
                     )
                 }
+            }else{
+                val intent = GroupActivity.getIntent(requireActivity(), START_CREATE_ORG)
+                startActivity(intent)
             }
         }
     }
@@ -138,6 +141,10 @@ class GroupsFragment : Fragment(){
                         5000
                     )
                 }
+            }else{
+                val intent = GroupActivity.getIntent(requireActivity(),
+                    START_GROUP_SEARCH)
+                startActivity(intent)
             }
         }
     }

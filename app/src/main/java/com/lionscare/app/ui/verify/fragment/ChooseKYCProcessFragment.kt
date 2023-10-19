@@ -85,6 +85,8 @@ class ChooseKYCProcessFragment : Fragment(), SwipeRefreshLayout.OnRefreshListene
                     viewState.profileVerificationResponse.data?.address_status  == "approved" &&
                     viewState.profileVerificationResponse.data?.facial_id_status == "approved"){
                     viewModel.updateKYCStatus("completed")
+                }else{
+                    viewModel.updateKYCStatus("pending")
                 }
 
                 val idStatus = "Valid ID"

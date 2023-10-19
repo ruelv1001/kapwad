@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WalletViewModel @Inject constructor(
     private val walletRepository: WalletRepository,
-    encryptedDataManager: AuthEncryptedDataManager
+    private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
     private val _walletSharedFlow = MutableSharedFlow<WalletViewState>()
@@ -37,7 +37,9 @@ class WalletViewModel @Inject constructor(
         _walletSharedFlow.asSharedFlow()
 
     //user info
-    val user = encryptedDataManager.getUserBasicInfo()
+    val kycStatus = encryptedDataManager.getKYCStatus()
+
+
     fun getWalletBalance() {
         viewModelScope.launch {
             walletRepository.getWalletBalance()

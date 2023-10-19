@@ -317,6 +317,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         //KYC status
         when(userModel?.kyc_status){
             "ongoing" -> {
+                binding.notVerifiedRelativeLayout.visibility = View.VISIBLE
                 // Change the status bar color
                 requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.pending)
 
@@ -326,16 +327,20 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
                     ContextCompat.getColor(requireContext(), R.color.pending),
                     PorterDuff.Mode.SRC_IN
                 )
+                viewModel.updateKYCStatus("ongoing")
             }
             "completed" -> {
                 // Change the status bar color
                 requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.color_primary)
                 binding.notVerifiedRelativeLayout.visibility = View.GONE
                 swipeRefreshLayout.isEnabled = false
+                viewModel.updateKYCStatus("completed")
             }
             "pending" -> {
+                binding.notVerifiedRelativeLayout.visibility = View.VISIBLE
                 // Change the status bar color
                 requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.color_primary)
+                viewModel.updateKYCStatus("pending")
             }
         }
         viewModel.userQrCode = userModel?.qrcode.orEmpty()
