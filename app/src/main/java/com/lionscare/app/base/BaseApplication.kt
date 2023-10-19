@@ -1,22 +1,24 @@
 package com.lionscare.app.base
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class BaseApplication : Application() {
 
     companion object {
-        var instance: com.lionscare.app.base.BaseApplication? = null
+        var instance: BaseApplication? = null
     }
 
     override fun onCreate() {
         super.onCreate()
-        com.lionscare.app.base.BaseApplication.Companion.instance = this
+        instance = this
         initCommonsLib()
+        FirebaseApp.initializeApp(this)
     }
 
     private fun initCommonsLib() {
-        com.lionscare.app.base.CommonsLib.init(this)
+        CommonsLib.init(this)
     }
 }

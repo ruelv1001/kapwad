@@ -63,10 +63,6 @@ class FaceScannerActivity : AppCompatActivity() {
         binding = ActivityFaceScannerBinding.inflate(layoutInflater)
         val view = binding.root
 
-        //for dev release version, since it produces error of
-        //FirebaseApp must be initialized
-        FirebaseApp.initializeApp(this)
-
         setContentView(view)
         setupFaceScanner()
         setClickListener()
