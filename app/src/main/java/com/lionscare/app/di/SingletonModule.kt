@@ -26,6 +26,7 @@ class SingletonModule {
 
 
     @Provides
+    @Singleton
     fun providesEncryptedDataManager(): AuthEncryptedDataManager {
         return AuthEncryptedDataManager()
     }

@@ -36,9 +36,9 @@ class WalletViewModel @Inject constructor(
     val walletSharedFlow: SharedFlow<WalletViewState> =
         _walletSharedFlow.asSharedFlow()
 
-    //user info
-    val kycStatus = encryptedDataManager.getKYCStatus()
-
+    fun getKycStatus() :String{
+        return encryptedDataManager.getKYCStatus()
+    }
 
     fun getWalletBalance() {
         viewModelScope.launch {

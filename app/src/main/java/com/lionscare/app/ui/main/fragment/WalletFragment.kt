@@ -95,7 +95,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             startActivity(intent)
         }
         sendPointsLinearLayout.setOnSingleClickListener {
-            if(viewModel.kycStatus != "completed"){
+            if(viewModel.getKycStatus()  != "completed"){
                 //do not allow users kyc is not completed
                 requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
             }else{
@@ -108,7 +108,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             startActivity(intent)
         }
         scan2PayLinearLayout.setOnSingleClickListener {
-            if(viewModel.kycStatus != "completed"){
+            if(viewModel.getKycStatus()  != "completed"){
                 //do not allow users kyc is not completed
                 requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
             }else{

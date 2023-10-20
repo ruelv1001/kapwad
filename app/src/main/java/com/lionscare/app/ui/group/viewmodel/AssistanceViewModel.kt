@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AssistanceViewModel @Inject constructor(
     private val assistanceRepository: AssistanceRepository,
-    encryptedDataManager: AuthEncryptedDataManager
+    private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
     val user = encryptedDataManager.getUserBasicInfo()
@@ -36,7 +36,7 @@ class AssistanceViewModel @Inject constructor(
     val assistanceSharedFlow: SharedFlow<AssistanceViewState> =
         _assistanceSharedFlow.asSharedFlow()
 
-    fun createAssistance(request: CreateAssistanceRequest) {
+    fun createAssistance(request: CreateAssistanceRequest){
         viewModelScope.launch {
             assistanceRepository.doCreateAssistance(request)
                 .onStart {
