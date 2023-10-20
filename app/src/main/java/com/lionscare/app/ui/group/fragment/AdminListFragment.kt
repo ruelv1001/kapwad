@@ -113,7 +113,7 @@ class AdminListFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         activity.setTitlee(getString(R.string.lbl_group_community_roles))
-        activity.getRolesView().isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
+        activity.getRolesView().isVisible = activity.groupDetails?.is_admin == true
     }
 
     private fun observeMemberList() {
