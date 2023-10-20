@@ -36,7 +36,7 @@ class AssistanceViewModel @Inject constructor(
     val assistanceSharedFlow: SharedFlow<AssistanceViewState> =
         _assistanceSharedFlow.asSharedFlow()
 
-    fun createAssistance(request: CreateAssistanceRequest) {
+    fun createAssistance(request: CreateAssistanceRequest){
         viewModelScope.launch {
             assistanceRepository.doCreateAssistance(request)
                 .onStart {
