@@ -18,6 +18,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.assistance.request.CreateAssistanceRequest
@@ -80,16 +81,20 @@ class AssistanceCreateFragment : Fragment() {
             amountTextInputLayout.error = ""
         }
         proceedButton.setOnSingleClickListener {
-                if (amountEditText.text.toString().isEmpty()){
-                    amountTextInputLayout.error = "This field is required."
-                } else {
-                    val request = CreateAssistanceRequest(
-                        group_id = activity.groupDetails?.id,
-                        amount = amountEditText.text.toString().replace(",",""),
-                        reason = reason,
-                        remarks = messageEditText.text.toString()
-                    )
-                    viewModel.createAssistance(request)
+                if(viewModel.user.kyc_status != "completed"){
+                    requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+                }else{
+                    if (amountEditText.text.toString().isEmpty()){
+                        amountTextInputLayout.error = "This field is required."
+                    } else {
+                        val request = CreateAssistanceRequest(
+                            group_id = activity.groupDetails?.id,
+                            amount = amountEditText.text.toString().replace(",",""),
+                            reason = reason,
+                            remarks = messageEditText.text.toString()
+                        )
+                        viewModel.createAssistance(request)
+                    }
                 }
             }
         }

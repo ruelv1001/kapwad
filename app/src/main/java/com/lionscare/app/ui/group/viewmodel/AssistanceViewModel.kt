@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AssistanceViewModel @Inject constructor(
     private val assistanceRepository: AssistanceRepository,
-    encryptedDataManager: AuthEncryptedDataManager
+    private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
     val user = encryptedDataManager.getUserBasicInfo()

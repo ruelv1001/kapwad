@@ -72,7 +72,7 @@ class GroupsFragment : Fragment(){
         }
 
         createGroupFloatingActionButton.setOnSingleClickListener {
-            if(viewModel.status != "completed") {
+            if(viewModel.getKycStatus() != "completed") {
                 if (activity.groupCount < 1) {
                     val intent = GroupActivity.getIntent(requireActivity(), START_CREATE_ORG)
                     startActivity(intent)
@@ -130,7 +130,7 @@ class GroupsFragment : Fragment(){
         }
 
         searchImageView.setOnSingleClickListener {
-            if (viewModel.status  != "completed") {
+            if (viewModel.getKycStatus()  != "completed") {
                 if (activity.groupCount < 1) {
                     val intent = GroupActivity.getIntent(requireActivity(),
                         START_GROUP_SEARCH)
