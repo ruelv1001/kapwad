@@ -83,7 +83,6 @@ class AssistanceRequestDetailsFragment : Fragment() {
             sendTextView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.white))
         }else{
             sendTextView.isVisible = data.status == "approved" && activity.groupDetails?.is_admin == true
-                    && activity.groupDetails?.owner_user_id == viewModel.user.id
             sendTextView.text = getString(R.string.search_user_send_txt)
             sendTextView.isEnabled = true
             sendTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
@@ -128,7 +127,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 if (data.user?.id == viewModel.user.id) {
                     cancelButton.isVisible = true
                 } else {
-                    requestLinearLayout.isVisible = activity.groupDetails?.is_admin == true && activity.groupDetails?.owner_user_id == viewModel.user.id
+                    requestLinearLayout.isVisible = activity.groupDetails?.is_admin == true
                 }
             }
         }

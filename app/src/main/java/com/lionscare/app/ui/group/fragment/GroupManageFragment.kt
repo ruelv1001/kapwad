@@ -123,7 +123,7 @@ class GroupManageFragment : Fragment() {
             typeFamTextView.isVisible = true
         }
 
-        editGroupImageView.isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
+        editGroupImageView.isVisible = activity.groupDetails?.is_admin == true
         transactionLinearLayout.isVisible = activity.groupDetails?.is_admin == true
     }
 
