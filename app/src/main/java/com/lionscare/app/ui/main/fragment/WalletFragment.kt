@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastInfo
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
@@ -94,7 +95,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             startActivity(intent)
         }
         sendPointsLinearLayout.setOnSingleClickListener {
-            if(viewModel.user.kyc_status != "completed"){
+            if(viewModel.kycStatus != "completed"){
                 //do not allow users kyc is not completed
                 requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
             }else{
@@ -107,7 +108,7 @@ class WalletFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallbac
             startActivity(intent)
         }
         scan2PayLinearLayout.setOnSingleClickListener {
-            if(viewModel.user.kyc_status != "completed"){
+            if(viewModel.kycStatus != "completed"){
                 //do not allow users kyc is not completed
                 requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
             }else{

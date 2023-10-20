@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var loadingDialog: CommonDialog? = null
 
+    var groupCount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

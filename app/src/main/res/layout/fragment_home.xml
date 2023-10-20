@@ -42,6 +42,7 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/notVerifiedRelativeLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_130">

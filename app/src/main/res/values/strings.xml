@@ -413,5 +413,6 @@
     <string name="bright_photo_label">Make sure to upload a bright photo.</string>
     <string name="kyc_upload_selfie_loading">Uploading Selfie…</string>
     <string name="facial_identification">Facial Identification</string>
+    <string name="not_verified_group">You must be verified in order to create and join more than 1 group.</string>
 
 </resources>

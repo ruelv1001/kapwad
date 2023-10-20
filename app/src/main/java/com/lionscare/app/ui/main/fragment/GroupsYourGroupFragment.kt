@@ -19,6 +19,7 @@ import com.lionscare.app.databinding.FragmentGroupsYourGroupBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.main.viewmodel.GroupListViewModel
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewModel
@@ -43,6 +44,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
     private val viewModel: GroupListViewModel by viewModels()
     private val iFViewModel: ImmediateFamilyViewModel by viewModels()
     private var immediateFamilyId = ""
+    private val activity by lazy { requireActivity() as MainActivity }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,6 +91,7 @@ class GroupsYourGroupFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback
                     orgShimmerLayout.isVisible = false
                     orgShimmerLayout.stopShimmer()
                     organizationRecyclerView.isVisible = true
+                    activity.groupCount = orgAdapter?.itemCount ?: 0
                 }
             }
         }
