@@ -18,5 +18,6 @@ data class BadgeStatus(
     val id: Long? = 0,
     val remarks: String? = null,
     val status: String? = null,
-    val submitted_date: DateModel? = null
+    val submitted_date: DateModel? = null,
+    val has_badge_cancellation_request: Boolean? = false
 )

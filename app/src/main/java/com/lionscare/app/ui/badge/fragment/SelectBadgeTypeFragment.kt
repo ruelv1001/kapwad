@@ -93,26 +93,34 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
             is ProfileViewState.SuccessGetBadgeStatus -> {
                 when(viewState.badgeStatusResponse.data?.badge_type){
                     "non_government_organization" -> {
-                        adapter?.changeIsBadgeRequestedBefore(true)
-                        binding.continueButton.isEnabled = false
-                        binding.removeBadgeButton.isEnabled = true
-                        //call the item clicked to display which has been seelcted prevously by the user
-                        onItemClicked( AccountTypeModel(getString(R.string.account_type_npo_text), R.drawable.ic_npo), 2)
+                        if(viewState.badgeStatusResponse.data.status != "declined"){
+                            adapter?.changeIsBadgeRequestedBefore(true)
+                            binding.continueButton.isEnabled = false
+                            binding.removeBadgeButton.isEnabled = true
+                            //call the item clicked to display which has been seelcted prevously by the user
+                            onItemClicked( AccountTypeModel(getString(R.string.account_type_npo_text), R.drawable.ic_npo), 2)
+                        }
+
                     }
                     "influencer" -> {
-                        adapter?.changeIsBadgeRequestedBefore(true)
-                        binding.continueButton.isEnabled = false
-                        binding.removeBadgeButton.isEnabled = true
-                        onItemClicked( AccountTypeModel(getString(R.string.account_type_influencer_text), R.drawable.ic_thumbs_up), 0)
+                        if(viewState.badgeStatusResponse.data.status != "declined"){
+                            adapter?.changeIsBadgeRequestedBefore(true)
+                            binding.continueButton.isEnabled = false
+                            binding.removeBadgeButton.isEnabled = true
+                            onItemClicked( AccountTypeModel(getString(R.string.account_type_influencer_text), R.drawable.ic_thumbs_up), 0)
+                        }
                     }
                     "public_servant" -> {
-                        adapter?.changeIsBadgeRequestedBefore(true)
-                        binding.continueButton.isEnabled = false
-                        binding.removeBadgeButton.isEnabled = true
-                        onItemClicked(  AccountTypeModel(
-                            getString(R.string.account_type_public_servant_text),
-                            R.drawable.ic_public_servant
-                        ), 1)
+                        if(viewState.badgeStatusResponse.data.status != "declined"){
+                            adapter?.changeIsBadgeRequestedBefore(true)
+                            binding.continueButton.isEnabled = false
+                            binding.removeBadgeButton.isEnabled = true
+                            onItemClicked(  AccountTypeModel(
+                                getString(R.string.account_type_public_servant_text),
+                                R.drawable.ic_public_servant
+                            ), 1)
+                        }
+
                     }
                 }
             }
