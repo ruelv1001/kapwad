@@ -392,12 +392,12 @@
     <string name="badge_removal_warning">Removing your badge will cancel and remove your badge regardless if its approved or still pending from your account. Once removal of badge is approved, you will have to request and submit documents again to get another badge.</string>
     <string name="location_required">Club is required if Lions Club International Membership is filled out</string>
     <string name="zone_required">Zone is required if Lions Club International Membership is filled out</string>
-    <string name="onb_input_your_email_address_here_to_reset_your_password">Input your email address or phone number here to reset your password</string>
+    <string name="onb_input_your_email_address_here_to_reset_your_password">Input your email address or phone number here to reset your password.</string>
     <string name="proceed_btn_lbl">Proceed</string>
     <string name="login_email_only_hint">Email</string>
-    <string name="kyc_status_must_be_verified">You cannot do this action until you are a completely verified user</string>
+    <string name="kyc_status_must_be_verified">You cannot do this action until you are a completely verified user.</string>
 
-    <string name="follow_the_instruction_to_enable_capture_button">Follow the instruction to enable capture button</string>
+    <string name="follow_the_instruction_to_enable_capture_button">Follow the instruction to enable capture button.</string>
     <string name="scanner_smile_lbl">Smile</string>
     <string name="scanner_left_lbl">Look Left</string>
     <string name="scanner_right_lbl">Look Right</string>

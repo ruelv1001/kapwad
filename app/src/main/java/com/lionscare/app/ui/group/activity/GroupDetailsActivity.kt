@@ -22,6 +22,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
@@ -148,13 +149,18 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
             finish()
         }
         walletLayout.sendLinearLayout.setOnSingleClickListener {
-            val intent = WalletActivity.getIntent(
-                this@GroupDetailsActivity,
-                "Send Points",
-                true,
-                groupId
-            )
-            startActivity(intent)
+            if(assistanceViewModel.getUserKYC() != "completed"){
+                toastWarning(getString(R.string.kyc_status_must_be_verified))
+            }else{
+                val intent = WalletActivity.getIntent(
+                    this@GroupDetailsActivity,
+                    "Send Points",
+                    true,
+                    groupId
+                )
+                startActivity(intent)
+            }
+
         }
         walletLayout.qrImageView.setOnSingleClickListener {
             frontAnim?.setTarget(walletLayout.walletCardView)

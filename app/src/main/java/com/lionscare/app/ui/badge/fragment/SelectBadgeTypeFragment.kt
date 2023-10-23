@@ -203,12 +203,7 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
     private fun setupClickListener() =  binding.run {
         viewModel.isBadgeRemovalRequestCancelled.observe(viewLifecycleOwner){
             removeBadgeButton.setOnSingleClickListener {
-                if(viewModel.user != null){
-                    viewModel.getUserInfo()
-                }
-                //doesn't necessarily needed since before going to this activity,
-                //it is being checked but, for double security purpose, check anyways
-                if(viewModel.user?.kyc_status != "completed"){
+                if(viewModel.getUserKYC()  != "completed"){
                     //do not allow users kyc is not completed
                     requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
                 }else{
