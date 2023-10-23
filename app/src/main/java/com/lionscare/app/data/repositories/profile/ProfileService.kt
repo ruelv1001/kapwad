@@ -109,6 +109,12 @@ interface ProfileService {
     @POST("api/notification/user")
     suspend fun getUserNotificationList(@Body request: NotificationListRequest): Response<UserNotificationListResponse>
 
-    @POST("api/notification/group/info")
+    @POST("api/notification/user/info")
     suspend fun getUserNotificationInfo(@Body request: NotificationListRequest): Response<UserNotificationResponse>
+
+    @POST("api/notification/group")
+    suspend fun getGroupNotificationList(@Body request: NotificationListRequest): Response<UserNotificationListResponse>
+
+    @POST("api/notification/group/info")
+    suspend fun getGroupNotificationInfo(@Body request: NotificationListRequest): Response<UserNotificationResponse>
 }

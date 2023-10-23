@@ -1,5 +1,6 @@
 package com.lionscare.app.ui.profile.viewmodel
 
+import androidx.paging.PagingData
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.baseresponse.UserModel
@@ -9,6 +10,8 @@ import com.lionscare.app.data.repositories.profile.response.BadgeStatus
 import com.lionscare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.lionscare.app.data.repositories.profile.response.LOVResponse
 import com.lionscare.app.data.repositories.profile.response.ProfileVerificationResponse
+import com.lionscare.app.data.repositories.profile.response.UserNotificationData
+import com.lionscare.app.data.repositories.profile.response.UserNotificationListResponse
 import com.lionscare.app.utils.PopupErrorState
 
 sealed class ProfileViewState {
@@ -41,6 +44,8 @@ sealed class ProfileViewState {
     //PHONE NUMBER
     data class SuccessUpdatePhoneNumber(val response: GeneralResponse) : ProfileViewState()
     data class SuccessUpdatePhoneNumberWithOTP(val response: GeneralResponse) : ProfileViewState()
+
+    data class SuccessGetNotificationList(val pagingData: PagingData<UserNotificationData>):ProfileViewState()
     data class PopupError(val errorCode: PopupErrorState, val message: String = "", val badge : String = "") : ProfileViewState()
     data class InputError(val errorData: ErrorsData? = null) : ProfileViewState()
 }
