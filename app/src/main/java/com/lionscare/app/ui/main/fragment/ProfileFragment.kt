@@ -2,13 +2,10 @@ package com.lionscare.app.ui.main.fragment
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -23,7 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
-import com.lionscare.app.data.repositories.profile.response.BadgeStatus
 import com.lionscare.app.databinding.FragmentSettingsBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.lionscare.app.ui.main.activity.MainActivity
@@ -34,6 +30,7 @@ import com.lionscare.app.ui.profile.activity.NotificationsActivity
 import com.lionscare.app.ui.profile.activity.ProfileActivity
 import com.lionscare.app.ui.profile.activity.UpdatePasswordActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
+import com.lionscare.app.utils.dialog.WebviewDialog
 import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -188,6 +185,18 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             val intent = NotificationsActivity.getIntent(requireActivity())
             startActivity(intent)
         }
+        privacyPolicyLinearLayout.setOnClickListener{
+            openWebViewDialog("https://www.lionscare.ph/privacy-policy")
+        }
+        faqLinearLayout.setOnClickListener{
+            openWebViewDialog("https://www.lionscare.ph/faq")
+        }
+        termsLinearLayout.setOnClickListener{
+            openWebViewDialog("https://www.lionscare.ph/terms")
+        }
+        contactLinearLayout.setOnClickListener{
+            openWebViewDialog("https://www.lionscare.ph/contact")
+        }
     }
 
     private fun setDetails(data: UserModel?) = binding.run {
@@ -256,6 +265,13 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onRefresh() {
         viewModel.getProfileDetails()
+    }
+
+    private fun openWebViewDialog(url: String){
+        WebviewDialog.openDialog(
+            childFragmentManager,
+            url
+        )
     }
 
 }
