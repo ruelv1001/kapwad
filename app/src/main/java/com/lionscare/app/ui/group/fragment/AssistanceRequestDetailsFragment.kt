@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.data.repositories.wallet.response.QRData
@@ -139,18 +140,27 @@ class AssistanceRequestDetailsFragment : Fragment() {
 //            findNavController().navigate(GroupManageFragmentDirections.actionNavigationGroupAssistance())
 //        }
         approveButton.setOnSingleClickListener {
-            viewModel.approveAssistance(
-                activity.referenceId,
-                activity.groupDetails?.id.toString(),
-                messageEditText.text.toString()
-            )
+            if(viewModel. getUserKYC() != "completed"){
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+            }else{
+                viewModel.approveAssistance(
+                    activity.referenceId,
+                    activity.groupDetails?.id.toString(),
+                    messageEditText.text.toString()
+                )
+            }
+
         }
         declineButton.setOnSingleClickListener {
-            viewModel.declineAssistance(
-                activity.referenceId,
-                activity.groupDetails?.id.toString(),
-                messageEditText.text.toString()
-            )
+            if(viewModel. getUserKYC() != "completed"){
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+            }else{
+                viewModel.declineAssistance(
+                    activity.referenceId,
+                    activity.groupDetails?.id.toString(),
+                    messageEditText.text.toString()
+                )
+            }
         }
         cancelButton.setOnSingleClickListener {
             viewModel.cancelAssistance(activity.referenceId, activity.groupDetails?.id.toString())

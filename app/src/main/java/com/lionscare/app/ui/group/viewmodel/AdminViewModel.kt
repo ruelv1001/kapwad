@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AdminViewModel @Inject constructor(
     private val adminRepository: AdminRepository,
-    encryptedDataManager: AuthEncryptedDataManager
+    private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
     val user = encryptedDataManager.getUserBasicInfo()
@@ -37,6 +37,9 @@ class AdminViewModel @Inject constructor(
     val adminSharedFlow: SharedFlow<AdminViewState> =
         _adminSharedFlow.asSharedFlow()
 
+    fun getUserKYC(): String {
+        return encryptedDataManager.getKYCStatus()
+    }
     private suspend fun loadAdminList(groupId: String) {
         adminRepository.doGetListOfAdmin(groupId = groupId)
             .cachedIn(viewModelScope)

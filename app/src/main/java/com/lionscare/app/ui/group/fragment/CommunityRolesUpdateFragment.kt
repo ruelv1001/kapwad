@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupCommunityRolesUpdateBinding
@@ -92,7 +93,12 @@ class CommunityRolesUpdateFragment: Fragment(), GroupPromoteMembersAdapter.Membe
     private fun setClickListeners() = binding.run {
 
         addLinearLayout.setOnSingleClickListener {
-            findNavController().navigate(CommunityRolesUpdateFragmentDirections.actionNavigationGroupRolesPromote())
+            if(viewModel.getUserKYC() != "completed"){
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+            }else{
+                findNavController().navigate(CommunityRolesUpdateFragmentDirections.actionNavigationGroupRolesPromote())
+
+            }
         }
         saveButton.setOnSingleClickListener {
             SaveSuccessDialog.newInstance().show(childFragmentManager, SaveSuccessDialog.TAG)

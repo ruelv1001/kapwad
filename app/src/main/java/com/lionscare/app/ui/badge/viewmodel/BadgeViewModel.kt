@@ -36,18 +36,13 @@ class BadgeViewModel @Inject constructor(
     val badgeSharedFlow: SharedFlow<ProfileViewState> =
         _badgeSharedFlow.asSharedFlow()
 
-    //user info, make it null first to not consume call from sharedpref
-    //if not necessary
-    var user : UserModel?  = null
-        private set
-
 
     //make it an observable to notify changes, making it a STATE
     private val _isBadgeRemovalRequestCancelled = MutableLiveData<Boolean>()
     val isBadgeRemovalRequestCancelled : LiveData<Boolean?> = _isBadgeRemovalRequestCancelled
 
-    fun getUserInfo(){
-        user = encryptedDataManager.getUserBasicInfo()
+    fun getUserKYC() : String{
+        return encryptedDataManager.getKYCStatus()
     }
     fun setBadgeRemovalRequestCancelled(value: Boolean) {
         _isBadgeRemovalRequestCancelled.value = value

@@ -80,12 +80,12 @@
                     android:layout_marginEnd="@dimen/dimen_5"
                     android:background="@drawable/bg_group_btn"
                     android:gravity="center"
-                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/dimen_15"
                     android:paddingTop="@dimen/dimen_10"
                     android:paddingEnd="@dimen/dimen_15"
-                    android:paddingBottom="@dimen/dimen_10">
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="@dimen/dimen_20"

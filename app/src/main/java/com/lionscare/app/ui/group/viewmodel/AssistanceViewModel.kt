@@ -36,6 +36,10 @@ class AssistanceViewModel @Inject constructor(
     val assistanceSharedFlow: SharedFlow<AssistanceViewState> =
         _assistanceSharedFlow.asSharedFlow()
 
+    fun getUserKYC() : String{
+        return encryptedDataManager.getKYCStatus()
+    }
+
     fun createAssistance(request: CreateAssistanceRequest){
         viewModelScope.launch {
             assistanceRepository.doCreateAssistance(request)
