@@ -296,6 +296,26 @@ class ProfileRemoteDataSource @Inject constructor(
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
+    suspend fun getGroupNotificationList(group_id: String, per_page: Int, page : Int): UserNotificationListResponse {
+        val request = NotificationListRequest(group_id = group_id, per_page = per_page, page = page)
+        val response = profileService.getGroupNotificationList(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getGroupNotificationInfo(group_id: String, notifId: String): UserNotificationResponse {
+        val request = NotificationListRequest(group_id = group_id, notif_id = notifId)
+        val response = profileService.getGroupNotificationInfo(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
     companion object {
         private const val IMAGE_MIME_TYPE = "image/*"
         private const val DOCS_MIME_TYPE = "application/*"

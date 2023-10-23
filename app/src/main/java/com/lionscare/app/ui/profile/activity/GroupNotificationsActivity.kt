@@ -33,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NotificationsActivity : AppCompatActivity(), NotificationsAdapter.NotificationsCallback,
+class GroupNotificationsActivity : AppCompatActivity(), NotificationsAdapter.NotificationsCallback,
     SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivityNotificationBinding
@@ -41,21 +41,23 @@ class NotificationsActivity : AppCompatActivity(), NotificationsAdapter.Notifica
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter : NotificationsAdapter? = null
     private val viewModel: ProfileViewModel by viewModels()
+    private var groupId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        groupId = intent.getStringExtra(GROUP_ID).toString()
         setOnClickListener()
         setUpAdapter()
         observeProfile()
     }
 
     private fun setUpAdapter() = binding.run {
-        adapter = NotificationsAdapter(this@NotificationsActivity)
-        linearLayoutManager = LinearLayoutManager(this@NotificationsActivity)
-        swipeRefreshLayout.setOnRefreshListener(this@NotificationsActivity)
+        adapter = NotificationsAdapter(this@GroupNotificationsActivity)
+        linearLayoutManager = LinearLayoutManager(this@GroupNotificationsActivity)
+        swipeRefreshLayout.setOnRefreshListener(this@GroupNotificationsActivity)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
@@ -102,7 +104,7 @@ class NotificationsActivity : AppCompatActivity(), NotificationsAdapter.Notifica
             is ProfileViewState.PopupError -> {
                 binding.swipeRefreshLayout.isRefreshing = false
                 showPopupError(
-                    this@NotificationsActivity,
+                    this@GroupNotificationsActivity,
                     supportFragmentManager,
                     viewState.errorCode,
                     viewState.message
@@ -152,7 +154,7 @@ class NotificationsActivity : AppCompatActivity(), NotificationsAdapter.Notifica
     }
 
     override fun onRefresh() {
-       viewModel.refreshUserNotif()
+       viewModel.refreshGroupNotif(groupId)
     }
 
     private fun clearList() {
@@ -160,8 +162,11 @@ class NotificationsActivity : AppCompatActivity(), NotificationsAdapter.Notifica
     }
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return Intent(context, NotificationsActivity::class.java)
+        private const val GROUP_ID = "GROUP_ID"
+        fun getIntent(context: Context, groupId: String): Intent {
+            val intent = Intent(context, GroupNotificationsActivity::class.java)
+            intent.putExtra(GROUP_ID,groupId)
+            return intent
         }
     }
 }

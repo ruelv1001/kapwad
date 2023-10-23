@@ -3,6 +3,7 @@ package com.lionscare.app.ui.profile.viewmodel
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.lionscare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -12,6 +13,7 @@ import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.lionscare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
+import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
@@ -142,7 +144,52 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    private suspend fun loadUserNotification() {
+        profileRepository.getUserNotificationList()
+            .cachedIn(viewModelScope)
+            .onStart {
+                _profileSharedFlow.emit(ProfileViewState.Loading)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.devLog("error",exception)
+            }
+            .collect { pagingData ->
+                _profileSharedFlow.emit(
+                    ProfileViewState.SuccessGetNotificationList(pagingData)
+                )
+            }
+    }
 
+    fun refreshUserNotif() {
+        viewModelScope.launch {
+            loadUserNotification()
+        }
+    }
+
+
+    private suspend fun loadGroupNotification(groupId: String) {
+        profileRepository.getGroupNotificationList(groupId = groupId)
+            .cachedIn(viewModelScope)
+            .onStart {
+                _profileSharedFlow.emit(ProfileViewState.Loading)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.devLog("error",exception)
+            }
+            .collect { pagingData ->
+                _profileSharedFlow.emit(
+                    ProfileViewState.SuccessGetNotificationList(pagingData)
+                )
+            }
+    }
+
+    fun refreshGroupNotif(groupId: String) {
+        viewModelScope.launch {
+            loadGroupNotification(groupId)
+        }
+    }
 
 
     private suspend fun onError(exception: Throwable) {

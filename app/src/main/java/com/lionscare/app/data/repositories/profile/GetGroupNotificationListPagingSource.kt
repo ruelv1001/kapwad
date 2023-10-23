@@ -5,8 +5,9 @@ import androidx.paging.PagingState
 import com.lionscare.app.data.repositories.profile.response.UserNotificationData
 import javax.inject.Inject
 
-class GetUserNotificationListPagingSource @Inject constructor(
-    private val profileRemoteDataSource: ProfileRemoteDataSource) :
+class GetGroupNotificationListPagingSource @Inject constructor(
+    private val profileRemoteDataSource: ProfileRemoteDataSource,
+    private val groupId: String) :
     PagingSource<Int, UserNotificationData>() {
     override fun getRefreshKey(state: PagingState<Int, UserNotificationData>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -19,7 +20,8 @@ class GetUserNotificationListPagingSource @Inject constructor(
         val page = params.key ?: 1
 
         return try {
-            val response = profileRemoteDataSource.getUserNotificationList(
+            val response = profileRemoteDataSource.getGroupNotificationList(
+                group_id = groupId,
                 per_page = params.loadSize,
                 page = page
             )

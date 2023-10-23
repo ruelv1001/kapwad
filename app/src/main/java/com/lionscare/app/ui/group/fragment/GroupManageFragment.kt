@@ -39,6 +39,7 @@ import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.activity.MainActivity
+import com.lionscare.app.ui.profile.activity.GroupNotificationsActivity
 import com.lionscare.app.ui.profile.fragment.ProfilePreviewFragment
 import com.lionscare.app.utils.convertImageUriToFile
 import com.lionscare.app.utils.loadAvatar
@@ -157,6 +158,10 @@ class GroupManageFragment : Fragment() {
         imageView.setOnSingleClickListener {
             if(activity.groupDetails?.is_admin == true)
                 openMediaOptionPicker()
+        }
+        notifLinearLayout.setOnSingleClickListener {
+            val intent = GroupNotificationsActivity.getIntent(requireActivity(),activity.groupDetails?.id.toString())
+            startActivity(intent)
         }
     }
 

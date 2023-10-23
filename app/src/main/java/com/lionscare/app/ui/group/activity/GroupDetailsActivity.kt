@@ -36,7 +36,7 @@ import com.lionscare.app.ui.group.viewmodel.GroupViewModel
 import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.GroupWalletViewModel
 import com.lionscare.app.ui.group.viewmodel.GroupWalletViewState
-import com.lionscare.app.ui.notifications.adapter.NotificationsAdapter
+import com.lionscare.app.ui.profile.adapter.NotificationsAdapter
 import com.lionscare.app.ui.wallet.activity.WalletActivity
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.copyToClipboard

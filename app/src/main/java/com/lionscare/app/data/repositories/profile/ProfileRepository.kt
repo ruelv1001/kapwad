@@ -180,11 +180,10 @@ class ProfileRepository @Inject constructor(
     }
 
     fun getUserNotificationList(
-        pagingConfig: PagingConfig = getDefaultPageConfig(),
-        groupId: String
+        pagingConfig: PagingConfig = getDefaultPageConfig()
     ): Flow<PagingData<UserNotificationData>> {
         val getUserNotificationListPagingSource =
-            GetUserNotificationListPagingSource(profileRemoteDataSource, groupId)
+            GetUserNotificationListPagingSource(profileRemoteDataSource)
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = { getUserNotificationListPagingSource }
@@ -198,6 +197,30 @@ class ProfileRepository @Inject constructor(
         return flow {
             val response =
                 profileRemoteDataSource.getUserNotificationInfo(notifId)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getGroupNotificationList(
+        pagingConfig: PagingConfig = getDefaultPageConfig(),
+        groupId: String
+    ): Flow<PagingData<UserNotificationData>> {
+        val getGroupNotificationListPagingSource =
+            GetGroupNotificationListPagingSource(profileRemoteDataSource, groupId)
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { getGroupNotificationListPagingSource }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
+    fun getGroupNotificationInfo(
+        groupId: String,
+        notifId: String
+    ): Flow<UserNotificationResponse> {
+        return flow {
+            val response =
+                profileRemoteDataSource.getGroupNotificationInfo(groupId,notifId)
             emit(response)
         }.flowOn(ioDispatcher)
     }
