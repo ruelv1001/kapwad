@@ -47,6 +47,7 @@ class InviteMemberDetailsDialog : BottomSheetDialogFragment() {
     private fun setView() = viewBinding?.run {
         nameTextView.text = data.name
         contactTextView.text = data.phone_number
+        avatarImageView.loadAvatar(data.avatar?.thumb_path, requireContext())
     }
 
     private fun setClickListener() {

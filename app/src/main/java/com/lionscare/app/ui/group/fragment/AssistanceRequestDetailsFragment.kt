@@ -17,6 +17,8 @@ import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
+import com.lionscare.app.data.repositories.baseresponse.Avatar
+import com.lionscare.app.data.repositories.baseresponse.AvatarModel
 import com.lionscare.app.data.repositories.wallet.response.QRData
 import com.lionscare.app.databinding.FragmentGroupAssistanceReqDetailsBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
@@ -38,6 +40,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
     private val activity by lazy { requireActivity() as GroupActivity }
     private val viewModel: AssistanceViewModel by viewModels()
     private var userId = ""
+    private var avatar =Avatar()
     private var userName = ""
     private var assistanceId = ""
 
@@ -178,7 +181,8 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 qrData = QRData(
                     id = userId,
                     name = userName,
-                    amount = amountTextView.text.toString()
+                    amount = amountTextView.text.toString(),
+                    avatar = avatar
                 ),
                 start = "START_INPUT"
             )
@@ -203,6 +207,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 activity.hideLoadingDialog()
                 viewState.response?.data?.let { setView(it) }
                 userId = viewState.response?.data?.user?.id.toString()
+                avatar = viewState.response?.data?.user?.avatar ?: Avatar()
                 userName = viewState.response?.data?.user?.name.toString()
                 assistanceId = viewState.response?.data?.reference_id.toString()
             }
