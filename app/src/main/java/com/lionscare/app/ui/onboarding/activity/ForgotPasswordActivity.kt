@@ -9,6 +9,8 @@ import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import com.emrekotun.toast.CpmToast
+import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.ActivityForgotPasswordBinding
@@ -70,7 +72,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             is LoginViewState.Loading -> showLoadingDialog(R.string.loading)
             is LoginViewState.SuccessForgotPassword -> {
                 hideLoadingDialog()
-                Toast.makeText(this, viewState.message, Toast.LENGTH_SHORT).show()
+                toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
                 this.finish()
             }
 
