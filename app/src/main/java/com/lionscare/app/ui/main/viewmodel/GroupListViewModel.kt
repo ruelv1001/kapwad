@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.member.MemberRepository
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.wallet.viewmodel.WalletViewState
 import com.lionscare.app.utils.AppConstant
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class GroupListViewModel @Inject constructor(
     private val groupRepository: GroupRepository,
     private val memberRepository: MemberRepository,
+    private val encryptedDataManager: AuthEncryptedDataManager
 ) :
     ViewModel() {
 
@@ -37,6 +39,10 @@ class GroupListViewModel @Inject constructor(
     val getGroupSharedFlow: SharedFlow<GroupListViewState> =
         _getGroupSharedFlow.asSharedFlow()
 
+
+    fun getUserKYC() : String {
+        return encryptedDataManager.getKYCStatus()
+    }
 
     private suspend fun loadGroups() {
         groupRepository.doGetGroupList()
