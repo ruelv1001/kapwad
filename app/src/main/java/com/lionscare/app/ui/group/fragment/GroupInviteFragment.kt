@@ -98,9 +98,10 @@ class GroupInviteFragment : Fragment(), SearchInviteMemberAdapter.SearchCallback
             }
 
             is MemberViewState.SuccessInviteMember -> {
+                //show toast first before going back
+                requireActivity().toastSuccess(viewState.data?.msg.toString(), CpmToast.LONG_DURATION)
                 activity.hideLoadingDialog()
                 activity.onBackPressedDispatcher.onBackPressed()
-                requireActivity().toastSuccess(viewState.data?.msg.toString(), CpmToast.LONG_DURATION)
             }
 
             else -> Unit
