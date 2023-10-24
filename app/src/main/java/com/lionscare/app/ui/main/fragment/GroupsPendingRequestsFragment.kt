@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.databinding.FragmentGroupsPendingRequestsBinding
@@ -148,11 +149,19 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     }
 
     override fun onAcceptClicked(data: PendingGroupRequestData) {
-        openAcceptInvitation(data)
+        if(viewModel.getUserKYC() != "completed"){
+            requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+        }else{
+            openAcceptInvitation(data)
+        }
     }
 
     override fun onDeclineClicked(data: PendingGroupRequestData) {
-        openDeclineInvitation(data)
+        if(viewModel.getUserKYC() != "completed"){
+            requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+        }else{
+            openDeclineInvitation(data)
+        }
     }
 
     override fun onCancelClicked(data: PendingGroupRequestData) {
