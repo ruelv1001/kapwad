@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/notif_badge_text"
-            android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_16" />
 
