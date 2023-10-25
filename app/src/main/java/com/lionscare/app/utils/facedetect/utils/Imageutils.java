@@ -113,7 +113,8 @@ public class Imageutils {
     public Uri getImageUri(Context context, Bitmap photo) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.PNG, 80, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), photo, "Title", null);
+        long dateInMillis = System.currentTimeMillis();
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), photo, "Title" + dateInMillis, null);
         return Uri.parse(path);
     }
 
