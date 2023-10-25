@@ -292,6 +292,7 @@ class UploadSelfieFragment : Fragment(), Imageutils.ImageAttachmentListener {
 
     private fun showLoadingDialog(@StringRes strId: Int) {
         if (loadingDialog == null){
+
             loadingDialog = CommonDialog.getLoadingDialogInstance(
                 message = getString(strId)
             )
