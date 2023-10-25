@@ -1,7 +1,10 @@
 package com.lionscare.app.ui.verify.fragment
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -13,6 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -83,15 +88,15 @@ class UploadSelfieFragment : Fragment(), Imageutils.ImageAttachmentListener {
     private fun setClickListeners() = binding.run {
         rightImageView.setOnSingleClickListener {
             num = 3
-            imageutils?.imagepicker(1, num)
+            openStoragePermissionChecker(num)
         }
         frontImageView.setOnSingleClickListener {
             num = 1
-            imageutils?.imagepicker(1, num)
+            openStoragePermissionChecker(num)
         }
         leftImageView.setOnSingleClickListener {
             num = 2
-            imageutils?.imagepicker(1, num)
+            openStoragePermissionChecker(num)
         }
         continueButton.setOnSingleClickListener {
             when{
@@ -114,6 +119,31 @@ class UploadSelfieFragment : Fragment(), Imageutils.ImageAttachmentListener {
                 }
             }
         }
+    }
+
+    private fun openStoragePermissionChecker(num: Int) {
+        if (Build.VERSION.SDK_INT <= 28){
+            if (hasStoragePermissions(requireActivity())) {
+                imageutils?.imagepicker(1, num)
+            } else {
+                requestPermission()
+            }
+        }else{
+            imageutils?.imagepicker(1, num)
+        }
+    }
+    private fun hasStoragePermissions(context: Activity): Boolean {
+        return !(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+    }
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ),
+            REQUEST_READ_WRITE_STORAGE
+        )
     }
 
     private fun getFaceCropResult(): FaceCenterCrop.FaceCenterCropListener? {
@@ -277,6 +307,7 @@ class UploadSelfieFragment : Fragment(), Imageutils.ImageAttachmentListener {
 
     companion object {
         fun newInstance() = UploadSelfieFragment()
+        private const val REQUEST_READ_WRITE_STORAGE = 1
         val TAG: String = UploadSelfieFragment::class.java.name
     }
 

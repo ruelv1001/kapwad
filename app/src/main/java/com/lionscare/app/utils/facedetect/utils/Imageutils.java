@@ -114,7 +114,7 @@ public class Imageutils {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.PNG, 80, bytes);
         long dateInMillis = System.currentTimeMillis();
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), photo, "Title" + dateInMillis, null);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), photo, "FACE_" + dateInMillis, "Date:" + dateInMillis);
         return Uri.parse(path);
     }
 
@@ -182,7 +182,7 @@ public class Imageutils {
     public boolean isDeviceSupportCamera() {
         // no camera on this device
         if (this.context.getPackageManager().hasSystemFeature(
-                PackageManager.FEATURE_CAMERA)) {
+                PackageManager.FEATURE_CAMERA_ANY)) {
             // this device has a camera
             return true;
         } else return this.context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT);
