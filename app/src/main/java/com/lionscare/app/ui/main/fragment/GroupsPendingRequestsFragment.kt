@@ -21,6 +21,7 @@ import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.databinding.FragmentGroupsPendingRequestsBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.adapter.GroupsPendingRequestsAdapter
 import com.lionscare.app.ui.main.viewmodel.GroupListViewModel
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
@@ -41,7 +42,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     private var adapter: GroupsPendingRequestsAdapter? = null
     private val viewModel: GroupListViewModel by viewModels()
     private var loadingDialog: CommonDialog? = null
-
+    private val activity by lazy { requireActivity() as MainActivity }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -150,15 +151,24 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
 
     override fun onAcceptClicked(data: PendingGroupRequestData) {
         if(viewModel.getUserKYC() != "completed"){
-            requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+            if (activity.groupCount < 1) {
+                openAcceptInvitation(data)
+
+            }else{
+                requireActivity().toastWarning(
+                    getString(R.string.not_verified_group),
+                    5000
+                )
+            }
         }else{
             openAcceptInvitation(data)
+
         }
     }
 
     override fun onDeclineClicked(data: PendingGroupRequestData) {
         if(viewModel.getUserKYC() != "completed"){
-            requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
         }else{
             openDeclineInvitation(data)
         }
