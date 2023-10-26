@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,6 +88,10 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
                     shimmerLayout.isVisible = false
                     shimmerLayout.stopShimmer()
                     recyclerView.isVisible = true
+
+                    //gets how many group pending request is of type (self request on group)
+                    viewModel.getSelfGroupRequestCount = adapter?.getSelfGroupRequestCount()
+
                 }
             }
         }
@@ -112,6 +117,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
             is GroupListViewState.SuccessAcceptDeclineInvitation -> {
                 viewModel.refreshPendingRequestList()
                 requireActivity().toastSuccess(viewState.msg, CpmToast.SHORT_DURATION)
+                findNavController().popBackStack()
             }
             is GroupListViewState.PopupError -> {
                 showPopupError(
@@ -152,8 +158,11 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     override fun onAcceptClicked(data: PendingGroupRequestData) {
         if(viewModel.getUserKYC() != "completed"){
             if (activity.groupCount < 1) {
-                openAcceptInvitation(data)
-
+                if((viewModel.doGetSelfGroupRequestCount() ?: 0) >= 1){ // if more than one then wait for that request first
+                    requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),10000)
+                }else{
+                    openAcceptInvitation(data)
+                }
             }else{
                 requireActivity().toastWarning(
                     getString(R.string.not_verified_group),

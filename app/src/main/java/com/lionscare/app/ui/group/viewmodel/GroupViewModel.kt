@@ -9,6 +9,7 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
+import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
@@ -31,6 +32,8 @@ class GroupViewModel @Inject constructor(
     private val groupRepository: GroupRepository
 ) : ViewModel() {
 
+    var curretGroupCount = 0
+
     var avatarFileHolder : File? = null
     var avatarURIHolder : Uri? = null
 
@@ -38,6 +41,25 @@ class GroupViewModel @Inject constructor(
 
     val groupSharedFlow: SharedFlow<GroupViewState> =
         _groupSharedFlow.asSharedFlow()
+
+
+    fun doGetGroupListCount() {
+        viewModelScope.launch {
+            groupRepository.doGetPendingGroupListCount()
+                .onStart {
+                    _groupSharedFlow.emit(GroupViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _groupSharedFlow.emit(
+                        GroupViewState.SuccessPendingGroupListCount(it)
+                    )
+                }
+        }
+    }
+
 
     fun createGroup(createGroupRequest: CreateGroupRequest) {
         viewModelScope.launch {
