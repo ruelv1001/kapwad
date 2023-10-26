@@ -72,7 +72,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             is LoginViewState.Loading -> showLoadingDialog(R.string.loading)
             is LoginViewState.SuccessForgotPassword -> {
                 hideLoadingDialog()
-                toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
+                toastSuccess(viewState.message, CpmToast.LONG_DURATION)
                 this.finish()
             }
 
