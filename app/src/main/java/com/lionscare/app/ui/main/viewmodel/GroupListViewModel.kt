@@ -34,6 +34,11 @@ class GroupListViewModel @Inject constructor(
 ) :
     ViewModel() {
 
+    var getSelfGroupRequestCount : Int?= 0
+
+    fun doGetSelfGroupRequestCount() : Int? {
+        return getSelfGroupRequestCount
+    }
     private val _getGroupSharedFlow = MutableSharedFlow<GroupListViewState>()
 
     val getGroupSharedFlow: SharedFlow<GroupListViewState> =
@@ -83,6 +88,7 @@ class GroupListViewModel @Inject constructor(
                 )
             }
     }
+
 
     fun doAcceptInvitation(pendingMemberId: Long, groupId: String) {
         viewModelScope.launch {

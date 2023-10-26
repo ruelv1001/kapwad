@@ -10,7 +10,9 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
@@ -65,11 +67,11 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
         setupClickListener()
         observeMember()
         observeGroup()
-        onResume()
     }
 
     override fun onResume() {
         super.onResume()
+        viewModel.doGetGroupListCount()
         activity.setTitlee(getString(R.string.lbl_group_search))
     }
 
@@ -115,9 +117,12 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
 
     private fun observeGroup() {
         viewLifecycleOwner.lifecycleScope.launch{
-            viewModel.groupSharedFlow.collectLatest { viewState ->
-                handleViewState(viewState)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.groupSharedFlow.collectLatest { viewState ->
+                    handleViewState(viewState)
+                }
             }
+
         }
     }
 
@@ -140,6 +145,13 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                     binding.recyclerView.isVisible = true
                 }*//*
             }*/
+            is GroupViewState.SuccessPendingGroupListCount -> {
+                activity.hideLoadingDialog()
+                for (i in 0 until viewState.pendingGroupRequestsListResponse.data?.size!!) {
+                    if(viewState.pendingGroupRequestsListResponse.data!![i].type == "request")
+                    viewModel.curretGroupCount++
+                }
+            }
             is GroupViewState.SuccessSearchGroup -> {
                 activity.hideLoadingDialog()
                 groupsAdapter?.clear()
@@ -199,10 +211,15 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     }
 
     override fun onJoinClicked(data: GroupData) {
-        JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
-            override fun onConfirm(group_id: String, privacy: String, passcode: String) {
-                memberViewModel.joinGroup(group_id, passcode)
-            }
-        }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
+        if (viewModel.curretGroupCount >= 1){
+           requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),10000)
+        }else{
+            JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
+                override fun onConfirm(group_id: String, privacy: String, passcode: String) {
+                    memberViewModel.joinGroup(group_id, passcode)
+                }
+            }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
+        }
+
     }
 }
