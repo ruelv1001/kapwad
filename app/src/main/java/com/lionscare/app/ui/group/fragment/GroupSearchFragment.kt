@@ -212,7 +212,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
 
     override fun onJoinClicked(data: GroupData) {
         if (viewModel.curretGroupCount >= 1){
-           requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),10000)
+           requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),CpmToast.LONG_DURATION)
         }else{
             JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
                 override fun onConfirm(group_id: String, privacy: String, passcode: String) {

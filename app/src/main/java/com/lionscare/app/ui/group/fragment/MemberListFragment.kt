@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
+import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.wallet.response.QRData
@@ -191,20 +193,25 @@ class MemberListFragment : Fragment(),
                 }
 
                 override fun onSendPoint(memberListData: MemberListData) {
-                    val intent = WalletActivity.getIntent(
-                        requireActivity(),
-                        "Send Points",
-                        true,
-                        groupSenderId = activity.groupDetails?.id.orEmpty(),
-                        qrData = QRData(
-                            data.user?.id,
-                            data.user?.name,
-                            avatar = data.user?.avatar
-                        ),
-                        start = "START_INPUT"
-                    )
+                    if(viewModel.getUserKYCStatus() != "completed"){
+                        requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+                    }else{
+                        val intent = WalletActivity.getIntent(
+                            requireActivity(),
+                            "Send Points",
+                            true,
+                            groupSenderId = activity.groupDetails?.id.orEmpty(),
+                            qrData = QRData(
+                                data.user?.id,
+                                data.user?.name,
+                                avatar = data.user?.avatar
+                            ),
+                            start = "START_INPUT"
+                        )
 
-                    startActivity(intent)
+                        startActivity(intent)
+                    }
+
                 }
 
                 override fun onTransferOwnership(memberListData: MemberListData) {
