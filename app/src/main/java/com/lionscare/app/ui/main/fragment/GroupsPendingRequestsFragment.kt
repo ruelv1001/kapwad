@@ -159,14 +159,14 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
         if(viewModel.getUserKYC() != "completed"){
             if (activity.groupCount < 1) {
                 if((viewModel.doGetSelfGroupRequestCount() ?: 0) >= 1){ // if more than one then wait for that request first
-                    requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),10000)
+                    requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),CpmToast.LONG_DURATION)
                 }else{
                     openAcceptInvitation(data)
                 }
             }else{
                 requireActivity().toastWarning(
                     getString(R.string.not_verified_group),
-                    5000
+                    CpmToast.LONG_DURATION
                 )
             }
         }else{
