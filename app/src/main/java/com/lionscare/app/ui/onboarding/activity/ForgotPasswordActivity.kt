@@ -4,16 +4,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
-import com.emrekotun.toast.CpmToast
-import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.databinding.ActivityForgotPasswordBinding
+import com.lionscare.app.ui.group.dialog.SaveSuccessDialog
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewModel
 import com.lionscare.app.ui.onboarding.viewmodel.LoginViewState
 import com.lionscare.app.utils.dialog.CommonDialog
@@ -23,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityForgotPasswordBinding
     private var loadingDialog: CommonDialog? = null
@@ -72,8 +70,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
             is LoginViewState.Loading -> showLoadingDialog(R.string.loading)
             is LoginViewState.SuccessForgotPassword -> {
                 hideLoadingDialog()
-                toastSuccess(viewState.message, CpmToast.LONG_DURATION)
-                this.finish()
+                SaveSuccessDialog.newInstance(object: SaveSuccessDialog.RegisterSuccessCallBack {
+                    override fun onMyAccountClicked() {
+                        finish()
+                    }
+                }, title = "Forgot Password" ,
+                    content = viewState.message).show(supportFragmentManager,SaveSuccessDialog.TAG)
             }
 
             is LoginViewState.PopupError -> {

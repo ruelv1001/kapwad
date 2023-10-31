@@ -31,6 +31,7 @@
         android:background="@color/bg_edittext" />
 
     <TextView
+        android:id="@+id/contentTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20"
