@@ -45,12 +45,6 @@
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_22" />
 
-        <ImageView
-            android:id="@+id/searchImageView"
-            android:layout_width="@dimen/dimen_30"
-            android:layout_height="@dimen/dimen_30"
-            android:visibility="gone"
-            android:src="@drawable/ic_search" />
 
         <ImageView
             android:id="@+id/rolesImageView"

@@ -114,12 +114,7 @@ class GroupActivity : AppCompatActivity() {
     fun setTitlee(title: String) = binding.run {
         titleTextView.text = title
         when (title) {
-            getString(R.string.lbl_transactions) -> {
-                rolesImageView.visibility = View.GONE
-                searchImageView.visibility = View.VISIBLE
-                filterImageView.visibility = View.GONE
-                scanImageView.visibility = View.GONE
-            }
+
             /*getString(R.string.lbl_group_community_roles) ->{
                 rolesImageView.visibility = View.VISIBLE
                 searchImageView.visibility = View.GONE
@@ -128,28 +123,24 @@ class GroupActivity : AppCompatActivity() {
             }*/
             getString(R.string.lbl_assistance) -> {
                 rolesImageView.visibility = View.GONE
-                searchImageView.visibility = View.GONE
                 filterImageView.visibility = View.VISIBLE
                 scanImageView.visibility = View.GONE
             }
 
             "Invite to ${groupDetails?.name}" -> {
                 rolesImageView.visibility = View.GONE
-                searchImageView.visibility = View.GONE
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.VISIBLE
             }
 
             "Group Search" -> {
                 rolesImageView.visibility = View.GONE
-                searchImageView.visibility = View.GONE
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.VISIBLE
             }
 
             else -> {
                 rolesImageView.visibility = View.GONE
-                searchImageView.visibility = View.GONE
                 filterImageView.visibility = View.GONE
                 scanImageView.visibility = View.GONE
             }
