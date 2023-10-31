@@ -9,6 +9,7 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.request.CreateGroupRequest
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
+import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.profile.viewmodel.ProfileViewState
 import com.lionscare.app.utils.AppConstant
@@ -29,7 +30,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupViewModel @Inject constructor(
-    private val groupRepository: GroupRepository
+    private val groupRepository: GroupRepository,
+    private val authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
     var curretGroupCount = 0
@@ -43,6 +45,9 @@ class GroupViewModel @Inject constructor(
         _groupSharedFlow.asSharedFlow()
 
 
+    fun getUserKYC() : String{
+        return authEncryptedDataManager.getKYCStatus()
+    }
     fun doGetGroupListCount() {
         viewModelScope.launch {
             groupRepository.doGetPendingGroupListCount()

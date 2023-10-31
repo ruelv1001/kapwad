@@ -172,21 +172,25 @@ class AssistanceRequestDetailsFragment : Fragment() {
             activity.copyToClipboard(refIDTextView.text.toString())
         }
         sendTextView.setOnSingleClickListener {
-            val intent = WalletActivity.getIntent(
-                requireActivity(),
-                "Send Points",
-                true,
-                groupSenderId = activity.groupDetails?.id.orEmpty(),
-                assistanceId = assistanceId,
-                qrData = QRData(
-                    id = userId,
-                    name = userName,
-                    amount = amountTextView.text.toString(),
-                    avatar = avatar
-                ),
-                start = "START_INPUT"
-            )
-            startActivity(intent)
+            if(viewModel. getUserKYC() != "completed"){
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+            }else{
+                val intent = WalletActivity.getIntent(
+                    requireActivity(),
+                    "Send Points",
+                    true,
+                    groupSenderId = activity.groupDetails?.id.orEmpty(),
+                    assistanceId = assistanceId,
+                    qrData = QRData(
+                        id = userId,
+                        name = userName,
+                        amount = amountTextView.text.toString(),
+                        avatar = avatar
+                    ),
+                    start = "START_INPUT"
+                )
+                startActivity(intent)
+            }
         }
     }
 

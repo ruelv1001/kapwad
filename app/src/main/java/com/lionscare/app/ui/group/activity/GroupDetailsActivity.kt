@@ -351,7 +351,7 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
         private const val START_MEMBERSHIP = "START_MEMBERSHIP"
         private const val START_ADMIN = "START_ADMIN"
         private const val START_ASSISTANCE_DETAILS = "START_ASSISTANCE_DETAILS"
-        private const val GROUP_ID = "GROUP_ID"
+                private const val GROUP_ID = "GROUP_ID"
         private const val GROUP_NAME = "GROUP_NAME"
         private const val ALL_REQUEST = "ALL_REQUEST"
         fun getIntent(context: Context, group_id: String? = null): Intent {

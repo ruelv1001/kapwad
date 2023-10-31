@@ -148,8 +148,9 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
             is GroupViewState.SuccessPendingGroupListCount -> {
                 activity.hideLoadingDialog()
                 for (i in 0 until viewState.pendingGroupRequestsListResponse.data?.size!!) {
-                    if(viewState.pendingGroupRequestsListResponse.data!![i].type == "request")
-                    viewModel.curretGroupCount++
+                    if(viewState.pendingGroupRequestsListResponse.data!![i].type == "request"){
+                        viewModel.curretGroupCount++
+                    }
                 }
             }
             is GroupViewState.SuccessSearchGroup -> {
@@ -211,8 +212,16 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     }
 
     override fun onJoinClicked(data: GroupData) {
-        if (viewModel.curretGroupCount >= 1){
-           requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),CpmToast.LONG_DURATION)
+        if(viewModel.getUserKYC() != "completed"){
+            if (viewModel.curretGroupCount >= 1){
+                requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),CpmToast.LONG_DURATION)
+            }else{
+                JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
+                    override fun onConfirm(group_id: String, privacy: String, passcode: String) {
+                        memberViewModel.joinGroup(group_id, passcode)
+                    }
+                }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
+            }
         }else{
             JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
                 override fun onConfirm(group_id: String, privacy: String, passcode: String) {
@@ -220,6 +229,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                 }
             }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
         }
+
 
     }
 }
