@@ -212,16 +212,14 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     }
 
     override fun onJoinClicked(data: GroupData) {
-        if(data.type == "immediate_family"){ //if family, just proceed as usual
-            JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
-                override fun onConfirm(group_id: String, privacy: String, passcode: String) {
-                    memberViewModel.joinGroup(group_id, passcode)
-                }
-            }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
-        }else { // if group and not family
+            if (viewModel.getUserKYC().equals("completed", true) || data.type.equals("immediate_family", true)) { //if verified kyc OR is an immediatefamily group then can join
+                JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
+                    override fun onConfirm(group_id: String, privacy: String, passcode: String) {
+                        memberViewModel.joinGroup(group_id, passcode)
+                    }
+                }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
 
-            if (viewModel.getUserKYC() != "completed") { //if not verified kyc
-
+            } else { // if not verified and not imeediate family
                 if (viewModel.curretGroupCount >= 1) { //check if there is any pending request made by user to other groups
                     requireActivity().toastWarning(
                         getString(R.string.group_self_request_non_verified),
@@ -240,17 +238,6 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                     }, "Do you want to join ${data.name}?", data)
                         .show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
                 }
-
-            } else { // if verified proceed instantly
-                JoinGroupConfirmationDialog.newInstance(object :
-                    JoinGroupConfirmationDialog.ConfirmationCallback {
-                    override fun onConfirm(group_id: String, privacy: String, passcode: String) {
-                        memberViewModel.joinGroup(group_id, passcode)
-                    }
-                }, "Do you want to join ${data.name}?", data)
-                    .show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
             }
-
-        }
     }
 }
