@@ -212,24 +212,32 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     }
 
     override fun onJoinClicked(data: GroupData) {
-        if(viewModel.getUserKYC() != "completed"){
-            if (viewModel.curretGroupCount >= 1){
-                requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),CpmToast.LONG_DURATION)
-            }else{
+            if (viewModel.getUserKYC().equals("completed", true) || data.type.equals("immediate_family", true)) { //if verified kyc OR is an immediatefamily group then can join
                 JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
                     override fun onConfirm(group_id: String, privacy: String, passcode: String) {
                         memberViewModel.joinGroup(group_id, passcode)
                     }
                 }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
-            }
-        }else{
-            JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
-                override fun onConfirm(group_id: String, privacy: String, passcode: String) {
-                    memberViewModel.joinGroup(group_id, passcode)
+
+            } else { // if not verified and not imeediate family
+                if (viewModel.curretGroupCount >= 1) { //check if there is any pending request made by user to other groups
+                    requireActivity().toastWarning(
+                        getString(R.string.group_self_request_non_verified),
+                        CpmToast.LONG_DURATION
+                    )
+                } else { //if no pending request, proceed
+                    JoinGroupConfirmationDialog.newInstance(object :
+                        JoinGroupConfirmationDialog.ConfirmationCallback {
+                        override fun onConfirm(
+                            group_id: String,
+                            privacy: String,
+                            passcode: String
+                        ) {
+                            memberViewModel.joinGroup(group_id, passcode)
+                        }
+                    }, "Do you want to join ${data.name}?", data)
+                        .show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
                 }
-            }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
-        }
-
-
+            }
     }
 }
