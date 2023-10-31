@@ -177,6 +177,7 @@ class GroupManageFragment : Fragment() {
         when (viewState) {
             MemberViewState.Loading -> showLoadingDialog(R.string.loading)
             is MemberViewState.PopupError -> {
+                hideLoadingDialog()
                 showPopupError(
                     requireActivity(),
                     childFragmentManager,

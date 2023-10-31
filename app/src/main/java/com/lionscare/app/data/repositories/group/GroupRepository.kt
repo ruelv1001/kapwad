@@ -11,6 +11,7 @@ import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
+import com.lionscare.app.data.repositories.group.response.PendingGroupRequestsListResponse
 import com.lionscare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.lionscare.app.data.repositories.wallet.response.SearchGroupResponse
 import com.lionscare.app.security.AuthEncryptedDataManager
@@ -63,6 +64,13 @@ class GroupRepository @Inject constructor(
         ).flow
             .flowOn(ioDispatcher)
     }
+    fun doGetPendingGroupListCount(): Flow<PendingGroupRequestsListResponse>{
+        return flow {
+            val response = groupRemoteDataSource.doGetPendingGroupRequest(null, null)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
 
     fun doGetPendingGroupRequestList(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<PendingGroupRequestData>>{
         val getPendingGroupRequestPagingSource = GetPendingGroupRequestPagingSource(groupRemoteDataSource)

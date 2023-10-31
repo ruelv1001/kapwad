@@ -11,15 +11,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.databinding.FragmentGroupsPendingRequestsBinding
+import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.adapter.GroupsPendingRequestsAdapter
 import com.lionscare.app.ui.main.viewmodel.GroupListViewModel
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
@@ -40,7 +43,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     private var adapter: GroupsPendingRequestsAdapter? = null
     private val viewModel: GroupListViewModel by viewModels()
     private var loadingDialog: CommonDialog? = null
-
+    private val activity by lazy { requireActivity() as MainActivity }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -85,6 +88,10 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
                     shimmerLayout.isVisible = false
                     shimmerLayout.stopShimmer()
                     recyclerView.isVisible = true
+
+                    //gets how many group pending request is of type (self request on group)
+                    viewModel.getSelfGroupRequestCount = adapter?.getSelfGroupRequestCount()
+
                 }
             }
         }
@@ -110,6 +117,7 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
             is GroupListViewState.SuccessAcceptDeclineInvitation -> {
                 viewModel.refreshPendingRequestList()
                 requireActivity().toastSuccess(viewState.msg, CpmToast.SHORT_DURATION)
+                findNavController().popBackStack()
             }
             is GroupListViewState.PopupError -> {
                 showPopupError(
@@ -148,11 +156,31 @@ class GroupsPendingRequestsFragment : Fragment(), GroupsPendingRequestsAdapter.G
     }
 
     override fun onAcceptClicked(data: PendingGroupRequestData) {
-        openAcceptInvitation(data)
+        if(viewModel.getUserKYC() != "completed"){
+            if (activity.groupCount < 1) {
+                if((viewModel.doGetSelfGroupRequestCount() ?: 0) >= 1){ // if more than one then wait for that request first
+                    requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),CpmToast.LONG_DURATION)
+                }else{
+                    openAcceptInvitation(data)
+                }
+            }else{
+                requireActivity().toastWarning(
+                    getString(R.string.not_verified_group),
+                    CpmToast.LONG_DURATION
+                )
+            }
+        }else{
+            openAcceptInvitation(data)
+
+        }
     }
 
     override fun onDeclineClicked(data: PendingGroupRequestData) {
-        openDeclineInvitation(data)
+        if(viewModel.getUserKYC() != "completed"){
+                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
+        }else{
+            openDeclineInvitation(data)
+        }
     }
 
     override fun onCancelClicked(data: PendingGroupRequestData) {

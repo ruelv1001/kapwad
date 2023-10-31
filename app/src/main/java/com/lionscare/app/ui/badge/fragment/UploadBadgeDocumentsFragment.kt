@@ -2,6 +2,7 @@ package com.lionscare.app.ui.badge.fragment
 
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.google.android.material.textfield.TextInputEditText
 import com.lionscare.app.R
 import com.lionscare.app.data.model.ErrorsData
@@ -152,9 +154,7 @@ class UploadBadgeDocumentsFragment : Fragment() {
             }
             is ProfileViewState.PopupError -> {
                 hideLoadingDialog()
-                CommonLogger.sysLogE("here", viewState.errorCode)
-                    showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
-
+                showPopupError(requireContext(), childFragmentManager, viewState.errorCode, viewState.message)
             }
             else -> {
                 hideLoadingDialog()
@@ -174,6 +174,18 @@ class UploadBadgeDocumentsFragment : Fragment() {
                 childFragmentManager,
                 PopupErrorState.HttpError,
                 getString(R.string.please_select_proof_of_address))
+        }
+        if (errorsData.doc1?.get(0)?.isNotEmpty() == true) {
+            showPopupError(requireContext(),
+                childFragmentManager,
+                PopupErrorState.HttpError,
+                getString(R.string.file_size_error))
+        }
+        if (errorsData.doc2?.get(0)?.isNotEmpty() == true) {
+            showPopupError(requireContext(),
+                childFragmentManager,
+                PopupErrorState.HttpError,
+                getString(R.string.file_size_error))
         }
     }
 
@@ -212,23 +224,40 @@ class UploadBadgeDocumentsFragment : Fragment() {
     private val filePickerLauncher =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
             if (uri != null) {
+                val fileSize = getFileSize(uri)
+                if (fileSize > 10 * 1024 * 1024) { // Check if file size exceeds 10MB
+                    requireActivity().toastWarning( getString(R.string.file_size_error))
+                    return@registerForActivityResult
+                }
+
                 val selectedFileName = getFileNameFromUri(uri)
                 val focusedEditText =
                     requireActivity().findViewById<TextInputEditText>(focusedEditTextId)
                 focusedEditText.setText(selectedFileName)
 
-                    when (selectedFile) {
-                        DOC1 -> {
-                            doc1 = getFileFromUri(requireContext(), uri)
-                        }
 
-                        DOC2 -> {
-                            doc2 = getFileFromUri(requireContext(), uri)
-                        }
+                when (selectedFile) {
+                    DOC1 -> {
+                        doc1 = getFileFromUri(requireContext(), uri)
                     }
+
+                    DOC2 -> {
+                        doc2 = getFileFromUri(requireContext(), uri)
+                    }
+                }
             }
         }
 
+
+    private fun getFileSize(uri: Uri): Long {
+        val contentResolver = requireContext().contentResolver
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        val sizeIndex = cursor?.getColumnIndex(OpenableColumns.SIZE) ?: -1
+        cursor?.moveToFirst()
+        val size = if (sizeIndex != -1) cursor?.getLong(sizeIndex) ?: -1 else -1
+        cursor?.close()
+        return size
+    }
 
 
     private fun getFileNameFromUri(uri: Uri): String {

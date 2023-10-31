@@ -22,6 +22,8 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
         DIFF_CALLBACK
     ) {
 
+    private var groupRequestCount = 0
+
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PendingGroupRequestData>() {
             override fun areItemsTheSame(oldItem: PendingGroupRequestData, newItem: PendingGroupRequestData): Boolean {
@@ -50,6 +52,9 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: PendingGroupRequestData?){
             data?.let {
+                if(data.type == "request"){
+                    groupRequestCount++
+                }
                 binding.titleTextView.text = data.group?.name
                 binding.membersTextView.text = context.resources.getQuantityString(
                     R.plurals.member_plural, //plural from strings.xml file
@@ -90,5 +95,9 @@ class GroupsPendingRequestsAdapter (val context: Context, val clickListener: Gro
 
     fun hasData() : Boolean{
         return itemCount != 0
+    }
+
+    fun getSelfGroupRequestCount() : Int {
+        return groupRequestCount
     }
 }

@@ -63,8 +63,8 @@ class GroupRemoteDataSource @Inject constructor(private val groupService: GroupS
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doGetPendingGroupRequest(page: String, perPage: String): PendingGroupRequestsListResponse {
-        val request = GetGroupListRequest(page.toInt(), perPage.toInt())
+    suspend fun doGetPendingGroupRequest(page: String?, perPage: String?): PendingGroupRequestsListResponse {
+        val request = GetGroupListRequest(page?.toInt(), perPage?.toInt())
         val response = groupService.doGetPendingGroupRequest(request)
 
         if (response.code() != HttpURLConnection.HTTP_OK) {

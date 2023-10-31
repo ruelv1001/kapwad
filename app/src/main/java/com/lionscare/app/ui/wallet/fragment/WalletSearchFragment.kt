@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.group.response.GroupData
@@ -85,7 +86,11 @@ class WalletSearchFragment : Fragment(),
                 activity.hideLoadingDialog()
                 activity.isGroupId = false
                 activity.qrData = viewState.scanQRData?: QRData()
-                findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
+                if(viewState.scanQRData?.id != viewModel.user.id){
+                    findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
+                }else{
+                    requireActivity().toastWarning("You cannot scan your own QR",CpmToast.LONG_DURATION)
+                }
             }
             is WalletViewState.SuccessScanGroup -> {
                 activity.hideLoadingDialog()

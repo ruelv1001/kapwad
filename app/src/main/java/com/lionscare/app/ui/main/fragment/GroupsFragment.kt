@@ -7,18 +7,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
+import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.databinding.FragmentGroupsBinding
 import com.lionscare.app.ui.group.activity.GroupActivity
+import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.main.activity.MainActivity
 import com.lionscare.app.ui.main.viewmodel.GroupsViewModel
 import com.lionscare.app.utils.adapter.CustomViewPagerAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GroupsFragment : Fragment(){
@@ -52,7 +62,46 @@ class GroupsFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         setUpTabs()
         setClickListeners()
+        observeGroup()
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.doGetGroupListCount()
+    }
+
+
+    private fun observeGroup() {
+        viewLifecycleOwner.lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.groupSharedFlow.collectLatest { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+
+        }
+    }
+
+    private fun handleViewState(viewState: GroupViewState) {
+        when (viewState) {
+            is GroupViewState.Loading -> activity.showLoadingDialog(R.string.loading)
+            is GroupViewState.SuccessPendingGroupListCount -> {
+                activity.hideLoadingDialog()
+                for (i in 0 until viewState.pendingGroupRequestsListResponse.data?.size!!) {
+                    if(viewState.pendingGroupRequestsListResponse.data!![i].type == "request"){
+                        viewModel.currentGroupCount++
+                    }
+                }
+            }
+            is GroupViewState.PopupError -> {
+                activity.hideLoadingDialog()
+                showPopupError(requireActivity(), childFragmentManager, viewState.errorCode, viewState.message)
+            }
+
+            else -> activity.hideLoadingDialog()
+        }
+    }
+
 
     private fun setClickListeners() = binding.run {
 
@@ -73,10 +122,13 @@ class GroupsFragment : Fragment(){
 
         createGroupFloatingActionButton.setOnSingleClickListener {
             if(viewModel.getKycStatus() != "completed") {
-                if (activity.groupCount < 1) {
+                if (viewModel.currentGroupCount >= 1){
+                    requireActivity().toastWarning(getString(R.string.group_self_request_non_verified),
+                        CpmToast.LONG_DURATION)
+                }else if (activity.groupCount < 1) {
                     val intent = GroupActivity.getIntent(requireActivity(), START_CREATE_ORG)
                     startActivity(intent)
-                } else {
+                }  else {
                     requireActivity().toastWarning(
                         getString(R.string.not_verified_group),
                         5000

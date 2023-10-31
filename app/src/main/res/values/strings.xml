@@ -418,5 +418,8 @@
     <string name="settings_frequently_asked_questions_text">Frequently Asked Questions</string>
     <string name="settings_terms_and_conditions_text">Terms and Conditions</string>
     <string name="settings_contact_us_text">Contact Us</string>
+    <string name="maximum_file_size_of_10mb">Maximum file size of 10mb</string>
+    <string name="file_size_error">File size not acceptable. Please upload between 1kb to 10mb file only.</string>
+    <string name="group_self_request_non_verified">While unverified, you still need to wait for your request to be updated before joining other groups or you may cancel your previous request(s)</string>
 
 </resources>

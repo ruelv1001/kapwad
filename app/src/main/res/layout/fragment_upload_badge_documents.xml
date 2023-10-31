@@ -88,6 +88,8 @@
             android:fontFamily="@font/inter_regular"
             app:boxBackgroundColor="@color/white"
             app:hintAnimationEnabled="true"
+            app:helperTextEnabled="true"
+            app:helperText="@string/maximum_file_size_of_10mb"
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -96,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext_selector"
                 android:fontFamily="@font/inter_semibold"
+
                 android:hint="@string/verify_select_document_text"
                 android:singleLine="true"
                 android:focusable="false"
@@ -124,6 +127,8 @@
             android:layout_marginTop="@dimen/dimen_10"
             android:fontFamily="@font/inter_regular"
             app:boxBackgroundColor="@color/white"
+            app:helperTextEnabled="true"
+            app:helperText="@string/maximum_file_size_of_10mb"
             app:hintAnimationEnabled="true"
             app:hintEnabled="false">
 

@@ -32,6 +32,7 @@ class WalletViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _walletSharedFlow = MutableSharedFlow<WalletViewState>()
+    val user = encryptedDataManager.getUserBasicInfo()
 
     val walletSharedFlow: SharedFlow<WalletViewState> =
         _walletSharedFlow.asSharedFlow()

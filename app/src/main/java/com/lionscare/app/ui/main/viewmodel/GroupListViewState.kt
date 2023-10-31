@@ -1,6 +1,7 @@
 package com.lionscare.app.ui.main.viewmodel
 
 import androidx.paging.PagingData
+import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.PendingGroupRequestData
 import com.lionscare.app.ui.group.viewmodel.MemberViewState

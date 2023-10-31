@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogSaveSuccessBinding
+import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,6 +16,8 @@ class SaveSuccessDialog : BottomSheetDialogFragment(){
 
     private var viewBinding: DialogSaveSuccessBinding? = null
     private var callback: RegisterSuccessCallBack? = null
+    private var title = ""
+    private var content = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,19 +39,20 @@ class SaveSuccessDialog : BottomSheetDialogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding = DialogSaveSuccessBinding.bind(view)
-        setClickListener()
         setView()
     }
 
     private fun setView() = viewBinding?.run {
 
+        titleTextView.text = title
+        contentTextView.text = content
+
+        doneButton.setOnSingleClickListener {
+            callback?.onMyAccountClicked()
+            dismiss()
+        }
     }
 
-    private fun setClickListener() {
-//        viewBinding?.myAcctButton?.setOnSingleClickListener {
-//            dismiss()
-//        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -56,13 +60,15 @@ class SaveSuccessDialog : BottomSheetDialogFragment(){
     }
 
     interface RegisterSuccessCallBack {
-        fun onMyAccountClicked(cityName: String, citySku: String, zipCode: String)
+        fun onMyAccountClicked()
     }
 
     companion object {
-        fun newInstance(callback: RegisterSuccessCallBack? = null) = SaveSuccessDialog()
+        fun newInstance(callback: RegisterSuccessCallBack? = null, title: String? = null, content: String? = null) = SaveSuccessDialog()
             .apply {
                 this.callback = callback
+                this.title = title.toString()
+                this.content = content.toString()
             }
 
         val TAG: String = SaveSuccessDialog::class.java.simpleName

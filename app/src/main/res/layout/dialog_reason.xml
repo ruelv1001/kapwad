@@ -34,11 +34,16 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/dimen_16"
+        app:hintTextColor="@color/black"
+        app:boxStrokeColor="@color/black"
+
         android:hint="@string/reason">
 
         <com.google.android.material.textfield.TextInputEditText
             android:cursorVisible="true"
             android:id="@+id/reasonTextField"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
