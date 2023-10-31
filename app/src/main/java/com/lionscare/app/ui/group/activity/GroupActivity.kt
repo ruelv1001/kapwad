@@ -33,7 +33,7 @@ class GroupActivity : AppCompatActivity() {
     private var memberCount: Int = 0
     var groupDetails: GroupData? = null
     var referenceId = ""
-
+    var groupCount = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupBinding.inflate(layoutInflater)
@@ -44,6 +44,7 @@ class GroupActivity : AppCompatActivity() {
         groupDetails = intent.getParcelable(GROUP_DATA)
         assistanceDetailsType = intent.getStringExtra(ASSISTANCE_TYPE).toString()
         referenceId = intent.getStringExtra(EXTRA_REF_ID).toString()
+        groupCount = intent.getIntExtra(GROUP_COUNT, -1)
     }
 
     private fun setOnClickListener() = binding.run {
@@ -178,18 +179,21 @@ class GroupActivity : AppCompatActivity() {
         private const val ALL_REQUEST = "ALL_REQUEST"
         private const val REQUEST = "REQUEST"
         private const val EXTRA_REF_ID = "EXTRA_REF_ID"
+        private const val GROUP_COUNT = "GROUP_COUNT"
         fun getIntent(
             context: Context,
             start: String,
             groupData: GroupData? = null,
             assistanceType: String? = null,
-            referenceId: String? = null
+            referenceId: String? = null,
+            groupCount : Int ? = -1
         ): Intent {
             val intent = Intent(context, GroupActivity::class.java)
             intent.putExtra(GROUP_DATA, groupData)
             intent.putExtra(EXTRA_START, start)
             intent.putExtra(ASSISTANCE_TYPE, assistanceType)
             intent.putExtra(EXTRA_REF_ID,referenceId)
+            intent.putExtra(GROUP_COUNT, groupCount)
             return intent
         }
     }

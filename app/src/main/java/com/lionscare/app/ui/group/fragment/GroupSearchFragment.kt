@@ -28,6 +28,7 @@ import com.lionscare.app.ui.group.viewmodel.GroupViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.adapter.GroupsGroupAdapter
+import com.lionscare.app.ui.main.fragment.GroupsFragment
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.dialog.ScannerDialog
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -149,7 +150,7 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                 activity.hideLoadingDialog()
                 for (i in 0 until viewState.pendingGroupRequestsListResponse.data?.size!!) {
                     if(viewState.pendingGroupRequestsListResponse.data!![i].type == "request"){
-                        viewModel.curretGroupCount++
+                        viewModel.currentGroupPendingCount++
                     }
                 }
             }
@@ -212,7 +213,10 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
     }
 
     override fun onJoinClicked(data: GroupData) {
-            if (viewModel.getUserKYC().equals("completed", true) || data.type.equals("immediate_family", true)) { //if verified kyc OR is an immediatefamily group then can join
+            if (
+                viewModel.getUserKYC().equals("completed", true) ||
+                data.type.equals("immediate_family", true)
+                ) { //if verified kyc OR is an immediatefamily group then can join
                 JoinGroupConfirmationDialog.newInstance(object : JoinGroupConfirmationDialog.ConfirmationCallback{
                     override fun onConfirm(group_id: String, privacy: String, passcode: String) {
                         memberViewModel.joinGroup(group_id, passcode)
@@ -220,23 +224,30 @@ class GroupSearchFragment : Fragment(), GroupsGroupAdapter.GroupCallback {
                 }, "Do you want to join ${data.name}?", data).show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
 
             } else { // if not verified and not imeediate family
-                if (viewModel.curretGroupCount >= 1) { //check if there is any pending request made by user to other groups
+                if (viewModel.currentGroupPendingCount >= 1) { //check if there is any pending request made by user to other groups
                     requireActivity().toastWarning(
                         getString(R.string.group_self_request_non_verified),
                         CpmToast.LONG_DURATION
                     )
                 } else { //if no pending request, proceed
-                    JoinGroupConfirmationDialog.newInstance(object :
-                        JoinGroupConfirmationDialog.ConfirmationCallback {
-                        override fun onConfirm(
-                            group_id: String,
-                            privacy: String,
-                            passcode: String
-                        ) {
-                            memberViewModel.joinGroup(group_id, passcode)
-                        }
-                    }, "Do you want to join ${data.name}?", data)
-                        .show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
+                    if (activity.groupCount >= 1) { // but if he already has groups, then dont proceed
+                        requireActivity().toastWarning(
+                            getString(R.string.not_verified_group),
+                            CpmToast.LONG_DURATION
+                        )
+                    }else{
+                        JoinGroupConfirmationDialog.newInstance(object :
+                            JoinGroupConfirmationDialog.ConfirmationCallback {
+                            override fun onConfirm(
+                                group_id: String,
+                                privacy: String,
+                                passcode: String
+                            ) {
+                                memberViewModel.joinGroup(group_id, passcode)
+                            }
+                        }, "Do you want to join ${data.name}?", data)
+                            .show(childFragmentManager, JoinGroupConfirmationDialog.TAG)
+                    }
                 }
             }
     }

@@ -34,7 +34,7 @@ class GroupViewModel @Inject constructor(
     private val authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
-    var curretGroupCount = 0
+    var currentGroupPendingCount = 0
 
     var avatarFileHolder : File? = null
     var avatarURIHolder : Uri? = null
