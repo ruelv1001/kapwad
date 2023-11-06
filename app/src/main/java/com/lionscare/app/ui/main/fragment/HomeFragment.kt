@@ -45,6 +45,7 @@ import com.lionscare.app.ui.main.viewmodel.SettingsViewState
 import com.lionscare.app.ui.onboarding.activity.SplashScreenActivity
 import com.lionscare.app.ui.verify.activity.AccountVerificationActivity
 import com.lionscare.app.utils.copyToClipboard
+import com.lionscare.app.utils.currencyFormat
 import com.lionscare.app.utils.loadAvatar
 import com.lionscare.app.utils.loadGroupAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -87,6 +88,9 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         observeImmediateFamily()
         setClickListeners()
         setUpAnimation()
+
+        //todo put in handle view state later
+        updateBilling(30000,100000,"Bill No. 0000004", true)
         binding.swipeRefreshLayout.setOnRefreshListener(this@HomeFragment)
 
         //immediately make this view gone
@@ -201,6 +205,16 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         }
     }
 
+
+    @SuppressLint("SetTextI18n")
+    private fun updateBilling(currentAmount : Int, totalAmount : Int, billingNumberText : String, shouldShow : Boolean = false){
+        binding.billingLinearLayout.isVisible = shouldShow
+        val progress = (currentAmount.toFloat() / totalAmount * 100).toInt()
+        binding.billingProgressIndicator.progress = progress
+        binding.billingNumberText.text = billingNumberText
+        binding.billingAmountText.text = "${currencyFormat(currentAmount.toString())}/${currencyFormat(totalAmount.toString())}"
+        binding.billingProgressIndicatorInText.text = "${progress}%"
+    }
     @SuppressLint("SetTextI18n")
     private fun showProperBadgeStatus(badgeStatus: BadgeStatus?){
         binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
@@ -460,6 +474,13 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         }
         qrLayout.qrCodeTextView.setOnSingleClickListener {
             activity?.copyToClipboard(viewModel.userQrCode)
+        }
+
+        billingLinearLayout.setOnSingleClickListener {
+            //TODO Go to Billing Details Activity
+        }
+        viewAllBillingTextButton.setOnSingleClickListener {
+            //TODO Go to
         }
     }
 
