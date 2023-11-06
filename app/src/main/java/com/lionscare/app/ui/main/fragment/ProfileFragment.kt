@@ -197,6 +197,9 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         contactLinearLayout.setOnClickListener{
             openWebViewDialog("https://www.lionscare.ph/contact")
         }
+        aboutLinearLayout.setOnClickListener{
+            openWebViewDialog("https://www.lionscare.ph/about")
+        }
     }
 
     private fun setDetails(data: UserModel?) = binding.run {
