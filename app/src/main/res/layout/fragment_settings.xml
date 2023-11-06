@@ -461,6 +461,43 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/aboutLinearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_60"
+                            android:layout_height="@dimen/dimen_60"
+                            android:background="@drawable/bg_group_btn"
+                            android:backgroundTint="@color/light_gray_line"
+                            android:backgroundTintMode="screen"
+                            android:padding="@dimen/dimen_15"
+                            android:src="@drawable/outline_info_24"
+                            android:contentDescription="@string/settings_about_us"
+                            app:tint="@color/super_light_gray" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="@string/settings_about_us"
+                            android:textColor="@color/black_text"
+                            android:textSize="@dimen/font_16" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_forward_arrow" />
+
+                    </LinearLayout>
+
+
 
                     <LinearLayout
                         android:id="@+id/logoutLinearLayout"
