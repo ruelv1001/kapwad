@@ -422,5 +422,6 @@
     <string name="file_size_error">File size not acceptable. Please upload between 1kb to 10mb file only.</string>
     <string name="group_self_request_non_verified">While unverified, you still need to wait for your request to be updated before joining other groups or you may cancel your previous request(s)</string>
     <string name="settings_about_us">About Us</string>
+    <string name="view_all">View All</string>
 
 </resources>
