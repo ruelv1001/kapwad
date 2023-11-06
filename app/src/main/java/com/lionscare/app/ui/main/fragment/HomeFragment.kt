@@ -475,6 +475,13 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         qrLayout.qrCodeTextView.setOnSingleClickListener {
             activity?.copyToClipboard(viewModel.userQrCode)
         }
+
+        billingLinearLayout.setOnSingleClickListener {
+            //TODO Go to Billing Details Activity
+        }
+        viewAllBillingTextButton.setOnSingleClickListener {
+            //TODO Go to
+        }
     }
 
 
