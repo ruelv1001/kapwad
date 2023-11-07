@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.lionscare.app" >
+    package="com.lionscare.app">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -30,7 +30,12 @@
         android:roundIcon="@drawable/img_lions_care_logo_new"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.billing.activity.BillingActivity"
+            android:exported="false"
+            android:screenOrientation="userPortrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.onboarding.activity.ForgotPasswordActivity"
             android:exported="false" />
@@ -50,7 +55,7 @@
             android:name=".ui.onboarding.activity.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="userPortrait"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -115,13 +120,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:replace="android:theme" />
-
         <activity
             android:name=".ui.verify.activity.FaceScannerActivity"
             android:label=""
             android:screenOrientation="userPortrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
