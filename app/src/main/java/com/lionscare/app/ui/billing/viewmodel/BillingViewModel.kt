@@ -26,6 +26,11 @@ class BillingViewModel  @Inject constructor(
     val billingSharedFlow: SharedFlow<BillingViewState> =
         _billingSharedFlow.asSharedFlow()
 
+
+    //=================== For ask for donations group request and custom request
+    var immediateFamilyId = ""
+
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
