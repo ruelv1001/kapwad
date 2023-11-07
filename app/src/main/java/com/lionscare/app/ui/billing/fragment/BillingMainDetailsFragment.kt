@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,7 +67,7 @@ class BillingMainDetailsFragment : Fragment() {
 
     private fun setOnClickListeners() = binding.run {
         amountDueImageButton.setOnSingleClickListener {
-
+            findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAskForDonationsFragment())
         }
     }
 

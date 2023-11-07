@@ -9,5 +9,17 @@
         tools:layout="@layout/fragment_billing_main_details"
         android:id="@+id/billingMainDetailsFragment"
         android:name="com.lionscare.app.ui.billing.fragment.BillingMainDetailsFragment"
-        android:label="BillingMainDetailsFragment" />
+        android:label="BillingMainDetailsFragment" >
+        <action
+            android:id="@+id/action_billingMainDetailsFragment_to_askForDonationsFragment"
+            app:destination="@id/askForDonationsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/billingMainDetailsFragment"
+      />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_ask_for_donations"
+        android:id="@+id/askForDonationsFragment"
+        android:name="com.lionscare.app.ui.billing.fragment.AskForDonationsFragment"
+        android:label="AskForDonationsFragment" />
 </navigation>
