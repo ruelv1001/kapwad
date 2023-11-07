@@ -33,6 +33,7 @@ import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.profile.response.BadgeStatus
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.badge.activity.VerifiedBadgeActivity
+import com.lionscare.app.ui.billing.activity.BillingActivity
 import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.ui.group.activity.GroupDetailsActivity
 import com.lionscare.app.ui.main.activity.MainActivity
@@ -477,7 +478,8 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         }
 
         billingLinearLayout.setOnSingleClickListener {
-            //TODO Go to Billing Details Activity
+            val intent = BillingActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
         viewAllBillingTextButton.setOnSingleClickListener {
             //TODO Go to

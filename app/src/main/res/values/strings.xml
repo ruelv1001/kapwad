@@ -423,5 +423,16 @@
     <string name="group_self_request_non_verified">While unverified, you still need to wait for your request to be updated before joining other groups or you may cancel your previous request(s)</string>
     <string name="settings_about_us">About Us</string>
     <string name="view_all">View All</string>
+    <string name="go_back">Go back</string>
+    <string name="scan_billing">Scan Billing</string>
+    <string name="amount_due">Amount Due</string>
+    <string name="total_donated">Total Donated</string>
+    <string name="billing_details">Billing Details</string>
+    <string name="date_uploaded">Date Uploaded</string>
+    <string name="due_date">Due Date</string>
+    <string name="downloadable_billing_statement">Downloadable Billing Statement</string>
+    <string name="points">points</string>
+    <string name="donated">donated</string>
+    <string name="recent_donators">Recent Donators</string>
 
 </resources>
