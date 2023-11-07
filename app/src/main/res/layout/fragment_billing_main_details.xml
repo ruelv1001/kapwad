@@ -232,6 +232,17 @@
                         android:layout_height="wrap_content"
                         tools:itemCount="6"
                         tools:listitem="@layout/adapter_billing_donators" />
+
+                    <TextView
+                        android:id="@+id/viewAllTextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="@string/view_all"
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/font_16" />
                     <TextView
                         android:id="@+id/placeHolderTextView"
                         android:layout_width="match_parent"
@@ -248,6 +259,7 @@
             </androidx.core.widget.NestedScrollView>
 
             <Button
+                android:visibility="visible"
                 android:id="@+id/donateButton"
                 style="@style/MyButtonStyle"
                 android:layout_width="match_parent"
