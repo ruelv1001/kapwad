@@ -181,7 +181,6 @@
                 android:textSize="@dimen/font_14"
                 android:visibility="gone" />
 
-
             <TextView
                 android:visibility="gone"
                 android:id="@+id/noteSendRequestText"
@@ -194,7 +193,6 @@
                 android:textStyle="italic"
                 android:layout_marginVertical="@dimen/dimen_4"
                 tools:text="Note: This Billing Statement B-000004 will be posted in the Request for Donations section of your selected groups" />
-
 
             <Button
                 android:visibility="gone"

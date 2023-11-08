@@ -72,4 +72,12 @@
         android:src="@drawable/ic_remove_eraser"
         android:visibility="gone" />
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:buttonTint="@color/color_primary"
+        />
 </LinearLayout>
