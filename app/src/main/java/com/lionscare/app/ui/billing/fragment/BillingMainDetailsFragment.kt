@@ -58,7 +58,6 @@ class BillingMainDetailsFragment : Fragment() {
         observeBillingFlow()
         setOnClickListeners()
 
-
         //TODO API
         setupAdapter()
         setContentViews()
@@ -196,7 +195,7 @@ class BillingMainDetailsFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        adapter?.removeLoadStateListener { requireActivity() }
+        adapter?.removeLoadStateListener { requireContext() }
         _binding = null
     }
 

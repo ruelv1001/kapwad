@@ -16,7 +16,7 @@ import com.lionscare.app.utils.loadGroupAvatar
 class GroupsYourGroupAdapter(
     val context: Context,
     val clickListener: GroupCallback,
-    val shouldShowCheckBox: Boolean = false
+    val shouldShowCheckbox: Boolean = false
 ) :
     PagingDataAdapter<GroupListData, GroupsYourGroupAdapter.AdapterViewHolder>(
         DIFF_CALLBACK
@@ -49,15 +49,17 @@ class GroupsYourGroupAdapter(
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
         val data = getItem(position)
-        holder.bind(data)
+        holder.bind(data, position)
     }
 
     inner class AdapterViewHolder(val binding: AdapterGroupYourGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: GroupListData?) {
+        fun bind(data: GroupListData?, position: Int) {
             data?.let {
-                binding.checkBox.isVisible = shouldShowCheckBox //if should show checkbox
+                binding.checkBox.isVisible = shouldShowCheckbox
+                binding.checkBox.isChecked =
+                    customGroupListDataModel?.get(position)?.isChecked == true //if should show checkbox
                 binding.titleTextView.text = data.name
                 binding.membersTextView.text = context.resources.getQuantityString(
                     R.plurals.member_plural, //plural from strings.xml file
@@ -94,6 +96,10 @@ class GroupsYourGroupAdapter(
 
     fun getCustomData(): List<CustomGroupListDataModel>? {
         return customGroupListDataModel
+    }
+
+    fun setCustomData(data: MutableList<CustomGroupListDataModel>) {
+        customGroupListDataModel = data
     }
 
     fun hasData(): Boolean {

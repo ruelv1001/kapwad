@@ -9,7 +9,9 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,11 +35,8 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
     private var orgAdapter: GroupsYourGroupAdapter? = null
-//    private val viewModel: GroupListViewModel by viewModels()
-//    private val iFViewModel: ImmediateFamilyViewModel by viewModels()
 
     private val viewModel: BillingViewModel by activityViewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +54,7 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
         super.onViewCreated(view, savedInstanceState)
         observeGroupList()
         observeImmediateFamily()
-        setClickListeners()
+        setOnClickListeners()
         setupAdapter()
         setContentViews()
 
@@ -121,7 +120,7 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
                     "of your selected groups"
     }
 
-    private fun setClickListeners() = binding.run {
+    private fun setOnClickListeners() = binding.run {
         sendRequestButton.setOnSingleClickListener {
             //get groups data where it is checked
             val groupsWithChecked = orgAdapter?.getCustomData()
@@ -141,7 +140,7 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
         orgAdapter = GroupsYourGroupAdapter(
             requireActivity(),
             this@AskForDonationsGroupRequestFragment,
-            shouldShowCheckBox = true
+            shouldShowCheckbox = true
         )
         orgSwipeRefreshLayout.setOnRefreshListener { orgSwipeRefreshLayout.isRefreshing = false }
         linearLayoutManager = LinearLayoutManager(context)
@@ -175,8 +174,10 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
 
     private fun observeGroupList() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getGroupSharedFlow.collectLatest { viewState ->
-                handleViewState(viewState)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.getGroupSharedFlow.collectLatest { viewState ->
+                    handleViewState(viewState)
+                }
             }
         }
     }
@@ -211,7 +212,7 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
         binding.sendRequestButton.isVisible = false
         binding.noteSendRequestText.isVisible = false
         binding.searchLinearLayout.isVisible = false
-        orgAdapter?.removeLoadStateListener { requireActivity() }
+        orgAdapter?.removeLoadStateListener { requireContext() }
         _binding = null
     }
 

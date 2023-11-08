@@ -55,7 +55,7 @@ class AskForDonationsFragment: Fragment()  {
          findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsGroupRequestFragment())
         }
         askInCustomRequestLinearLayout.setOnSingleClickListener {
-        //todo
+         findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsCustomRequestFragment())
         }
         listOfGroupRequestLinearLayout.setOnSingleClickListener {
         //todo
