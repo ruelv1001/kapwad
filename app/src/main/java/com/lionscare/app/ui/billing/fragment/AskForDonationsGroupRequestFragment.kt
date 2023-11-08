@@ -16,6 +16,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.repositories.group.response.GroupListData
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupsYourGroupBinding
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
@@ -132,15 +133,17 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
     }
 
     override fun onItemClicked(data: GroupListData) {
-
         //TODO
     }
-
+    override fun onRemoveButtonClicked(data: GroupListData) {
+        TODO("Not yet implemented")
+    }
     private fun setupAdapter() = binding.run {
         orgAdapter = GroupsYourGroupAdapter(
             requireActivity(),
             this@AskForDonationsGroupRequestFragment,
-            shouldShowCheckbox = true
+            shouldShowCheckbox = !viewModel.shouldShowRemoveButton,
+            shouldShowRemoveTextButton = viewModel.shouldShowRemoveButton
         )
         orgSwipeRefreshLayout.setOnRefreshListener { orgSwipeRefreshLayout.isRefreshing = false }
         linearLayoutManager = LinearLayoutManager(context)

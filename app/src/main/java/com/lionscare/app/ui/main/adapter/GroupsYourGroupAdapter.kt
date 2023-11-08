@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupListData
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
 import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
 import com.lionscare.app.utils.loadGroupAvatar
@@ -16,7 +17,8 @@ import com.lionscare.app.utils.loadGroupAvatar
 class GroupsYourGroupAdapter(
     val context: Context,
     val clickListener: GroupCallback,
-    val shouldShowCheckbox: Boolean = false
+    val shouldShowCheckbox: Boolean = false,
+    val shouldShowRemoveTextButton: Boolean = false,
 ) :
     PagingDataAdapter<GroupListData, GroupsYourGroupAdapter.AdapterViewHolder>(
         DIFF_CALLBACK
@@ -58,6 +60,7 @@ class GroupsYourGroupAdapter(
         fun bind(data: GroupListData?, position: Int) {
             data?.let {
                 binding.checkBox.isVisible = shouldShowCheckbox
+                binding.removeTextButton.isVisible = shouldShowRemoveTextButton
                 binding.checkBox.isChecked =
                     customGroupListDataModel?.get(position)?.isChecked == true //if should show checkbox
                 binding.titleTextView.text = data.name
@@ -81,6 +84,9 @@ class GroupsYourGroupAdapter(
                 binding.adapterLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)
                 }
+                binding.removeTextButton.setOnClickListener {
+                    clickListener.onRemoveButtonClicked(data)
+                }
 
                 //to get which data is checked or not
                 customGroupListDataModel?.add(
@@ -98,6 +104,7 @@ class GroupsYourGroupAdapter(
         return customGroupListDataModel
     }
 
+    //get cahced result from viewmodel
     fun setCustomData(data: MutableList<CustomGroupListDataModel>) {
         customGroupListDataModel = data
     }
@@ -108,6 +115,8 @@ class GroupsYourGroupAdapter(
 
     interface GroupCallback {
         fun onItemClicked(data: GroupListData)
+        fun onRemoveButtonClicked(data: GroupListData)
+
     }
 
     fun filterData(query: String?) {
