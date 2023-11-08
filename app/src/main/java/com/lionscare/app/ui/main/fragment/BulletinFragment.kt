@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.databinding.FragmentBulletinBinding
@@ -60,6 +62,8 @@ class BulletinFragment : Fragment() {
                 publicRequestsTextView.visibility = View.VISIBLE
                 askedForDonationsView.visibility = View.GONE
                 askedForDonationsTextView.visibility = View.GONE
+
+                viewAllTextView.isVisible = true
             }
 
             askedForDonationsRelativeLayout -> {
@@ -67,6 +71,8 @@ class BulletinFragment : Fragment() {
                 publicRequestsTextView.visibility = View.GONE
                 askedForDonationsView.visibility = View.VISIBLE
                 askedForDonationsTextView.visibility = View.VISIBLE
+
+                viewAllTextView.isGone = true
             }
 
             else -> Unit
