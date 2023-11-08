@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.lionscare.app.databinding.FragmentAskForDonationsBinding
 import com.lionscare.app.databinding.FragmentBillingMainDetailsBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
@@ -51,7 +52,7 @@ class AskForDonationsFragment: Fragment()  {
 
     private fun setOnClickListeners() = binding.run {
         askInGroupRequestLinearLayout.setOnSingleClickListener {
-        //todo
+         findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsGroupRequestFragment())
         }
         askInCustomRequestLinearLayout.setOnSingleClickListener {
         //todo

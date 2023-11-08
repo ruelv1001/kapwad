@@ -3,19 +3,27 @@ package com.lionscare.app.ui.main.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
-import com.lionscare.app.utils.loadAvatar
+import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
 import com.lionscare.app.utils.loadGroupAvatar
 
-class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCallback) :
+class GroupsYourGroupAdapter(
+    val context: Context,
+    val clickListener: GroupCallback,
+    val shouldShowCheckBox: Boolean = false
+) :
     PagingDataAdapter<GroupListData, GroupsYourGroupAdapter.AdapterViewHolder>(
         DIFF_CALLBACK
     ) {
+
+    var customGroupListDataModel: MutableList<CustomGroupListDataModel>? = null
+        private set
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<GroupListData>() {
@@ -23,7 +31,10 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: GroupListData, newItem: GroupListData): Boolean {
+            override fun areContentsTheSame(
+                oldItem: GroupListData,
+                newItem: GroupListData
+            ): Boolean {
                 return oldItem == newItem
             }
         }
@@ -44,15 +55,16 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
     inner class AdapterViewHolder(val binding: AdapterGroupYourGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: GroupListData?){
+        fun bind(data: GroupListData?) {
             data?.let {
+                binding.checkBox.isVisible = shouldShowCheckBox //if should show checkbox
                 binding.titleTextView.text = data.name
-                  binding.membersTextView.text = context.resources.getQuantityString(
-                      R.plurals.member_plural, //plural from strings.xml file
-                      data.member_count?: 0, //quantity
-                      data.member_count?: 0 //var arg
-                  )
-                  binding.referenceTextView.text = data.qrcode
+                binding.membersTextView.text = context.resources.getQuantityString(
+                    R.plurals.member_plural, //plural from strings.xml file
+                    data.member_count ?: 0, //quantity
+                    data.member_count ?: 0 //var arg
+                )
+                binding.referenceTextView.text = data.qrcode
                 binding.imageView.loadGroupAvatar(data.avatar?.thumb_path)
 
                 /*if (data.type.equals("FAM")){
@@ -67,15 +79,28 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
                 binding.adapterLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)
                 }
+
+                //to get which data is checked or not
+                customGroupListDataModel?.add(
+                    CustomGroupListDataModel(
+                        groupData = data,
+                        isChecked = binding.checkBox.isChecked
+                    )
+                )
+
             }
         }
     }
 
-    fun hasData() : Boolean{
+    fun getCustomData(): List<CustomGroupListDataModel>? {
+        return customGroupListDataModel
+    }
+
+    fun hasData(): Boolean {
         return itemCount != 0
     }
 
-    interface GroupCallback{
+    interface GroupCallback {
         fun onItemClicked(data: GroupListData)
     }
 
@@ -84,7 +109,7 @@ class GroupsYourGroupAdapter (val context: Context, val clickListener: GroupCall
             data.group_name?.contains(query ?: "", ignoreCase = true) == true ||
                     data.group_privacy?.contains(query ?: "", ignoreCase = true) == true
         }*/
-       // appendData(filteredList)
+        // appendData(filteredList)
         notifyDataSetChanged()
         //adapter.submitData(lifecycle, PagingData.from(filteredList))
     }

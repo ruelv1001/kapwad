@@ -437,6 +437,7 @@
     <string name="share_this_billing_statement_to_public_bulletin">Share this billing statement to public bulletin.</string>
     <string name="group_request">Group Request</string>
     <string name="custom_request">Custom Request</string>
+    <string name="send_request">Send Request</string>
 
 
 </resources>

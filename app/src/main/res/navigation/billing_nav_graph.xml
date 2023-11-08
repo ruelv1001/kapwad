@@ -21,5 +21,16 @@
         tools:layout="@layout/fragment_ask_for_donations"
         android:id="@+id/askForDonationsFragment"
         android:name="com.lionscare.app.ui.billing.fragment.AskForDonationsFragment"
-        android:label="AskForDonationsFragment" />
+        android:label="AskForDonationsFragment" >
+        <action
+            android:id="@+id/action_askForDonationsFragment_to_askForDonationsGroupRequestFragment"
+            app:destination="@id/askForDonationsGroupRequestFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/askForDonationsFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_groups_your_group"
+        android:id="@+id/askForDonationsGroupRequestFragment"
+        android:name="com.lionscare.app.ui.billing.fragment.AskForDonationsGroupRequestFragment"
+        android:label="AskForDonationsGroupRequestFragment" />
 </navigation>
