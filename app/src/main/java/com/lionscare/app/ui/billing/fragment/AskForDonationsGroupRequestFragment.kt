@@ -130,13 +130,14 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
             //TODO
         }
 
+        orgAdapter?.setOnRemoveButtonClicked {
+            TODO()
+        }
+
     }
 
     override fun onItemClicked(data: GroupListData) {
         //TODO
-    }
-    override fun onRemoveButtonClicked(data: GroupListData) {
-        TODO("Not yet implemented")
     }
     private fun setupAdapter() = binding.run {
         orgAdapter = GroupsYourGroupAdapter(

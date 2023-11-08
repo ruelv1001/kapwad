@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterMembersBinding
 import com.lionscare.app.ui.billing.viewstate.CustomMemberListDataModel
@@ -95,7 +96,7 @@ class GroupMembersAdapter(
                     }
                 }
                 binding.removeTextButton.setOnClickListener {
-                    clickListener.onRemoveButtonClicked(data)
+                    onRemoveButtonClicked?.let { it(data) }
                 }
                 //to get which data is checked or not
                 customMemberListDataModel?.add(
@@ -118,9 +119,12 @@ class GroupMembersAdapter(
 
     interface MembersCallback {
         fun onItemClicked(data: MemberListData)
-        fun onRemoveButtonClicked(data: MemberListData)
     }
 
+    private var onRemoveButtonClicked: ((MemberListData) -> Unit)? = null
+    fun setOnRemoveButtonClicked(listener : (MemberListData)-> Unit){
+        onRemoveButtonClicked = listener
+    }
     fun hasData(): Boolean {
         return itemCount != 0
     }

@@ -96,13 +96,13 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
             CommonLogger.instance.sysLogI("Custom Member List", peopleWithChecked)
             //TODO
         }
+
+        adapter?.setOnRemoveButtonClicked {
+            TODO()
+        }
     }
     override fun onItemClicked(data: MemberListData) {
         //todo
-    }
-
-    override fun onRemoveButtonClicked(data: MemberListData) {
-        TODO("Not yet implemented")
     }
 
     private fun handleViewState(viewState: MemberViewState) {

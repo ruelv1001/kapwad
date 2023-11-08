@@ -85,9 +85,8 @@ class GroupsYourGroupAdapter(
                     clickListener.onItemClicked(data)
                 }
                 binding.removeTextButton.setOnClickListener {
-                    clickListener.onRemoveButtonClicked(data)
+                    onRemoveButtonClicked?.let { it(data) }
                 }
-
                 //to get which data is checked or not
                 customGroupListDataModel?.add(
                     CustomGroupListDataModel(
@@ -115,8 +114,11 @@ class GroupsYourGroupAdapter(
 
     interface GroupCallback {
         fun onItemClicked(data: GroupListData)
-        fun onRemoveButtonClicked(data: GroupListData)
+    }
 
+    private var onRemoveButtonClicked: ((GroupListData) -> Unit)? = null
+    fun setOnRemoveButtonClicked(listener : (GroupListData)-> Unit){
+        onRemoveButtonClicked = listener
     }
 
     fun filterData(query: String?) {
