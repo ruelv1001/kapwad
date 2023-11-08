@@ -52,16 +52,20 @@ class AskForDonationsFragment: Fragment()  {
 
     private fun setOnClickListeners() = binding.run {
         askInGroupRequestLinearLayout.setOnSingleClickListener {
+            viewModel.shouldShowRemoveButton = false
          findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsGroupRequestFragment())
         }
         askInCustomRequestLinearLayout.setOnSingleClickListener {
+            viewModel.shouldShowRemoveButton = false
          findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsCustomRequestFragment())
         }
         listOfGroupRequestLinearLayout.setOnSingleClickListener {
-        //todo
+            viewModel.shouldShowRemoveButton = true
+            findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsGroupRequestFragment())
         }
         listOfPeopleCustomRequestLinearLayout.setOnSingleClickListener {
-        //todo
+            viewModel.shouldShowRemoveButton = true
+            findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsCustomRequestFragment())
         }
         continueButton.setOnSingleClickListener {
             //todo

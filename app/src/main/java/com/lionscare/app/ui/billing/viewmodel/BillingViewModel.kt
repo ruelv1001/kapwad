@@ -49,6 +49,9 @@ class BillingViewModel @Inject constructor(
     val memberSharedFlow: SharedFlow<MemberViewState> =
         _memberSharedFlow.asSharedFlow()
 
+    //==================== For donations request groupos and people custom =======
+    var shouldShowRemoveButton = false // for donations request list
+
     //=================== For ask for donations group request and custom request
     var immediateFamilyId = ""
     var billingStatementNumber = "Billing Statement B-0000004"

@@ -64,21 +64,21 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
         sampleData.add(
             MemberListData(
                 date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
-                user = User(id = "1", name = "Von Denuelle Tandoc"),
+                user = User(id = "1", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
                 id = 1
             )
         )
         sampleData.add(
             MemberListData(
                 date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
-                user = User(id = "2", name = "Von Denuelle Tandoc"),
+                user = User(id = "2", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
                 id =2
             )
         )
         sampleData.add(
             MemberListData(
                 date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
-                user = User(id = "3", name = "Von Denuelle Tandoc"),
+                user = User(id = "3", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
                 id =3
             )
         )
@@ -95,6 +95,10 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
                 ?.filter{ it.isChecked }
             CommonLogger.instance.sysLogI("Custom Member List", peopleWithChecked)
             //TODO
+        }
+
+        adapter?.setOnRemoveButtonClicked {
+            TODO()
         }
     }
     override fun onItemClicked(data: MemberListData) {
@@ -125,7 +129,8 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
         adapter = GroupMembersAdapter(
             requireActivity(),
             this@AskForDonationsCustomRequestFragment,
-            shouldShowCheckbox = true
+            shouldShowCheckbox = !viewModel.shouldShowRemoveButton,
+            shouldShowRemoveTextButton = viewModel.shouldShowRemoveButton
         )
         swipeRefreshLayout.setOnRefreshListener { swipeRefreshLayout.isRefreshing = false }
         linearLayoutManager = LinearLayoutManager(context)
