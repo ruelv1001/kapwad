@@ -441,6 +441,8 @@
     <string name="menu_bulletin_title">Bulletin</string>
     <string name="lbl_public_requests">Public Requests</string>
     <string name="lbl_asked_for_donations">Asked for Donations</string>
+    <string name="lbl_amount_due_text">Amount Due:</string>
+    <string name="lbl_donated_amount_text">Donated Amount:</string>
 
 
 </resources>

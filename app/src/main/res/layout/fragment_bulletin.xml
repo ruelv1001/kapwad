@@ -127,6 +127,18 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/viewAllTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:layout_marginVertical="@dimen/dimen_20"
+        android:text="@string/view_all"
+        android:layout_gravity="center"
+        android:textColor="@color/color_primary"
+        android:textSize="@dimen/font_16"/>
 
 </LinearLayout>
