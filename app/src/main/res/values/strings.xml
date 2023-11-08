@@ -443,6 +443,10 @@
     <string name="lbl_asked_for_donations">Asked for Donations</string>
     <string name="lbl_amount_due_text">Amount Due:</string>
     <string name="lbl_donated_amount_text">Donated Amount:</string>
+    <string name="lbl_wallet_balance">Wallet Balance:</string>
+    <string name="lbl_send_as_anonymous">Send as Anonymous</string>
+    <string name="send_as_anonymous">Your account name will be replaced by \'anonymous\' on the list of donators.</string>
+    <string name="lbl_send">Send</string>
     <string name="remove">Remove</string>
 
 
