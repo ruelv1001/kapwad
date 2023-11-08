@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/dimen_20"
@@ -17,6 +19,54 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/searchLinearLayout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/searchTextInputLayout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_55"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="@string/lbl_search_group"
+                    app:boxBackgroundColor="@color/light_gray_line"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/searchEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_search"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:fontFamily="@font/inter_medium"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_14" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/applyTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/search_user_apply_btn"
+                    android:textSize="@dimen/font_14"
+                    android:visibility="gone"
+                    android:textColor="@color/color_primary"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:paddingHorizontal="@dimen/dimen_16"
+                    android:gravity="center" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,12 +139,14 @@
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/orgShimmerLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/dimen_4"
                 android:layout_gravity="center">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <include layout="@layout/item_shimmer_content" />
@@ -112,7 +164,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/organizationRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:visibility="gone" />
 
@@ -121,11 +174,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_4"
                 android:gravity="center"
                 android:text="@string/lbl_nothing_to_show_txt"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/font_14"
                 android:visibility="gone" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/noteSendRequestText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/font_14"
+                android:textStyle="italic"
+                android:layout_marginVertical="@dimen/dimen_4"
+                tools:text="Note: This Billing Statement B-000004 will be posted in the Request for Donations section of your selected groups" />
+
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/sendRequestButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20"
+                android:layout_marginBottom="@dimen/dimen_8"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/send_request"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14"
+              />
 
         </LinearLayout>
 

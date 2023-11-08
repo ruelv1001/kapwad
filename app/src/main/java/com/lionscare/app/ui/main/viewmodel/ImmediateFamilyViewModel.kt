@@ -29,7 +29,6 @@ class ImmediateFamilyViewModel  @Inject constructor(private val groupRepository:
     ViewModel() {
 
     private val _getGroupSharedFlow = MutableSharedFlow<ImmediateFamilyViewState>()
-
     val immediateFamilySharedFlow: SharedFlow<ImmediateFamilyViewState> =
         _getGroupSharedFlow.asSharedFlow()
 
