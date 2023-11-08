@@ -438,6 +438,9 @@
     <string name="group_request">Group Request</string>
     <string name="custom_request">Custom Request</string>
     <string name="send_request">Send Request</string>
+    <string name="menu_bulletin_title">Bulletin</string>
+    <string name="lbl_public_requests">Public Requests</string>
+    <string name="lbl_asked_for_donations">Asked for Donations</string>
 
 
 </resources>
