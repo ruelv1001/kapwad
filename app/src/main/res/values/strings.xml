@@ -443,6 +443,7 @@
     <string name="lbl_asked_for_donations">Asked for Donations</string>
     <string name="lbl_amount_due_text">Amount Due:</string>
     <string name="lbl_donated_amount_text">Donated Amount:</string>
+    <string name="remove">Remove</string>
 
 
 </resources>

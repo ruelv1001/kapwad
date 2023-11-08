@@ -20,7 +20,8 @@ class GroupMembersAdapter(
     val clickListener: MembersCallback,
     val id: String? = null,
     val isInMemberList: Boolean? = true,
-    val shouldShowCheckbox: Boolean = false
+    val shouldShowCheckbox: Boolean = false,
+    val shouldShowRemoveTextButton: Boolean = false,
 ) :
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
@@ -63,7 +64,7 @@ class GroupMembersAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(data: MemberListData?, position: Int) {
             data?.let {
-                CommonLogger.sysLog("CLICKED", data)
+                binding.removeTextButton.isVisible = shouldShowRemoveTextButton
                 binding.checkBox.isVisible = shouldShowCheckbox
                 binding.checkBox.isChecked =
                     customMemberListDataModel?.get(position)?.isChecked == true //if should show checkbox
@@ -93,7 +94,9 @@ class GroupMembersAdapter(
                         clickListener.onItemClicked(data)
                     }
                 }
-
+                binding.removeTextButton.setOnClickListener {
+                    clickListener.onRemoveButtonClicked(data)
+                }
                 //to get which data is checked or not
                 customMemberListDataModel?.add(
                     CustomMemberListDataModel(
@@ -115,6 +118,7 @@ class GroupMembersAdapter(
 
     interface MembersCallback {
         fun onItemClicked(data: MemberListData)
+        fun onRemoveButtonClicked(data: MemberListData)
     }
 
     fun hasData(): Boolean {
