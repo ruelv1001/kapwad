@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
-import com.emrekotun.toast.CpmToast
-import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogOptionDonateBinding
@@ -50,6 +49,10 @@ class OptionDonateDialog : BottomSheetDialogFragment() {
         amountEditText.setAmountFormat()
         personalWalletTextView.text = personalWallet
         groupWalletTextView.text = groupWallet
+        amountEditText.doOnTextChanged {
+                text, start, before, count ->
+            amountInputLayout.error = ""
+        }
     }
 
     private fun setClickListener() = viewBinding?.run  {
@@ -59,14 +62,14 @@ class OptionDonateDialog : BottomSheetDialogFragment() {
                     callback?.onSend(amountEditText.text.toString())
                     dismiss()
                 }else{
-                    requireActivity().toastError("Amount must not be greater than your balance", CpmToast.LONG_DURATION)
+                    amountInputLayout.error = "Amount must not be greater than your balance"
                 }
             }else{
                 if(amountEditText.text.toString().toDouble() > groupWallet.toDouble()){
                     callback?.onSend(amountEditText.text.toString())
                     dismiss()
                 }else{
-                    requireActivity().toastError("Amount must not be greater than your balance", CpmToast.LONG_DURATION)
+                    amountInputLayout.error = "Amount must not be greater than your balance"
                 }
             }
         }
