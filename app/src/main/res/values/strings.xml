@@ -447,6 +447,7 @@
     <string name="lbl_send_as_anonymous">Send as Anonymous</string>
     <string name="send_as_anonymous">Your account name will be replaced by \'anonymous\' on the list of donators.</string>
     <string name="lbl_send">Send</string>
+    <string name="remove">Remove</string>
 
 
 </resources>

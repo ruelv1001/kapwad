@@ -16,6 +16,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.repositories.group.response.GroupListData
+import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.FragmentGroupsYourGroupBinding
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
@@ -120,7 +121,7 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
                     "of your selected groups"
     }
 
-    private fun setOnClickListeners() = binding.run {
+    private fun setOnClickListeners() =  binding.run {
         sendRequestButton.setOnSingleClickListener {
             //get groups data where it is checked
             val groupsWithChecked = orgAdapter?.getCustomData()
@@ -129,18 +130,21 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
             //TODO
         }
 
+        orgAdapter?.setOnRemoveButtonClicked {
+            TODO()
+        }
+
     }
 
     override fun onItemClicked(data: GroupListData) {
-
         //TODO
     }
-
     private fun setupAdapter() = binding.run {
         orgAdapter = GroupsYourGroupAdapter(
             requireActivity(),
             this@AskForDonationsGroupRequestFragment,
-            shouldShowCheckbox = true
+            shouldShowCheckbox = !viewModel.shouldShowRemoveButton,
+            shouldShowRemoveTextButton = viewModel.shouldShowRemoveButton
         )
         orgSwipeRefreshLayout.setOnRefreshListener { orgSwipeRefreshLayout.isRefreshing = false }
         linearLayoutManager = LinearLayoutManager(context)
