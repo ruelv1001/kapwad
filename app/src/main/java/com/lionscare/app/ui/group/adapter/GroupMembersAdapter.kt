@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterMembersBinding
+import com.lionscare.app.ui.billing.viewstate.CustomMemberListDataModel
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.loadAvatar
 
@@ -18,11 +19,14 @@ class GroupMembersAdapter(
     val context: Context,
     val clickListener: MembersCallback,
     val id: String? = null,
-    val isInMemberList: Boolean? = true
+    val isInMemberList: Boolean? = true,
+    val shouldShowCheckbox: Boolean = false
 ) :
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {
+    var customMemberListDataModel: MutableList<CustomMemberListDataModel>? = null
+        private set
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MemberListData>() {
@@ -50,15 +54,19 @@ class GroupMembersAdapter(
 
     override fun onBindViewHolder(holder: MembersViewHolder, position: Int) {
         val article = getItem(position)
-        holder.bind(article)
+        holder.bind(article, position)
     }
 
     inner class MembersViewHolder(private val binding: AdapterMembersBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: MemberListData?) {
+        fun bind(data: MemberListData?, position: Int) {
             data?.let {
+                CommonLogger.sysLog("CLICKED", data)
+                binding.checkBox.isVisible = shouldShowCheckbox
+                binding.checkBox.isChecked =
+                    customMemberListDataModel?.get(position)?.isChecked == true //if should show checkbox
 
                 CommonLogger.sysLog("CLICKED", data.id)
                 if (id == data.user?.id) {
@@ -86,8 +94,23 @@ class GroupMembersAdapter(
                     }
                 }
 
+                //to get which data is checked or not
+                customMemberListDataModel?.add(
+                    CustomMemberListDataModel(
+                        memberListData = data,
+                        isChecked = binding.checkBox.isChecked
+                    )
+                )
+
             }
         }
+    }
+
+    fun getCustomData(): List<CustomMemberListDataModel>? {
+        return customMemberListDataModel
+    }
+    fun setCustomData(data: MutableList<CustomMemberListDataModel>) {
+        customMemberListDataModel = data
     }
 
     interface MembersCallback {

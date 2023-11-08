@@ -9,6 +9,7 @@ import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
+import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
 import com.lionscare.app.utils.AppConstant
@@ -43,6 +44,10 @@ class BillingViewModel @Inject constructor(
     private val _getGroupSharedFlow = MutableSharedFlow<GroupListViewState>()
     val getGroupSharedFlow: SharedFlow<GroupListViewState> =
         _getGroupSharedFlow.asSharedFlow()
+
+    private val _memberSharedFlow = MutableSharedFlow<MemberViewState>()
+    val memberSharedFlow: SharedFlow<MemberViewState> =
+        _memberSharedFlow.asSharedFlow()
 
     //=================== For ask for donations group request and custom request
     var immediateFamilyId = ""

@@ -27,10 +27,20 @@
             app:destination="@id/askForDonationsGroupRequestFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/askForDonationsFragment" />
+        <action
+            android:id="@+id/action_askForDonationsFragment_to_askForDonationsCustomRequestFragment"
+            app:destination="@id/askForDonationsCustomRequestFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/askForDonationsFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_groups_your_group"
         android:id="@+id/askForDonationsGroupRequestFragment"
         android:name="com.lionscare.app.ui.billing.fragment.AskForDonationsGroupRequestFragment"
         android:label="AskForDonationsGroupRequestFragment" />
+    <fragment
+        tools:layout="@layout/fragment_ask_for_donations_custom_request"
+        android:id="@+id/askForDonationsCustomRequestFragment"
+        android:name="com.lionscare.app.ui.billing.fragment.AskForDonationsCustomRequestFragment"
+        android:label="AskForDonationsCustomRequestFragment" />
 </navigation>
