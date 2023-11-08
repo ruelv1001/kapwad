@@ -121,7 +121,7 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
                     "of your selected groups"
     }
 
-    private fun setOnClickListeners() = binding.run {
+    private fun setOnClickListeners() =  binding.run {
         sendRequestButton.setOnSingleClickListener {
             //get groups data where it is checked
             val groupsWithChecked = orgAdapter?.getCustomData()
