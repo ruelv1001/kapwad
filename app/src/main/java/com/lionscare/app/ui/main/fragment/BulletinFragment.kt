@@ -62,7 +62,6 @@ class BulletinFragment : Fragment() {
                 publicRequestsTextView.visibility = View.VISIBLE
                 askedForDonationsView.visibility = View.GONE
                 askedForDonationsTextView.visibility = View.GONE
-
                 viewAllTextView.isVisible = true
             }
 

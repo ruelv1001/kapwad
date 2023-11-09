@@ -58,34 +58,8 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
         observeMemberList()
         setOnClickListeners()
         setupAdapter()
+        setContentViews()
 
-        //TODO change api
-        val sampleData = mutableListOf<MemberListData>()
-        sampleData.add(
-            MemberListData(
-                date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
-                user = User(id = "1", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
-                id = 1
-            )
-        )
-        sampleData.add(
-            MemberListData(
-                date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
-                user = User(id = "2", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
-                id =2
-            )
-        )
-        sampleData.add(
-            MemberListData(
-                date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
-                user = User(id = "3", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
-                id =3
-            )
-        )
-
-        val samplePagingData: PagingData<MemberListData> = PagingData.from(sampleData)
-        showList(samplePagingData)
-        binding.noteSendRequestText.text = "Note: This ${viewModel.billingStatementNumber} will be available in their Asked for Donations Bulletin Board"
     }
 
     private fun setOnClickListeners() = binding.run {
@@ -121,6 +95,45 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
         }
     }
 
+    private fun setContentViews(){
+        if(viewModel.shouldShowRemoveButton){
+            binding.noteSendRequestText.isVisible = false
+            binding.sendRequestButton.isVisible = false
+            binding.searchTextInputLayout.isVisible = false
+        }else{
+            binding.noteSendRequestText.isVisible = true
+            binding.sendRequestButton.isVisible = true
+            binding.searchTextInputLayout.isVisible = true
+        }
+
+        //TODO change api
+        val sampleData = mutableListOf<MemberListData>()
+        sampleData.add(
+            MemberListData(
+                date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
+                user = User(id = "1", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
+                id = 1
+            )
+        )
+        sampleData.add(
+            MemberListData(
+                date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
+                user = User(id = "2", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
+                id =2
+            )
+        )
+        sampleData.add(
+            MemberListData(
+                date_joined = DateModel("11/23/2023","11/23/2023","11/23/2023","11/23/2023","11/23/2023"),
+                user = User(id = "3", name = "Von Denuelle Tandoc", qrcode = "876545679872"),
+                id =3
+            )
+        )
+
+        val samplePagingData: PagingData<MemberListData> = PagingData.from(sampleData)
+        showList(samplePagingData)
+        binding.noteSendRequestText.text = "Note: This ${viewModel.billingStatementNumber} will be available in their Asked for Donations Bulletin Board"
+    }
     private fun showList(memberListData: PagingData<MemberListData>){
         binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(viewLifecycleOwner.lifecycle, memberListData)
