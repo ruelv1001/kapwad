@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_margin="@dimen/dimen_10"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/totalDonatedAmountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="30,000.00" />
+
+        <TextView
+            android:id="@+id/totalDonatedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:text="@string/total_donated"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintEnd_toEndOf="@+id/totalDonatedAmountText"
+            app:layout_constraintStart_toStartOf="@+id/totalDonatedAmountText"
+            app:layout_constraintTop_toBottomOf="@+id/totalDonatedAmountText" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/dimen_6"
+            android:layout_marginTop="@dimen/dimen_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalDonatedText">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/skeletonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/include_donator_list_skeleton" />
+                    <include layout="@layout/include_donator_list_skeleton" />
+                    <include layout="@layout/include_donator_list_skeleton" />
+                    <include layout="@layout/include_donator_list_skeleton" />
+                    <include layout="@layout/include_donator_list_skeleton" />
+                    <include layout="@layout/include_donator_list_skeleton" />
+                    <include layout="@layout/include_donator_list_skeleton" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/donatorsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:itemCount="6"
+                tools:listitem="@layout/adapter_billing_donators" />
+
+            <TextView
+                android:id="@+id/placeHolderTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:gravity="center"
+                android:text="@string/lbl_nothing_to_show_txt"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/font_16"
+                android:visibility="gone" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

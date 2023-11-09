@@ -16,6 +16,11 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/billingMainDetailsFragment"
       />
+        <action
+            android:id="@+id/action_billingMainDetailsFragment_to_allDonatorsFragment"
+            app:destination="@id/allDonatorsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/billingMainDetailsFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_ask_for_donations"
@@ -43,4 +48,9 @@
         android:id="@+id/askForDonationsCustomRequestFragment"
         android:name="com.lionscare.app.ui.billing.fragment.AskForDonationsCustomRequestFragment"
         android:label="AskForDonationsCustomRequestFragment" />
+    <fragment
+        tools:layout="@layout/fragment_all_donators"
+        android:id="@+id/allDonatorsFragment"
+        android:name="com.lionscare.app.ui.billing.fragment.AllDonatorsFragment"
+        android:label="AllDonatorsFragment" />
 </navigation>
