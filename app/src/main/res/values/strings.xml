@@ -451,6 +451,7 @@
     <string name="lbl_personal_wallet">Personal Wallet</string>
     <string name="ongoing">Ongoing</string>
     <string name="completed">Completed</string>
+    <string name="lbl_all_requests_title">All Requests</string>
 
 
 </resources>
