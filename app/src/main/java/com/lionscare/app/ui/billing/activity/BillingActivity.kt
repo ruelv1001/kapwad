@@ -5,9 +5,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.lionscare.app.BillingNavGraphDirections
 import com.lionscare.app.R
 import com.lionscare.app.databinding.ActivityBillingBinding
 import com.lionscare.app.databinding.ActivityProfileBinding
@@ -37,9 +41,20 @@ class BillingActivity : AppCompatActivity() {
         binding.backImageView.setOnSingleClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+        binding.scanQrImageView.setOnSingleClickListener {
+            findNavController(R.id.billingNavFragmentContainerView).navigate(BillingNavGraphDirections.actionGlobalScanBillingStatementFragment())
+        }
     }
     fun setToolbarTitle(title: String) = binding.run {
         titleTextView.text = title
+    }
+    fun getToolbarTitle() : String = binding.run {
+       return titleTextView.text.toString()
+    }
+    fun toggleToolbar(value : Boolean, color: Int, text : String){
+        binding.customToolbar.setBackgroundColor(ContextCompat.getColor(this, color))
+        binding.scanQrImageView.isVisible = value
+        binding.titleTextView.text = text
     }
     private fun setupNavigationComponent() {
         binding.run {

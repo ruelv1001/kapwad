@@ -14,6 +14,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.databinding.FragmentCompletedBillingStatementsBinding
+import com.lionscare.app.ui.billing.activity.BillingActivity
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.bulletin.adapter.BillAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +49,8 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
     private fun setOnClickListeners() = binding.run {
     }
     override fun onItemClicked(data: SampleData) {
-        //todo
+        val intent = BillingActivity.getIntent(requireActivity())
+        startActivity(intent)
     }
     private fun handleViewState(viewState: BillingViewState) {
         when (viewState) {

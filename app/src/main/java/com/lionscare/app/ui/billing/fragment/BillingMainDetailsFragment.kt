@@ -22,10 +22,11 @@ import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.billing.response.DonatorData
 import com.lionscare.app.databinding.FragmentBillingMainDetailsBinding
-import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
 import com.lionscare.app.ui.billing.activity.MyBillingStatementsActivity
 import com.lionscare.app.ui.billing.adapter.BillingDonatorsAdapter
+import com.lionscare.app.ui.billing.dialog.DonateDialog
+import com.lionscare.app.ui.billing.dialog.OptionDonateDialog
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.utils.setOnSingleClickListener
@@ -34,7 +35,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BillingMainDetailsFragment : Fragment() {
-    private var _binding: FragmentBillingMainDetailsBinding? = null
+    private var _binding: FragmentBillingMainDetailsBinding ? = null
     private val binding get() = _binding!!
     private val viewModel: BillingViewModel by activityViewModels()
 
@@ -69,6 +70,24 @@ class BillingMainDetailsFragment : Fragment() {
             findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAskForDonationsFragment())
         }
 
+        donateButton.setOnSingleClickListener {
+            if(viewModel.isRequestFromGroups){
+                OptionDonateDialog.newInstance(callback = object : OptionDonateDialog.OptionDonateAmountCallback {
+                    override fun onSend(amount: String) {
+                        //TODO
+                    }
+                }, personalWallet = "40000", groupWallet = "30000")
+                    .show(childFragmentManager, OptionDonateDialog.TAG)
+            }else{
+                DonateDialog.newInstance(callback = object : DonateDialog.DonateAmountCallback {
+                    override fun onSend(amount: String, isAnonymous: Boolean) {
+                        //TODO
+                    }
+                }, walletBalance = "40000")
+                    .show(childFragmentManager, DonateDialog.TAG)
+            }
+
+        }
         viewAllTextButton.setOnSingleClickListener {
             findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAllDonatorsFragment())
         }
@@ -131,23 +150,25 @@ class BillingMainDetailsFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun handleButtonStatus(data : String = "completed"){
-        when(data){
-            "completed" ->{
+    private fun handleButtonStatus(data: String = "ongoing") {
+        when (data) {
+            "completed" -> {
                 binding.donateButton.text = "Completed"
                 val color = ContextCompat.getColor(requireContext(), R.color.color_primary)
                 val colorStateList = ColorStateList.valueOf(color)
                 binding.donateButton.backgroundTintList = colorStateList
                 binding.donateButton.isEnabled = false
             }
-            "ongoing" ->{
+
+            "ongoing" -> {
                 binding.donateButton.text = "Donate"
                 val color = ContextCompat.getColor(requireContext(), R.color.color_primary)
                 val colorStateList = ColorStateList.valueOf(color)
                 binding.donateButton.backgroundTintList = colorStateList
                 binding.donateButton.isEnabled = true
             }
-            "cancelled" ->{
+
+            "cancelled" -> {
                 binding.donateButton.text = "Cancelled"
                 val color = ContextCompat.getColor(requireContext(), R.color.light_red)
                 val colorStateList = ColorStateList.valueOf(color)

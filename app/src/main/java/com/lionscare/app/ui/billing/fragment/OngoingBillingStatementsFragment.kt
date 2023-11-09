@@ -17,6 +17,7 @@ import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.User
 import com.lionscare.app.databinding.FragmentOngoingBillingStatementsBinding
+import com.lionscare.app.ui.billing.activity.BillingActivity
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.bulletin.adapter.BillAdapter
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
@@ -59,7 +60,8 @@ class OngoingBillingStatementsFragment : Fragment(), BillAdapter.OnClickCallback
     private fun setOnClickListeners() = binding.run {
     }
     override fun onItemClicked(data: SampleData) {
-        //todo
+        val intent = BillingActivity.getIntent(requireActivity())
+        startActivity(intent)
     }
     private fun handleViewState(viewState: BillingViewState) {
         when (viewState) {
