@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.lionscare.app.databinding.FragmentBulletinBinding
+import com.lionscare.app.ui.bulletin.activity.AllRequestBulletinActivity
 import com.lionscare.app.ui.bulletin.fragment.AskedForDonationFragment
 import com.lionscare.app.ui.bulletin.fragment.PublicRequestFragment
 import com.lionscare.app.utils.adapter.CustomViewPagerAdapter
@@ -51,6 +52,11 @@ class BulletinFragment : Fragment() {
         askedForDonationsRelativeLayout.setOnSingleClickListener {
             setActiveTab(askedForDonationsRelativeLayout)
             viewPager.currentItem = 1
+        }
+
+        viewAllTextView.setOnSingleClickListener {
+            val intent = AllRequestBulletinActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
     }
 
