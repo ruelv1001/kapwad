@@ -1,12 +1,9 @@
 package com.lionscare.app.ui.billing.fragment
 
-import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,24 +14,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.UserModel
 import com.lionscare.app.data.repositories.billing.response.DonatorData
+import com.lionscare.app.databinding.FragmentAllDonatorsBinding
 import com.lionscare.app.databinding.FragmentBillingMainDetailsBinding
-import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
 import com.lionscare.app.ui.billing.activity.MyBillingStatementsActivity
 import com.lionscare.app.ui.billing.adapter.BillingDonatorsAdapter
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.utils.setOnSingleClickListener
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class BillingMainDetailsFragment : Fragment() {
-    private var _binding: FragmentBillingMainDetailsBinding? = null
+class AllDonatorsFragment: Fragment() {
+    private var _binding: FragmentAllDonatorsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: BillingViewModel by activityViewModels()
 
@@ -42,10 +36,11 @@ class BillingMainDetailsFragment : Fragment() {
     private var linearLayoutManager: LinearLayoutManager? = null
 
     private val activity by lazy { requireActivity() as BillingActivity }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBillingMainDetailsBinding.inflate(
+        _binding = FragmentAllDonatorsBinding.inflate(
             inflater,
             container,
             false
@@ -61,27 +56,11 @@ class BillingMainDetailsFragment : Fragment() {
         //TODO API
         setupAdapter()
         setContentViews()
-
     }
 
-    private fun setOnClickListeners() = binding.run {
-        amountDueImageButton.setOnSingleClickListener {
-            findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAskForDonationsFragment())
-        }
+        private fun setOnClickListeners() = binding.run {
 
-        viewAllTextButton.setOnSingleClickListener {
-            findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAllDonatorsFragment())
         }
-
-        totalDonatedImageButton.setOnSingleClickListener {
-            findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAllDonatorsFragment())
-        }
-        billingBadge.setOnSingleClickListener {
-            //TODO remove this later on
-            val intent = MyBillingStatementsActivity.getIntent(requireActivity())
-            startActivity(intent)
-        }
-    }
 
     //TODO API
     private fun handleViewState(viewState: BillingViewState) {
@@ -92,7 +71,8 @@ class BillingMainDetailsFragment : Fragment() {
 
 
     private fun setContentViews() {
-        activity.setToolbarTitle("Billing B-000004")
+        activity.setToolbarTitle("All Donators")
+        binding.totalDonatedAmountText.text = "30,000.00"
         val sampleDonatorDataList = mutableListOf<DonatorData>()
         sampleDonatorDataList.add(
             DonatorData(
@@ -119,42 +99,6 @@ class BillingMainDetailsFragment : Fragment() {
         // Add more sample data as needed
         val samplePagingData: PagingData<DonatorData> = PagingData.from(sampleDonatorDataList)
         showList(samplePagingData)
-
-        binding.amountDueText.text = "100,000.00"
-        binding.totalDonatedText.text = "30,000.00"
-        binding.billingBadge.text = "Public"
-        binding.dateUploadedText.text = "10/12/2023"
-        binding.dueDateText.text = "10/13/2023"
-        binding.downloadableBillingText.text = "samepl file.pdf"
-
-        handleButtonStatus()
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun handleButtonStatus(data : String = "completed"){
-        when(data){
-            "completed" ->{
-                binding.donateButton.text = "Completed"
-                val color = ContextCompat.getColor(requireContext(), R.color.color_primary)
-                val colorStateList = ColorStateList.valueOf(color)
-                binding.donateButton.backgroundTintList = colorStateList
-                binding.donateButton.isEnabled = false
-            }
-            "ongoing" ->{
-                binding.donateButton.text = "Donate"
-                val color = ContextCompat.getColor(requireContext(), R.color.color_primary)
-                val colorStateList = ColorStateList.valueOf(color)
-                binding.donateButton.backgroundTintList = colorStateList
-                binding.donateButton.isEnabled = true
-            }
-            "cancelled" ->{
-                binding.donateButton.text = "Cancelled"
-                val color = ContextCompat.getColor(requireContext(), R.color.light_red)
-                val colorStateList = ColorStateList.valueOf(color)
-                binding.donateButton.backgroundTintList = colorStateList
-                binding.donateButton.isEnabled = false
-            }
-        }
     }
 
     private fun showList(donator: PagingData<DonatorData>) {
@@ -164,6 +108,7 @@ class BillingMainDetailsFragment : Fragment() {
     private fun clearList() {
         adapter?.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
     }
+
 
 
     private fun observeBillingFlow() {
@@ -214,5 +159,4 @@ class BillingMainDetailsFragment : Fragment() {
         adapter?.removeLoadStateListener { requireContext() }
         _binding = null
     }
-
 }
