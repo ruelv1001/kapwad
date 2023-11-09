@@ -1,14 +1,21 @@
 package com.lionscare.app.ui.bulletin.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.AdapterBillBinding
+import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
+import com.lionscare.app.utils.setOnSingleClickListener
 
-class BillAdapter: PagingDataAdapter<SampleData, BillAdapter.AdapterViewHolder>(
+class BillAdapter(val context: Context,
+                  val clickListener: BillAdapter.OnClickCallback): PagingDataAdapter<SampleData, BillAdapter.AdapterViewHolder>(
     BillAdapter.DIFF_CALLBACK
 )  {
     companion object {
@@ -38,6 +45,29 @@ class BillAdapter: PagingDataAdapter<SampleData, BillAdapter.AdapterViewHolder>(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SampleData?) {
             data?.let {
+                binding.adapterLinearLayout.setOnSingleClickListener {
+                    clickListener.onItemClicked(data)
+                }
+
+                when(data.remarks?.lowercase()){
+                    "completed" -> {
+                        binding.statusTextView.setTextColor(ContextCompat.getColor(context,R.color.approved))
+                    }
+                    "ongoing" -> {
+                        binding.statusTextView.setTextColor(ContextCompat.getColor(context,R.color.pending))
+                    }
+                    "cancelled" -> {
+                        binding.statusTextView.setTextColor(ContextCompat.getColor(context,R.color.declined))
+                    }
+                }
+                binding.billNumberTextView.text = data.title
+                binding.nameTextView.text = data.name
+                binding.amountDueTextView.text = data.amount
+                binding.donatedAmountTextView.text = data.amount
+                binding.dueDateTextView.text = data.date
+                binding.statusTextView.text = data.remarks
+
+
                /* binding.billNumberTextView.text = bill number
                 binding.nameTextView.text = name
                 binding.amountDueTextView.text = data.amount
@@ -55,6 +85,10 @@ class BillAdapter: PagingDataAdapter<SampleData, BillAdapter.AdapterViewHolder>(
                 */
             }
         }
+    }
+
+    interface OnClickCallback {
+        fun onItemClicked(data: SampleData)
     }
 
     fun hasData(): Boolean {

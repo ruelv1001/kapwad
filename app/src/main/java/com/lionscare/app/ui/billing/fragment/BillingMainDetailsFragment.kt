@@ -24,6 +24,7 @@ import com.lionscare.app.data.repositories.billing.response.DonatorData
 import com.lionscare.app.databinding.FragmentBillingMainDetailsBinding
 import com.lionscare.app.databinding.FragmentHomeBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
+import com.lionscare.app.ui.billing.activity.MyBillingStatementsActivity
 import com.lionscare.app.ui.billing.adapter.BillingDonatorsAdapter
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
@@ -67,6 +68,12 @@ class BillingMainDetailsFragment : Fragment() {
     private fun setOnClickListeners() = binding.run {
         amountDueImageButton.setOnSingleClickListener {
             findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAskForDonationsFragment())
+        }
+
+        billingBadge.setOnSingleClickListener {
+            //TODO remove this later on
+            val intent = MyBillingStatementsActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
     }
 

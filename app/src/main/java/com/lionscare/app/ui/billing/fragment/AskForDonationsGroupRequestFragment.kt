@@ -110,10 +110,17 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
 
     @SuppressLint("SetTextI18n")
     private fun setContentViews() = binding.run {
-        //Only show this views on this fragment
-        sendRequestButton.isVisible = true
-        noteSendRequestText.isVisible = true
-        searchLinearLayout.isVisible = true
+        if(viewModel.shouldShowRemoveButton){
+            binding.noteSendRequestText.isVisible = false
+            binding.sendRequestButton.isVisible = false
+            searchLinearLayout.isVisible = false
+        }else{
+            //Only show this views on this fragment
+            sendRequestButton.isVisible = true
+            noteSendRequestText.isVisible = true
+            searchLinearLayout.isVisible = true
+
+        }
 
         noteSendRequestText.text =
             "Note: This Billing ${viewModel.billingStatementNumber} " +

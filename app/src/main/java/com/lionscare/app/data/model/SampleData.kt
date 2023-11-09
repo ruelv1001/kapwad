@@ -5,5 +5,6 @@ data class SampleData(
     val title: String?=null,
     val amount: String?=null,
     val remarks: String?=null,
-    val date: String?=null
+    val date: String?=null,
+    val name : String? =null
 )
