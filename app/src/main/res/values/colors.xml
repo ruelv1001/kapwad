@@ -36,6 +36,7 @@
     <color name="bg_blue_text">#3173FD</color>
     <color name="blue_text">#3275FE</color>
     <color name="icon_black">#3D3F41</color>
+    <color name="tea_rose">#F0D5D5</color>
 
     <color name="pending">#D38200</color>
     <color name="approved">#1D8A5F</color>

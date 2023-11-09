@@ -175,6 +175,36 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/myBillingStatementLinearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_60"
+                            android:layout_height="@dimen/dimen_60"
+                            android:background="@drawable/bg_group_btn"
+                            android:backgroundTint="@color/tea_rose"
+                            android:padding="@dimen/dimen_15"
+                            android:backgroundTintMode="screen"
+                            android:src="@drawable/ic_receipt"
+                            app:tint="@color/red" />
+
+                        <TextView
+                            android:layout_width="215dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="@string/lbl_my_billing_statement"
+                            android:textColor="@color/black_text"
+                            android:textSize="@dimen/font_16" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/requestBadgeLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
