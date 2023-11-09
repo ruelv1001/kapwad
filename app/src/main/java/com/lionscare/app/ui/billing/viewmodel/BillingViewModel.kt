@@ -52,6 +52,8 @@ class BillingViewModel @Inject constructor(
     //==================== For donations request groupos and people custom =======
     var shouldShowRemoveButton = false // for donations request list
 
+    var isRequestFromGroups = false //if it came from groups or personal request screen
+
     //=================== For ask for donations group request and custom request
     var immediateFamilyId = ""
     var billingStatementNumber = "Billing Statement B-0000004"
