@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BillingMainDetailsFragment : Fragment() {
-    private var _binding: FragmentBillingMainDetailsBinding? = null
+    private var _binding: FragmentBillingMainDetailsBinding ? = null
     private val binding get() = _binding!!
     private val viewModel: BillingViewModel by activityViewModels()
 
