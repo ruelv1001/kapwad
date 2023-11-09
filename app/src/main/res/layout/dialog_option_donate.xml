@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_bottom_sheet"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_20"
+        android:paddingVertical="@dimen/dimen_10"
+        android:background="@color/light_gray_line"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/personalRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_personal_wallet"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/light_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/personalWalletTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="@dimen/dimen_14"
+                    android:autoSizeMinTextSize="@dimen/font_4"
+                    android:autoSizeStepGranularity="@dimen/font_1"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/inter_bold"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:gravity="center_vertical"
+                    android:text="100,000.00"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/groupRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_group_wallet"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/light_gray"/>
+
+                <TextView
+                    android:id="@+id/groupWalletTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="@dimen/dimen_14"
+                    android:autoSizeMinTextSize="@dimen/font_4"
+                    android:autoSizeStepGranularity="@dimen/font_1"
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="center_vertical"
+                    android:text="100,000.00"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:layout_marginHorizontal="@dimen/dimen_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_semibold"
+            android:maxLines="1"
+            android:text="@string/lbl_amount"
+            android:textSize="@dimen/font_14" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/amountInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:fontFamily="@font/inter_regular"
+            app:boxStrokeColor="@color/black"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/amountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/lbl_0"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sendButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dimen_20"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="@string/lbl_send"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_14" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -448,6 +448,7 @@
     <string name="send_as_anonymous">Your account name will be replaced by \'anonymous\' on the list of donators.</string>
     <string name="lbl_send">Send</string>
     <string name="remove">Remove</string>
+    <string name="lbl_personal_wallet">Personal Wallet</string>
     <string name="ongoing">Ongoing</string>
     <string name="completed">Completed</string>
 
