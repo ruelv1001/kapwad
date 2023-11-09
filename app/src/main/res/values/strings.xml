@@ -452,6 +452,8 @@
     <string name="ongoing">Ongoing</string>
     <string name="completed">Completed</string>
     <string name="lbl_all_requests_title">All Requests</string>
+    <string name="scan_qr_below">Scan QR Below</string>
+    <string name="show_this_qr_code_to_accept_donation">Show this QR code to accept donation.</string>
 
 
 </resources>

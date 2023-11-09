@@ -240,6 +240,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/dimen_12"
                         android:fontFamily="@font/inter_bold"
+                        android:padding="@dimen/dimen_8"
                         android:text="@string/view_all"
                         android:textColor="@color/color_primary"
                         android:textSize="@dimen/font_16" />
