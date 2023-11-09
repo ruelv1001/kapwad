@@ -111,7 +111,7 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
         titleTextView.text = data.name
         referenceTextView.text = data.qrcode
         membersTextView.text = data.member_count.toString()
-        adminTextView.text = data.admin_only_count.toString()
+       // adminTextView.text = data.admin_only_count.toString()
         assistanceTextView.text = data.request_assistance_count.toString()
         qrLayout.qrImageView.setImageBitmap(setQR(this@GroupDetailsActivity, data.qrcode_value))
         qrLayout.idNoTextView.text = data.code
@@ -141,8 +141,10 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
             startActivity(intent)
         }
         adminLinearLayout.setOnSingleClickListener {
-            val intent =
+           /* val intent =
                 GroupActivity.getIntent(this@GroupDetailsActivity, START_ADMIN, groupDetails)
+            startActivity(intent)*/
+            val intent = RequestForDonationActivity.getIntent(this@GroupDetailsActivity)
             startActivity(intent)
         }
         backImageView.setOnSingleClickListener {
