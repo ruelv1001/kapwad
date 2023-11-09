@@ -455,6 +455,7 @@
     <string name="lbl_for_donations">For Donations</string>
     <string name="lbl_request_for_donation">Request for Donation</string>
     <string name="lbl_my_requests">My Requests</string>
+    <string name="lbl_my_billing_statement">My Billing Statement</string>
 
 
 </resources>
