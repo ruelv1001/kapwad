@@ -36,16 +36,16 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_16"
-            android:background="@drawable/bg_rounded"
+            android:background="@drawable/bg_rounded_donations"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dimen_12">
+            android:padding="@dimen/dimen_20">
 
             <ImageView
-                android:layout_width="@dimen/dimen_48"
-                android:layout_height="@dimen/dimen_48"
+                android:layout_width="@dimen/dimen_32"
+                android:layout_height="@dimen/dimen_32"
                 android:contentDescription="@string/lbl_group_search"
-                android:src="@drawable/ic_groups" />
+                android:src="@drawable/group_request_icon" />
 
             <TextView
                 android:layout_width="0dp"
@@ -57,11 +57,14 @@
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_20" />
 
-            <ImageView
-                android:layout_width="@dimen/dimen_32"
-                android:layout_height="@dimen/dimen_32"
-                android:contentDescription="@string/lbl_group_search"
-                android:src="@drawable/ic_forward_arrow" />
+            <CheckBox
+                android:id="@+id/groupRequestCheckBox"
+                style="@android:style/Widget.CompoundButton.RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:buttonTint="@color/color_primary"
+                />
         </LinearLayout>
 
         <!--    custom request-->
@@ -71,20 +74,20 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_16"
-            android:background="@drawable/bg_rounded"
+            android:background="@drawable/bg_rounded_donations"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dimen_12">
+            android:padding="@dimen/dimen_20">
 
             <ImageView
-                android:layout_width="@dimen/dimen_48"
-                android:layout_height="@dimen/dimen_48"
+                android:layout_width="@dimen/dimen_32"
+                android:layout_height="@dimen/dimen_32"
                 android:contentDescription="@string/lbl_group_search"
-                android:src="@drawable/baseline_person_24"
-                app:tint="@color/icon_black" />
+                android:src="@drawable/custom_request_icon"
+                 />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="229dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_12"
                 android:layout_weight="1"
@@ -93,17 +96,21 @@
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/font_20" />
 
-            <ImageView
-                android:layout_width="@dimen/dimen_32"
-                android:layout_height="@dimen/dimen_32"
-                android:contentDescription="@string/lbl_group_search"
-                android:src="@drawable/ic_forward_arrow" />
+
+            <CheckBox
+                android:id="@+id/customRequestCheckBox"
+                style="@android:style/Widget.CompoundButton.RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:buttonTint="@color/color_primary"
+                />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_32"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
@@ -119,12 +126,6 @@
                 android:paddingHorizontal="@dimen/dimen_32"
                 android:paddingVertical="@dimen/dimen_24">
 
-                <ImageView
-                    android:layout_width="@dimen/dimen_48"
-                    android:layout_height="@dimen/dimen_48"
-                    android:contentDescription="@string/lbl_group_search"
-                    android:src="@drawable/ic_groups"
-                    app:tint="@color/icon_black" />
 
                 <TextView
                     android:id="@+id/numberOfGroupsRequestedText"
@@ -132,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_bold"
                     android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_20"
+                    android:textSize="@dimen/font_28"
                     tools:text="3" />
 
                 <TextView
@@ -150,26 +151,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_24"
                 android:layout_weight="1"
-                android:background="@drawable/bg_rounded_accent_card"
+                android:background="@drawable/bg_rounded_blue_card"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/dimen_32"
                 android:paddingVertical="@dimen/dimen_24">
 
-                <ImageView
-                    android:layout_width="@dimen/dimen_48"
-                    android:layout_height="@dimen/dimen_48"
-                    android:contentDescription="@string/lbl_group_search"
-                    android:src="@drawable/baseline_person_24"
-                    app:tint="@color/icon_black" />
 
                 <TextView
                     android:id="@+id/numberOfCustomPeopleRequestedText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_bold"
-                    android:textColor="@color/color_primary"
-                    android:textSize="@dimen/font_20"
+                    android:textColor="@color/blue_icon_variation"
+                    android:textSize="@dimen/font_28"
                     tools:text="6" />
 
                 <TextView
@@ -177,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_bold"
                     android:text="@string/request_points_people_lbl"
-                    android:textColor="@color/color_primary"
+                    android:textColor="@color/blue_icon_variation"
                     android:textSize="@dimen/font_20" />
             </LinearLayout>
         </LinearLayout>
