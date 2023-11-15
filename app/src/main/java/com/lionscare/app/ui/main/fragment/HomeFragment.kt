@@ -215,7 +215,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         binding.billingProgressIndicator.progress = progress
         binding.billingNumberText.text = billingNumberText
         binding.billingAmountText.text = "${currencyFormat(currentAmount.toString())}/${currencyFormat(totalAmount.toString())}"
-        binding.billingProgressIndicatorInText.text = "${progress}%"
     }
     @SuppressLint("SetTextI18n")
     private fun showProperBadgeStatus(badgeStatus: BadgeStatus?){
