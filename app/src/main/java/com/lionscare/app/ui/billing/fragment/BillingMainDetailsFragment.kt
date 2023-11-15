@@ -224,8 +224,8 @@ class BillingMainDetailsFragment : Fragment() {
         }
     }
 
-    private fun showList(donator: PagingData<DonatorData>) {
-        adapter?.submitData(viewLifecycleOwner.lifecycle, donator)
+    private fun showList(donator: PagingData<DonatorData>)  {
+        adapter?.submitData(viewLifecycleOwner.lifecycle,donator)
     }
 
     private fun clearList() {
