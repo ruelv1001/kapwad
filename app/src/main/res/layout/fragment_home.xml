@@ -145,7 +145,7 @@
                             android:textColor="@color/color_primary"
                             app:drawableTint="@color/color_primary"
                             android:drawablePadding="@dimen/dimen_4"
-                            app:drawableStartCompat="@drawable/ic_settings" />
+                            app:drawableStartCompat="@drawable/baseline_favorite_border_24" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
