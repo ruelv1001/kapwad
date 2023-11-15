@@ -1,11 +1,14 @@
 package com.lionscare.app.ui.billing.dialog
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lionscare.app.R
 import com.lionscare.app.databinding.DialogDonateBinding
 import com.lionscare.app.utils.setAmountFormat
@@ -13,7 +16,7 @@ import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DonateDialog : BottomSheetDialogFragment() {
+class DonateDialog : DialogFragment() {
 
     private var viewBinding: DialogDonateBinding? = null
     private var callback: DonateAmountCallback? = null
@@ -30,12 +33,10 @@ class DonateDialog : BottomSheetDialogFragment() {
             false
         )
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetStyle)
+        setStyle(STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding = DialogDonateBinding.bind(view)
@@ -49,8 +50,11 @@ class DonateDialog : BottomSheetDialogFragment() {
     }
 
     private fun setClickListener() = viewBinding?.run  {
+        backImageView.setOnSingleClickListener {
+            dismiss()
+        }
         sendButton.setOnSingleClickListener {
-            callback?.onSend(amountEditText.text.toString(),anonymousCheckBox.isChecked)
+            callback?.onSend(amountEditText.text.toString(),anonymousCheckBox.isChecked, messageEditText.text.toString())
             dismiss()
         }
     }
@@ -61,7 +65,7 @@ class DonateDialog : BottomSheetDialogFragment() {
     }
 
     interface DonateAmountCallback {
-        fun onSend(amount: String, isAnonymous: Boolean)
+        fun onSend(amount: String, isAnonymous: Boolean, message: String)
     }
 
     companion object {
