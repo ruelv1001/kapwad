@@ -174,7 +174,7 @@ class BillingMainDetailsFragment : Fragment() {
         sampleDonatorDataList.add(
             DonatorData(
                 date = DateModel(date_only_ph = "15, Nov 2023"),
-                user = UserModel(id = "3", name = "Pocholo Gopez"),
+                user = UserModel(id = "3", name = "Pocholo sGopez"),
                 amount = "P45,000.00"
             )
         )
