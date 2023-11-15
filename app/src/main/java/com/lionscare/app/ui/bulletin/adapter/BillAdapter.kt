@@ -15,8 +15,8 @@ import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 
 class BillAdapter(val context: Context,
-                  val clickListener: BillAdapter.OnClickCallback): PagingDataAdapter<SampleData, BillAdapter.AdapterViewHolder>(
-    BillAdapter.DIFF_CALLBACK
+                  val clickListener: OnClickCallback): PagingDataAdapter<SampleData, BillAdapter.AdapterViewHolder>(
+    DIFF_CALLBACK
 )  {
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SampleData>(){
@@ -51,13 +51,16 @@ class BillAdapter(val context: Context,
 
                 when(data.remarks?.lowercase()){
                     "completed" -> {
-                        binding.statusTextView.setTextColor(ContextCompat.getColor(context,R.color.approved))
+                        binding.statusTextView.backgroundTintList =
+                            ContextCompat.getColorStateList(context,R.color.approved)
                     }
                     "ongoing" -> {
-                        binding.statusTextView.setTextColor(ContextCompat.getColor(context,R.color.pending))
+                        binding.statusTextView.backgroundTintList =
+                            ContextCompat.getColorStateList(context,R.color.ongoing)
                     }
                     "cancelled" -> {
-                        binding.statusTextView.setTextColor(ContextCompat.getColor(context,R.color.declined))
+                        binding.statusTextView.backgroundTintList =
+                            ContextCompat.getColorStateList(context,R.color.declined)
                     }
                 }
                 binding.billNumberTextView.text = data.title

@@ -46,4 +46,6 @@
 
     <color name="billing_progress_bar">#8B7901</color>
     <color name="color_primary_alpha10">#1A1D8A5F</color>
+
+    <color name="ongoing">#E4BB29</color>
 </resources>
