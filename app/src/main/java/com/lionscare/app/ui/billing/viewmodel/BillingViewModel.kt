@@ -56,7 +56,7 @@ class BillingViewModel @Inject constructor(
 
     //=================== For ask for donations group request and custom request
     var immediateFamilyId = ""
-    var billingStatementNumber = "Billing Statement B-0000004"
+    var billingStatementNumber = "B-0000004"
 
     fun loadGroups() {
         viewModelScope.launch {

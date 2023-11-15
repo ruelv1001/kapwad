@@ -1,11 +1,13 @@
 package com.lionscare.app.ui.billing.fragment
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -30,6 +32,7 @@ import com.lionscare.app.ui.billing.dialog.OptionDonateDialog
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.utils.setOnSingleClickListener
+import com.lionscare.app.utils.setQR
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -66,7 +69,7 @@ class BillingMainDetailsFragment : Fragment() {
     }
 
     private fun setOnClickListeners() = binding.run {
-        amountDueImageButton.setOnSingleClickListener {
+        amountDueIconImageButton.setOnSingleClickListener {
             findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAskForDonationsFragment())
         }
 
@@ -92,14 +95,54 @@ class BillingMainDetailsFragment : Fragment() {
             findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAllDonatorsFragment())
         }
 
-        totalDonatedImageButton.setOnSingleClickListener {
-            findNavController().navigate(BillingMainDetailsFragmentDirections.actionBillingMainDetailsFragmentToAllDonatorsFragment())
-        }
         billingBadge.setOnSingleClickListener {
             //TODO remove this later on
             val intent = MyBillingStatementsActivity.getIntent(requireActivity())
             startActivity(intent)
         }
+
+        exitQrIconImage.setOnSingleClickListener {
+            val rotationAnimator = backLayout.animate().rotationYBy(-180f).setDuration(600).setInterpolator(
+                AccelerateDecelerateInterpolator()
+            )
+            rotationAnimator.start()
+
+            val fadeOutAnimator = ObjectAnimator.ofFloat(backLayout, View.ALPHA, 1f, 0f)
+            fadeOutAnimator.duration = rotationAnimator.duration
+            fadeOutAnimator.start()
+
+            // Delay the visibility change until halfway through the animation
+            backLayout.postDelayed({
+                // Toggle the visibility of front and back layouts
+                frontLayout.visibility = if (frontLayout.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                backLayout.visibility = if (backLayout.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+
+                frontLayout.alpha = 1f // Reset alpha after visibility change
+                frontLayout.rotationY = 0f // Reset rotation
+            }, rotationAnimator.duration )
+        }
+
+        qrIconImageView.setOnSingleClickListener {
+            val rotationAnimator = frontLayout.animate().rotationYBy(180f).setDuration(600).setInterpolator(
+                AccelerateDecelerateInterpolator()
+            )
+            rotationAnimator.start()
+
+            val fadeOutAnimator = ObjectAnimator.ofFloat(frontLayout, View.ALPHA, 1f, 0f)
+            fadeOutAnimator.duration = rotationAnimator.duration
+            fadeOutAnimator.start()
+
+            // Delay the visibility change until halfway through the animation
+            frontLayout.postDelayed({
+                // Toggle the visibility of front and back layouts
+                frontLayout.visibility = if (frontLayout.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                backLayout.visibility = if (backLayout.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+
+                backLayout.alpha = 1f // Reset alpha after visibility change
+                backLayout.rotationY = 0f // Reset rotation
+            }, rotationAnimator.duration )
+        }
+
     }
 
     //TODO API
@@ -110,28 +153,29 @@ class BillingMainDetailsFragment : Fragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun setContentViews() {
-        activity.setToolbarTitle("Billing B-000004")
+        activity.setToolbarTitle(viewModel.billingStatementNumber)
         val sampleDonatorDataList = mutableListOf<DonatorData>()
         sampleDonatorDataList.add(
             DonatorData(
                 date = DateModel(date_only_ph = "11/23/2023"),
                 user = UserModel(id = "1", name = "Von Denuelle Tandoc"),
-                amount = "100,000.00"
+                amount = "P100,000.00"
             )
         )
         sampleDonatorDataList.add(
             DonatorData(
                 date = DateModel(date_only_ph = "11/25/2023"),
                 user = UserModel(id = "2", name = "Justin Edriqe Reyes"),
-                amount = "300,000.00"
+                amount = "P300,000.00"
             )
         )
         sampleDonatorDataList.add(
             DonatorData(
                 date = DateModel(date_only_ph = "11/30/2023"),
                 user = UserModel(id = "3", name = "Pocholo Gopez"),
-                amount = "45,000.00"
+                amount = "P45,000.00"
             )
         )
 
@@ -139,12 +183,14 @@ class BillingMainDetailsFragment : Fragment() {
         val samplePagingData: PagingData<DonatorData> = PagingData.from(sampleDonatorDataList)
         showList(samplePagingData)
 
-        binding.amountDueText.text = "100,000.00"
-        binding.totalDonatedText.text = "30,000.00"
+        binding.qrImageView.setImageBitmap(setQR(requireActivity(), "sasacs sas  as "))
+        binding.billingNumberTextView.text = viewModel.billingStatementNumber
+        binding.billingNumberInQRText.text = viewModel.billingStatementNumber
+        binding.amountDueTextView.text = "P100,000.00"
+        binding.totalDonatedTextView.text = "P30,000.00"
         binding.billingBadge.text = "Public"
-        binding.dateUploadedText.text = "10/12/2023"
-        binding.dueDateText.text = "10/13/2023"
-        binding.downloadableBillingText.text = "samepl file.pdf"
+        binding.dateOfBillingStatementTextView.text = "10.12.2023 | 10:00 am"
+        binding.dueDateTextView.text = "10.13.2023"
 
         handleButtonStatus()
     }

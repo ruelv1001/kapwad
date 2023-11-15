@@ -3,277 +3,338 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
-    android:layout_marginHorizontal="@dimen/dimen_10"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/dimen_10">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/dimen_4"
+            app:layout_constraintBottom_toTopOf="@+id/donateButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/dimen_4"
-                app:layout_constraintBottom_toTopOf="@+id/donateButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
+                <!--                DETAIL VIEW-->
                 <LinearLayout
+                    android:id="@+id/frontLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_8"
-                    android:layout_marginTop="@dimen/dimen_24"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:background="@drawable/bg_rounded_outline"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cardLinearLayout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:padding="@dimen/dimen_16">
 
                         <TextView
-                            android:id="@+id/amountDueText"
+                            android:id="@+id/dateOfBillingStatementTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/dimen_4"
-                            android:fontFamily="@font/inter_bold"
-                            android:textColor="@color/black_text"
-                            android:textSize="@dimen/font_20"
-                            tools:text="100,000.00" />
+                            android:fontFamily="@font/inter_regular"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="10.12.2023 | 10:00 am" />
 
                         <ImageView
-                            android:id="@+id/amountDueImageButton"
+                            android:id="@+id/qrIconImageView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/amount_due"
-                            android:src="@drawable/arrow_right_curved" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_medium"
-                        android:text="@string/amount_due"
-                        android:textSize="@dimen/font_16" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/font_12"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/totalDonatedText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/dimen_4"
-                            android:fontFamily="@font/inter_bold"
-                            android:textColor="@color/black_text"
-                            android:textSize="@dimen/font_20"
-                            tools:text="30,000.00" />
+                            android:src="@drawable/ic_qr"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/totalDonatedImageButton"
+                            android:id="@+id/amountDueIconImageButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/total_donated"
-                            android:src="@drawable/ic_group"
-                            app:tint="@color/black" />
-                    </LinearLayout>
+                            android:layout_marginEnd="@dimen/dimen_12"
+                            android:contentDescription="@string/amount_due"
+                            android:src="@drawable/baseline_reply_right"
+                            app:layout_constraintEnd_toStartOf="@+id/qrIconImageView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/color_primary" />
+
+                        <TextView
+                            android:id="@+id/billingBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="@dimen/dimen_8"
+                            android:background="@drawable/bg_rounded_influencer"
+                            android:fontFamily="@font/inter_regular"
+                            android:paddingHorizontal="@dimen/dimen_10"
+                            android:paddingVertical="@dimen/dimen_5"
+                            android:text="@string/lbl_public"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/dateOfBillingStatementTextView" />
+
+                        <TextView
+                            android:id="@+id/billingNumberTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_48"
+                            android:fontFamily="@font/inter_bold"
+                            android:textColor="@color/black_text"
+                            android:textSize="@dimen/font_26"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/billingBadge"
+                            tools:text="B-0000004" />
+
+
+                        <!--                    Amount Due-->
+                        <TextView
+                            android:id="@+id/amountDueLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_48"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="@string/amount_due"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/billingNumberTextView" />
+
+                        <TextView
+                            android:id="@+id/amountDueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_semibold"
+                            android:textColor="@color/black_text"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/amountDueLabel"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="P100,000.00" />
+
+                        <!--                    Total Donated-->
+                        <TextView
+                            android:id="@+id/totalDonatedLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="@string/total_donated"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/amountDueLabel" />
+
+                        <TextView
+                            android:id="@+id/totalDonatedTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_semibold"
+                            android:textColor="@color/black_text"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/totalDonatedLabel"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="P30,000.00" />
+
+                        <!--                    Due Date-->
+                        <TextView
+                            android:id="@+id/dueDateLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_24"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="@string/due_date"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/totalDonatedLabel" />
+
+                        <TextView
+                            android:id="@+id/dueDateTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_semibold"
+                            android:textColor="@color/black_text"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/dueDateLabel"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="10.13.2023" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_1"
+                        android:layout_marginTop="@dimen/dimen_24"
+                        android:background="@color/color_primaryLight" />
 
                     <TextView
+                        android:id="@+id/downloadTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="@dimen/dimen_12"
+                        android:drawablePadding="@dimen/dimen_12"
                         android:fontFamily="@font/inter_medium"
-                        android:text="@string/total_donated"
-                        android:textSize="@dimen/font_16" />
+                        android:text="@string/download"
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/font_16"
+                        app:drawableStartCompat="@drawable/outline_file_download_24"
+                        app:drawableTint="@color/color_primary" />
+                </LinearLayout>
 
-                    <!--    Public badge-->
-                    <TextView
-                        android:id="@+id/billingBadge"
+
+                <!--                QR VIEW-->
+                <LinearLayout
+                    android:id="@+id/backLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_8"
+                    android:background="@drawable/bg_rounded_outline"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/dimen_16"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/exitQrIconImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="@dimen/dimen_12"
-                        android:background="@drawable/bg_rounded_influencer"
-                        android:fontFamily="@font/inter_regular"
-                        android:paddingHorizontal="@dimen/dimen_10"
-                        android:paddingVertical="@dimen/dimen_5"
-                        android:text="Public"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_16" />
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/dimen_8"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:contentDescription="@string/lbl_cancel"
+                        app:tint="@color/color_primary"
+                        android:src="@drawable/ic_close" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="@dimen/dimen_4"
-                        android:fontFamily="@font/inter_bold"
-                        android:text="@string/billing_details"
-                        android:textColor="@color/black_text"
-                        android:textSize="@dimen/font_20" />
 
-                    <!--    Billing details-->
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/qrImageView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_12"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/inter_bold"
-                                android:text="@string/date_uploaded"
-                                android:textColor="@color/black_text"
-                                android:textSize="@dimen/font_16" />
-
-                            <TextView
-                                android:id="@+id/dateUploadedText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/inter_regular"
-                                android:textColor="@color/black_text"
-                                android:textSize="@dimen/font_16"
-                                tools:text="10/12/2023 10:00 AM" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/inter_bold"
-                                android:text="@string/due_date"
-                                android:textColor="@color/black_text"
-                                android:textSize="@dimen/font_16" />
-
-                            <TextView
-                                android:id="@+id/dueDateText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/inter_regular"
-                                android:textColor="@color/black_text"
-                                android:textSize="@dimen/font_16"
-                                tools:text="10/13/2023" />
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="@dimen/dimen_40"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/show_this_qr_code_to_accept_donation"
+                        android:src="@drawable/ic_qr" />
 
                     <TextView
+                        android:id="@+id/billingNumberInQRText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="@dimen/dimen_12"
                         android:fontFamily="@font/inter_bold"
-                        android:text="@string/downloadable_billing_statement"
                         android:textColor="@color/black_text"
-                        android:textSize="@dimen/font_16" />
+                        android:textSize="@dimen/font_18"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:layout_gravity="center_horizontal"
+                        tools:text="B-0000004" />
+
+                </LinearLayout>
+                <!--    Recent donations-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_8">
 
                     <TextView
-                        android:id="@+id/downloadableBillingText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:fontFamily="@font/inter_regular"
-                        android:textColor="@color/blue_text"
-                        android:textSize="@dimen/font_16"
-                        android:textStyle="italic"
-                        tools:text="filename.pdf" />
-
-                    <!--    Recent donations-->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="@dimen/dimen_24"
+                        android:layout_weight="1"
                         android:fontFamily="@font/inter_bold"
                         android:text="@string/recent_donators"
                         android:textColor="@color/black_text"
                         android:textSize="@dimen/font_20" />
 
-                    <com.facebook.shimmer.ShimmerFrameLayout
-                        android:id="@+id/skeletonLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_gravity="center">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <include
-                                layout="@layout/include_donator_list_skeleton" />
-                            <include
-                                layout="@layout/include_donator_list_skeleton" />
-                            <include
-                                layout="@layout/include_donator_list_skeleton" />
-                        </LinearLayout>
-                    </com.facebook.shimmer.ShimmerFrameLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/donatorsRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:itemCount="6"
-                        tools:listitem="@layout/adapter_billing_donators" />
-
                     <TextView
                         android:id="@+id/viewAllTextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/dimen_12"
                         android:fontFamily="@font/inter_bold"
                         android:padding="@dimen/dimen_8"
                         android:text="@string/view_all"
                         android:textColor="@color/color_primary"
                         android:textSize="@dimen/font_16" />
-                    <TextView
-                        android:id="@+id/placeHolderTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/dimen_12"
-                        android:gravity="center"
-                        android:text="@string/lbl_nothing_to_show_txt"
-                        android:fontFamily="@font/inter_medium"
-                        android:textColor="@color/light_gray"
-                        android:textSize="@dimen/font_16"
-                        android:visibility="gone" />
-
                 </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
 
-            <Button
-                android:visibility="visible"
-                android:id="@+id/donateButton"
-                style="@style/MyButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_20"
-                android:layout_marginBottom="@dimen/dimen_8"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/lbl_donate"
-                android:textAllCaps="false"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/skeletonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/dimen_8"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/include_donator_list_skeleton" />
+
+                        <include layout="@layout/include_donator_list_skeleton" />
+
+                        <include layout="@layout/include_donator_list_skeleton" />
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/donatorsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_8"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/adapter_billing_donators" />
+
+                <TextView
+                    android:id="@+id/placeHolderTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dimen_12"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="center"
+                    android:text="@string/lbl_nothing_to_show_txt"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/font_16"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/donateButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_8"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/lbl_donate"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_14"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -458,6 +458,7 @@
     <string name="lbl_my_billing_statement">My Billing Statement</string>
     <string name="scan_qr_below">Scan QR Below</string>
     <string name="show_this_qr_code_to_accept_donation">Show this QR code to accept donation.</string>
+    <string name="download">Download</string>
 
 
 </resources>
