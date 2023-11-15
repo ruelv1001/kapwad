@@ -159,22 +159,36 @@ class BillingMainDetailsFragment : Fragment() {
         val sampleDonatorDataList = mutableListOf<DonatorData>()
         sampleDonatorDataList.add(
             DonatorData(
-                date = DateModel(date_only_ph = "11/23/2023"),
+                date = DateModel(date_only_ph = "15, Nov 2023"),
                 user = UserModel(id = "1", name = "Von Denuelle Tandoc"),
                 amount = "P100,000.00"
             )
         )
         sampleDonatorDataList.add(
             DonatorData(
-                date = DateModel(date_only_ph = "11/25/2023"),
+                date = DateModel(date_only_ph = "15, Nov 2023"),
                 user = UserModel(id = "2", name = "Justin Edriqe Reyes"),
                 amount = "P300,000.00"
             )
         )
         sampleDonatorDataList.add(
             DonatorData(
-                date = DateModel(date_only_ph = "11/30/2023"),
-                user = UserModel(id = "3", name = "Pocholo Gopez"),
+                date = DateModel(date_only_ph = "15, Nov 2023"),
+                user = UserModel(id = "3", name = "Pocholo sGopez"),
+                amount = "P45,000.00"
+            )
+        )
+        sampleDonatorDataList.add(
+            DonatorData(
+                date = DateModel(date_only_ph = "15, Nov 2023"),
+                user = UserModel(id = "4", name = "Pocholo Gopez"),
+                amount = "P45,000.00"
+            )
+        )
+        sampleDonatorDataList.add(
+            DonatorData(
+                date = DateModel(date_only_ph = "15, Nov 2023"),
+                user = UserModel(id = "5", name = "Pocholo Gopez"),
                 amount = "P45,000.00"
             )
         )
