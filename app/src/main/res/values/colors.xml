@@ -45,5 +45,5 @@
     <color name="my_card_transparent">#85000000</color>
 
     <color name="billing_progress_bar">#8B7901</color>
-    <color name="billing_progress_bar_10alpha">#198B7901</color>
+    <color name="color_primary_alpha10">#1A1D8A5F</color>
 </resources>
