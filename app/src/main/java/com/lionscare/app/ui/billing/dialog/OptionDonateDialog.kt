@@ -14,7 +14,7 @@ import com.lionscare.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OptionDonateDialog : BottomSheetDialogFragment() {
+class OptionDonateDialog : DialogFragment() {
 
     private var viewBinding: DialogOptionDonateBinding? = null
     private var callback: OptionDonateAmountCallback? = null
@@ -35,7 +35,7 @@ class OptionDonateDialog : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetStyle)
+        setStyle(STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,25 +51,28 @@ class OptionDonateDialog : BottomSheetDialogFragment() {
         groupWalletTextView.text = groupWallet
         amountEditText.doOnTextChanged {
                 text, start, before, count ->
-            amountInputLayout.error = ""
+            amountTextInputLayout.error = ""
         }
     }
 
     private fun setClickListener() = viewBinding?.run  {
+        backImageView.setOnSingleClickListener {
+            dismiss()
+        }
         sendButton.setOnSingleClickListener {
             if(personalRadioButton.isChecked){
                 if(amountEditText.text.toString().toDouble() > personalWallet.toDouble()){
-                    callback?.onSend(amountEditText.text.toString())
+                    callback?.onSend(amountEditText.text.toString(), messageEditText.text.toString())
                     dismiss()
                 }else{
-                    amountInputLayout.error = "Amount must not be greater than your balance"
+                    amountTextInputLayout.error = "Amount must not be greater than your balance"
                 }
             }else{
                 if(amountEditText.text.toString().toDouble() > groupWallet.toDouble()){
-                    callback?.onSend(amountEditText.text.toString())
+                    callback?.onSend(amountEditText.text.toString(), messageEditText.text.toString())
                     dismiss()
                 }else{
-                    amountInputLayout.error = "Amount must not be greater than your balance"
+                    amountTextInputLayout.error = "Amount must not be greater than your balance"
                 }
             }
         }
@@ -81,7 +84,7 @@ class OptionDonateDialog : BottomSheetDialogFragment() {
     }
 
     interface OptionDonateAmountCallback {
-        fun onSend(amount: String)
+        fun onSend(amount: String, message: String)
     }
 
     companion object {

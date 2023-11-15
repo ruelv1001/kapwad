@@ -76,7 +76,7 @@ class BillingMainDetailsFragment : Fragment() {
         donateButton.setOnSingleClickListener {
             if(viewModel.isRequestFromGroups){
                 OptionDonateDialog.newInstance(callback = object : OptionDonateDialog.OptionDonateAmountCallback {
-                    override fun onSend(amount: String) {
+                    override fun onSend(amount: String, message: String) {
                         //TODO
                     }
                 }, personalWallet = "40000", groupWallet = "30000")
