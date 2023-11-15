@@ -1,74 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/dimen_8"
-    >
+    android:gravity="center"
+    android:layout_marginVertical="@dimen/dimen_8">
 
-    <TextView
-        android:id="@+id/dateOfDonationText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:textColor="@color/black_text"
-        android:textSize="@dimen/font_16"
-        tools:text="10/12/2023" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginEnd="@dimen/dimen_8"
+        android:id="@+id/profileImageView"
+        android:layout_width="@dimen/dimen_60"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_gravity="center"
+        android:src="@drawable/img_profile"
+/>
 
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_marginStart="@dimen/dimen_12"
+        android:id="@+id/nameLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:orientation="vertical"
+>
 
         <TextView
             android:id="@+id/donatorNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Von Denuelle Tandoc"
             android:fontFamily="@font/inter_bold"
             android:textColor="@color/black_text"
-            android:layout_gravity="start"
-            android:textSize="@dimen/font_16"
-            />
+            android:textSize="@dimen/font_14"
+            tools:text="Von Denuelle Tandoc" />
 
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/dateOfDonationText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_4"
-                android:fontFamily="@font/inter_regular"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_16"
-                android:text="@string/donated" />
-
-            <TextView
-                android:id="@+id/donationAmountText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_4"
-                android:fontFamily="@font/inter_bold"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_16"
-                tools:text="100,000.00" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_4"
-                android:fontFamily="@font/inter_regular"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/font_16"
-                android:text="@string/points" />
-        </LinearLayout>
-
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/inter_regular"
+            tools:text="19, Nov 2023"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_14" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+>
+        <TextView
+            android:id="@+id/donationAmountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/font_14"
+            tools:text="3,000 pts" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/donated"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_14" />
+    </LinearLayout>
+
 
 
 </LinearLayout>

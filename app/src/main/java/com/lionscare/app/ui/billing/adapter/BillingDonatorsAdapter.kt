@@ -6,12 +6,14 @@ import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.assistance.response.CreateAssistanceData
 import com.lionscare.app.data.repositories.billing.response.DonatorData
 import com.lionscare.app.databinding.AdapterBillingDonatorsBinding
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.currencyFormat
+import com.lionscare.app.utils.loadAvatar
 
 class BillingDonatorsAdapter :   PagingDataAdapter<DonatorData, BillingDonatorsAdapter.AdapterViewHolder>(
     BillingDonatorsAdapter.DIFF_CALLBACK
@@ -46,6 +48,7 @@ class BillingDonatorsAdapter :   PagingDataAdapter<DonatorData, BillingDonatorsA
         fun bind(data: DonatorData?) {
             CommonLogger.instance.sysLogI("bill", data)
             data?.let {
+//                binding.profileImageView.loadAvatar() TODO()
                 binding.dateOfDonationText.text = data.date?.date_only_ph
                 binding.donatorNameText.text = data.user?.name
                 binding.donationAmountText.text = data.amount
