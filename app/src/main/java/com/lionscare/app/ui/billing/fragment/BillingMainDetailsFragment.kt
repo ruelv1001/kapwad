@@ -83,7 +83,7 @@ class BillingMainDetailsFragment : Fragment() {
                     .show(childFragmentManager, OptionDonateDialog.TAG)
             }else{
                 DonateDialog.newInstance(callback = object : DonateDialog.DonateAmountCallback {
-                    override fun onSend(amount: String, isAnonymous: Boolean) {
+                    override fun onSend(amount: String, isAnonymous: Boolean, message: String) {
                         //TODO
                     }
                 }, walletBalance = "40000")
