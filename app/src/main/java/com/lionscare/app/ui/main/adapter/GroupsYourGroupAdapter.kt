@@ -12,19 +12,19 @@ import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.databinding.AdapterGroupYourGroupBinding
 import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.loadGroupAvatar
 
 class GroupsYourGroupAdapter(
     val context: Context,
     val clickListener: GroupCallback,
-    val shouldShowCheckbox: Boolean = false,
-    val shouldShowRemoveTextButton: Boolean = false,
+    val shouldShowDonationRequestsViews: Boolean? = null,
 ) :
     PagingDataAdapter<GroupListData, GroupsYourGroupAdapter.AdapterViewHolder>(
         DIFF_CALLBACK
     ) {
 
-    var customGroupListDataModel: MutableList<CustomGroupListDataModel>? = null
+    var customGroupListDataModel: MutableList<CustomGroupListDataModel> = mutableListOf()
         private set
 
     companion object {
@@ -56,13 +56,29 @@ class GroupsYourGroupAdapter(
 
     inner class AdapterViewHolder(val binding: AdapterGroupYourGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(data: GroupListData?, position: Int) {
             data?.let {
-                binding.checkBox.isVisible = shouldShowCheckbox
-                binding.removeTextButton.isVisible = shouldShowRemoveTextButton
-                binding.checkBox.isChecked =
-                    customGroupListDataModel?.get(position)?.isChecked == true //if should show checkbox
+                val customGroupDataModel = CustomGroupListDataModel(groupData = data, isChecked = true)
+
+                // Check if the data is not already present in the list
+                if (!customGroupListDataModel.contains(customGroupDataModel)) {
+                    customGroupListDataModel.add(customGroupDataModel.copy(isChecked = false))
+                }
+
+                // Check if the data is already present in the list
+                val existingModel = customGroupListDataModel.find { it == customGroupDataModel }
+
+                binding.checkBox.isVisible = shouldShowDonationRequestsViews != null
+                binding.checkBox.isChecked = existingModel?.isChecked ?: false
+
+                binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+                    if (existingModel != null) {
+                        existingModel.isChecked = isChecked
+                    } else {
+                        // If not in the list, add it with the current isChecked value
+                        customGroupListDataModel.add(CustomGroupListDataModel(groupData = data, isChecked = isChecked))
+                    }
+                }
                 binding.titleTextView.text = data.name
                 binding.membersTextView.text = context.resources.getQuantityString(
                     R.plurals.member_plural, //plural from strings.xml file
@@ -84,22 +100,13 @@ class GroupsYourGroupAdapter(
                 binding.adapterLinearLayout.setOnClickListener {
                     clickListener.onItemClicked(data)
                 }
-                binding.removeTextButton.setOnClickListener {
-                    onRemoveButtonClicked?.let { it(data) }
-                }
-                //to get which data is checked or not
-                customGroupListDataModel?.add(
-                    CustomGroupListDataModel(
-                        groupData = data,
-                        isChecked = binding.checkBox.isChecked
-                    )
-                )
-
             }
         }
     }
 
-    fun getCustomData(): List<CustomGroupListDataModel>? {
+
+
+    fun getCustomData(): List<CustomGroupListDataModel>{
         return customGroupListDataModel
     }
 
@@ -114,11 +121,6 @@ class GroupsYourGroupAdapter(
 
     interface GroupCallback {
         fun onItemClicked(data: GroupListData)
-    }
-
-    private var onRemoveButtonClicked: ((GroupListData) -> Unit)? = null
-    fun setOnRemoveButtonClicked(listener : (GroupListData)-> Unit){
-        onRemoveButtonClicked = listener
     }
 
     fun filterData(query: String?) {

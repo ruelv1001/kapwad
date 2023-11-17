@@ -21,8 +21,7 @@ class GroupMembersAdapter(
     val clickListener: MembersCallback,
     val id: String? = null,
     val isInMemberList: Boolean? = true,
-    val shouldShowCheckbox: Boolean = false,
-    val shouldShowRemoveTextButton: Boolean = false,
+    val shouldShowDonationRequestsViews: Boolean? = null,
 ) :
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
@@ -65,8 +64,7 @@ class GroupMembersAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(data: MemberListData?, position: Int) {
             data?.let {
-                binding.removeTextButton.isVisible = shouldShowRemoveTextButton
-                binding.checkBox.isVisible = shouldShowCheckbox
+                binding.checkBox.isVisible = shouldShowDonationRequestsViews != null
                 binding.checkBox.isChecked =
                     customMemberListDataModel?.get(position)?.isChecked == true //if should show checkbox
 
@@ -94,9 +92,6 @@ class GroupMembersAdapter(
                     if (id != data.user?.id) { // the user must not be able to click himself/herself
                         clickListener.onItemClicked(data)
                     }
-                }
-                binding.removeTextButton.setOnClickListener {
-                    onRemoveButtonClicked?.let { it(data) }
                 }
                 //to get which data is checked or not
                 customMemberListDataModel?.add(

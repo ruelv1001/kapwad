@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -141,6 +142,10 @@ class BillingMainDetailsFragment : Fragment() {
                 backLayout.alpha = 1f // Reset alpha after visibility change
                 backLayout.rotationY = 0f // Reset rotation
             }, rotationAnimator.duration )
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
         }
 
     }

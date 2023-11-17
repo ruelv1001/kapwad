@@ -21,6 +21,7 @@ import com.lionscare.app.data.repositories.member.response.MemberListData
 import com.lionscare.app.data.repositories.member.response.User
 import com.lionscare.app.databinding.FragmentAskForDonationsCustomRequestBinding
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
+import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.group.adapter.GroupMembersAdapter
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.utils.CommonLogger
@@ -79,10 +80,10 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
         //todo
     }
 
-    private fun handleViewState(viewState: MemberViewState) {
+    private fun handleViewState(viewState: BillingViewState) {
         when (viewState) {
-            MemberViewState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
-            is MemberViewState.PopupError -> {
+            is BillingViewState.LoadingMembers -> binding.swipeRefreshLayout.isRefreshing = true
+            is BillingViewState.PopupError -> {
                 showPopupError(
                     requireActivity(),
                     childFragmentManager,
@@ -96,7 +97,7 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
     }
 
     private fun setContentViews(){
-        if(viewModel.shouldShowRemoveButton){
+        if(viewModel.shouldShowDonationRequestsViews){
             binding.noteSendRequestText.isVisible = false
             binding.sendRequestButton.isVisible = false
             binding.searchTextInputLayout.isVisible = false
@@ -142,8 +143,7 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
         adapter = GroupMembersAdapter(
             requireActivity(),
             this@AskForDonationsCustomRequestFragment,
-            shouldShowCheckbox = !viewModel.shouldShowRemoveButton,
-            shouldShowRemoveTextButton = viewModel.shouldShowRemoveButton
+            shouldShowDonationRequestsViews = viewModel.shouldShowDonationRequestsViews,
         )
         swipeRefreshLayout.setOnRefreshListener { swipeRefreshLayout.isRefreshing = false }
         linearLayoutManager = LinearLayoutManager(context)
@@ -177,7 +177,7 @@ class AskForDonationsCustomRequestFragment : Fragment(),  GroupMembersAdapter.Me
     private fun observeMemberList() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.memberSharedFlow.collectLatest { viewState ->
+                viewModel.billingSharedFlow.collectLatest { viewState ->
                     handleViewState(viewState)
                 }
             }
