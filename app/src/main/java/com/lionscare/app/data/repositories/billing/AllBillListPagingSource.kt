@@ -18,7 +18,7 @@ class AllBillListPagingSource @Inject constructor(private val billRemoteDataSour
         val page = params.key ?: 1
 
         return try {
-            val response = billRemoteDataSource.doGetAllBillList()
+            val response = billRemoteDataSource.doGetAllBillList(page.toString(), params.loadSize.toString())
             if(response.data?.isNotEmpty() == true){
                 LoadResult.Page(
                     data = response.data.orEmpty(),

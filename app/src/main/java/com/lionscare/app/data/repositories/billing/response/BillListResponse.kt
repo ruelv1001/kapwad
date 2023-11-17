@@ -28,6 +28,7 @@ data class BillData(
     var donated_amount: String? = null,
     var due_date: DateModel? = null,
     var id: Int? = 0,
+    var name: String? = null,
     var qr_value: QrValue? = null,
     var qrcode_value: String? = null,
     var remarks: String? = null,

@@ -8,23 +8,21 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lionscare.app.R
-import com.lionscare.app.data.model.SampleData
-import com.lionscare.app.data.repositories.group.response.GroupListData
+import com.lionscare.app.data.repositories.billing.response.BillData
 import com.lionscare.app.databinding.AdapterBillBinding
-import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
 import com.lionscare.app.utils.setOnSingleClickListener
 
 class BillAdapter(val context: Context,
-                  val clickListener: OnClickCallback): PagingDataAdapter<SampleData, BillAdapter.AdapterViewHolder>(
+                  val clickListener: OnClickCallback): PagingDataAdapter<BillData, BillAdapter.AdapterViewHolder>(
     DIFF_CALLBACK
 )  {
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SampleData>(){
-            override fun areItemsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<BillData>(){
+            override fun areItemsTheSame(oldItem: BillData, newItem: BillData): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: SampleData, newItem: SampleData): Boolean {
+            override fun areContentsTheSame(oldItem: BillData, newItem: BillData): Boolean {
                 return oldItem == newItem
             }
         }
@@ -43,13 +41,13 @@ class BillAdapter(val context: Context,
 
     inner class AdapterViewHolder(val binding: AdapterBillBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: SampleData?) {
+        fun bind(data: BillData?) {
             data?.let {
                 binding.adapterLinearLayout.setOnSingleClickListener {
                     clickListener.onItemClicked(data)
                 }
 
-                when(data.remarks?.lowercase()){
+                when(data.status?.lowercase()){
                     "completed" -> {
                         binding.statusTextView.backgroundTintList =
                             ContextCompat.getColorStateList(context,R.color.approved)
@@ -63,35 +61,19 @@ class BillAdapter(val context: Context,
                             ContextCompat.getColorStateList(context,R.color.declined)
                     }
                 }
-                binding.billNumberTextView.text = data.title
+                binding.billNumberTextView.text = data.code
                 binding.nameTextView.text = data.name
-                binding.amountDueTextView.text = data.amount
-                binding.donatedAmountTextView.text = data.amount
-                binding.dueDateTextView.text = data.date
-                binding.statusTextView.text = data.remarks
+                binding.amountDueTextView.text = data.display_amount
+                binding.donatedAmountTextView.text = data.display_donated_amount
+                binding.dueDateTextView.text = data.due_date?.date_only_ph
+                binding.statusTextView.text = data.status
 
-
-               /* binding.billNumberTextView.text = bill number
-                binding.nameTextView.text = name
-                binding.amountDueTextView.text = data.amount
-                binding.donatedAmountTextView.text = donated amount
-                binding.dueDateTextView.text = due date
-                binding.statusTextView.text = status
-
-                if(binding.statusTextView.equals("Completed")){
-                binding.statusTextView.setTextColor(context.getColor(R.color.color_primary))
-                }else if(binding.statusTextView.equals("Cancelled")){
-                binding.statusTextView.setTextColor(context.getColor(R.color.declined))
-                }else{
-                binding.statusTextView.setTextColor(context.getColor(R.color.pending))
-                }
-                */
             }
         }
     }
 
     interface OnClickCallback {
-        fun onItemClicked(data: SampleData)
+        fun onItemClicked(data: BillData)
     }
 
     fun hasData(): Boolean {

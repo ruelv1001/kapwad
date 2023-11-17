@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.billing.response.BillData
 import com.lionscare.app.databinding.FragmentCompletedBillingStatementsBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
@@ -48,7 +49,7 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
 
     private fun setOnClickListeners() = binding.run {
     }
-    override fun onItemClicked(data: SampleData) {
+    override fun onItemClicked(data: BillData) {
         val intent = BillingActivity.getIntent(requireActivity())
         startActivity(intent)
     }
@@ -92,11 +93,11 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
             )
         )
         val samplePagingData: PagingData<SampleData> = PagingData.from(sampleData)
-        showList(samplePagingData)
+       // showList(samplePagingData)
     }
 
     //TODO
-    private fun showList(sampleData: PagingData<SampleData>){
+    private fun showList(sampleData: PagingData<BillData>){
         binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(viewLifecycleOwner.lifecycle, sampleData)
     }

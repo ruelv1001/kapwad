@@ -12,14 +12,13 @@ import javax.inject.Inject
 
 class BillRepository @Inject constructor(
     private val billRemoteDataSource: BillRemoteDataSource,
-    private val allBillListPagingSource: AllBillListPagingSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 )   {
 
     fun doGetAllBillList(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<BillData>>{
         return Pager(
             config = pagingConfig,
-            pagingSourceFactory = { allBillListPagingSource }
+            pagingSourceFactory = { AllBillListPagingSource(billRemoteDataSource) }
         ).flow
             .flowOn(ioDispatcher)
     }
