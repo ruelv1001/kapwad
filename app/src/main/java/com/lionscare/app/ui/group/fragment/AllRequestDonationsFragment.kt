@@ -10,6 +10,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.billing.response.BillData
 import com.lionscare.app.databinding.FragmentMyRequestDonationsBinding
 import com.lionscare.app.ui.bulletin.adapter.BillAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -83,7 +84,7 @@ class AllRequestDonationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
 
     }
 
-    override fun onItemClicked(data: SampleData) {
+    override fun onItemClicked(data: BillData) {
 
     }
 

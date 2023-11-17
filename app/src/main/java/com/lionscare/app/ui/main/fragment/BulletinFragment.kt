@@ -54,10 +54,10 @@ class BulletinFragment : Fragment() {
             viewPager.currentItem = 1
         }
 
-        viewAllTextView.setOnSingleClickListener {
+     /*   viewAllTextView.setOnSingleClickListener {
             val intent = AllRequestBulletinActivity.getIntent(requireActivity())
             startActivity(intent)
-        }
+        }*/
     }
 
     private fun setActiveTab(layout: RelativeLayout) = binding.run {
@@ -68,7 +68,7 @@ class BulletinFragment : Fragment() {
                 publicRequestsTextView.visibility = View.VISIBLE
                 askedForDonationsView.visibility = View.GONE
                 askedForDonationsTextView.visibility = View.GONE
-                viewAllTextView.isVisible = true
+                //viewAllTextView.isVisible = true
             }
 
             askedForDonationsRelativeLayout -> {
@@ -77,7 +77,7 @@ class BulletinFragment : Fragment() {
                 askedForDonationsView.visibility = View.VISIBLE
                 askedForDonationsTextView.visibility = View.VISIBLE
 
-                viewAllTextView.isGone = true
+               //viewAllTextView.isGone = true
             }
 
             else -> Unit
