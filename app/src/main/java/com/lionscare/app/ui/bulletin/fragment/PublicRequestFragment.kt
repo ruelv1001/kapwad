@@ -121,6 +121,7 @@ class PublicRequestFragment : Fragment(), BillAdapter.OnClickCallback,
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter?.removeLoadStateListener { requireActivity() }
         _binding = null
     }
 
