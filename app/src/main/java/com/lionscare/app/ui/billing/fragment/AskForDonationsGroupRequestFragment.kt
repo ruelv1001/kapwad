@@ -66,15 +66,11 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
         super.onResume()
         //===================== groups
         if (viewModel.groupsRequestsData != null) {
+            //put the cached data from viewmodel back to adapter
             orgAdapter?.setCustomData(viewModel.groupsRequestsData!!)
-            viewModel.loadGroups()
-//            val data = viewModel.groupsRequestsData?.map {
-//                it.groupData
-//            }?.toMutableList()
-//            val pagingData: PagingData<GroupListData> = PagingData.from(data.orEmpty())
-//            showGroup(pagingData)
+            viewModel.loadGroups() //load all groups
         } else {
-            //if request add, and not show list of request, then do api
+            //if from fragment request add, and not show list of request, then do api
             if (viewModel.currentFragmentRoute == "request_add") {
                 viewModel.loadGroups()
             } else {
@@ -83,7 +79,6 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
                 binding.organizationRecyclerView.isVisible = false
             }
         }
-
         //============= family
         if (viewModel.immediateFamilyData != null) {
             binding.createGroupButton.isGone = true

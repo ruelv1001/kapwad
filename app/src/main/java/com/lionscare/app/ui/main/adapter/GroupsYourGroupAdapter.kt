@@ -58,14 +58,14 @@ class GroupsYourGroupAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: GroupListData?, position: Int) {
             data?.let {
+                //set to ischecked true to make sure cached data will match contains
                 val customGroupDataModel = CustomGroupListDataModel(groupData = data, isChecked = true)
-
-                // Check if the data is not already present in the list
-                if (!customGroupListDataModel.contains(customGroupDataModel)) {
-                    customGroupListDataModel.add(customGroupDataModel.copy(isChecked = false))
-                }
-
-                // Check if the data is already present in the list
+////                // only add data that are not present in the list
+//                if (!customGroupListDataModel.contains(customGroupDataModel)) {
+//                    //set it back to false, since its a new data
+//                    customGroupListDataModel.add(customGroupDataModel.copy(isChecked = false))
+//                }
+                // find and get data
                 val existingModel = customGroupListDataModel.find { it == customGroupDataModel }
 
                 binding.checkBox.isVisible = shouldShowDonationRequestsViews != null
