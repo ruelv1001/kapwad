@@ -60,12 +60,6 @@ class GroupsYourGroupAdapter(
             data?.let {
                 //set to ischecked true to make sure cached data will match contains
                 val customGroupDataModel = CustomGroupListDataModel(groupData = data, isChecked = true)
-////                // only add data that are not present in the list
-//                if (!customGroupListDataModel.contains(customGroupDataModel)) {
-//                    //set it back to false, since its a new data
-//                    customGroupListDataModel.add(customGroupDataModel.copy(isChecked = false))
-//                }
-                // find and get data
                 val existingModel = customGroupListDataModel.find { it == customGroupDataModel }
 
                 binding.checkBox.isVisible = shouldShowDonationRequestsViews != null
@@ -74,6 +68,9 @@ class GroupsYourGroupAdapter(
                 binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                     if (existingModel != null) {
                         existingModel.isChecked = isChecked
+                        val index = customGroupListDataModel.indexOf(existingModel)
+                        customGroupListDataModel[index] = existingModel
+                        CommonLogger.instance.sysLogE("fefe",  customGroupListDataModel[index].isChecked)
                     } else {
                         // If not in the list, add it with the current isChecked value
                         customGroupListDataModel.add(CustomGroupListDataModel(groupData = data, isChecked = isChecked))

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:layout_width="@dimen/dimen_48"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_marginVertical="@dimen/dimen_24"
+        android:src="@drawable/ic_warningcircle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:textSize="@dimen/font_26"
+        android:textColor="@color/black_text"
+        android:text="@string/are_you_sure"/>
+
+    <TextView
+        android:id="@+id/toBeRemovedText"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_24"
+        android:fontFamily="@font/inter_regular"
+        android:textSize="@dimen/font_16"
+        tools:text="remove blablabalbal"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/yesButton"
+        style="@style/MyButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/inter_semibold"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:paddingTop="@dimen/dimen_15"
+        android:paddingBottom="@dimen/dimen_15"
+        android:text="@string/option_yes_txt"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_14" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/noButton"
+        style="@style/MyButtonStyle"
+        android:layout_marginVertical="@dimen/dimen_8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingTop="@dimen/dimen_15"
+        android:paddingBottom="@dimen/dimen_15"
+        android:text="@string/option_no_txt"
+        android:textAllCaps="false"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/font_14" />
+</LinearLayout>

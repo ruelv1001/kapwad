@@ -18,13 +18,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.databinding.FragmentGroupsYourGroupBinding
+import com.lionscare.app.ui.billing.dialog.RemoveFromDonationRequestDialog
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
 import com.lionscare.app.ui.main.adapter.GroupsYourGroupAdapter
+import com.lionscare.app.ui.profile.dialog.ProfileConfirmationDialog
+import com.lionscare.app.ui.register.dialog.RegisterSuccessDialog
+import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.loadGroupAvatar
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.showPopupError
@@ -33,7 +38,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback {
+class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback , RemoveFromDonationRequestDialog.RemoveFromDonationRequestCallback{
     private var _binding: FragmentGroupsYourGroupBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
@@ -65,18 +70,36 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
     override fun onResume() {
         super.onResume()
         //===================== groups
-        if (viewModel.groupsRequestsData != null) {
-            //put the cached data from viewmodel back to adapter
-            orgAdapter?.setCustomData(viewModel.groupsRequestsData!!)
-            viewModel.loadGroups() //load all groups
-        } else {
-            //if from fragment request add, and not show list of request, then do api
-            if (viewModel.currentFragmentRoute == "request_add") {
-                viewModel.loadGroups()
-            } else {
-                binding.orgPlaceHolderTextView.isVisible = true
-                binding.orgShimmerLayout.isVisible = false
-                binding.organizationRecyclerView.isVisible = false
+        when(viewModel.currentFragmentRoute ){
+            "request_add" -> {
+                if (viewModel.groupsRequestsData != null && viewModel.groupsRequestsData.orEmpty().isNotEmpty()
+                ) {
+                    //put the cached data from viewmodel back to adapter
+                    // along with other list but show currentyl checked
+                    orgAdapter?.setCustomData(viewModel.groupsRequestsData!!)
+                    viewModel.loadGroups()
+                }else{
+                    viewModel.loadGroups()
+                    binding.orgPlaceHolderTextView.isVisible = true
+                    binding.orgShimmerLayout.isVisible = false
+                    binding.organizationRecyclerView.isVisible = false
+                }
+            }
+            "request_list" -> {
+                if (viewModel.groupsRequestsData != null && viewModel.groupsRequestsData.orEmpty().isNotEmpty()) {
+                    //put the cached data from viewmodel back to adapter
+                    val data = viewModel.groupsRequestsData?.map {
+                        it.groupData
+                    }?.toMutableList()
+                    orgAdapter?.setCustomData(viewModel.groupsRequestsData.orEmpty().toMutableList())
+                    val pagingData: PagingData<GroupListData> = PagingData.from(data.orEmpty())
+                    showGroup(pagingData)
+
+                }else{
+                    binding.orgPlaceHolderTextView.isVisible = true
+                    binding.orgShimmerLayout.isVisible = false
+                    binding.organizationRecyclerView.isVisible = false
+                }
             }
         }
         //============= family
@@ -169,44 +192,54 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
 
     private fun setOnClickListeners() = binding.run {
         sendRequestButton.setOnSingleClickListener {
-            //get groups data where it is checked
+            when(viewModel.currentFragmentRoute ){
+                "request_add" -> {
+                    //get groups data where it is checked
+                    val groupsWithChecked: MutableList<CustomGroupListDataModel>? =
+                        orgAdapter?.getCustomData()
+                            ?.filter { it.isChecked }?.toMutableList()
 
-            val groupsWithChecked: MutableList<CustomGroupListDataModel>? =
-                orgAdapter?.getCustomData()
-                    ?.filter { it.isChecked }?.toMutableList()
+                    //remvoe imediatefamily if not checked
+                    if (!binding.immediateFamilyLayout.checkBox.isChecked) {
+                        viewModel.immediateFamilyData = null
+                    }
+                    //store to viewModel
+                    viewModel.groupsRequestsData = groupsWithChecked
+                    findNavController().popBackStack()
+                }
+                "request_list" -> {
 
-            //remvoe imediatefamily if not checked
-            if (!binding.immediateFamilyLayout.checkBox.isChecked) {
-                viewModel.immediateFamilyData = null
+                    RemoveFromDonationRequestDialog.newInstance(this@AskForDonationsGroupRequestFragment)
+                        .show(childFragmentManager, RegisterSuccessDialog.TAG)
+                }
             }
-            //store to viewModel
-            viewModel.groupsRequestsData = groupsWithChecked
 
-            findNavController().popBackStack()
         }
-
-//        requireActivity().onBackPressedDispatcher.addCallback {
-//            if (!binding.immediateFamilyLayout.checkBox.isChecked) {
-//                viewModel.immediateFamilyData = null
-//
-//                //get groups data where it is checked
-//                val groupsWithChecked: MutableList<CustomGroupListDataModel>? =
-//                    orgAdapter?.getCustomData()
-//                        ?.filter { it.isChecked }?.toMutableList()
-//
-//                //remvoe imediatefamily if not checked
-//                if (!binding.immediateFamilyLayout.checkBox.isChecked) {
-//                    viewModel.immediateFamilyData = null
-//                }
-//                //store to viewModel
-//                viewModel.groupsRequestsData = groupsWithChecked
-//            }
-//            findNavController().popBackStack()
-//        }
     }
 
     override fun onItemClicked(data: GroupListData) {
         //TODO
+    }
+
+    override fun onRemoveFromRequest(dialog: RemoveFromDonationRequestDialog) {
+        dialog.dismiss()
+        //filter those without Chcked
+        val groupsWithoutChecked: MutableList<CustomGroupListDataModel>? =
+            orgAdapter?.getCustomData()
+                ?.filter { !it.isChecked }?.toMutableList()
+
+        //Get only the groupData to be sent to paging
+        val data = groupsWithoutChecked?.map {
+            it.groupData
+        }?.toMutableList()
+
+        //make changes to the groupsWithoutChecked and make a certain value back to true
+        viewModel.groupsRequestsData = groupsWithoutChecked?.map {
+            it.copy(isChecked = true)
+        }?.toMutableList()
+
+        val pagingData: PagingData<GroupListData> = PagingData.from(data.orEmpty())
+        showGroup(pagingData)
     }
 
     private fun setupAdapter() = binding.run {
