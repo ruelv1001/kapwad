@@ -60,6 +60,29 @@ class BillViewModel @Inject constructor(
         }
     }
 
+    private suspend fun loadAskForDonation() {
+        billRepository.doGetAskForDonationList()
+            .cachedIn(viewModelScope)
+            .onStart {
+                _getBillSharedFlow.emit(BillViewState.Loading)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.devLog("error",exception)
+            }
+            .collect { pagingData ->
+                _getBillSharedFlow.emit(
+                    BillViewState.SuccessGetAskForDonationList(pagingData)
+                )
+            }
+    }
+
+    fun refreshDonations() {
+        viewModelScope.launch {
+            loadAskForDonation()
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,

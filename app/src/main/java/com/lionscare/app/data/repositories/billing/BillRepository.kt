@@ -23,6 +23,14 @@ class BillRepository @Inject constructor(
             .flowOn(ioDispatcher)
     }
 
+    fun doGetAskForDonationList(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<BillData>>{
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { AskForDonationListPagingSource(billRemoteDataSource) }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(pageSize = 5, initialLoadSize = 5, enablePlaceholders = false)
     }
