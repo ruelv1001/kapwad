@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.R
 import com.lionscare.app.data.model.SampleData
+import com.lionscare.app.data.repositories.billing.response.BillData
 import com.lionscare.app.databinding.ActivityAllRequestBulletinBinding
 import com.lionscare.app.databinding.ActivityBillingBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
@@ -82,7 +83,7 @@ class AllRequestBulletinActivity : AppCompatActivity(), BillAdapter.OnClickCallb
         }
     }
 
-    override fun onItemClicked(data: SampleData) {
+    override fun onItemClicked(data: BillData) {
 
     }
 
