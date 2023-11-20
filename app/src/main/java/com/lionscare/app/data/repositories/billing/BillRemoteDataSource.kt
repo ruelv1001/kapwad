@@ -1,5 +1,8 @@
 package com.lionscare.app.data.repositories.billing
 
+import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
+import com.lionscare.app.data.repositories.billing.request.AskDonationRequest
+import com.lionscare.app.data.repositories.billing.request.GetListOfAskedDonationRequest
 import com.lionscare.app.data.repositories.billing.request.MyBillListRequest
 import com.lionscare.app.data.repositories.billing.response.BillListResponse
 import com.lionscare.app.data.repositories.group.request.GetGroupListRequest
@@ -31,8 +34,12 @@ class BillRemoteDataSource @Inject constructor(private val billService: BillServ
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    suspend fun doGetAllMyBillList(status: String, page: String, perPage: String): BillListResponse {
-        val request = MyBillListRequest(status ,page.toInt(), perPage.toInt())
+    suspend fun doGetAllMyBillList(
+        status: String,
+        page: String,
+        perPage: String
+    ): BillListResponse {
+        val request = MyBillListRequest(status, page.toInt(), perPage.toInt())
         val response = billService.doGetAllMyBillList(request)
 
         if (response.code() != HttpURLConnection.HTTP_OK) {
@@ -40,6 +47,7 @@ class BillRemoteDataSource @Inject constructor(private val billService: BillServ
         }
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
+
     //===================ask for donation
     suspend fun doGetAllListOfGroupRequestedForDonations(
         page: String,
@@ -76,6 +84,7 @@ class BillRemoteDataSource @Inject constructor(private val billService: BillServ
         }
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
+
     suspend fun doRequestToUsers(request: AskDonationRequest): GeneralResponse {
         val response = billService.doRequestToUsers(request)
         if (response.code() != HttpURLConnection.HTTP_OK) {

@@ -79,6 +79,9 @@
 -keep class com.lionscare.app.data.repositories.wallet.request.* { *; }
 -keep class com.lionscare.app.data.repositories.wallet.response.* { *; }
 
+-keep class com.lionscare.app.data.repositories.billing.request.* { *; }
+-keep class com.lionscare.app.data.repositories.billing.response.* { *; }
+
 -keep,allowobfuscation,allowshrinking class kotlinx.coroutines.flow.*
 
 -keep class com.google.gson.reflect.TypeToken
