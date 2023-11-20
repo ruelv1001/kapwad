@@ -18,4 +18,15 @@ class BillRemoteDataSource @Inject constructor(private val billService: BillServ
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
+    suspend fun doGetAskForDonationList(page: String, perPage: String): BillListResponse {
+        val request = GetGroupListRequest(page.toInt(), perPage.toInt())
+        val response = billService.doGetAskForDonationList(request)
+
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+
 }

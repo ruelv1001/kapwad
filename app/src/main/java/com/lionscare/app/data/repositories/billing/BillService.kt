@@ -11,4 +11,8 @@ interface BillService {
     @POST("api/bills/bulletin/all")
     suspend fun doGetAllBillList(@Body getGroupListRequest: GetGroupListRequest): Response<BillListResponse>
 
+    @POST("api/bills/bulletin/requests")
+    suspend fun doGetAskForDonationList(@Body getGroupListRequest: GetGroupListRequest): Response<BillListResponse>
+
+
 }
