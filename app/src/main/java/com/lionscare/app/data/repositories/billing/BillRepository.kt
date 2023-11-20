@@ -31,6 +31,14 @@ class BillRepository @Inject constructor(
             .flowOn(ioDispatcher)
     }
 
+    fun doGetAllMyBillList(pagingConfig: PagingConfig = getDefaultPageConfig(), status: String): Flow<PagingData<BillData>>{
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { AllMyBillListPagingSource(billRemoteDataSource, status) }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(pageSize = 5, initialLoadSize = 5, enablePlaceholders = false)
     }

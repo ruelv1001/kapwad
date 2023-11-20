@@ -1,5 +1,6 @@
 package com.lionscare.app.data.repositories.billing
 
+import com.lionscare.app.data.repositories.billing.request.MyBillListRequest
 import com.lionscare.app.data.repositories.billing.response.BillListResponse
 import com.lionscare.app.data.repositories.group.request.GetGroupListRequest
 import retrofit2.Response
@@ -8,11 +9,15 @@ import retrofit2.http.POST
 
 interface BillService {
 
+    //bulletin
     @POST("api/bills/bulletin/all")
     suspend fun doGetAllBillList(@Body getGroupListRequest: GetGroupListRequest): Response<BillListResponse>
 
     @POST("api/bills/bulletin/requests")
     suspend fun doGetAskForDonationList(@Body getGroupListRequest: GetGroupListRequest): Response<BillListResponse>
 
+
+    @POST("api/bills/all")
+    suspend fun doGetAllMyBillList(@Body myBillListRequest: MyBillListRequest): Response<BillListResponse>
 
 }

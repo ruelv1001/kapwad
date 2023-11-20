@@ -6,12 +6,14 @@ import androidx.paging.cachedIn
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
+import com.lionscare.app.data.repositories.billing.BillRepository
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
 import com.lionscare.app.ui.billing.viewstate.CustomMemberListDataModel
+import com.lionscare.app.ui.bulletin.viewmodel.BillViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
@@ -33,7 +35,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BillingViewModel @Inject constructor(
     private val encryptedDataManager: AuthEncryptedDataManager,
-    private val groupRepository: GroupRepository
+    private val groupRepository: GroupRepository,
+    private val billRepository: BillRepository
 ) : ViewModel() {
     // Shared Flows
     private val _billingSharedFlow = MutableSharedFlow<BillingViewState>()
@@ -89,6 +92,35 @@ class BillingViewModel @Inject constructor(
                         BillingViewState.SuccessLoadFamily(it)
                     )
                 }
+        }
+    }
+
+    private suspend fun loadMyBills(status: String) {
+        billRepository.doGetAllMyBillList(status = status)
+            .cachedIn(viewModelScope)
+            .onStart {
+                _billingSharedFlow.emit(BillingViewState.LoadingMyBills)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.devLog("error",exception)
+            }
+            .collect { pagingData ->
+                _billingSharedFlow.emit(
+                    BillingViewState.SuccessMyListOfBills(pagingData)
+                )
+            }
+    }
+
+    fun refreshMyOngoingBills() {
+        viewModelScope.launch {
+            loadMyBills("ongoing")
+        }
+    }
+
+    fun refreshMyCompletedBills() {
+        viewModelScope.launch {
+            loadMyBills("completed")
         }
     }
 
