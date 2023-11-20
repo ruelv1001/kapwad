@@ -6,15 +6,13 @@ import androidx.paging.cachedIn
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
+import com.lionscare.app.data.repositories.billing.BillRepository
 import com.lionscare.app.data.repositories.group.GroupRepository
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
 import com.lionscare.app.ui.billing.viewstate.CustomMemberListDataModel
-import com.lionscare.app.ui.group.viewmodel.MemberViewState
-import com.lionscare.app.ui.main.viewmodel.GroupListViewState
-import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
 import com.lionscare.app.utils.AppConstant
 import com.lionscare.app.utils.CommonLogger
 import com.lionscare.app.utils.PopupErrorState
@@ -33,7 +31,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BillingViewModel @Inject constructor(
     private val encryptedDataManager: AuthEncryptedDataManager,
-    private val groupRepository: GroupRepository
+    private val groupRepository: GroupRepository,
+    private val billRepository: BillRepository,
 ) : ViewModel() {
     // Shared Flows
     private val _billingSharedFlow = MutableSharedFlow<BillingViewState>()
@@ -45,33 +44,63 @@ class BillingViewModel @Inject constructor(
     var shouldShowDonationRequestsViews = true // for donations request list
 
     var isRequestFromGroups = false //if it came from groups or personal request screen
-    var immediateFamilyData : GroupListData? = null
+    var immediateFamilyData: GroupListData? = null
 
     //================= For holding data, to cache users selected groups and custom people request in donations
-    var groupsRequestsData : MutableList<CustomGroupListDataModel>? = null
-    var customRequestsData : MutableList<CustomMemberListDataModel>? = null
+    var groupsRequestsData: MutableList<CustomGroupListDataModel>? = null
+    var customRequestsData: MutableList<CustomMemberListDataModel>? = null
 
-    var currentFragmentRoute : String = "" // determines if it should show list from API or cached list above
+    var currentFragmentRoute: String =
+        "" // determines if it should show list from API or cached list above
 
     var billingStatementNumber = "B-0000004"
 
+
+    //Ask for donations
+    fun loadRequests(code: String) {
+        viewModelScope.launch {
+            loadGroupsRequestedForDonations(code)
+        }
+    }
+
+    private suspend fun loadGroupsRequestedForDonations(code: String) {
+        billRepository.doGetAllListOfGroupRequestedForDonations(code = code)
+            .cachedIn(viewModelScope)
+            .onStart {
+                _billingSharedFlow.emit(BillingViewState.LoadingMembers)
+            }
+            .catch { exception ->
+                onError(exception)
+            }
+            .collect { pagingData ->
+                _billingSharedFlow.emit(
+                    BillingViewState.SuccessGroupsRequestedForDonations(pagingData)
+                )
+            }
+    }
+
+
     fun loadGroups() {
         viewModelScope.launch {
-            groupRepository.doGetGroupList()
-                .cachedIn(viewModelScope)
-                .onStart {
-                    _billingSharedFlow.emit(BillingViewState.LoadingGroups)
-                }
-                .catch { exception ->
-                    onError(exception)
-                    CommonLogger.devLog("error", exception)
-                }
-                .collect { pagingData ->
-                    _billingSharedFlow.emit(
-                        BillingViewState.SuccessLoadGroup(pagingData)
-                    )
-                }
+            doGetGroupList()
         }
+    }
+
+    private suspend fun doGetGroupList() {
+        groupRepository.doGetGroupList()
+            .cachedIn(viewModelScope)
+            .onStart {
+                _billingSharedFlow.emit(BillingViewState.LoadingGroups)
+            }
+            .catch { exception ->
+                onError(exception)
+                CommonLogger.devLog("error", exception)
+            }
+            .collect { pagingData ->
+                _billingSharedFlow.emit(
+                    BillingViewState.SuccessLoadGroup(pagingData)
+                )
+            }
     }
 
     fun getImmediateFamily() {
@@ -121,7 +150,7 @@ class BillingViewModel @Inject constructor(
                                 errorResponse?.msg.orEmpty(),
                             )
                         )
-                    } else{
+                    } else {
                         _billingSharedFlow.emit(
                             BillingViewState.PopupError(
                                 PopupErrorState.HttpError,

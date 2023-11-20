@@ -69,64 +69,17 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
 
     override fun onResume() {
         super.onResume()
-        //===================== groups
-        when(viewModel.currentFragmentRoute ){
-            "request_add" -> {
-                if (viewModel.groupsRequestsData != null && viewModel.groupsRequestsData.orEmpty().isNotEmpty()
-                ) {
-                    //put the cached data from viewmodel back to adapter
-                    // along with other list but show currentyl checked
-                    orgAdapter?.setCustomData(viewModel.groupsRequestsData!!)
-                    viewModel.loadGroups()
-                }else{
-                    viewModel.loadGroups()
-                    binding.orgPlaceHolderTextView.isVisible = true
-                    binding.orgShimmerLayout.isVisible = false
-                    binding.organizationRecyclerView.isVisible = false
-                }
-            }
-            "request_list" -> {
-                if (viewModel.groupsRequestsData != null && viewModel.groupsRequestsData.orEmpty().isNotEmpty()) {
-                    //put the cached data from viewmodel back to adapter
-                    val data = viewModel.groupsRequestsData?.map {
-                        it.groupData
-                    }?.toMutableList()
-                    orgAdapter?.setCustomData(viewModel.groupsRequestsData.orEmpty().toMutableList())
-                    val pagingData: PagingData<GroupListData> = PagingData.from(data.orEmpty())
-                    showGroup(pagingData)
 
-                }else{
-                    binding.orgPlaceHolderTextView.isVisible = true
-                    binding.orgShimmerLayout.isVisible = false
-                    binding.organizationRecyclerView.isVisible = false
-                }
-            }
-        }
-        //============= family
-        if (viewModel.immediateFamilyData != null) {
-            binding.createGroupButton.isGone = true
-            binding.famShimmerLayout.isGone = true
-            binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
-            setImmediateFamily(viewModel.immediateFamilyData!!)
-            binding.immediateFamilyLayout.checkBox.isChecked = true
-        } else {
-            //if request add, and not show list of request, then do api
-            if (viewModel.currentFragmentRoute == "request_add") {
-                viewModel.getImmediateFamily()
-            } else {
-                binding.createGroupButton.isVisible = true
-                binding.createGroupButton.text = "No Family Selected"
-                binding.createGroupButton.isEnabled = false
-                binding.famShimmerLayout.isGone = true
-                binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
-            }
-        }
     }
 
     private fun handleViewState(viewState: BillingViewState) {
         when (viewState) {
             is BillingViewState.LoadingGroups -> binding.orgSwipeRefreshLayout.isRefreshing = true
+            is BillingViewState.LoadingGroupsRequestedForDonations -> binding.orgSwipeRefreshLayout.isRefreshing = true
             is BillingViewState.SuccessLoadGroup -> {
+                showGroup(viewState.pagingData)
+            }
+            is BillingViewState.SuccessGroupsRequestedForDonations -> {
                 showGroup(viewState.pagingData)
             }
 
@@ -187,6 +140,61 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
             "Note: This Billing ${viewModel.billingStatementNumber} " +
                     "will be posted in the Request for Donations section " +
                     "of your selected groups"
+
+
+        //===================== groups
+        when(viewModel.currentFragmentRoute ){
+            "request_add" -> {
+                if (viewModel.groupsRequestsData != null && viewModel.groupsRequestsData.orEmpty().isNotEmpty()
+                ) {
+                    //put the cached data from viewmodel back to adapter
+                    // along with other list but show currentyl checked
+                    orgAdapter?.setCustomData(viewModel.groupsRequestsData!!)
+                    viewModel.loadGroups()
+                }else{
+                    viewModel.loadGroups()
+                    binding.orgPlaceHolderTextView.isVisible = true
+                    binding.orgShimmerLayout.isVisible = false
+                    binding.organizationRecyclerView.isVisible = false
+                }
+            }
+            "request_list" -> {
+                viewModel.loadRequests("2311845686")
+//                if (viewModel.groupsRequestsData != null && viewModel.groupsRequestsData.orEmpty().isNotEmpty()) {
+//                    //put the cached data from viewmodel back to adapter
+//                    val data = viewModel.groupsRequestsData?.map {
+//                        it.groupData
+//                    }?.toMutableList()
+//                    orgAdapter?.setCustomData(viewModel.groupsRequestsData.orEmpty().toMutableList())
+//                    val pagingData: PagingData<GroupListData> = PagingData.from(data.orEmpty())
+//                    showGroup(pagingData)
+//
+//                }else{
+//                    binding.orgPlaceHolderTextView.isVisible = true
+//                    binding.orgShimmerLayout.isVisible = false
+//                    binding.organizationRecyclerView.isVisible = false
+//                }
+            }
+        }
+        //============= family
+        if (viewModel.immediateFamilyData != null) {
+            binding.createGroupButton.isGone = true
+            binding.famShimmerLayout.isGone = true
+            binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
+            setImmediateFamily(viewModel.immediateFamilyData!!)
+            binding.immediateFamilyLayout.checkBox.isChecked = true
+        } else {
+            //if request add, and not show list of request, then do api
+            if (viewModel.currentFragmentRoute == "request_add") {
+                viewModel.getImmediateFamily()
+            } else {
+                binding.createGroupButton.isVisible = true
+                binding.createGroupButton.text = "No Family Selected"
+                binding.createGroupButton.isEnabled = false
+                binding.famShimmerLayout.isGone = true
+                binding.immediateFamilyLayout.adapterLinearLayout.isGone = true
+            }
+        }
     }
 
     private fun setOnClickListeners() = binding.run {
@@ -214,11 +222,6 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
                         .show(childFragmentManager, RegisterSuccessDialog.TAG)
                 }
             }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback {
-            //If user selected and checked some values, reset and remove it
-            orgAdapter?.setCustomData(mutableListOf())
         }
     }
 
@@ -253,7 +256,18 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
             this@AskForDonationsGroupRequestFragment,
             shouldShowDonationRequestsViews = viewModel.shouldShowDonationRequestsViews,
         )
-        orgSwipeRefreshLayout.setOnRefreshListener { orgSwipeRefreshLayout.isRefreshing = false }
+        orgSwipeRefreshLayout.setOnRefreshListener {
+            when(viewModel.currentFragmentRoute ){
+                "request_add" -> {
+                    viewModel.loadGroups()
+                    viewModel.getImmediateFamily()
+                }
+                "request_list" -> {
+                    viewModel.loadRequests("2311845686")
+                }
+            }
+
+        }
         linearLayoutManager = LinearLayoutManager(context)
         organizationRecyclerView.layoutManager = linearLayoutManager
         organizationRecyclerView.adapter = orgAdapter
