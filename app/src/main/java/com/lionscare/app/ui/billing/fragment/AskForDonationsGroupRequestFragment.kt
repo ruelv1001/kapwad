@@ -205,15 +205,21 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
                     }
                     //store to viewModel
                     viewModel.groupsRequestsData = groupsWithChecked
-                    findNavController().popBackStack()
+
+                    //API
+
+//                    findNavController().popBackStack()
                 }
                 "request_list" -> {
-
                     RemoveFromDonationRequestDialog.newInstance(this@AskForDonationsGroupRequestFragment)
                         .show(childFragmentManager, RegisterSuccessDialog.TAG)
                 }
             }
+        }
 
+        requireActivity().onBackPressedDispatcher.addCallback {
+            //If user selected and checked some values, reset and remove it
+            orgAdapter?.setCustomData(mutableListOf())
         }
     }
 

@@ -60,22 +60,25 @@ class GroupsYourGroupAdapter(
             data?.let {
                 //set to ischecked true to make sure cached data will match contains
                 val customGroupDataModel = CustomGroupListDataModel(groupData = data, isChecked = true)
-                val existingModel = customGroupListDataModel.find { it == customGroupDataModel }
+                var existingModel = customGroupListDataModel.find { it == customGroupDataModel }
 
                 binding.checkBox.isVisible = shouldShowDonationRequestsViews != null
                 binding.checkBox.isChecked = existingModel?.isChecked ?: false
 
                 binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+                    existingModel = customGroupListDataModel.find { it == customGroupDataModel }
                     if (existingModel != null) {
-                        existingModel.isChecked = isChecked
+                        existingModel?.isChecked = isChecked
                         val index = customGroupListDataModel.indexOf(existingModel)
-                        customGroupListDataModel[index] = existingModel
+                        customGroupListDataModel[index] = existingModel!!
                         CommonLogger.instance.sysLogE("fefe",  customGroupListDataModel[index].isChecked)
                     } else {
                         // If not in the list, add it with the current isChecked value
                         customGroupListDataModel.add(CustomGroupListDataModel(groupData = data, isChecked = isChecked))
                     }
                 }
+
+
                 binding.titleTextView.text = data.name
                 binding.membersTextView.text = context.resources.getQuantityString(
                     R.plurals.member_plural, //plural from strings.xml file
