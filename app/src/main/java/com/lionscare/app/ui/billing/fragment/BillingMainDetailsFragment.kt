@@ -34,6 +34,7 @@ import com.lionscare.app.ui.billing.dialog.DonateDialog
 import com.lionscare.app.ui.billing.dialog.OptionDonateDialog
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
+import com.lionscare.app.utils.capitalizeWords
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
@@ -219,7 +220,7 @@ class BillingMainDetailsFragment : Fragment() {
         binding.billingNumberInQRText.text = data.code
         binding.amountDueTextView.text = data.display_amount
         binding.totalDonatedTextView.text = data.display_donated_amount
-        binding.billingBadge.text = data.type
+        binding.billingBadge.text = data.type?.capitalizeWords()
         binding.dateOfBillingStatementTextView.text = data.date_created?.date_db
         binding.dueDateTextView.text = data.due_date?.date_only_ph
 
