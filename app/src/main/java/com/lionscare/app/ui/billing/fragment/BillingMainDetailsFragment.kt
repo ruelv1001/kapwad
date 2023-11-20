@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.addCallback
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lionscare.app.R
 import com.lionscare.app.data.repositories.baseresponse.DateModel
 import com.lionscare.app.data.repositories.baseresponse.UserModel
+import com.lionscare.app.data.repositories.billing.response.BillDetailsData
 import com.lionscare.app.data.repositories.billing.response.DonatorData
 import com.lionscare.app.databinding.FragmentBillingMainDetailsBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
@@ -32,8 +34,10 @@ import com.lionscare.app.ui.billing.dialog.DonateDialog
 import com.lionscare.app.ui.billing.dialog.OptionDonateDialog
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
+import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
+import com.lionscare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -65,8 +69,6 @@ class BillingMainDetailsFragment : Fragment() {
 
         //TODO API
         setupAdapter()
-        setContentViews()
-
     }
 
     private fun setOnClickListeners() = binding.run {
@@ -150,16 +152,27 @@ class BillingMainDetailsFragment : Fragment() {
 
     }
 
-    //TODO API
     private fun handleViewState(viewState: BillingViewState) {
         when (viewState) {
+            is BillingViewState.LoadingBillingDetails -> activity.showLoadingDialog(R.string.loading)
+            is BillingViewState.SuccessLoadBillingDetails -> {
+                activity.hideLoadingDialog()
+                viewState.data?.let { setContentViews(it) }
+            }
+            is BillingViewState.PopupError -> {
+                activity.hideLoadingDialog()
+                showPopupError(requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message)
+            }
             else -> Unit
         }
     }
 
 
     @SuppressLint("SetTextI18n")
-    private fun setContentViews() {
+    private fun setContentViews(data: BillDetailsData) {
         activity.setToolbarTitle(viewModel.billingStatementNumber)
         val sampleDonatorDataList = mutableListOf<DonatorData>()
         sampleDonatorDataList.add(
@@ -202,20 +215,20 @@ class BillingMainDetailsFragment : Fragment() {
         val samplePagingData: PagingData<DonatorData> = PagingData.from(sampleDonatorDataList)
         showList(samplePagingData)
 
-        binding.qrImageView.setImageBitmap(setQR(requireActivity(), "sasacs sas  as "))
-        binding.billingNumberTextView.text = viewModel.billingStatementNumber
-        binding.billingNumberInQRText.text = viewModel.billingStatementNumber
-        binding.amountDueTextView.text = "P100,000.00"
-        binding.totalDonatedTextView.text = "P30,000.00"
-        binding.billingBadge.text = "Public"
-        binding.dateOfBillingStatementTextView.text = "10.12.2023 | 10:00 am"
-        binding.dueDateTextView.text = "10.13.2023"
+        binding.qrImageView.setImageBitmap(setQR(requireActivity(), data.code))
+        binding.billingNumberTextView.text = data.code
+        binding.billingNumberInQRText.text = data.code
+        binding.amountDueTextView.text = data.display_amount
+        binding.totalDonatedTextView.text = data.display_donated_amount
+        binding.billingBadge.text = data.type
+        binding.dateOfBillingStatementTextView.text = data.date_created?.date_db
+        binding.dueDateTextView.text = data.due_date?.date_only_ph
 
-        handleButtonStatus()
+        handleButtonStatus(data.status.toString())
     }
 
     @SuppressLint("SetTextI18n")
-    private fun handleButtonStatus(data: String = "ongoing") {
+    private fun handleButtonStatus(data: String) {
         when (data) {
             "completed" -> {
                 binding.donateButton.text = "Completed"
@@ -294,11 +307,15 @@ class BillingMainDetailsFragment : Fragment() {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         adapter?.removeLoadStateListener { requireContext() }
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.doGetBillDetails(activity.billingCode)
     }
 
 }

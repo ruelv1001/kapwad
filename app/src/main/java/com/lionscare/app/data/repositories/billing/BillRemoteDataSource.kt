@@ -3,7 +3,9 @@ package com.lionscare.app.data.repositories.billing
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.billing.request.AskDonationRequest
 import com.lionscare.app.data.repositories.billing.request.GetListOfAskedDonationRequest
+import com.lionscare.app.data.repositories.billing.request.BillDetailsRequest
 import com.lionscare.app.data.repositories.billing.request.MyBillListRequest
+import com.lionscare.app.data.repositories.billing.response.BillDetailsResponse
 import com.lionscare.app.data.repositories.billing.response.BillListResponse
 import com.lionscare.app.data.repositories.group.request.GetGroupListRequest
 import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
@@ -101,4 +103,13 @@ class BillRemoteDataSource @Inject constructor(private val billService: BillServ
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
+    suspend fun doGetBillDetails(code: String): BillDetailsResponse {
+        val request = BillDetailsRequest(code)
+        val response = billService.doGetBillDetails(request)
+
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
 }

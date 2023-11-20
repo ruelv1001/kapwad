@@ -3,10 +3,9 @@ package com.lionscare.app.ui.billing.viewstate
 import androidx.paging.PagingData
 import com.lionscare.app.data.model.ErrorsData
 import com.lionscare.app.data.repositories.billing.response.BillData
+import com.lionscare.app.data.repositories.billing.response.BillDetailsData
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.group.response.ImmediateFamilyResponse
-import com.lionscare.app.ui.main.viewmodel.GroupListViewState
-import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
 import com.lionscare.app.utils.PopupErrorState
 
 sealed class BillingViewState{
@@ -18,6 +17,7 @@ sealed class BillingViewState{
     object LoadingGroupsRequestedForDonations : BillingViewState()
     data class SuccessGroupsRequestedForDonations(val pagingData: PagingData<GroupListData>) : BillingViewState()
     data class SuccessLoadBillingDetails(val id: String) : BillingViewState()
+    data class SuccessLoadBillingDetails(val data: BillDetailsData? = null) : BillingViewState()
     data class SuccessLoadGroup(val pagingData: PagingData<GroupListData>) : BillingViewState()
     data class SuccessLoadFamily(val immediateFamilyResponse: ImmediateFamilyResponse? = null) : BillingViewState()
     data class SuccessMyListOfBills(val pagingData: PagingData<BillData>) : BillingViewState()

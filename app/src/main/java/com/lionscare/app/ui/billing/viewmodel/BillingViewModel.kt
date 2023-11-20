@@ -14,6 +14,7 @@ import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
 import com.lionscare.app.ui.billing.viewstate.CustomMemberListDataModel
 import com.lionscare.app.ui.bulletin.viewmodel.BillViewState
+import com.lionscare.app.ui.group.viewmodel.AdminViewState
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
@@ -154,6 +155,22 @@ class BillingViewModel @Inject constructor(
         }
     }
 
+    fun doGetBillDetails(code: String) {
+        viewModelScope.launch {
+            billRepository.doGetBillDetails(code)
+                .onStart {
+                    _billingSharedFlow.emit(BillingViewState.LoadingBillingDetails)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _billingSharedFlow.emit(
+                        BillingViewState.SuccessLoadBillingDetails(it.data)
+                    )
+                }
+        }
+    }
 
     private suspend fun onError(exception: Throwable, endpoint: String = "") {
         when (exception) {

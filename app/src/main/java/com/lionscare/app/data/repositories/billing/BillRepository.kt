@@ -8,6 +8,7 @@ import com.lionscare.app.data.repositories.billing.request.AskDonationRequest
 import com.lionscare.app.data.repositories.billing.response.BillData
 import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.data.repositories.member.response.MemberListData
+import com.lionscare.app.data.repositories.billing.response.BillDetailsResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -77,6 +78,13 @@ class BillRepository @Inject constructor(
         return flow {
             val response =
                 billRemoteDataSource.doRequestToGroups(request)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doGetBillDetails(code: String): Flow<BillDetailsResponse> {
+        return flow {
+            val response = billRemoteDataSource.doGetBillDetails(code)
             emit(response)
         }.flowOn(ioDispatcher)
     }
