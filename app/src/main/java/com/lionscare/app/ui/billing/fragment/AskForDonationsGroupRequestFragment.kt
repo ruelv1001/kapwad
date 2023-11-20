@@ -161,7 +161,6 @@ class AskForDonationsGroupRequestFragment : Fragment(), GroupsYourGroupAdapter.G
                 binding.createGroupButton.isGone = true
                 binding.famShimmerLayout.isGone = true
                 binding.immediateFamilyLayout.adapterLinearLayout.isVisible = true
-
                 viewState.immediateFamilyResponse?.data?.let { setImmediateFamily(it) }
             }
 
