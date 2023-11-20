@@ -6,27 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lionscare.app.data.model.SampleData
 import com.lionscare.app.data.repositories.billing.response.BillData
 import com.lionscare.app.databinding.FragmentCompletedBillingStatementsBinding
 import com.lionscare.app.ui.billing.activity.BillingActivity
+import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
 import com.lionscare.app.ui.bulletin.adapter.BillAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCallback {
+class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCallback,
+    SwipeRefreshLayout.OnRefreshListener {
     private var _binding: FragmentCompletedBillingStatementsBinding? = null
     private val binding get() = _binding!!
     private var linearLayoutManager: LinearLayoutManager? = null
     private var adapter : BillAdapter? = null
+    private val viewModel: BillingViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,7 +50,6 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
         observeOngoingStatements()
         setOnClickListeners()
         setupAdapter()
-        setContentViews()
     }
 
     private fun setOnClickListeners() = binding.run {
@@ -55,48 +60,14 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
     }
     private fun handleViewState(viewState: BillingViewState) {
         when (viewState) {
+            is BillingViewState.LoadingMyBills -> binding.swipeRefreshLayout.isRefreshing = true
+            is BillingViewState.SuccessMyListOfBills -> {
+                showList(viewState.pagingData)
+            }
             else -> Unit
         }
     }
 
-    private fun setContentViews(){  //TODO
-        //TODO change api
-        val sampleData = mutableListOf<SampleData>()
-        sampleData.add(
-            SampleData(
-                title = "B-0000004",
-                amount = "30,000.00",
-                remarks = "Cancelled",
-                date ="11/23/2023",
-                id = 1,
-                name = "Von Denuelle Tandoc"
-            )
-        )
-        sampleData.add(
-            SampleData(
-                title = "B-0000043",
-                amount = "30,000.00",
-                remarks = "Completed",
-                date ="11/23/2023",
-                id = 2,
-                name = "Von Denuelle Tandoc"
-            )
-        )
-        sampleData.add(
-            SampleData(
-                title = "B-00005354",
-                amount = "30,000.00",
-                remarks = "Completed",
-                date ="11/23/2023",
-                id = 3,
-                name = "Von Denuelle Tandoc"
-            )
-        )
-        val samplePagingData: PagingData<SampleData> = PagingData.from(sampleData)
-       // showList(samplePagingData)
-    }
-
-    //TODO
     private fun showList(sampleData: PagingData<BillData>){
         binding.swipeRefreshLayout.isRefreshing = false
         adapter?.submitData(viewLifecycleOwner.lifecycle, sampleData)
@@ -104,7 +75,7 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
 
     private fun setupAdapter() = binding.run {
         adapter = BillAdapter(requireContext(), this@CompletedBillingStatementsFragment)
-        swipeRefreshLayout.setOnRefreshListener { swipeRefreshLayout.isRefreshing = false }
+        swipeRefreshLayout.setOnRefreshListener(this@CompletedBillingStatementsFragment)
         linearLayoutManager = LinearLayoutManager(context)
         completedBillingRecyclerView.layoutManager = linearLayoutManager
         completedBillingRecyclerView.adapter = adapter
@@ -136,9 +107,9 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
     private fun observeOngoingStatements() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-//                viewModel.memberSharedFlow.collectLatest { viewState ->
-//                    handleViewState(viewState)
-//                }
+                viewModel.billingSharedFlow.collectLatest { viewState ->
+                    handleViewState(viewState)
+                }
             }
         }
     }
@@ -146,6 +117,15 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
         super.onDestroyView()
         adapter?.removeLoadStateListener { requireContext() }
         _binding = null
+    }
+
+    override fun onRefresh() {
+        viewModel.refreshMyCompletedBills()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
     }
 
     companion object {

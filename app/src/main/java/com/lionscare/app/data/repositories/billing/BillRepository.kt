@@ -38,6 +38,14 @@ class BillRepository @Inject constructor(
             .flowOn(ioDispatcher)
     }
 
+    fun doGetAllMyBillList(pagingConfig: PagingConfig = getDefaultPageConfig(), status: String): Flow<PagingData<BillData>>{
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { AllMyBillListPagingSource(billRemoteDataSource, status) }
+        ).flow
+            .flowOn(ioDispatcher)
+    }
+
     //==================Ask for donations
     fun doGetAllListOfGroupRequestedForDonations(pagingConfig: PagingConfig = getDefaultPageConfig(), code : String): Flow<PagingData<GroupListData>>{
         val doGetAllListOfGroupRequestedForDonations =

@@ -3,6 +3,7 @@ package com.lionscare.app.data.repositories.billing
 import com.lionscare.app.data.repositories.baseresponse.GeneralResponse
 import com.lionscare.app.data.repositories.billing.request.AskDonationRequest
 import com.lionscare.app.data.repositories.billing.request.GetListOfAskedDonationRequest
+import com.lionscare.app.data.repositories.billing.request.MyBillListRequest
 import com.lionscare.app.data.repositories.billing.response.BillListResponse
 import com.lionscare.app.data.repositories.group.request.GetGroupListRequest
 import com.lionscare.app.data.repositories.group.response.GetGroupListResponse
@@ -13,12 +14,16 @@ import retrofit2.http.POST
 
 interface BillService {
 
+    //bulletin
     @POST("api/bills/bulletin/all")
     suspend fun doGetAllBillList(@Body getGroupListRequest: GetGroupListRequest): Response<BillListResponse>
 
     @POST("api/bills/bulletin/requests")
     suspend fun doGetAskForDonationList(@Body getGroupListRequest: GetGroupListRequest): Response<BillListResponse>
 
+
+    @POST("api/bills/all")
+    suspend fun doGetAllMyBillList(@Body myBillListRequest: MyBillListRequest): Response<BillListResponse>
 
     //=============Ask for donation
     @POST("api/bills/requests/groups-list")
