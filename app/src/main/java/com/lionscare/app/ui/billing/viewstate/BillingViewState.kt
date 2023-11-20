@@ -15,6 +15,8 @@ sealed class BillingViewState{
     object LoadingGroups : BillingViewState()
     object LoadingFamily : BillingViewState()
     object LoadingMyBills : BillingViewState()
+    object LoadingGroupsRequestedForDonations : BillingViewState()
+    data class SuccessGroupsRequestedForDonations(val pagingData: PagingData<GroupListData>) : BillingViewState()
     data class SuccessLoadBillingDetails(val id: String) : BillingViewState()
     data class SuccessLoadGroup(val pagingData: PagingData<GroupListData>) : BillingViewState()
     data class SuccessLoadFamily(val immediateFamilyResponse: ImmediateFamilyResponse? = null) : BillingViewState()
