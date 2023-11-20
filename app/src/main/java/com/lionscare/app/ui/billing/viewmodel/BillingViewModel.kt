@@ -7,8 +7,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lionscare.app.data.model.ErrorModel
 import com.lionscare.app.data.repositories.group.GroupRepository
+import com.lionscare.app.data.repositories.group.response.GroupListData
 import com.lionscare.app.security.AuthEncryptedDataManager
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
+import com.lionscare.app.ui.billing.viewstate.CustomGroupListDataModel
+import com.lionscare.app.ui.billing.viewstate.CustomMemberListDataModel
 import com.lionscare.app.ui.group.viewmodel.MemberViewState
 import com.lionscare.app.ui.main.viewmodel.GroupListViewState
 import com.lionscare.app.ui.main.viewmodel.ImmediateFamilyViewState
@@ -37,25 +40,19 @@ class BillingViewModel @Inject constructor(
     val billingSharedFlow: SharedFlow<BillingViewState> =
         _billingSharedFlow.asSharedFlow()
 
-    private val _getFamilySharedFlow = MutableSharedFlow<ImmediateFamilyViewState>()
-    val immediateFamilySharedFlow: SharedFlow<ImmediateFamilyViewState> =
-        _getFamilySharedFlow.asSharedFlow()
+    //=================== For ask for donations group request and custom request
 
-    private val _getGroupSharedFlow = MutableSharedFlow<GroupListViewState>()
-    val getGroupSharedFlow: SharedFlow<GroupListViewState> =
-        _getGroupSharedFlow.asSharedFlow()
-
-    private val _memberSharedFlow = MutableSharedFlow<MemberViewState>()
-    val memberSharedFlow: SharedFlow<MemberViewState> =
-        _memberSharedFlow.asSharedFlow()
-
-    //==================== For donations request groupos and people custom =======
-    var shouldShowRemoveButton = false // for donations request list
+    var shouldShowDonationRequestsViews = true // for donations request list
 
     var isRequestFromGroups = false //if it came from groups or personal request screen
+    var immediateFamilyData : GroupListData? = null
 
-    //=================== For ask for donations group request and custom request
-    var immediateFamilyId = ""
+    //================= For holding data, to cache users selected groups and custom people request in donations
+    var groupsRequestsData : MutableList<CustomGroupListDataModel>? = null
+    var customRequestsData : MutableList<CustomMemberListDataModel>? = null
+
+    var currentFragmentRoute : String = "" // determines if it should show list from API or cached list above
+
     var billingStatementNumber = "B-0000004"
 
     fun loadGroups() {
@@ -63,15 +60,15 @@ class BillingViewModel @Inject constructor(
             groupRepository.doGetGroupList()
                 .cachedIn(viewModelScope)
                 .onStart {
-                    _getGroupSharedFlow.emit(GroupListViewState.Loading)
+                    _billingSharedFlow.emit(BillingViewState.LoadingGroups)
                 }
                 .catch { exception ->
                     onError(exception)
                     CommonLogger.devLog("error", exception)
                 }
                 .collect { pagingData ->
-                    _getGroupSharedFlow.emit(
-                        GroupListViewState.Success(pagingData)
+                    _billingSharedFlow.emit(
+                        BillingViewState.SuccessLoadGroup(pagingData)
                     )
                 }
         }
@@ -81,22 +78,22 @@ class BillingViewModel @Inject constructor(
         viewModelScope.launch {
             groupRepository.doGetImmediateFamily()
                 .onStart {
-                    _getFamilySharedFlow.emit(ImmediateFamilyViewState.Loading)
+                    _billingSharedFlow.emit(BillingViewState.LoadingFamily)
                 }
                 .catch { exception ->
-                    onError(exception)
+                    onError(exception, endpoint = "family")
                     CommonLogger.sysLogE("ERROR", exception)
                 }
                 .collect {
-                    _getFamilySharedFlow.emit(
-                        ImmediateFamilyViewState.Success(it)
+                    _billingSharedFlow.emit(
+                        BillingViewState.SuccessLoadFamily(it)
                     )
                 }
         }
     }
 
 
-    private suspend fun onError(exception: Throwable) {
+    private suspend fun onError(exception: Throwable, endpoint: String = "") {
         when (exception) {
             is IOException,
             is TimeoutException,
@@ -121,14 +118,15 @@ class BillingViewModel @Inject constructor(
                         _billingSharedFlow.emit(
                             BillingViewState.PopupError(
                                 PopupErrorState.SessionError,
-                                errorResponse?.msg.orEmpty()
+                                errorResponse?.msg.orEmpty(),
                             )
                         )
-                    } else if (errorResponse?.status_code.orEmpty() != AppConstant.NOT_FOUND) {
+                    } else{
                         _billingSharedFlow.emit(
                             BillingViewState.PopupError(
                                 PopupErrorState.HttpError,
-                                errorResponse?.msg.orEmpty()
+                                errorResponse?.msg.orEmpty(),
+                                endpoint = endpoint
                             )
                         )
                     }

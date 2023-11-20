@@ -459,6 +459,8 @@
     <string name="scan_qr_below">Scan QR Below</string>
     <string name="show_this_qr_code_to_accept_donation">Show this QR code to accept donation.</string>
     <string name="download">Download</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="no">No</string>
 
 
 </resources>

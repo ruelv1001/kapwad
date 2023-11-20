@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -52,23 +53,31 @@ class AskForDonationsFragment: Fragment()  {
 
     private fun setOnClickListeners() = binding.run {
         askInGroupRequestLinearLayout.setOnSingleClickListener {
-            viewModel.shouldShowRemoveButton = false
+            viewModel.shouldShowDonationRequestsViews = true
+            viewModel.currentFragmentRoute = "request_add"
          findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsGroupRequestFragment())
         }
         askInCustomRequestLinearLayout.setOnSingleClickListener {
-            viewModel.shouldShowRemoveButton = false
+            viewModel.shouldShowDonationRequestsViews = true
+            viewModel.currentFragmentRoute = "request_add"
          findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsCustomRequestFragment())
         }
         listOfGroupRequestLinearLayout.setOnSingleClickListener {
-            viewModel.shouldShowRemoveButton = true
+            viewModel.shouldShowDonationRequestsViews = false
+            viewModel.currentFragmentRoute = "request_list"
             findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsGroupRequestFragment())
         }
         listOfPeopleCustomRequestLinearLayout.setOnSingleClickListener {
-            viewModel.shouldShowRemoveButton = true
+            viewModel.shouldShowDonationRequestsViews = false
+            viewModel.currentFragmentRoute = "request_list"
             findNavController().navigate(AskForDonationsFragmentDirections.actionAskForDonationsFragmentToAskForDonationsCustomRequestFragment())
         }
         continueButton.setOnSingleClickListener {
             //todo
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            findNavController().popBackStack()
         }
     }
 
