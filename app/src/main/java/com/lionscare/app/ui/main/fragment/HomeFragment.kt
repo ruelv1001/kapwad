@@ -478,7 +478,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         }
 
         billingLinearLayout.setOnSingleClickListener {
-            val intent = BillingActivity.getIntent(requireActivity())
+            val intent = BillingActivity.getIntent(requireActivity(), "")
             startActivity(intent)
         }
         viewAllBillingTextButton.setOnSingleClickListener {

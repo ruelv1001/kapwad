@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
@@ -28,6 +29,7 @@ class BillingActivity : AppCompatActivity() {
     private var loadingDialog: CommonDialog? = null
 
     private val viewModel: BillingViewModel by viewModels()
+    var billingCode = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityBillingBinding.inflate(layoutInflater)
@@ -35,6 +37,7 @@ class BillingActivity : AppCompatActivity() {
 
         setupNavigationComponent()
         setOnClickListeners()
+        billingCode = intent.getStringExtra(BILLING_CODE).toString()
     }
 
     private fun setOnClickListeners(){
@@ -71,6 +74,20 @@ class BillingActivity : AppCompatActivity() {
         }
     }
 
+    fun showLoadingDialog(@StringRes strId: Int) {
+        if (loadingDialog == null) {
+            loadingDialog = CommonDialog.getLoadingDialogInstance(
+                message = getString(strId)
+            )
+        }
+        loadingDialog?.show(supportFragmentManager)
+    }
+
+    fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -78,8 +95,11 @@ class BillingActivity : AppCompatActivity() {
 
     companion object {
         private const val INVALID_ID = -1
-        fun getIntent(context: Context): Intent {
-            return Intent(context, BillingActivity::class.java)
+        private const val BILLING_CODE = "BILLING_CODE"
+        fun getIntent(context: Context, code: String): Intent {
+            val intent = Intent(context, BillingActivity::class.java)
+            intent.putExtra(BILLING_CODE, code)
+            return intent
         }
     }
 }

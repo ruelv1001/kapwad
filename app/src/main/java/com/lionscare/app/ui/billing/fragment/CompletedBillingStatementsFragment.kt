@@ -55,7 +55,7 @@ class CompletedBillingStatementsFragment() : Fragment(), BillAdapter.OnClickCall
     private fun setOnClickListeners() = binding.run {
     }
     override fun onItemClicked(data: BillData) {
-        val intent = BillingActivity.getIntent(requireActivity())
+        val intent = BillingActivity.getIntent(requireActivity(), data.code.toString())
         startActivity(intent)
     }
     private fun handleViewState(viewState: BillingViewState) {
