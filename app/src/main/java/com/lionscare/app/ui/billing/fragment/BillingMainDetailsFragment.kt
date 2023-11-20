@@ -34,7 +34,6 @@ import com.lionscare.app.ui.billing.dialog.DonateDialog
 import com.lionscare.app.ui.billing.dialog.OptionDonateDialog
 import com.lionscare.app.ui.billing.viewmodel.BillingViewModel
 import com.lionscare.app.ui.billing.viewstate.BillingViewState
-import com.lionscare.app.ui.group.activity.GroupActivity
 import com.lionscare.app.utils.setOnSingleClickListener
 import com.lionscare.app.utils.setQR
 import com.lionscare.app.utils.showPopupError
