@@ -1,0 +1,28 @@
+package com.ziacare.app.ui.group.viewmodel
+
+import com.ziacare.app.data.model.ErrorsData
+import com.ziacare.app.data.repositories.group.response.CreateGroupResponse
+import com.ziacare.app.data.repositories.group.response.GetGroupListResponse
+import com.ziacare.app.data.repositories.group.response.GroupData
+import com.ziacare.app.data.repositories.group.response.GroupListData
+import com.ziacare.app.data.repositories.group.response.PendingGroupRequestsListResponse
+import com.ziacare.app.ui.main.viewmodel.GroupListViewState
+import com.ziacare.app.ui.profile.viewmodel.ProfileViewState
+import com.ziacare.app.ui.wallet.viewmodel.WalletViewState
+import com.ziacare.app.utils.PopupErrorState
+
+sealed class GroupViewState{
+
+    object Loading : GroupViewState()
+    data class SuccessCreateGroup(val createGroupResponse: CreateGroupResponse? = null) : GroupViewState()
+    data class SuccessUpdateGroup(val createGroupResponse: CreateGroupResponse? = null) : GroupViewState()
+    data class SuccessShowGroup(val createGroupResponse: CreateGroupResponse? = null) : GroupViewState()
+    data class SuccessUploadAvatar(val message : String = "") : GroupViewState()
+    data class SuccessPendingGroupListCount(val pendingGroupRequestsListResponse : PendingGroupRequestsListResponse) : GroupViewState()
+
+
+    data class SuccessSearchGroup(val listData: List<GroupData>) : GroupViewState()
+    data class PopupError(val errorCode: PopupErrorState, val message: String = "") : GroupViewState()
+    data class InputError(val errorData: ErrorsData? = null) : GroupViewState()
+
+}

@@ -37,7 +37,7 @@ android {
     flavorDimensions "default"
 
     defaultConfig {
-        applicationId "com.lionscare.app"
+        applicationId "com.ziacare.app"
         minSdk 23
         targetSdk 33
         versionCode 35
@@ -88,7 +88,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            def appName = "Lions Care"
+            def appName = "Ziacare"
             def flavorName = variant.flavorName
             def versionCode = variant.versionCode
             def versionName = variant.versionName
