@@ -28,19 +28,6 @@
         <action
             android:id="@+id/action_navigation_wallet_to_navigation_groups"
             app:destination="@id/navigation_groups" />
-        <action
-            android:id="@+id/action_navigation_wallet_to_navigation_bulletin"
-            app:destination="@id/navigation_bulletin" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_bulletin"
-        android:name="com.ziacare.app.ui.main.fragment.BulletinFragment"
-        android:label=""
-        tools:layout="@layout/fragment_bulletin" >
-        <action
-            android:id="@+id/action_navigation_wallet_to_navigation_groups"
-            app:destination="@id/navigation_groups" />
     </fragment>
 
     <fragment

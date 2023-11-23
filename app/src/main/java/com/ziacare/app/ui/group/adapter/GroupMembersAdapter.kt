@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ziacare.app.data.repositories.group.response.GroupListData
 import com.ziacare.app.data.repositories.member.response.MemberListData
 import com.ziacare.app.databinding.AdapterMembersBinding
-import com.ziacare.app.ui.billing.viewstate.CustomMemberListDataModel
 import com.ziacare.app.utils.CommonLogger
 import com.ziacare.app.utils.loadAvatar
 
@@ -26,8 +25,6 @@ class GroupMembersAdapter(
     PagingDataAdapter<MemberListData, GroupMembersAdapter.MembersViewHolder>(
         DIFF_CALLBACK
     ) {
-    var customMemberListDataModel: MutableList<CustomMemberListDataModel>? = null
-        private set
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MemberListData>() {
@@ -65,9 +62,6 @@ class GroupMembersAdapter(
         fun bind(data: MemberListData?, position: Int) {
             data?.let {
                 binding.checkBox.isVisible = shouldShowDonationRequestsViews != null
-                binding.checkBox.isChecked =
-                    customMemberListDataModel?.get(position)?.isChecked == true //if should show checkbox
-
                 CommonLogger.sysLog("CLICKED", data.id)
                 if (id == data.user?.id) {
                     binding.youTextView.isVisible = true
@@ -93,23 +87,8 @@ class GroupMembersAdapter(
                         clickListener.onItemClicked(data)
                     }
                 }
-                //to get which data is checked or not
-                customMemberListDataModel?.add(
-                    CustomMemberListDataModel(
-                        memberListData = data,
-                        isChecked = binding.checkBox.isChecked
-                    )
-                )
-
             }
         }
-    }
-
-    fun getCustomData(): List<CustomMemberListDataModel>? {
-        return customMemberListDataModel
-    }
-    fun setCustomData(data: MutableList<CustomMemberListDataModel>) {
-        customMemberListDataModel = data
     }
 
     interface MembersCallback {

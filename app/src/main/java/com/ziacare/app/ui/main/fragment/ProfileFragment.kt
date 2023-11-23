@@ -22,7 +22,6 @@ import com.ziacare.app.R
 import com.ziacare.app.data.repositories.baseresponse.UserModel
 import com.ziacare.app.databinding.FragmentSettingsBinding
 import com.ziacare.app.ui.badge.activity.VerifiedBadgeActivity
-import com.ziacare.app.ui.billing.activity.MyBillingStatementsActivity
 import com.ziacare.app.ui.main.activity.MainActivity
 import com.ziacare.app.ui.main.viewmodel.SettingsViewModel
 import com.ziacare.app.ui.main.viewmodel.SettingsViewState
@@ -184,11 +183,6 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         notifLinearLayout.setOnSingleClickListener {
             val intent = NotificationsActivity.getIntent(requireActivity())
-            startActivity(intent)
-        }
-
-        myBillingStatementLinearLayout.setOnSingleClickListener {
-            val intent = MyBillingStatementsActivity.getIntent(requireActivity())
             startActivity(intent)
         }
 

@@ -141,10 +141,8 @@ class GroupDetailsActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
             startActivity(intent)
         }
         adminLinearLayout.setOnSingleClickListener {
-           /* val intent =
+           val intent =
                 GroupActivity.getIntent(this@GroupDetailsActivity, START_ADMIN, groupDetails)
-            startActivity(intent)*/
-            val intent = RequestForDonationActivity.getIntent(this@GroupDetailsActivity)
             startActivity(intent)
         }
         backImageView.setOnSingleClickListener {

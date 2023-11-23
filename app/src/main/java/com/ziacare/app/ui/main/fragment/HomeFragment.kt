@@ -33,8 +33,6 @@ import com.ziacare.app.data.repositories.group.response.GroupListData
 import com.ziacare.app.data.repositories.profile.response.BadgeStatus
 import com.ziacare.app.databinding.FragmentHomeBinding
 import com.ziacare.app.ui.badge.activity.VerifiedBadgeActivity
-import com.ziacare.app.ui.billing.activity.BillingActivity
-import com.ziacare.app.ui.billing.activity.MyBillingStatementsActivity
 import com.ziacare.app.ui.group.activity.GroupActivity
 import com.ziacare.app.ui.group.activity.GroupDetailsActivity
 import com.ziacare.app.ui.main.activity.MainActivity
@@ -90,9 +88,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         observeImmediateFamily()
         setClickListeners()
         setUpAnimation()
-
-        //todo put in handle view state later
-        updateBilling(30000,100000,"Bill No. 0000004", true)
         binding.swipeRefreshLayout.setOnRefreshListener(this@HomeFragment)
 
         //immediately make this view gone
@@ -207,15 +202,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         }
     }
 
-
-    @SuppressLint("SetTextI18n")
-    private fun updateBilling(currentAmount : Int, totalAmount : Int, billingNumberText : String, shouldShow : Boolean = false){
-        binding.billingLinearLayout.isVisible = shouldShow
-        val progress = (currentAmount.toFloat() / totalAmount * 100).toInt()
-        binding.billingProgressIndicator.progress = progress
-        binding.billingNumberText.text = billingNumberText
-        binding.billingAmountText.text = "${currencyFormat(currentAmount.toString())}/${currencyFormat(totalAmount.toString())}"
-    }
     @SuppressLint("SetTextI18n")
     private fun showProperBadgeStatus(badgeStatus: BadgeStatus?){
         binding.mainLayout.requestVerifiedBadgeLinearLayout.visibility = View.GONE
@@ -475,15 +461,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         }
         qrLayout.qrCodeTextView.setOnSingleClickListener {
             activity?.copyToClipboard(viewModel.userQrCode)
-        }
-
-        billingLinearLayout.setOnSingleClickListener {
-            val intent = BillingActivity.getIntent(requireActivity(), "")
-            startActivity(intent)
-        }
-        viewAllBillingTextButton.setOnSingleClickListener {
-            val intent = MyBillingStatementsActivity.getIntent(requireActivity())
-            startActivity(intent)
         }
     }
 
