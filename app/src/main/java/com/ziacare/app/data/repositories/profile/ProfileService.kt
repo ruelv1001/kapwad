@@ -2,13 +2,11 @@ package com.ziacare.app.data.repositories.profile
 
 import com.ziacare.app.data.repositories.auth.response.LoginResponse
 import com.ziacare.app.data.repositories.baseresponse.GeneralResponse
-import com.ziacare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.ziacare.app.data.repositories.profile.request.ChangePassRequest
 import com.ziacare.app.data.repositories.profile.request.NotificationListRequest
 import com.ziacare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
-import com.ziacare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.ziacare.app.data.repositories.profile.response.BadgeResponse
 import com.ziacare.app.data.repositories.profile.response.LOVResponse
 import com.ziacare.app.data.repositories.profile.response.ProfileVerificationResponse
@@ -89,17 +87,6 @@ interface ProfileService {
     @Multipart
     @POST("api/profile/setting/update-avatar")
     suspend fun uploadAvatar(@Part image: MultipartBody.Part): Response<GeneralResponse>
-
-
-    //============================= Cancel Badge
-    @POST("api/profile/badge/remove/request")
-    suspend fun requestBadgeRemoval(@Body request : BadgeRemovalRequest): Response<GeneralResponse>
-
-    @POST("api/profile/badge/remove/status")
-    suspend fun getBadgeRemovalStatus(): Response<BadgeRemovalStatusResponse>
-
-    @POST("api/profile/badge/remove/cancel")
-    suspend fun cancelRequestBadgeRemoval(): Response<GeneralResponse>
 
     @POST("api/notification/user")
     suspend fun getUserNotificationList(@Body request: NotificationListRequest): Response<UserNotificationListResponse>

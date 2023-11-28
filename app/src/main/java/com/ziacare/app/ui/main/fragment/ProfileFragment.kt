@@ -1,6 +1,5 @@
 package com.ziacare.app.ui.main.fragment
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,14 +13,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.emrekotun.toast.CpmToast.Companion.toastWarning
 import com.ziacare.app.R
 import com.ziacare.app.data.repositories.baseresponse.UserModel
 import com.ziacare.app.databinding.FragmentSettingsBinding
-import com.ziacare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.ziacare.app.ui.main.activity.MainActivity
 import com.ziacare.app.ui.main.viewmodel.SettingsViewModel
 import com.ziacare.app.ui.main.viewmodel.SettingsViewState
@@ -152,16 +149,6 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             startActivity(intent)
         }
 
-        requestBadgeLinearLayout.setOnSingleClickListener {
-            if(viewModel.userKycStatus != "completed"){
-                //do not allow users to request badge if kyc is not completed
-                requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified), 5000)
-            }else{
-                val intent = VerifiedBadgeActivity.getIntent(requireActivity())
-                startActivity(intent)
-            }
-        }
-
         verifyAccountLinearLayout.setOnSingleClickListener {
             val intent = AccountVerificationActivity.getIntent(requireActivity())
             startActivity(intent)
@@ -225,18 +212,9 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_public_servant)
                 }
             }
-
-            requestBadgeLinearLayout.isClickable = true
-            verifiedRBTextView.visibility = View.VISIBLE
-            arrowRBImageView.visibility = View.GONE
         }else{
             binding.badgeIdStatus.visibility = View.GONE
             binding.badgeImageView.visibility = View.GONE
-
-            requestBadgeLinearLayout.isClickable = true
-            requestBadgeImageView.setImageResource(R.drawable.ic_settings_request_badge)
-            verifiedRBTextView.visibility = View.GONE
-            arrowRBImageView.visibility = View.VISIBLE
         }
 
         if(isAccountVerified == true){

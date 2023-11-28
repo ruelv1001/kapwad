@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import com.ziacare.app.data.repositories.auth.response.LoginResponse
 import com.ziacare.app.data.repositories.baseresponse.GeneralResponse
 import com.ziacare.app.data.repositories.baseresponse.UserModel
-import com.ziacare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.ziacare.app.data.repositories.profile.request.BadgeRequest
 import com.ziacare.app.data.repositories.profile.request.FaceIDRequest
 import com.ziacare.app.data.repositories.profile.request.KYCRequest
@@ -14,7 +13,6 @@ import com.ziacare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.ziacare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
-import com.ziacare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.ziacare.app.data.repositories.profile.response.BadgeResponse
 import com.ziacare.app.data.repositories.profile.response.LOVResponse
 import com.ziacare.app.data.repositories.profile.response.ProfileVerificationResponse
@@ -127,27 +125,6 @@ class ProfileRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
-    //================================= Badge Removal
-    fun requestBadgeRemoval(request: BadgeRemovalRequest): Flow<GeneralResponse> {
-        return flow {
-            val response = profileRemoteDataSource.requestBadgeRemoval(request)
-            emit(response)
-        }.flowOn(ioDispatcher)
-    }
-
-    fun getBadgeRemovalStatus(): Flow<BadgeRemovalStatusResponse> {
-        return flow {
-            val response = profileRemoteDataSource.getBadgeRemovalStatus()
-            emit(response)
-        }.flowOn(ioDispatcher)
-    }
-
-    fun cancelRequestBadgeRemoval(): Flow<GeneralResponse> {
-        return flow {
-            val response = profileRemoteDataSource.cancelRequestBadgeRemoval()
-            emit(response)
-        }.flowOn(ioDispatcher)
-    }
     //======================= Change pass
     fun doChangePass(
         currentPass: String,

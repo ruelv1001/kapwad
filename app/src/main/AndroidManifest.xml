@@ -44,9 +44,6 @@
             android:name=".ui.wallet.activity.WalletActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.badge.activity.VerifiedBadgeActivity"
-            android:exported="false" />
-        <activity
             android:name="com.ziacare.app.ui.onboarding.activity.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="userPortrait"

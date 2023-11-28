@@ -2,7 +2,6 @@ package com.ziacare.app.data.repositories.profile
 
 import com.ziacare.app.data.repositories.auth.response.LoginResponse
 import com.ziacare.app.data.repositories.baseresponse.GeneralResponse
-import com.ziacare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.ziacare.app.data.repositories.profile.request.BadgeRequest
 import com.ziacare.app.data.repositories.profile.request.ChangePassRequest
 import com.ziacare.app.data.repositories.profile.request.FaceIDRequest
@@ -12,7 +11,6 @@ import com.ziacare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.ziacare.app.data.repositories.profile.request.UpdateInfoRequest
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberOTPRequest
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
-import com.ziacare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.ziacare.app.data.repositories.profile.response.BadgeResponse
 import com.ziacare.app.data.repositories.profile.response.LOVResponse
 import com.ziacare.app.data.repositories.profile.response.ProfileVerificationResponse
@@ -207,33 +205,6 @@ class ProfileRemoteDataSource @Inject constructor(
         return response.body() ?: throw NullPointerException("Response data is empty")
     }
 
-    //=================================BADGE REMOVAL API
-    suspend fun requestBadgeRemoval(request : BadgeRemovalRequest): GeneralResponse {
-        val response = profileService.requestBadgeRemoval(request)
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
-
-    suspend fun getBadgeRemovalStatus(): BadgeRemovalStatusResponse {
-        val response = profileService.getBadgeRemovalStatus()
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
-
-    suspend fun cancelRequestBadgeRemoval(): GeneralResponse {
-        val response = profileService.cancelRequestBadgeRemoval()
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
     //===================== Change password
 
     fun doChangePass(
