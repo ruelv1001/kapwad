@@ -200,46 +200,6 @@
 
     </LinearLayout>
 
-    <!--        initial request badge butto-->
-    <LinearLayout
-        android:id="@+id/requestVerifiedBadgeLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/color_accent"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/dimen_12"
-        android:paddingVertical="@dimen/dimen_18">
-
-        <ImageView
-            android:id="@+id/requestVerifiedBadgeImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:src="@drawable/ic_request_badge" />
-
-        <LinearLayout
-            android:id="@+id/textHolderLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/requestVerifiedBadgeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/home_membership_card_text"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_16" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!--        for status button-->
     <include
         android:id="@+id/includeBadgeLayout"
         layout="@layout/adapter_account_type"

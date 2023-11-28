@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -22,8 +20,7 @@
                 android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_gravity="center"
-                android:visibility="gone"
-                android:src="@drawable/img_lionscare_logo" />
+                android:visibility="gone" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -41,130 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-<!--KYC VERIFICATION STATUS-->
-                    <RelativeLayout
-                        android:visibility="gone"
-                        android:id="@+id/notVerifiedRelativeLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_130">
 
-                        <ImageView
-                            android:id="@+id/statusKYCImageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/bg_login"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:id="@+id/statusKYCTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter_semibold"
-                            android:text="@string/home_not_verified_message"
-                            android:layout_marginEnd="@dimen/dimen_16"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginStart="@dimen/dimen_20"
-                            android:textColor="@color/white"
-                            android:layout_toStartOf="@id/getVerifiedButton"
-                            android:layout_centerVertical="true"
-                            android:textSize="@dimen/font_24" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/getVerifiedButton"
-                            style="@style/MyButtonIconStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/white"
-                            android:fontFamily="@font/inter_semibold"
-                            android:paddingVertical="@dimen/dimen_10"
-                            android:paddingHorizontal="@dimen/dimen_20"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/dimen_20"
-                            android:text="@string/home_get_verified_text"
-                            android:textAllCaps="false"
-                            android:textColor="@color/color_primary"
-                            android:textSize="@dimen/font_16"/>
-
-                    </RelativeLayout>
-
-<!--BILLING PROGRESS-->
-                    <LinearLayout
-                        android:background="@drawable/bg_rounded_outline"
-                        android:id="@+id/billingLinearLayout"
-                        android:layout_marginTop="@dimen/dimen_8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:maxWidth="@dimen/dimen_350"
-                        android:maxHeight="@dimen/dimen_600"
-                        android:minWidth="@dimen/dimen_350"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="@dimen/dimen_16"
-                        android:paddingVertical="@dimen/dimen_8"
-                        >
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/billingNumberText"
-                                android:textColor="@color/color_primary"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                 android:layout_weight="1"
-                                tools:text="Bill No. 0000004"
-                                android:fontFamily="@font/inter_regular"
-                                android:textSize="@dimen/font_16" />
-
-                            <TextView
-                                android:id="@+id/viewAllBillingTextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_4"
-                                android:textColor="@color/color_primary"
-                                android:textAlignment="textEnd"
-                                android:text="@string/view_all"
-                                android:fontFamily="@font/inter_regular"
-                                android:textSize="@dimen/font_16" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/billingAmountText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="30,000/100,000"
-                            android:layout_marginBottom="@dimen/dimen_4"
-                            android:layout_marginTop="@dimen/dimen_16"
-                            android:layout_gravity="center_horizontal"
-                            android:gravity="center"
-                            android:fontFamily="@font/inter_semibold"
-                            android:textColor="@color/color_primary"
-                            app:drawableTint="@color/color_primary"
-                            android:drawablePadding="@dimen/dimen_4"
-                            app:drawableStartCompat="@drawable/baseline_favorite_border_24" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <com.google.android.material.progressindicator.LinearProgressIndicator
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/billingProgressIndicator"
-                                android:progress="25"
-                                app:trackCornerRadius="@dimen/dimen_50"
-                                app:trackThickness="@dimen/dimen_16"
-                                />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-<!--CARDS / IDS-->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -9,15 +9,15 @@
     <color name="black_text">#212121</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="color_primary">#1D8A5F</color>
-    <color name="color_primaryLight">#A8EAD0</color>
-    <color name="color_primaryDark">#1D8A5F</color>
-    <color name="color_accent">#E0F5ED</color>
+    <color name="color_primary">#845EC2</color>
+    <color name="color_primaryDark">#845EC2</color>
+    <color name="color_accent">#DACBF3</color>
+    <color name="color_primaryLight">#DACBF3</color>
     <color name="commons_text_hint">#BBBBBB</color>
     <color name="commons_lbl">#757575</color>
     <color name="commons_lbl_highlight">#BEB700</color>
 
-    <color name="green">#1D8A5F</color>
+    <color name="green">#845EC2</color>
     <color name="red">#F85757</color>
     <color name="light_red">#FF8CB6</color>
     <color name="lighter_red">#ffcccb</color>

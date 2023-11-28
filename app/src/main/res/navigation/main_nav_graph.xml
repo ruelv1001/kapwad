@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.lionscare.app.ui.main.fragment.HomeFragment"
+        android:name="com.ziacare.app.ui.main.fragment.HomeFragment"
         android:label=""
         tools:layout="@layout/fragment_home">
         <action
@@ -22,22 +22,9 @@
 
     <fragment
         android:id="@+id/navigation_wallet"
-        android:name="com.lionscare.app.ui.main.fragment.WalletFragment"
+        android:name="com.ziacare.app.ui.main.fragment.WalletFragment"
         android:label=""
         tools:layout="@layout/fragment_wallet" >
-        <action
-            android:id="@+id/action_navigation_wallet_to_navigation_groups"
-            app:destination="@id/navigation_groups" />
-        <action
-            android:id="@+id/action_navigation_wallet_to_navigation_bulletin"
-            app:destination="@id/navigation_bulletin" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_bulletin"
-        android:name="com.lionscare.app.ui.main.fragment.BulletinFragment"
-        android:label=""
-        tools:layout="@layout/fragment_bulletin" >
         <action
             android:id="@+id/action_navigation_wallet_to_navigation_groups"
             app:destination="@id/navigation_groups" />
@@ -45,7 +32,7 @@
 
     <fragment
         android:id="@+id/navigation_groups"
-        android:name="com.lionscare.app.ui.main.fragment.GroupsFragment"
+        android:name="com.ziacare.app.ui.main.fragment.GroupsFragment"
         android:label=""
         tools:layout="@layout/fragment_groups" >
         <action
@@ -55,7 +42,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.lionscare.app.ui.main.fragment.ProfileFragment"
+        android:name="com.ziacare.app.ui.main.fragment.ProfileFragment"
         android:label=""
         tools:layout="@layout/fragment_settings" />
 

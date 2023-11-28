@@ -17,8 +17,7 @@
             android:layout_width="@dimen/dimen_130"
             android:layout_height="@dimen/dimen_130"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen_50"
-            android:src="@drawable/img_lionscare_logo" />
+            android:layout_marginTop="@dimen/dimen_50" />
 
         <TextView
             android:layout_width="match_parent"

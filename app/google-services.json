@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "947225419985",
-    "project_id": "lionscare-b29db",
-    "storage_bucket": "lionscare-b29db.appspot.com"
+    "project_number": "253461583172",
+    "project_id": "ziacare-boilerplate",
+    "storage_bucket": "ziacare-boilerplate.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:947225419985:android:b05284ffe2cad64e5765f0",
+        "mobilesdk_app_id": "1:253461583172:android:3bbe362fa74f9c4e5d3311",
         "android_client_info": {
-          "package_name": "com.lionscare.app"
+          "package_name": "com.ziacare.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAEGAnU2BzMgcv66J5hdDKN6pDT3qwY2FY"
+          "current_key": "AIzaSyAZvEb-PW1L9S6gsT95ABhxf6qSJWW2yro"
         }
       ],
       "services": {

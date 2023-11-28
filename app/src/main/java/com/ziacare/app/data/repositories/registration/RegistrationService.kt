@@ -1,0 +1,35 @@
+package com.ziacare.app.data.repositories.registration
+
+import com.ziacare.app.data.repositories.auth.response.LoginResponse
+import com.ziacare.app.data.repositories.baseresponse.GeneralResponse
+import com.ziacare.app.data.repositories.registration.request.OTPRequest
+import com.ziacare.app.data.repositories.registration.request.OnboardingRequest
+import com.ziacare.app.data.repositories.registration.request.RegistrationRequest
+import com.ziacare.app.data.repositories.registration.response.OnboardingScanQRResponse
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+interface RegistrationService {
+
+    @POST("api/auth/pre-register")
+    suspend fun doValidateFields(@Body registrationRequest: RegistrationRequest): Response<GeneralResponse>
+
+    @POST("api/auth/request-otp")
+    suspend fun doRequestOTP(@Body otpRequest: OTPRequest): Response<GeneralResponse>
+
+    @POST("api/auth/register")
+    suspend fun doRegisterAccount(@Body registrationRequest: RegistrationRequest): Response<LoginResponse>
+
+    @POST("api/auth/onboarding/scan")
+    suspend fun doScanQR(@Body onboardingRequest: OnboardingRequest): Response<OnboardingScanQRResponse>
+
+    @POST("api/auth/onboarding/pre-validate")
+    suspend fun doPrevalidatePassword(@Body onboardingRequest: OnboardingRequest): Response<GeneralResponse>
+
+    @POST("api/auth/onboarding/request-otp")
+    suspend fun doRequestOTP(@Body onboardingRequest: OnboardingRequest): Response<GeneralResponse>
+
+    @POST("api/auth/onboarding/validate-otp")
+    suspend fun doValidateAndSetPassword(@Body onboardingRequest: OnboardingRequest): Response<LoginResponse>
+}
