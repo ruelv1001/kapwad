@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/bg_id_layout"
     android:padding="@dimen/dimen_20">
 
     <LinearLayout
@@ -60,8 +59,7 @@
             <ImageView
                 android:layout_width="@dimen/dimen_30"
                 android:layout_height="@dimen/dimen_30"
-                android:layout_marginEnd="@dimen/dimen_16"
-                android:src="@drawable/img_lionscare_logo" />
+                android:layout_marginEnd="@dimen/dimen_16" />
 
             <TextView
                 android:layout_width="wrap_content"
