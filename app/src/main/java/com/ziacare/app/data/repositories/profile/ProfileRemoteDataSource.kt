@@ -14,7 +14,6 @@ import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberOTPReq
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.ziacare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.ziacare.app.data.repositories.profile.response.BadgeResponse
-import com.ziacare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.ziacare.app.data.repositories.profile.response.LOVResponse
 import com.ziacare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.ziacare.app.data.repositories.profile.response.UserNotificationListResponse
@@ -201,14 +200,6 @@ class ProfileRemoteDataSource @Inject constructor(
             MultipartBody.Part.createFormData("type", request.type)
         )
 
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
-    suspend fun getBadgeStatus(): BadgeStatusResponse {
-        val response = profileService.getBadgeStatus()
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

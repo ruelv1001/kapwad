@@ -16,7 +16,6 @@ import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberOTPReq
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.ziacare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.ziacare.app.data.repositories.profile.response.BadgeResponse
-import com.ziacare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.ziacare.app.data.repositories.profile.response.LOVResponse
 import com.ziacare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.ziacare.app.data.repositories.profile.response.UserNotificationData
@@ -29,7 +28,6 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.io.File
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(
@@ -125,13 +123,6 @@ class ProfileRepository @Inject constructor(
     fun doRequestBadge(request: BadgeRequest): Flow<BadgeResponse> {
         return flow {
             val response = profileRemoteDataSource.doRequestBadge(request)
-            emit(response)
-        }.flowOn(ioDispatcher)
-    }
-
-    fun getBadgeStatus(): Flow<BadgeStatusResponse> {
-        return flow {
-            val response = profileRemoteDataSource.getBadgeStatus()
             emit(response)
         }.flowOn(ioDispatcher)
     }

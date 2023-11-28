@@ -2,18 +2,19 @@ package com.ziacare.app.ui.main.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ziacare.app.data.repositories.auth.AuthRepository
-import com.ziacare.app.utils.PopupErrorState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.ziacare.app.data.repositories.auth.AuthRepository
 import com.ziacare.app.data.repositories.profile.ProfileRepository
 import com.ziacare.app.security.AuthEncryptedDataManager
-import com.ziacare.app.ui.profile.viewmodel.ProfileViewState
 import com.ziacare.app.utils.AppConstant
 import com.ziacare.app.utils.AppConstant.NOT_FOUND
-import com.ziacare.app.utils.CommonLogger
+import com.ziacare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -71,26 +72,6 @@ class SettingsViewModel @Inject constructor (
                 }
         }
     }
-
-    fun getBadgeStatus() {
-        viewModelScope.launch {
-            profileRepository.getBadgeStatus()
-                .onStart {
-                    _loginSharedFlow.emit(SettingsViewState.LoadingBadge)
-                }
-                .catch { exception ->
-                    onError(exception)
-                }
-                .collect {
-                    _loginSharedFlow.emit(
-                        SettingsViewState.SuccessGetBadgeStatus(
-                         badgeStatus = it.data)
-                    )
-                }
-        }
-    }
-
-
 
     fun doChangePass(
         currentPass: String,

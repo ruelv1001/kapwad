@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.emrekotun.toast.CpmToast
-import com.emrekotun.toast.CpmToast.Companion
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
@@ -20,16 +18,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.ziacare.app.R
 import com.ziacare.app.data.model.ErrorsData
 import com.ziacare.app.data.repositories.profile.request.UpdateInfoRequest
-import com.ziacare.app.data.repositories.profile.response.LOVData
 import com.ziacare.app.databinding.FragmentRegistrationCompleteProfileBinding
 import com.ziacare.app.ui.main.activity.MainActivity
 import com.ziacare.app.ui.register.activity.RegisterActivity
 import com.ziacare.app.ui.register.dialog.BrgyDialog
 import com.ziacare.app.ui.register.dialog.CityDialog
-import com.ziacare.app.ui.register.dialog.ClusterDialog
 import com.ziacare.app.ui.register.dialog.ProvinceDialog
-import com.ziacare.app.ui.register.dialog.RegionDialog
-import com.ziacare.app.ui.register.dialog.ZoneDialog
 import com.ziacare.app.ui.register.viewmodel.RegisterViewModel
 import com.ziacare.app.ui.register.viewmodel.RegisterViewState
 import com.ziacare.app.utils.setOnSingleClickListener
@@ -48,9 +42,6 @@ class RegisterCompleteProfileFragment: Fragment() {
     private var reference: String = ""
     private var cityCode: String = ""
     private var brgyCode: String = ""
-    private var lc_location_id: String = ""
-    private var lc_region_id: String = ""
-    private var lc_zone_id: String = ""
     private val viewModel: RegisterViewModel by viewModels()
 
 
@@ -121,8 +112,6 @@ class RegisterCompleteProfileFragment: Fragment() {
         if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
         if (errorsData.zipcode?.get(0)?.isNotEmpty() == true) binding.zipcodeTextInputLayout.error = errorsData.zipcode?.get(0)
         //custom error since API error is jargon to non-IT user
-        if (errorsData.lc_location_id?.get(0)?.isNotEmpty() == true) binding.clusterTextInputLayout.error = getString( R.string.location_required)
-        if (errorsData.lc_zone_id?.get(0)?.isNotEmpty() == true) binding.zoneTextInputLayout.error = getString( R.string.zone_required)
     }
 
     override fun onResume() {
@@ -151,19 +140,6 @@ class RegisterCompleteProfileFragment: Fragment() {
         }
         zipcodeEditText.doOnTextChanged { text, start, before, count ->
             zipcodeTextInputLayout.isErrorEnabled = false //to not take up space after removing error
-        }
-
-        regionEditText.doOnTextChanged {
-                text, start, before, count ->
-            regionTextInputLayout.isErrorEnabled = false //to not take up space after removing error
-        }
-        zoneEditText.doOnTextChanged {
-                text, start, before, count ->
-            zoneTextInputLayout.isErrorEnabled = false //to not take up space after removing error
-        }
-        clusterEditText.doOnTextChanged {
-                text, start, before, count ->
-            clusterTextInputLayout.isErrorEnabled = false //to not take up space after removing error
         }
 
         cityEditText.isClickable = false
@@ -210,7 +186,7 @@ class RegisterCompleteProfileFragment: Fragment() {
                 // Respond to dismiss events.
                 datePicker.dismiss()
             }
-            datePicker.show(childFragmentManager, "ProfileUpdateFragment");
+            datePicker.show(childFragmentManager, "ProfileUpdateFragment")
         }
 
         provinceEditText.setOnSingleClickListener {
@@ -270,78 +246,6 @@ class RegisterCompleteProfileFragment: Fragment() {
             }
         }
 
-//        ===================== LIONS CLUB INTL
-        regionEditText.setOnClickListener {
-            RegionDialog.newInstance(object : RegionDialog.RegionCallBack {
-                override fun onRegionClicked(
-                    data: LOVData
-                ) {
-                    if(data.code == "Deselect"){
-                        regionEditText.setText("")
-                        zoneEditText.setText("")
-                        clusterEditText.setText("")
-                        lc_region_id = ""
-                        lc_zone_id = ""
-                        lc_location_id = ""
-                    }else{
-                        regionEditText.setText(data.value)
-                        lc_region_id = data.code.toString()
-
-                        zoneEditText.setText("")
-                        clusterEditText.setText("")
-                        lc_zone_id = ""
-                        lc_location_id = ""
-                    }
-
-                }
-            }).show(childFragmentManager, RegionDialog.TAG)
-        }
-
-        zoneEditText.setOnSingleClickListener {
-            if(regionEditText.text.toString().isNotEmpty()){
-                ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
-                    override fun onZoneClicked(
-                        data: LOVData
-                    ) {
-                        if(data.code == "Deselect"){
-                            zoneEditText.setText("")
-                            clusterEditText.setText("")
-                            lc_zone_id = ""
-                            lc_location_id = ""
-                        }else {
-                            zoneEditText.setText(data.value)
-                            lc_zone_id = data.code.toString()
-
-                            clusterEditText.setText("")
-                            lc_location_id = ""
-                        }
-
-                    }
-                }, lc_region_id).show(childFragmentManager, CityDialog.TAG)
-            }
-        }
-
-        clusterEditText.setOnSingleClickListener {
-            if(zoneEditText.text.toString().isNotEmpty()){
-                ClusterDialog.newInstance(object : ClusterDialog.ClusterCallBack {
-                    override fun onClusterClicked(
-                        data: LOVData
-                    ) {
-                        if(data.code == "Deselect"){
-                            clusterEditText.setText("")
-                            lc_location_id = ""
-                        }else{
-                            lc_location_id = data.code.toString()
-                            clusterEditText.setText(data.value)
-                        }
-
-                    }
-                }, zone= lc_zone_id, region = lc_region_id ).show(childFragmentManager, BrgyDialog.TAG)
-            }
-
-        }
-
-
         continueButton.setOnSingleClickListener {
             val request = UpdateInfoRequest(
                 province_sku = reference,
@@ -356,18 +260,12 @@ class RegisterCompleteProfileFragment: Fragment() {
                 lastname = activity.requestModel.lastname.orEmpty(),
                 middlename = activity.requestModel.middlename.orEmpty(),
                 email = emailEditText.text.toString(),
-                birthdate = birthdateEditText.text.toString(),
-                lc_region_id = lc_region_id,
-                lc_zone_id = lc_zone_id,
-                lc_location_id = lc_location_id,
+                birthdate = birthdateEditText.text.toString()
             )
 
             viewModel.doUpdateProfile(request)
         }
     }
-
-
-
 
     private fun showLoadingDialog(@StringRes strId: Int) {
         (requireActivity() as RegisterActivity).showLoadingDialog(strId)

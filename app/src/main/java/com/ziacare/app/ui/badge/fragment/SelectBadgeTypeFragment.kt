@@ -3,13 +3,12 @@ package com.ziacare.app.ui.badge.fragment
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,11 +28,7 @@ import com.ziacare.app.ui.badge.activity.VerifiedBadgeActivity
 import com.ziacare.app.ui.badge.adapter.AccountTypeAdapter
 import com.ziacare.app.ui.badge.dialog.ReasonBottomSheetDialog
 import com.ziacare.app.ui.badge.viewmodel.BadgeViewModel
-import com.ziacare.app.ui.main.activity.MainActivity
 import com.ziacare.app.ui.profile.viewmodel.ProfileViewState
-import com.ziacare.app.utils.AppConstant.NOT_FOUND
-import com.ziacare.app.utils.CommonLogger
-import com.ziacare.app.utils.PopupErrorState
 import com.ziacare.app.utils.dialog.CommonDialog
 import com.ziacare.app.utils.setOnSingleClickListener
 import com.ziacare.app.utils.showPopupError
@@ -70,8 +65,6 @@ class SelectBadgeTypeFragment : Fragment(), AccountTypeAdapter.OnClickCallback {
         observeProfile()
         setupClickListener()
         viewModel.getBadgeRemovalStatus()
-        viewModel.getBadgeStatus()
-
         setupList()
     }
 

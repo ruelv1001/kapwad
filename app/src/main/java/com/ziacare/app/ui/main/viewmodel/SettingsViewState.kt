@@ -1,8 +1,6 @@
 package com.ziacare.app.ui.main.viewmodel
 
 import com.ziacare.app.data.repositories.baseresponse.UserModel
-import com.ziacare.app.data.repositories.profile.response.BadgeStatus
-import com.ziacare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.ziacare.app.utils.PopupErrorState
 
 sealed class SettingsViewState{
@@ -11,7 +9,6 @@ sealed class SettingsViewState{
     object LoadingBadge : SettingsViewState()
     data class Success(val message: String = "") : SettingsViewState()
     data class SuccessGetUserInfo(val message: String = "",val userModel: UserModel? = UserModel()) : SettingsViewState()
-    data class SuccessGetBadgeStatus(val badgeStatus: BadgeStatus? = BadgeStatus()) : SettingsViewState()
     data class PopupError(val errorCode: PopupErrorState, val message: String = "") : SettingsViewState()
     data class InputError(val errorData: com.ziacare.app.data.model.ErrorsData? = null) : SettingsViewState()
 }

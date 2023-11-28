@@ -2,7 +2,6 @@ package com.ziacare.app.data.repositories.baseresponse
 
 import androidx.annotation.Keep
 import java.io.Serializable
-import java.util.Date
 
 @Keep
 data class UserModel(
@@ -29,11 +28,6 @@ data class UserModel(
     var street_name: String? = null,
     var zipcode: String? = null,
     var birthdate : DateModel? = null,
-    var lc_member : Boolean? = false,
-    var lc_group : String? = null,
-    var lc_region_id : String? = null,
-    var lc_zone_id : String? = null,
-    var lc_location_id : String? = null,
     var date_registered: DateModel? = null,
     var badge_type : String? = null,
     var badge_type_issued_at: DateModel? = null,

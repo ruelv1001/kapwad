@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ziacare.app.data.model.ErrorModel
-import com.ziacare.app.data.repositories.baseresponse.UserModel
 import com.ziacare.app.data.repositories.profile.ProfileRepository
 import com.ziacare.app.data.repositories.profile.request.BadgeRemovalRequest
 import com.ziacare.app.data.repositories.profile.request.BadgeRequest
@@ -61,24 +60,6 @@ class BadgeViewModel @Inject constructor(
                     _badgeSharedFlow.emit(
                         ProfileViewState.SuccessBadgeRequest(
                             message = it.msg.orEmpty(), badgeResponse = it)
-                    )
-                }
-        }
-    }
-
-    fun getBadgeStatus() {
-        viewModelScope.launch {
-            profileRepository.getBadgeStatus()
-                .onStart {
-                    _badgeSharedFlow.emit(ProfileViewState.LoadingBadgeStatus)
-                }
-                .catch { exception ->
-                    onError(exception, "badge")
-                }
-                .collect {
-                    _badgeSharedFlow.emit(
-                        ProfileViewState.SuccessGetBadgeStatus(
-                            message = it.msg.orEmpty(), badgeStatusResponse = it)
                     )
                 }
         }

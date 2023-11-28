@@ -15,10 +15,7 @@ data class UpdateInfoRequest(
     var firstname: String,
     var lastname: String,
     var middlename: String,
-    var email : String ? = null, //could be requested in diff screen,
+    var email: String? = null, //could be requested in diff screen,
     var birthdate: String,
-    var lc_region_id : String? = null,
-    var lc_zone_id : String? = null,
-    var lc_location_id : String? = null,
 
-)
+    )

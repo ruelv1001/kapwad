@@ -2,12 +2,8 @@ package com.ziacare.app.data.repositories.address
 
 import com.ziacare.app.BuildConfig
 import com.ziacare.app.data.repositories.address.request.CountryListRequest
-import com.ziacare.app.data.repositories.address.request.LocationRequest
 import com.ziacare.app.data.repositories.address.request.MunicipalityListRequest
-import com.ziacare.app.data.repositories.address.request.RegionRequest
-import com.ziacare.app.data.repositories.address.request.ZoneRequest
 import com.ziacare.app.data.repositories.address.response.AddressResponse
-import com.ziacare.app.data.repositories.profile.response.LOVResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -37,16 +33,6 @@ interface AddressService {
         @Header("PSGC-Authorization") auth: String = BuildConfig.PSGC_AUTH,
         @Body municipalityListRequest: MunicipalityListRequest
     ): Response<AddressResponse>
-
-
-    @POST("api/setting/lov/lc/region")
-    suspend fun getRegionList(@Body request : RegionRequest): Response<LOVResponse>
-
-    @POST("api/setting/lov/lc/zone")
-    suspend fun getZoneList(@Body request : ZoneRequest): Response<LOVResponse>
-
-    @POST("api/setting/lov/lc/location")
-    suspend fun getLocationList(@Body request : LocationRequest): Response<LOVResponse>
 
 
 }

@@ -40,8 +40,6 @@ data class  ErrorsData(
     var group_passcode: List<String>? = null,
     var passcode: List<String>? = null,
     var amount: List<String>? = null,
-    var lc_location_id: List<String>? = null,
-    var lc_zone_id: List<String>? = null,
     var doc1: List<String>? = null,
     var doc2: List<String>? = null
 

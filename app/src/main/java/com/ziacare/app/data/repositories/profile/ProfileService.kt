@@ -3,7 +3,6 @@ package com.ziacare.app.data.repositories.profile
 import com.ziacare.app.data.repositories.auth.response.LoginResponse
 import com.ziacare.app.data.repositories.baseresponse.GeneralResponse
 import com.ziacare.app.data.repositories.profile.request.BadgeRemovalRequest
-import com.ziacare.app.data.repositories.profile.request.BadgeRequest
 import com.ziacare.app.data.repositories.profile.request.ChangePassRequest
 import com.ziacare.app.data.repositories.profile.request.NotificationListRequest
 import com.ziacare.app.data.repositories.profile.request.UpdateInfoRequest
@@ -11,7 +10,6 @@ import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberOTPReq
 import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.ziacare.app.data.repositories.profile.response.BadgeRemovalStatusResponse
 import com.ziacare.app.data.repositories.profile.response.BadgeResponse
-import com.ziacare.app.data.repositories.profile.response.BadgeStatusResponse
 import com.ziacare.app.data.repositories.profile.response.LOVResponse
 import com.ziacare.app.data.repositories.profile.response.ProfileVerificationResponse
 import com.ziacare.app.data.repositories.profile.response.UserNotificationListResponse
@@ -82,9 +80,6 @@ interface ProfileService {
         @Part doc2: MultipartBody.Part,
         @Part type: MultipartBody.Part
     ): Response<BadgeResponse>
-
-    @POST("api/profile/badge/status")
-    suspend fun getBadgeStatus(): Response<BadgeStatusResponse>
 
     @POST("api/profile/setting/password")
     suspend fun doChangePass(@Body request : ChangePassRequest): Response<GeneralResponse>

@@ -302,61 +302,6 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_1"
-                    android:layout_marginTop="@dimen/dimen_12"
-                    android:background="@color/line"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_12"
-                    android:fontFamily="@font/inter_bold"
-                    android:text="@string/lions_club_international"
-                    android:textColor="@color/color_primaryDark"
-                    android:textSize="@dimen/font_16" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_8"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/dimen_32"
-                        android:layout_height="@dimen/dimen_32" />
-                    <TextView
-                        android:id="@+id/lionsClubTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_12"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/loading"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/font_16"
-                     />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_8"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/lionsClubLocationTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_44"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/loading"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/font_16"
-                        />
-                </LinearLayout>
-
             </LinearLayout>
 
 

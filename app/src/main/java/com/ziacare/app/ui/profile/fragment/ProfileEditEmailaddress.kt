@@ -1,11 +1,9 @@
 package com.ziacare.app.ui.profile.fragment
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -13,21 +11,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
-import com.emrekotun.toast.CpmToast.Companion.toastSuccess
-import com.google.android.material.snackbar.Snackbar
 import com.ziacare.app.R
 import com.ziacare.app.data.model.ErrorsData
 import com.ziacare.app.data.repositories.profile.request.UpdateInfoRequest
-import com.ziacare.app.data.repositories.profile.request.UpdatePhoneNumberRequest
 import com.ziacare.app.databinding.FragmentProfileEditEmailaddressBinding
-import com.ziacare.app.databinding.FragmentRegistrationOtpBinding
 import com.ziacare.app.ui.profile.activity.ProfileActivity
 import com.ziacare.app.ui.profile.viewmodel.ProfileViewModel
 import com.ziacare.app.ui.profile.viewmodel.ProfileViewState
-import com.ziacare.app.utils.CommonLogger
 import com.ziacare.app.utils.setOnSingleClickListener
 import com.ziacare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,10 +74,7 @@ class ProfileEditEmailaddress: Fragment(){
                         lastname = viewModel.userModel?.lastname.orEmpty(),
                         middlename =viewModel.userModel?.middlename.orEmpty(),
                         email = emailEditText.text.toString(), //THIS IS CHANGED HERE IN THIS FRAGMENT, REST IS FROM INITIAL GET PROFILE
-                        birthdate = viewModel.userModel?.birthdate?.date_only_ph.orEmpty(),
-                        lc_region_id = viewModel.userModel?.lc_region_id.orEmpty(),
-                        lc_zone_id = viewModel.userModel?.lc_zone_id.orEmpty(),
-                        lc_location_id = viewModel.userModel?.lc_location_id.orEmpty(),
+                        birthdate = viewModel.userModel?.birthdate?.date_only_ph.orEmpty()
                     )
 
                     viewModel.doUpdateProfile(request) //the way to get email address is to pass email address in update profile

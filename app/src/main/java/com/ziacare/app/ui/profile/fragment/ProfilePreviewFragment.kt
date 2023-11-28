@@ -12,7 +12,6 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -22,7 +21,6 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -30,25 +28,19 @@ import androidx.navigation.fragment.findNavController
 import com.emrekotun.toast.CpmToast
 import com.emrekotun.toast.CpmToast.Companion.toastError
 import com.emrekotun.toast.CpmToast.Companion.toastSuccess
+import com.yalantis.ucrop.UCrop
 import com.ziacare.app.R
 import com.ziacare.app.data.repositories.baseresponse.UserModel
 import com.ziacare.app.data.repositories.profile.request.ProfileAvatarRequest
 import com.ziacare.app.databinding.FragmentProfilePreviewBinding
-import com.ziacare.app.ui.register.dialog.RegisterSuccessDialog
 import com.ziacare.app.ui.profile.activity.ProfileActivity
-import com.ziacare.app.ui.profile.dialog.VerificationSuccessDialog
 import com.ziacare.app.ui.profile.viewmodel.ProfileViewModel
 import com.ziacare.app.ui.profile.viewmodel.ProfileViewState
-import com.ziacare.app.ui.verify.fragment.ProofOfAddressFragment
-import com.ziacare.app.utils.CommonLogger
 import com.ziacare.app.utils.calculateAge
 import com.ziacare.app.utils.convertImageUriToFile
-import com.ziacare.app.utils.getFileFromCroppedUri
-import com.ziacare.app.utils.getFileFromUri
 import com.ziacare.app.utils.loadAvatar
 import com.ziacare.app.utils.setOnSingleClickListener
 import com.ziacare.app.utils.showPopupError
-import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
@@ -153,7 +145,8 @@ class ProfilePreviewFragment : Fragment() {
             ?.toString() ?: "Not set"
 
         if (userModel?.province_name?.isNotEmpty() == true){
-            addressTextView.text = "${userModel?.street_name}, ${userModel?.brgy_name},\n${userModel?.city_name}, ${userModel?.province_name}"
+            addressTextView.text =
+                "${userModel.street_name}, ${userModel.brgy_name},\n${userModel.city_name}, ${userModel.province_name}"
         }else{
             addressTextView.text = "Address Unavailable"
         }
@@ -168,13 +161,6 @@ class ProfilePreviewFragment : Fragment() {
         }
 
         phoneEditText.setText(userModel?.phone_number)
-        if (userModel?.lc_member == true){
-            lionsClubTextView.text = "${userModel.lc_group} (${userModel.lc_location_id})"
-            lionsClubLocationTextView.text = "Region ${userModel.lc_region_id}, Zone ${userModel.lc_zone_id}"
-        }else{
-            lionsClubTextView.text = getString(R.string.not_yet_a_member)
-            lionsClubLocationTextView.text = ""
-        }
     }
 
     private fun setClickListeners() = binding.run  {
@@ -308,7 +294,7 @@ class ProfilePreviewFragment : Fragment() {
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(), arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            ProfilePreviewFragment.REQUEST_IMAGE_CAPTURE
+            REQUEST_IMAGE_CAPTURE
         )
     }
 
@@ -318,7 +304,7 @@ class ProfilePreviewFragment : Fragment() {
         grantResults: IntArray
     )  = binding.run {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == ProfilePreviewFragment.REQUEST_IMAGE_CAPTURE) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (grantResults[0] == 0) {
                 openCameraChecker()
             }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -23,21 +22,16 @@ import com.ziacare.app.R
 import com.ziacare.app.data.model.ErrorsData
 import com.ziacare.app.data.repositories.baseresponse.UserModel
 import com.ziacare.app.data.repositories.profile.request.UpdateInfoRequest
-import com.ziacare.app.data.repositories.profile.response.LOVData
 import com.ziacare.app.databinding.FragmentProfileUpdateBinding
 import com.ziacare.app.ui.main.activity.MainActivity
-import com.ziacare.app.ui.register.dialog.BrgyDialog
-import com.ziacare.app.ui.register.dialog.CityDialog
-import com.ziacare.app.ui.register.dialog.ProvinceDialog
-import com.ziacare.app.ui.register.dialog.RegisterSuccessDialog
 import com.ziacare.app.ui.profile.activity.ProfileActivity
 import com.ziacare.app.ui.profile.dialog.ProfileConfirmationDialog
 import com.ziacare.app.ui.profile.viewmodel.ProfileViewModel
 import com.ziacare.app.ui.profile.viewmodel.ProfileViewState
-import com.ziacare.app.ui.register.dialog.ClusterDialog
-import com.ziacare.app.ui.register.dialog.RegionDialog
-import com.ziacare.app.ui.register.dialog.ZoneDialog
-import com.ziacare.app.utils.CommonLogger
+import com.ziacare.app.ui.register.dialog.BrgyDialog
+import com.ziacare.app.ui.register.dialog.CityDialog
+import com.ziacare.app.ui.register.dialog.ProvinceDialog
+import com.ziacare.app.ui.register.dialog.RegisterSuccessDialog
 import com.ziacare.app.utils.setOnSingleClickListener
 import com.ziacare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
@@ -128,9 +122,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         if (errorsData.city_name?.get(0)?.isNotEmpty() == true) binding.cityTextInputLayout.error = errorsData.city_name?.get(0)
         if (errorsData.brgy_name?.get(0)?.isNotEmpty() == true) binding.barangayTextInputLayout.error = errorsData.brgy_name?.get(0)
         if (errorsData.street_name?.get(0)?.isNotEmpty() == true) binding.streetTextInputLayout.error = errorsData.street_name?.get(0)
-        //custom error since API error is jargon to non-IT user
-        if (errorsData.lc_location_id?.get(0)?.isNotEmpty() == true) binding.clusterTextInputLayout.error = getString( R.string.location_required)
-        if (errorsData.lc_zone_id?.get(0)?.isNotEmpty() == true) binding.zoneTextInputLayout.error = getString( R.string.zone_required)
     }
 
 
@@ -190,19 +181,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             zipcodeTextInputLayout.isErrorEnabled = false
         }
 
-        regionEditText.doOnTextChanged {
-                text, start, before, count ->
-            regionTextInputLayout.isErrorEnabled =  false
-        }
-        zoneEditText.doOnTextChanged {
-                text, start, before, count ->
-            zoneTextInputLayout.isErrorEnabled = false
-        }
-        clusterEditText.doOnTextChanged {
-                text, start, before, count ->
-            clusterTextInputLayout.isErrorEnabled =false
-        }
-
 
         firstNameEditText.setText(userModel?.firstname)
         middleNameEditText.setText(userModel?.middlename)
@@ -212,19 +190,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         barangayEditText.setText(userModel?.brgy_name)
         streetEditText.setText(userModel?.street_name)
         zipcodeEditText.setText(userModel?.zipcode)
-        viewModel.lcRegionCode = userModel?.lc_region_id
-        viewModel.lcClusterCode = userModel?.lc_location_id
-        viewModel.lcZoneCode =userModel?.lc_zone_id
         birthdateEditText.setText(userModel?.birthdate?.date_only_ph)
-        regionEditText.setText(userModel?.lc_region_id?.takeIf { it.isNotEmpty() }
-            ?.let { "Region $it" }
-            ?: "")
-        zoneEditText.setText(userModel?.lc_zone_id?.takeIf { it.isNotEmpty() }
-            ?.let { "Zone $it" }
-            ?: "")
-        clusterEditText.setText(userModel?.lc_location_id?.takeIf { it.isNotEmpty() }
-            ?.let { "${userModel.lc_group} (${userModel.lc_location_id})" }
-            ?: "")
     }
 
     private fun setClickListeners() = binding.run {
@@ -316,71 +282,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             }
         }
 
-//        ===================== LIONS CLUB INTL
-        regionEditText.setOnClickListener {
-            RegionDialog.newInstance(object : RegionDialog.RegionCallBack {
-                override fun onRegionClicked(
-                    data: LOVData
-                ) {
-                    if(data.code == "Deselect"){
-                        regionEditText.setText("")
-                        zoneEditText.setText("")
-                        clusterEditText.setText("")
-                        viewModel.lcRegionCode = ""
-                        viewModel.lcClusterCode = ""
-                        viewModel.lcZoneCode = ""
-                    }else{
-                        regionEditText.setText(data.value)
-                        viewModel.lcRegionCode = data.code.orEmpty()
-                        zoneEditText.setText("")
-                        clusterEditText.setText("")
-                        viewModel.lcClusterCode = ""
-                        viewModel.lcZoneCode = ""
-                    }
-                }
-            }).show(childFragmentManager, RegionDialog.TAG)
-        }
-
-        zoneEditText.setOnSingleClickListener {
-            if(regionEditText.text.toString().isNotEmpty()){
-                ZoneDialog.newInstance(object : ZoneDialog.ZoneCallBack {
-                    override fun onZoneClicked(
-                        data: LOVData
-                    ) {
-                        if(data.code == "Deselect"){
-                            zoneEditText.setText("")
-                            clusterEditText.setText("")
-                            viewModel.lcClusterCode = ""
-                            viewModel.lcZoneCode = ""
-                        }else {
-                            zoneEditText.setText(data.value)
-                            viewModel.lcZoneCode = data.code.orEmpty()
-                            clusterEditText.setText("")
-                            viewModel.lcClusterCode = ""
-                        }
-                    }
-                }, region = viewModel.lcRegionCode.orEmpty()).show(childFragmentManager, CityDialog.TAG)
-            }
-        }
-
-        clusterEditText.setOnSingleClickListener {
-            if(zoneEditText.text.toString().isNotEmpty()){
-                ClusterDialog.newInstance(object : ClusterDialog.ClusterCallBack {
-                    override fun onClusterClicked(
-                        data: LOVData
-                    ) {
-                        if(data.code == "Deselect"){
-                            clusterEditText.setText("")
-                            viewModel.lcClusterCode = ""
-                        }else {
-                            viewModel.lcClusterCode = data.code.orEmpty()
-                            clusterEditText.setText(data.value)
-                        }
-                    }
-                },region = viewModel.lcRegionCode.orEmpty(), zone = viewModel.lcZoneCode.orEmpty()).show(childFragmentManager, BrgyDialog.TAG)
-            }
-        }
-
         saveButton.setOnSingleClickListener {
                 ProfileConfirmationDialog.newInstance(this@ProfileUpdateFragment)
                     .show(childFragmentManager, RegisterSuccessDialog.TAG)
@@ -407,10 +308,7 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             lastname = lastNameEditText.text.toString(),
             middlename = middleNameEditText.text.toString(),
             email = null,
-            birthdate = birthdateEditText.text.toString(),
-            lc_region_id = viewModel.lcRegionCode.orEmpty(),
-            lc_zone_id = viewModel.lcZoneCode.orEmpty(),
-            lc_location_id = viewModel.lcClusterCode.orEmpty(),
+            birthdate = birthdateEditText.text.toString()
         )
         viewModel.doUpdateProfile(request)
     }

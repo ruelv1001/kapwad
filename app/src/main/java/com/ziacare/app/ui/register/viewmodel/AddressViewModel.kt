@@ -1,21 +1,21 @@
 package com.ziacare.app.ui.register.viewmodel
 
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
-
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ziacare.app.data.model.ErrorModel
 import com.ziacare.app.data.repositories.address.AddressRepository
-import com.ziacare.app.data.repositories.address.request.LocationRequest
 import com.ziacare.app.data.repositories.address.request.MunicipalityListRequest
-import com.ziacare.app.data.repositories.address.request.RegistrationRequest
-import com.ziacare.app.data.repositories.address.request.ZoneRequest
 import com.ziacare.app.utils.AppConstant
 import com.ziacare.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -123,63 +123,6 @@ class AddressViewModel @Inject constructor(
                 .collect {
                     _addressSharedFlow.emit(
                         AddressViewState.SuccessGetMunicipalityList(it.data.orEmpty())
-                    )
-                }
-        }
-
-    }
-
-
-    //==================================LionsClub
-    fun getRegionList() {
-        viewModelScope.launch {
-            addressRepository.getRegionList()
-                .onStart {
-                    _addressSharedFlow.emit(AddressViewState.Loading)
-                }
-                .catch { exception ->
-                    onError(exception)
-
-                }
-                .collect {
-                    _addressSharedFlow.emit(
-                        AddressViewState.SuccessGetLionsClubLOV(it.data.orEmpty())
-                    )
-                }
-        }
-    }
-
-    fun getZoneList(request: ZoneRequest) {
-        viewModelScope.launch {
-            addressRepository.getZoneList(request)
-                .onStart {
-                    _addressSharedFlow.emit(AddressViewState.Loading)
-                }
-                .catch { exception ->
-                    onError(exception)
-
-                }
-                .collect {
-                    _addressSharedFlow.emit(
-                        AddressViewState.SuccessGetLionsClubLOV(it.data.orEmpty())
-                    )
-                }
-        }
-    }
-
-    fun getLocationList(request: LocationRequest) {
-        viewModelScope.launch {
-            addressRepository.getLocationList(request)
-                .onStart {
-                    _addressSharedFlow.emit(AddressViewState.Loading)
-                }
-                .catch { exception ->
-                    onError(exception)
-
-                }
-                .collect {
-                    _addressSharedFlow.emit(
-                        AddressViewState.SuccessGetLionsClubLOV(it.data.orEmpty())
                     )
                 }
         }
