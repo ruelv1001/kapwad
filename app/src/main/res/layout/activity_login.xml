@@ -14,9 +14,10 @@
 
 
         <ImageView
-            android:layout_width="@dimen/dimen_130"
-            android:layout_height="@dimen/dimen_130"
+            android:layout_width="@dimen/dimen_150"
+            android:layout_height="@dimen/dimen_150"
             android:layout_gravity="center"
+            android:src="@drawable/app_logo"
             android:layout_marginTop="@dimen/dimen_50" />
 
         <TextView
@@ -95,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_20"
+            android:visibility="gone"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -147,6 +149,7 @@
             android:paddingTop="@dimen/dimen_15"
             android:paddingBottom="@dimen/dimen_15"
             android:text="@string/lbl_register"
+            android:visibility="gone"
             android:textAllCaps="false"
             android:textColor="@color/color_primary"
             android:textSize="@dimen/font_14" />
