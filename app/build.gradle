@@ -88,7 +88,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            def appName = "Ziacare"
+            def appName = "DSWD_App"
             def flavorName = variant.flavorName
             def versionCode = variant.versionCode
             def versionName = variant.versionName

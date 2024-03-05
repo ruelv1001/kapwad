@@ -11,13 +11,14 @@
 
     <color name="color_primary">#C41E3A</color>
     <color name="color_primaryDark">#800020</color>
-    <color name="color_accent">#EE4B2B</color>
+    <color name="color_accent">#0047AB</color>
+    <color name="color_blue">#0047AB</color>
     <color name="color_primaryLight">#DACBF3</color>
     <color name="commons_text_hint">#BBBBBB</color>
     <color name="commons_lbl">#757575</color>
     <color name="commons_lbl_highlight">#BEB700</color>
 
-    <color name="green">#EE4B2B</color>
+    <color name="green">#0047AB</color>
     <color name="red">#F85757</color>
     <color name="light_red">#FF8CB6</color>
     <color name="lighter_red">#ffcccb</color>
