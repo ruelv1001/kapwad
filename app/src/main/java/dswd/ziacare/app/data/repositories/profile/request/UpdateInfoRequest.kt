@@ -17,5 +17,4 @@ data class UpdateInfoRequest(
     var middlename: String,
     var email: String? = null, //could be requested in diff screen,
     var birthdate: String,
-
     )
