@@ -10,6 +10,7 @@ plugins {
 }
 
 android {
+ 	namespace 'dswd.ziacare.app'
     signingConfigs {
         Properties properties = new Properties()
         InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
@@ -37,7 +38,7 @@ android {
     flavorDimensions "default"
 
     defaultConfig {
-        applicationId "com.ziacare.app"
+        applicationId "dswd.ziacare.app"
         minSdk 23
         targetSdk 33
         versionCode 1
