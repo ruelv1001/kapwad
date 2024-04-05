@@ -302,9 +302,24 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <Button
+                    android:id="@+id/accountOwnershipAndControlTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12"
+                    android:padding="@dimen/dimen_8"
+                    android:text="@string/account_ownership_control"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="@dimen/font_14"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:textColor="@color/black_text"
+                    android:textAllCaps="false"
+                    app:iconPadding="@dimen/dimen_16"
+                    android:gravity="center_vertical"
+                    app:icon="@drawable/ic_privacy_policy"
+                    app:iconTint="@color/icon_black" />
+
             </LinearLayout>
-
-
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

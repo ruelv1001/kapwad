@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_choose_kyc"
-        android:name="com.ziacare.app.ui.verify.fragment.ChooseKYCProcessFragment"
+        android:name="dswd.ziacare.app.ui.verify.fragment.ChooseKYCProcessFragment"
         android:label=""
         tools:layout="@layout/fragment_choose_kyc_process">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_upload_id"
-        android:name="com.ziacare.app.ui.verify.fragment.UploadIDFragment"
+        android:name="dswd.ziacare.app.ui.verify.fragment.UploadIDFragment"
         android:label=""
         tools:layout="@layout/fragment_upload_id">
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/navigation_proof_of_address"
-        android:name="com.ziacare.app.ui.verify.fragment.ProofOfAddressFragment"
+        android:name="dswd.ziacare.app.ui.verify.fragment.ProofOfAddressFragment"
         android:label=""
         tools:layout="@layout/fragment_proof_of_address">
         <action
@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/uploadSelfieFragment"
         tools:layout="@layout/fragment_upload_selfie"
-        android:name="com.ziacare.app.ui.verify.fragment.UploadSelfieFragment"
+        android:name="dswd.ziacare.app.ui.verify.fragment.UploadSelfieFragment"
         android:label="UploadSelfieFragment" />
 
 </navigation>

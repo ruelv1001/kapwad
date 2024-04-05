@@ -46,41 +46,41 @@
   <fields>;
 }
 
--keep class com.lionscare.app.data.local.* { *; }
+-keep class dswd.ziacare.app.data.local.* { *; }
 
--keep class com.lionscare.app.data.model.* { *; }
+-keep class dswd.ziacare.app.data.model.* { *; }
 
--keep class com.lionscare.app.data.repositories.address.request.* { *; }
--keep class com.lionscare.app.data.repositories.address.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.address.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.address.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.admin.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.admin.request.* { *; }
 
--keep class com.lionscare.app.data.repositories.auth.request.* { *; }
--keep class com.lionscare.app.data.repositories.auth.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.auth.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.auth.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.assistance.request.* { *; }
--keep class com.lionscare.app.data.repositories.assistance.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.assistance.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.assistance.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.baseresponse.* { *; }
+-keep class dswd.ziacare.app.data.repositories.baseresponse.* { *; }
 
--keep class com.lionscare.app.data.repositories.group.request.* { *; }
--keep class com.lionscare.app.data.repositories.group.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.group.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.group.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.generalsetting.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.generalsetting.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.member.request.* { *; }
--keep class com.lionscare.app.data.repositories.member.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.member.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.member.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.profile.request.* { *; }
--keep class com.lionscare.app.data.repositories.profile.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.profile.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.profile.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.registration.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.registration.request.* { *; }
 
--keep class com.lionscare.app.data.repositories.wallet.request.* { *; }
--keep class com.lionscare.app.data.repositories.wallet.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.wallet.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.wallet.response.* { *; }
 
--keep class com.lionscare.app.data.repositories.billing.request.* { *; }
--keep class com.lionscare.app.data.repositories.billing.response.* { *; }
+-keep class dswd.ziacare.app.data.repositories.billing.request.* { *; }
+-keep class dswd.ziacare.app.data.repositories.billing.response.* { *; }
 
 -keep,allowobfuscation,allowshrinking class kotlinx.coroutines.flow.*
 

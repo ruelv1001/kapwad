@@ -8,6 +8,7 @@
     android:maxWidth="410dp"
     android:layout_height="@dimen/dimen_270"
     android:layout_gravity="center_horizontal"
+    app:cardBackgroundColor="@color/blue_text"
     android:elevation="@dimen/dimen_0">
 
     <RelativeLayout
@@ -34,7 +35,6 @@
                 android:layout_width="@dimen/dimen_30"
                 android:layout_height="@dimen/dimen_30"
                 android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/dimen_20"
                 android:src="@drawable/ic_wallet"
                 app:tint="@color/white" />
 

@@ -10,6 +10,7 @@ plugins {
 }
 
 android {
+ 	namespace 'dswd.ziacare.app'
     signingConfigs {
         Properties properties = new Properties()
         InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
@@ -37,11 +38,11 @@ android {
     flavorDimensions "default"
 
     defaultConfig {
-        applicationId "com.ziacare.app"
+        applicationId "dswd.ziacare.app"
         minSdk 23
         targetSdk 33
-        versionCode 1
-        versionName "0.0.1"
+        versionCode 3
+        versionName "0.0.3"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -178,6 +179,8 @@ dependencies {
     //noinspection OutdatedLibrary
     implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
     implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
+    implementation 'com.github.mhadikz:toaster:1.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

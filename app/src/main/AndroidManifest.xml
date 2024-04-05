@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ziacare.app">
+    package="dswd.ziacare.app">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -44,7 +44,7 @@
             android:name=".ui.wallet.activity.WalletActivity"
             android:exported="false" />
         <activity
-            android:name="com.ziacare.app.ui.onboarding.activity.SplashScreenActivity"
+            android:name="dswd.ziacare.app.ui.onboarding.activity.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="userPortrait"
             android:windowSoftInputMode="adjustResize">
@@ -115,6 +115,10 @@
         <activity
             android:name=".ui.verify.activity.FaceScannerActivity"
             android:label=""
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.accountcontrol.activity.AccountControlActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

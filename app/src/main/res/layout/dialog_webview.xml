@@ -4,7 +4,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.ziacare.app.utils.ObservableWebView
+    <dswd.ziacare.app.utils.ObservableWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
