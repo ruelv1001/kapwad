@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dimen_20"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/confirm_otp"
+        android:textSize="@dimen/font_20" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/please_enter_the_otp_we_just_sent_to"
+        android:textSize="@dimen/font_16" />
+
+    <TextView
+        android:id="@+id/phoneNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_9xx_xxx_xxxx"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/font_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/otpFirstEdittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext_otp_selector"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="@string/lbl_0"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textColorHint="@color/commons_text_hint" />
+
+        <View
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_1" />
+
+        <EditText
+            android:id="@+id/otpSecondEdittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext_otp_selector"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="@string/lbl_0"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textColorHint="@color/commons_text_hint" />
+
+        <View
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_1" />
+
+        <EditText
+            android:id="@+id/otpThirdEdittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext_otp_selector"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="@string/lbl_0"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textColorHint="@color/commons_text_hint" />
+
+        <View
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_1" />
+
+        <EditText
+            android:id="@+id/otpFourthEdittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext_otp_selector"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="@string/lbl_0"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textColorHint="@color/commons_text_hint" />
+
+        <View
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_1" />
+
+        <EditText
+            android:id="@+id/otpFifthEdittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext_otp_selector"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="@string/lbl_0"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textColorHint="@color/commons_text_hint" />
+
+        <View
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_1" />
+
+        <EditText
+            android:id="@+id/otpSixthEdittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edittext_otp_selector"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="@string/lbl_0"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textColorHint="@color/commons_text_hint" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/resendTimeLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/lbl_resend_code_in"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/lbl_0"
+            android:textAlignment="center"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_5"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/lbl_second_s"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/font_14" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/resendTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/lbl_resend_code"
+        android:textAlignment="center"
+        android:textColor="@color/color_primary"
+        android:textSize="@dimen/font_14"
+        android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirmButton"
+        style="@style/MyButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingVertical="@dimen/dimen_15"
+        android:text="@string/lbl_confirm"
+        android:textAllCaps="false" />
+
+</LinearLayout>

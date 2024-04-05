@@ -42,6 +42,7 @@ import dswd.ziacare.app.utils.loadAvatar
 import dswd.ziacare.app.utils.setOnSingleClickListener
 import dswd.ziacare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import dswd.ziacare.app.ui.accountcontrol.activity.AccountControlActivity
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Calendar
@@ -176,6 +177,10 @@ class ProfilePreviewFragment : Fragment() {
         }
         profileImageView.setOnSingleClickListener {
             openMediaOptionPicker()
+        }
+        accountOwnershipAndControlTextView.setOnSingleClickListener {
+            val intent = AccountControlActivity.getIntent(requireActivity())
+            startActivity(intent)
         }
     }
 

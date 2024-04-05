@@ -117,6 +117,10 @@
             android:label=""
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.accountcontrol.activity.AccountControlActivity"
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/dimen_20"
+            android:paddingVertical="@dimen/dimen_26">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="@string/von_denuelle_delete_your_account_permanently"
+                android:textSize="@dimen/font_20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/if_you_delete_your_account_permanently"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/no_one_can_search_your_account"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/all_transactions_that_involves_your_account_will_be_halted"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/your_account_and_information_across_the_app_will_be_deleted"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/you_may_cancel_the_deletion_request_by_loggin_in_the_same_details_and_reactivating_your_account"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/if_you_wish_to_learn_more_about_agricare_app_policies_and_terms_of_conditions"
+                android:textSize="@dimen/font_16" />
+            <TextView
+                android:id="@+id/privacyPolicyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:letterSpacing="0.1"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/blue_text"
+                android:text="@string/privacy_policy"
+                android:textSize="@dimen/font_16" />
+            <TextView
+                android:id="@+id/termsAndConditionsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:letterSpacing="0.1"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/blue_text"
+                android:text="@string/terms_and_conditions"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deactivateButton"
+        style="@style/MyButtonStyle"
+        android:layout_margin="@dimen/dimen_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingVertical="@dimen/dimen_16"
+        android:text="@string/delete_account_permanently"
+        android:textAllCaps="false" />
+</LinearLayout>
