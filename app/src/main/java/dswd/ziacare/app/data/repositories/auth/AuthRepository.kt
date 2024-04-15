@@ -3,6 +3,7 @@ package dswd.ziacare.app.data.repositories.auth
 import dswd.ziacare.app.data.local.UserLocalData
 import dswd.ziacare.app.data.repositories.baseresponse.GeneralResponse
 import dswd.ziacare.app.data.repositories.auth.response.LoginResponse
+import dswd.ziacare.app.data.repositories.auth.response.ReasonsResponse
 import dswd.ziacare.app.data.repositories.baseresponse.UserModel
 import dswd.ziacare.app.security.AuthEncryptedDataManager
 import kotlinx.coroutines.CoroutineDispatcher
@@ -118,6 +119,29 @@ class AuthRepository @Inject constructor(
     fun doForgotPass(email: String): Flow<GeneralResponse> {
         return flow {
             val response = authRemoteDataSource.doForgotPass(email)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doDeleteOrDeactivateAccount(reasonId: String, other: String? =null, type: String): Flow<GeneralResponse> {
+        return flow {
+            val response = authRemoteDataSource.doDeleteOrDeactivateAccount(reasonId, other, type)
+            encryptedDataManager.clearUserInfo()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun doDeleteOrDeactivateAccountOTP(reasonId: String, other: String? =null, type: String, otp: String): Flow<GeneralResponse> {
+        return flow {
+            val response = authRemoteDataSource.doDeleteOrDeactivateAccountOTP(reasonId, other, type, otp)
+            encryptedDataManager.clearUserInfo()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getReasonsList(): Flow<ReasonsResponse> {
+        return flow {
+            val response = authRemoteDataSource.getReasonsList()
             emit(response)
         }.flowOn(ioDispatcher)
     }

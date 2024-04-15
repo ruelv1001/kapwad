@@ -1,9 +1,11 @@
 package dswd.ziacare.app.data.repositories.auth
 
+import dswd.ziacare.app.data.repositories.auth.request.DeleteOrDeactivateRequest
 import dswd.ziacare.app.data.repositories.baseresponse.GeneralResponse
 import dswd.ziacare.app.data.repositories.auth.request.LoginRequest
 import dswd.ziacare.app.data.repositories.auth.request.ValidateEmailRequest
 import dswd.ziacare.app.data.repositories.auth.response.LoginResponse
+import dswd.ziacare.app.data.repositories.auth.response.ReasonsResponse
 import retrofit2.HttpException
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -48,6 +50,32 @@ class AuthRemoteDataSource @Inject constructor(private val authService: AuthServ
     suspend fun doForgotPass(email: String): GeneralResponse{
         val request = ValidateEmailRequest(email = email)
         val response = authService.doForgotPass(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doDeleteOrDeactivateAccount(reasonId: String, other: String? =null, type: String): GeneralResponse{
+        val request = DeleteOrDeactivateRequest(reason_id = reasonId, other_reason = other, type = type)
+        val response = authService.doDeleteOrDeactivate(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun doDeleteOrDeactivateAccountOTP(reasonId: String, other: String? =null, type: String, otp: String): GeneralResponse{
+        val request = DeleteOrDeactivateRequest(reason_id = reasonId, other_reason = other, type = type, otp = otp)
+        val response = authService.doDeleteOrDeactivateOTP(request)
+        if (response.code() != HttpURLConnection.HTTP_OK) {
+            throw HttpException(response)
+        }
+        return response.body() ?: throw NullPointerException("Response data is empty")
+    }
+
+    suspend fun getReasonsList(): ReasonsResponse {
+        val response = authService.doGetDeleteReason()
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }
