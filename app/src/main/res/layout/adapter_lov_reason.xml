@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RadioButton
+        android:id="@+id/reasonRadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/i_m_leaving_temporarily"
+        android:layout_marginVertical="@dimen/dimen_10"
+        android:buttonTintMode="src_atop"
+        android:layoutDirection="rtl"
+        android:textSize="@dimen/font_16"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:background="@color/light_gray"/>
+
+</LinearLayout>

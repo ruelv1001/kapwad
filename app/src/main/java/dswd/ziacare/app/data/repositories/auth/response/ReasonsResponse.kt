@@ -9,10 +9,11 @@ data class ReasonsResponse(
     val msg: String? = null,
     val status: Boolean? = false,
     val status_code: String? = null
-) {
-    @Keep
-    data class ReasonsData(
-        val id: Int? = 0,
-        val reason: String? = null
-    )
-}
+)
+
+@Keep
+data class ReasonsData(
+    val id: Int? = 0,
+    val reason: String? = null,
+    var isSelected: Boolean? = false
+)

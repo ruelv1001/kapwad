@@ -19,6 +19,8 @@ class AccountControlActivity : AppCompatActivity() {
     private var _binding : ActivityAccountControlBinding? = null
     private val binding get() = _binding!!
     private var loadingDialog: CommonDialog? = null
+    var reasonId : Int = 0
+    var reason : String? = null
 
     var selectedChoice = ""
     override fun onCreate(savedInstanceState: Bundle?) {
