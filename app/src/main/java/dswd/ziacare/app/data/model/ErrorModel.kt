@@ -41,6 +41,7 @@ data class  ErrorsData(
     var passcode: List<String>? = null,
     var amount: List<String>? = null,
     var doc1: List<String>? = null,
-    var doc2: List<String>? = null
+    var doc2: List<String>? = null,
+    var other_reason: List<String>? = null
 
 )

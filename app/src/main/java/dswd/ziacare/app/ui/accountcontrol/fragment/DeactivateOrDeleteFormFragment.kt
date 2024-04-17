@@ -81,6 +81,9 @@ class DeactivateOrDeleteFormFragment : Fragment(), ReasonsLOVAdapter.ReasonCallb
                 if(activity.reasonId == 6){
                     activity.reason = binding.reasonEditText.text.toString()
                 }
+                else{
+                    activity.reason = ""
+                }
                 when(activity.selectedChoice){
                     AccountControlActivity.DEACTIVATE -> {
                         findNavController().navigate(DeactivateOrDeleteFormFragmentDirections.actionDeactivateOrDeleteFormFragmentToDeactivateFragment())
@@ -137,12 +140,20 @@ class DeactivateOrDeleteFormFragment : Fragment(), ReasonsLOVAdapter.ReasonCallb
     }
 
     override fun onItemClicked(data: ReasonsData, position: Int) {
+        if(data.id != 6 &&  binding.reasonTextInputLayout.isVisible ){
+            hideSoftKeyboard()
+        }
+
         adapter?.setSelectedItem(data)
         activity.reason = data.reason
         activity.reasonId = data.id?:0
-
         binding.reasonTextInputLayout.isVisible = activity.reasonId == 6
         binding.reasonEditText.setText("")
+    }
+
+    private fun hideSoftKeyboard() {
+        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     override fun onDestroyView() {

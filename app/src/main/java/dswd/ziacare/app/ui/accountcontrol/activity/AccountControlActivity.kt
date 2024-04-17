@@ -77,8 +77,8 @@ class AccountControlActivity : AppCompatActivity() {
 
     companion object {
         private const val INVALID_ID = -1
-        const val DELETE = "DELETE"
-        const val DEACTIVATE = "DEACTIVATE"
+        const val DELETE = "delete"
+        const val DEACTIVATE = "deactivate"
         fun getIntent(context: Context): Intent {
             return Intent(context, AccountControlActivity::class.java)
         }
