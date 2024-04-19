@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import dswd.ziacare.app.R
 import dswd.ziacare.app.data.model.ErrorsData
 import dswd.ziacare.app.databinding.FragmentDeactivateBinding
@@ -25,6 +26,7 @@ import dswd.ziacare.app.utils.showToastSuccess
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DeactivateFragment : Fragment() {
     private var _binding: FragmentDeactivateBinding? = null
     private val binding get() = _binding!!

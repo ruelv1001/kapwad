@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import dswd.ziacare.app.R
 import dswd.ziacare.app.data.repositories.auth.response.ReasonsData
 import dswd.ziacare.app.databinding.FragmentDeactivateOrDeleteFormBinding
@@ -31,6 +32,8 @@ import dswd.ziacare.app.utils.showToastError
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
+@AndroidEntryPoint
 class DeactivateOrDeleteFormFragment : Fragment(), ReasonsLOVAdapter.ReasonCallback  {
     private var _binding : FragmentDeactivateOrDeleteFormBinding? = null
     private val binding get() = _binding!!

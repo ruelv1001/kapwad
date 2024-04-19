@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import dswd.ziacare.app.R
 import dswd.ziacare.app.databinding.FragmentChooseDeactivateOrDeleteBinding
 import dswd.ziacare.app.ui.accountcontrol.activity.AccountControlActivity
 import dswd.ziacare.app.utils.setOnSingleClickListener
 
+@AndroidEntryPoint
 class ChooseDeactivateOrDeleteFragment : Fragment() {
     private var _binding : FragmentChooseDeactivateOrDeleteBinding? = null
     private val binding get() = _binding!!
