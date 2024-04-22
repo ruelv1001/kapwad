@@ -126,7 +126,6 @@ class AuthRepository @Inject constructor(
     fun doDeleteOrDeactivateAccount(reasonId: String, other: String? =null, type: String): Flow<GeneralResponse> {
         return flow {
             val response = authRemoteDataSource.doDeleteOrDeactivateAccount(reasonId, other, type)
-            encryptedDataManager.clearUserInfo()
             emit(response)
         }.flowOn(ioDispatcher)
     }

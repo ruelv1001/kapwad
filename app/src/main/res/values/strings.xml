@@ -464,11 +464,11 @@
 
     <string name="account_ownership_control"><![CDATA[Account Ownership & Control]]></string>
     <string name="deactivate_or_permanent_delete">Deactivate or Permanent Delete?</string>
-    <string name="deactivate_or_delete_warning">If you want to leave Agricare temporarily, simply deactivate your account. If you choose to delete your account instead, you won\'t be able to recover it after 60 days. You may reactivate your account by simply logging in again.</string>
+    <string name="deactivate_or_delete_warning">If you want to leave DSWD App temporarily, simply deactivate your account. If you choose to delete your account instead, you won\'t be able to recover it after 60 days. You may reactivate your account by simply logging in again.</string>
     <string name="deactivate_account">Deactivate Account</string>
     <string name="deactivate_account_info">No one can search your account. All transactions will be halted until you reactivate your account. You can reactivate your account anytime.</string>
     <string name="delete_account_permanently">Delete Account Permanently</string>
-    <string name="why_are_you_leaving_agricare">Why are you leaving Agricare?</string>
+    <string name="why_are_you_leaving_agricare">Why are you leaving DSWD App?</string>
     <string name="leaving_agricare_info">We\'re sorry to see you go. We\'d love to know why you want to deactivate or delete your account, so we can improve the app and support our users.</string>
     <string name="i_m_leaving_temporarily">I\'m leaving temporarily</string>
     <string name="safety_privacy_or_concerns">Safety privacy or concerns</string>
@@ -480,11 +480,11 @@
     <string name="von_denuelle_deactivate_this_account">Von Denuelle, deactivate this account?</string>
     <string name="if_you_deactivate_your_account">If you deactivate your account:</string>
     <string name="you_can_reactivate_your_account_anytime_by_using_the_same_login_detals">• You can reactivate your account anytime by using the same login detals.</string>
-    <string name="agricare_will_continue_to_keep_your_data_so_that_you_can_recover_it_until_you_decide_to_reactivate_your_account">• Agricare will continue to keep your data so that you can recover it until you decide to reactivate your account.</string>
+    <string name="agricare_will_continue_to_keep_your_data_so_that_you_can_recover_it_until_you_decide_to_reactivate_your_account">• DSWD App will continue to keep your data so that you can recover it until you decide to reactivate your account.</string>
     <string name="information_that_isn_t_stored_in_your_account_such_as_previous_successful_transactions_may_still_be_visible_to_others">• Information that isn\'t stored in your account, such as previous successful transactions, may still be visible to others</string>
     <string name="all_transactions_that_involves_your_account_will_be_halted">• All transactions that involves your account will be halted.</string>
     <string name="no_one_can_search_your_account">• No one can search your account.</string>
-    <string name="if_you_wish_to_learn_more_about_agricare_app_policies_and_terms_of_conditions">If you wish to learn more about Agricare App privacy policies and terms of conditions:</string>
+    <string name="if_you_wish_to_learn_more_about_agricare_app_policies_and_terms_of_conditions">If you wish to learn more about DSWD App App privacy policies and terms of conditions:</string>
     <string name="privacy_policy"><u>Privacy Policy</u></string>
     <string name="terms_and_conditions"><u>Terms and Conditions</u></string>
     <string name="von_denuelle_delete_your_account_permanently">• Von Denuelle, delete your account permanently?</string>

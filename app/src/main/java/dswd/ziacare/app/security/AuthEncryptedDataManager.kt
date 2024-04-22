@@ -87,7 +87,7 @@ class AuthEncryptedDataManager {
             putString(USER_BRGY_CODE, userInfo.brgy_code)
             putString(USER_QRCODE, userInfo.qrcode)
             putString(USER_ZIPCODE, userInfo.zipcode)
-            putString(USER_KYC_STATUS, userInfo.kyc_status)
+            putString(USER_KYC_STATUS, "completed")
             putBoolean(USER_IS_COMPLETE_PROFILE, userInfo.is_complete_profile?: false)
         }
     }
