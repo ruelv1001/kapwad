@@ -19,6 +19,8 @@ class AccountControlActivity : AppCompatActivity() {
     private var _binding : ActivityAccountControlBinding? = null
     private val binding get() = _binding!!
     private var loadingDialog: CommonDialog? = null
+    var reasonId : Int = 0
+    var reason : String? = null
 
     var selectedChoice = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,8 +77,8 @@ class AccountControlActivity : AppCompatActivity() {
 
     companion object {
         private const val INVALID_ID = -1
-        const val DELETE = "DELETE"
-        const val DEACTIVATE = "DEACTIVATE"
+        const val DELETE = "delete"
+        const val DEACTIVATE = "deactivate"
         fun getIntent(context: Context): Intent {
             return Intent(context, AccountControlActivity::class.java)
         }

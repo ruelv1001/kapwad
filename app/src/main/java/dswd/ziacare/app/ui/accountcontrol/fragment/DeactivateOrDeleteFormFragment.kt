@@ -9,36 +9,39 @@ import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import dswd.ziacare.app.R
+import dswd.ziacare.app.data.repositories.auth.response.ReasonsData
 import dswd.ziacare.app.databinding.FragmentDeactivateOrDeleteFormBinding
 import dswd.ziacare.app.ui.accountcontrol.activity.AccountControlActivity
+import dswd.ziacare.app.ui.accountcontrol.adapter.ReasonsLOVAdapter
+import dswd.ziacare.app.ui.accountcontrol.viewmodel.AccountControlViewModel
+import dswd.ziacare.app.ui.accountcontrol.viewmodel.AccountControlViewState
 import dswd.ziacare.app.utils.setOnSingleClickListener
+import dswd.ziacare.app.utils.showPopupError
+import dswd.ziacare.app.utils.showToastError
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class DeactivateOrDeleteFormFragment : Fragment()  {
+
+@AndroidEntryPoint
+class DeactivateOrDeleteFormFragment : Fragment(), ReasonsLOVAdapter.ReasonCallback  {
     private var _binding : FragmentDeactivateOrDeleteFormBinding? = null
     private val binding get() = _binding!!
     private val activity by lazy { requireActivity() as AccountControlActivity }
+    private var adapter: ReasonsLOVAdapter? = null
+    private var layoutManager: LinearLayoutManager? = null
+    private val viewModel : AccountControlViewModel by viewModels()
 
-    val hidingAnimation = TranslateAnimation(
-        Animation.RELATIVE_TO_SELF, 0f,
-        Animation.RELATIVE_TO_SELF, 0f,
-        Animation.RELATIVE_TO_SELF, 0f,
-        Animation.RELATIVE_TO_SELF, -1f
-    ).apply {
-        duration = 400
-    }
-
-    val showingAnimation = TranslateAnimation(
-        Animation.RELATIVE_TO_SELF, 0f,
-        Animation.RELATIVE_TO_SELF, 0f,
-        Animation.RELATIVE_TO_SELF, -1f,
-        Animation.RELATIVE_TO_SELF, 0f
-    ).apply {
-        duration = 400
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,6 +58,9 @@ class DeactivateOrDeleteFormFragment : Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListeners()
+        setupList()
+        observeDeleteOrDeactivate()
+        viewModel.getReasonsList()
     }
 
     override fun onResume() {
@@ -69,90 +75,88 @@ class DeactivateOrDeleteFormFragment : Fragment()  {
         }
     }
     private fun setOnClickListeners() = binding.run {
-        leavingTemporarilyCardView.setOnSingleClickListener {
-            resetRadioButtonState(leavingTemporarilyRadio)
-            leavingTemporarilyRadio.isChecked =  !leavingTemporarilyRadio.isChecked
-        }
-        safetyPrivacyConcernsCardView.setOnSingleClickListener {
-            resetRadioButtonState(safetyPrivacyConcernsRadio)
-            safetyPrivacyConcernsRadio.isChecked =  !safetyPrivacyConcernsRadio.isChecked
-        }
-        troubleGettingStartedCardView.setOnSingleClickListener {
-            resetRadioButtonState(troubleGettingStartedRadio)
-            troubleGettingStartedRadio.isChecked =  !troubleGettingStartedRadio.isChecked
-        }
-        multipleAccountsCardView.setOnSingleClickListener {
-            resetRadioButtonState(multipleAccountsRadio)
-            multipleAccountsRadio.isChecked =  !multipleAccountsRadio.isChecked
-        }
-        unableToTransactCardView.setOnSingleClickListener {
-            resetRadioButtonState(unableToTransactRadio)
-            unableToTransactRadio.isChecked =  !unableToTransactRadio.isChecked
-        }
-        anotherReasonCardView.setOnSingleClickListener {
-            resetRadioButtonState(anotherReasonRadio)
-            anotherReasonRadio.isChecked =  !anotherReasonRadio.isChecked
-
-            if (anotherReasonRadio.isChecked){
-                reasonTextInputLayout.animation = showingAnimation
-                reasonTextInputLayout.isVisible = true
-                reasonTextInputLayout.startAnimation(showingAnimation)
-            }else{
-                hidingAnimation.setAnimationListener(createAnimationListener())
-                reasonTextInputLayout.animation = hidingAnimation
-                reasonTextInputLayout.startAnimation(hidingAnimation)
-            }
-        }
-
         continueButton.setOnSingleClickListener {
-            when(activity.selectedChoice){
-                AccountControlActivity.DEACTIVATE -> {
-                    findNavController().navigate(DeactivateOrDeleteFormFragmentDirections.actionDeactivateOrDeleteFormFragmentToDeactivateFragment())
+            if(activity.reasonId == 6 && reasonEditText.text.toString().isEmpty()){
+                reasonEditText.error = "Field Required."
+            }else if(activity.reasonId == 0){
+                showToastError(requireActivity(), "Error","Please choose a reason")
+            }else{
+                if(activity.reasonId == 6){
+                    activity.reason = binding.reasonEditText.text.toString()
                 }
-                AccountControlActivity.DELETE -> {
-                   findNavController().navigate(DeactivateOrDeleteFormFragmentDirections.actionDeactivateOrDeleteFormFragmentToDeleteAccountFragment())
+                else{
+                    activity.reason = ""
+                }
+                when(activity.selectedChoice){
+                    AccountControlActivity.DEACTIVATE -> {
+                        findNavController().navigate(DeactivateOrDeleteFormFragmentDirections.actionDeactivateOrDeleteFormFragmentToDeactivateFragment())
+                    }
+                    AccountControlActivity.DELETE -> {
+                        findNavController().navigate(DeactivateOrDeleteFormFragmentDirections.actionDeactivateOrDeleteFormFragmentToDeleteAccountFragment())
+                    }
                 }
             }
         }
     }
 
-    private fun createAnimationListener(): Animation.AnimationListener {
-        return object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {}
-            override fun onAnimationEnd(animation: Animation?) {
-                binding.reasonTextInputLayout.isVisible = false
-                hideSoftKeyboard()
-            }
-            override fun onAnimationRepeat(animation: Animation?) {}
+    private fun setupList() {
+        binding.apply {
+            adapter = ReasonsLOVAdapter(this@DeactivateOrDeleteFormFragment)
+            layoutManager = LinearLayoutManager(context)
+            recyclerView.layoutManager = layoutManager
+            recyclerView.adapter = adapter
         }
     }
+
+    private fun observeDeleteOrDeactivate() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.accountControlSharedFlow.collectLatest { viewState ->
+                    handleViewState(viewState)
+                }
+            }
+        }
+    }
+    private fun handleViewState(viewState: AccountControlViewState) {
+        when (viewState) {
+            is AccountControlViewState.Loading -> {
+                binding.recyclerView.isGone = true
+                binding.progressContainer.isVisible = true
+            }
+            is AccountControlViewState.PopupError -> {
+                showPopupError(
+                    requireActivity(),
+                    childFragmentManager,
+                    viewState.errorCode,
+                    viewState.message
+                )
+
+            }
+            is AccountControlViewState.SuccessGetReasons -> {
+                binding.recyclerView.isVisible = true
+                binding.progressContainer.isGone = true
+
+                viewState.response.data?.let { adapter?.appendData(it) }
+            }
+            else -> Unit
+        }
+    }
+
+    override fun onItemClicked(data: ReasonsData, position: Int) {
+        if(data.id != 6 &&  binding.reasonTextInputLayout.isVisible ){
+            hideSoftKeyboard()
+        }
+
+        adapter?.setSelectedItem(data)
+        activity.reason = data.reason
+        activity.reasonId = data.id?:0
+        binding.reasonTextInputLayout.isVisible = activity.reasonId == 6
+        binding.reasonEditText.setText("")
+    }
+
     private fun hideSoftKeyboard() {
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
-    }
-
-    private fun resetRadioButtonState(excludeCheckBox : CheckBox) = binding.run{
-        if(excludeCheckBox != anotherReasonRadio){
-            //reset the text layout
-            hidingAnimation.setAnimationListener(createAnimationListener())
-            reasonTextInputLayout.animation = hidingAnimation
-            reasonTextInputLayout.startAnimation(hidingAnimation)
-        }
-
-        val checkBoxes = listOf(
-            leavingTemporarilyRadio,
-            safetyPrivacyConcernsRadio,
-            troubleGettingStartedRadio,
-            multipleAccountsRadio,
-            unableToTransactRadio,
-            anotherReasonRadio,
-        )
-
-        checkBoxes.forEach { checkBox ->
-            if (checkBox != excludeCheckBox) {
-                checkBox.isChecked = false
-            }
-        }
     }
 
     override fun onDestroyView() {

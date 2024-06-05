@@ -35,203 +35,23 @@
             android:text="@string/leaving_agricare_info"
             android:textSize="@dimen/font_16" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/leavingTemporarilyCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dimen_4"
-                app:cardCornerRadius="@dimen/dimen_10"
-                app:contentPaddingBottom="@dimen/dimen_6"
-                app:contentPaddingLeft="@dimen/dimen_16"
-                app:contentPaddingTop="@dimen/dimen_6"
-                app:strokeColor="@color/line"
-                app:strokeWidth="@dimen/dimen_1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/i_m_leaving_temporarily"
-                        android:textSize="@dimen/font_16" />
-
-                    <CheckBox
-                        android:id="@+id/leavingTemporarilyRadio"
-                        style="@android:style/Widget.CompoundButton.RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/safetyPrivacyConcernsCardView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_marginTop="@dimen/dimen_20"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dimen_4"
-            app:cardCornerRadius="@dimen/dimen_10"
-            app:contentPaddingBottom="@dimen/dimen_6"
-            app:contentPaddingLeft="@dimen/dimen_16"
-            app:contentPaddingTop="@dimen/dimen_6"
-            app:strokeColor="@color/line"
-            app:strokeWidth="@dimen/dimen_1">
+            android:layout_height="wrap_content"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/progressContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_200">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/safety_privacy_or_concerns"
-                        android:textSize="@dimen/font_16" />
-
-                    <CheckBox
-                        android:id="@+id/safetyPrivacyConcernsRadio"
-                        style="@android:style/Widget.CompoundButton.RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/troubleGettingStartedCardView"
+            <ProgressBar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dimen_4"
-                app:cardCornerRadius="@dimen/dimen_10"
-                app:contentPaddingBottom="@dimen/dimen_6"
-                app:contentPaddingLeft="@dimen/dimen_16"
-                app:contentPaddingTop="@dimen/dimen_6"
-                app:strokeColor="@color/line"
-                app:strokeWidth="@dimen/dimen_1">
+                android:layout_height="@dimen/dimen_30"
+                android:layout_centerInParent="true" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/trouble_getting_started"
-                        android:textSize="@dimen/font_16" />
-
-                    <CheckBox
-                        android:id="@+id/troubleGettingStartedRadio"
-                        style="@android:style/Widget.CompoundButton.RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/multipleAccountsCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dimen_4"
-                app:cardCornerRadius="@dimen/dimen_10"
-                app:contentPaddingBottom="@dimen/dimen_6"
-                app:contentPaddingLeft="@dimen/dimen_16"
-                app:contentPaddingTop="@dimen/dimen_6"
-                app:strokeColor="@color/line"
-                app:strokeWidth="@dimen/dimen_1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/i_have_multiple_accounts"
-                        android:textSize="@dimen/font_16" />
-
-                    <CheckBox
-                        android:id="@+id/multipleAccountsRadio"
-                        style="@android:style/Widget.CompoundButton.RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/unableToTransactCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dimen_4"
-                app:cardCornerRadius="@dimen/dimen_10"
-                app:contentPaddingBottom="@dimen/dimen_6"
-                app:contentPaddingLeft="@dimen/dimen_16"
-                app:contentPaddingTop="@dimen/dimen_6"
-                app:strokeColor="@color/line"
-                app:strokeWidth="@dimen/dimen_1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/unable_to_make_transactions"
-                        android:textSize="@dimen/font_16" />
-
-                    <CheckBox
-                        android:id="@+id/unableToTransactRadio"
-                        style="@android:style/Widget.CompoundButton.RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/anotherReasonCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dimen_4"
-                app:cardCornerRadius="@dimen/dimen_10"
-                app:contentPaddingBottom="@dimen/dimen_6"
-                app:contentPaddingLeft="@dimen/dimen_16"
-                app:contentPaddingTop="@dimen/dimen_6"
-                app:strokeColor="@color/line"
-                app:strokeWidth="@dimen/dimen_1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/another_reason"
-                        android:textSize="@dimen/font_16" />
-
-                    <CheckBox
-                        android:id="@+id/anotherReasonRadio"
-                        style="@android:style/Widget.CompoundButton.RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
 
 <!--        if another reason, visible-->
         <com.google.android.material.textfield.TextInputLayout

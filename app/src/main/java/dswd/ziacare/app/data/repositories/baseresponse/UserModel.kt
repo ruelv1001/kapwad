@@ -31,7 +31,7 @@ data class UserModel(
     var date_registered: DateModel? = null,
     var badge_type : String? = null,
     var badge_type_issued_at: DateModel? = null,
-    var kyc_status : String? = null
+    var kyc_status : String? = "completed"
     //var qr_value: String? = null
 ): Serializable {
     fun getFullName() = "$firstname ${middlename.orEmpty()} $lastname"

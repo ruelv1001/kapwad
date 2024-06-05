@@ -17,6 +17,7 @@ import dswd.ziacare.app.ui.accountcontrol.viewmodel.AccountControlViewModel
 import dswd.ziacare.app.ui.accountcontrol.viewmodel.AccountControlViewState
 import dagger.hilt.android.AndroidEntryPoint
 import dswd.ziacare.app.R
+import dswd.ziacare.app.data.model.ErrorsData
 import dswd.ziacare.app.databinding.FragmentAccountControlOtpBinding
 import dswd.ziacare.app.security.AuthEncryptedDataManager
 import dswd.ziacare.app.ui.onboarding.activity.LoginActivity
@@ -24,6 +25,7 @@ import dswd.ziacare.app.utils.GenericKeyEvent
 import dswd.ziacare.app.utils.GenericTextWatcher
 import dswd.ziacare.app.utils.setOnSingleClickListener
 import dswd.ziacare.app.utils.showPopupError
+import dswd.ziacare.app.utils.showToastError
 import dswd.ziacare.app.utils.showToastSuccess
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -50,13 +52,48 @@ class AccountControlOTPFragment:  Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeOTP()
-        setOnClickListeners()
+        observeDeleteOrDeactivate()
+        setupClickListener()
         setView()
         startCountdown()
     }
+    private fun setupClickListener() = binding.run{
+        confirmButton.setOnSingleClickListener {
+            val otp = "${otpFirstEdittext.text}${otpSecondEdittext.text}${otpThirdEdittext.text}${otpFourthEdittext.text}${otpFifthEdittext.text}${otpSixthEdittext.text}"
+            viewModel.deleteOrDeactivateAccountOTP(reasonId = activity.reasonId.toString(), other = activity.reason.toString(), type = activity.selectedChoice.toString(), otp = otp)
+        }
+        resendTextView.setOnSingleClickListener {
+            viewModel.deleteOrDeactivateAccount(reasonId = activity.reasonId.toString(), other = activity.reason.toString(), type = activity.selectedChoice.toString())
+        }
 
-    private fun observeOTP(){
+    }
+
+    private fun startCountdown() = binding.run {
+        resendTextView.visibility = View.GONE
+        resendTimeLinearLayout.visibility = View.VISIBLE
+        countDownTimer = object : CountDownTimer(
+            MILLI_SEC,
+            COUNTDOWN_INTERVAL
+        ) {
+            override fun onTick(millisUntilFinished: Long) {
+                val sourceString = ""+ millisUntilFinished / COUNTDOWN_INTERVAL +""
+                timeTextView.text = HtmlCompat.fromHtml(sourceString,
+                    HtmlCompat.FROM_HTML_MODE_COMPACT)
+            }
+
+            override fun onFinish() {
+                resendTextView.visibility = View.VISIBLE
+                resendTimeLinearLayout.visibility = View.GONE
+            }
+        }.start()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun observeDeleteOrDeactivate() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.accountControlSharedFlow.collectLatest { viewState ->
@@ -65,36 +102,43 @@ class AccountControlOTPFragment:  Fragment() {
             }
         }
     }
-
     private fun handleViewState(viewState: AccountControlViewState) {
         when (viewState) {
-            is AccountControlViewState.Loading -> showLoadingDialog(R.string.loading)
-            is AccountControlViewState.SuccessClearLocalData -> {
-                hideLoadingDialog()
-                showToastSuccess(requireActivity(), description = "Successfully Deactivated/Deleted Your Account");
-
-                val intent = LoginActivity.getIntent(requireActivity())
-                startActivity(intent)
-                requireActivity().finishAffinity()
-            }
+            is AccountControlViewState.Loading -> activity.showLoadingDialog(R.string.loading)
             is AccountControlViewState.PopupError -> {
+                activity.hideLoadingDialog()
                 showPopupError(
                     requireActivity(),
                     childFragmentManager,
                     viewState.errorCode,
                     viewState.message
                 )
-            }
-            else -> hideLoadingDialog()
 
+            }
+
+            is AccountControlViewState.InputError ->{
+                activity.hideLoadingDialog()
+                handleInputError(viewState.errorData ?: ErrorsData())
+            }
+            is AccountControlViewState.SuccessDeleteOrDeactivateAccountOTP -> {
+                activity.hideLoadingDialog()
+                showToastSuccess(requireActivity(), description = viewState.response.msg.toString())
+                val intent = LoginActivity.getIntent(requireActivity())
+                startActivity(intent)
+                requireActivity().finishAffinity()
+            }
+            is AccountControlViewState.SuccessDeleteOrDeactivateAccount -> {
+                activity.hideLoadingDialog()
+                showToastSuccess(requireActivity(), description = viewState.response.msg.toString())
+                startCountdown()
+            }
+            else -> activity.hideLoadingDialog()
         }
     }
-    private fun showLoadingDialog(@StringRes strId: Int) {
-        (requireActivity() as AccountControlActivity).showLoadingDialog(strId)
-    }
 
-    private fun hideLoadingDialog() {
-        (requireActivity() as AccountControlActivity).hideLoadingDialog()
+    private fun handleInputError(errorsData: ErrorsData) = binding.run {
+        if (errorsData.otp?.get(0)?.isNotEmpty() == true)
+            showToastError(requireActivity(), description = "Invalid OTP")
     }
 
     override fun onResume() {
@@ -125,47 +169,10 @@ class AccountControlOTPFragment:  Fragment() {
 //        phoneNumberTextView.text = activity.otpModel.phone_number
     }
 
-    private fun setOnClickListeners() = binding.run {
-        confirmButton.setOnSingleClickListener {
-//            val modelReg = activity.requestModel
-//            modelReg.otp = "${otpFirstEdittext.text}${otpSecondEdittext.text}${otpThirdEdittext.text}${otpFourthEdittext.text}${otpFifthEdittext.text}${otpSixthEdittext.text}"
-//            viewModel.doReg(modelReg)
-            //tODO
-            AuthEncryptedDataManager().clearUserInfo()
-            showToastSuccess(requireActivity(), description = "Succesfully Deactivated/Deleted Your Account");
-            val intent = LoginActivity.getIntent(requireActivity())
-            startActivity(intent)
-            requireActivity().finishAffinity()
-        }
-        resendTextView.setOnSingleClickListener {
-            startCountdown()
-        }
-    }
-
-    private fun startCountdown() = binding.run {
-//        setDoReqOTP()
-        resendTextView.visibility = View.GONE
-        resendTimeLinearLayout.visibility = View.VISIBLE
-        countDownTimer = object : CountDownTimer(MILLI_SEC, COUNTDOWN_INTERVAL) {
-            override fun onTick(millisUntilFinished: Long) {
-                val sourceString = ""+ millisUntilFinished / COUNTDOWN_INTERVAL +""
-                timeTextView.text = HtmlCompat.fromHtml(sourceString,
-                    HtmlCompat.FROM_HTML_MODE_COMPACT)
-            }
-
-            override fun onFinish() {
-                resendTextView.visibility = View.VISIBLE
-                resendTimeLinearLayout.visibility = View.GONE
-            }
-        }.start()
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     companion object {
         private const val MILLI_SEC = 60000L
         private const val COUNTDOWN_INTERVAL = 1000L
     }
 }
+

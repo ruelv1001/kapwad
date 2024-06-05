@@ -25,6 +25,7 @@ import dswd.ziacare.app.utils.dialog.CommonDialog
 import dswd.ziacare.app.utils.setOnSingleClickListener
 import dswd.ziacare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import dswd.ziacare.app.utils.showToastSuccess
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -76,6 +77,8 @@ class LoginActivity : AppCompatActivity() {
             is LoginViewState.Success -> {
                 hideLoadingDialog()
                 toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
+                showToastSuccess(this, description = viewState.message)
+
                 if(viewState.isCompleteProfile){
                     val intent = MainActivity.getIntent(this)
                     startActivity(intent)
