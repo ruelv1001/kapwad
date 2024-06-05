@@ -11,6 +11,7 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/dimen_20"
+        android:visibility="gone"
         android:src="@drawable/ic_profile_edit" />
 
     <androidx.core.widget.NestedScrollView
@@ -184,6 +185,7 @@
                     android:fontFamily="@font/inter_bold"
                     android:text="@string/contact_information"
                     android:textColor="@color/color_primaryDark"
+                    android:visibility="gone"
                     android:textSize="@dimen/font_16" />
 
                 <LinearLayout
@@ -191,6 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_10"
                     android:layout_gravity="center_vertical"
+                    android:visibility="gone"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -222,6 +225,7 @@
                     android:layout_height="wrap_content"
                     app:boxStrokeColor="@color/bg_edittext"
                     app:boxStrokeWidth="@dimen/dimen_0"
+                    android:visibility="gone"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:boxBackgroundColor="@color/bg_edittext"
                     android:layout_marginTop="@dimen/dimen_4"
@@ -249,6 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_16"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -283,6 +288,7 @@
                     android:layout_height="wrap_content"
                     app:boxStrokeColor="@color/bg_edittext"
                     app:boxStrokeWidth="@dimen/dimen_0"
+                    android:visibility="gone"
                     app:boxBackgroundColor="@color/bg_edittext"
                     android:layout_marginTop="@dimen/dimen_4"
                     >
