@@ -71,18 +71,33 @@ android {
             manifestPlaceholders = [appName: 'Dev - ' + rootProject.name]
             buildConfigField "String", "BASE_URL", "\"https://dswd-food-stamp.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziademo.com/\""
+            buildConfigField "String", "TERMS_URL", "\"https://dswdwebsite.ziademo.com/terms/\""
+            buildConfigField "String", "PRIVACY_POLICY_URL", "\"https://dswdwebsite.ziademo.com/privacy-policy/\""
+            buildConfigField "String", "ABOUT_US_URL", "\"https://dswdwebsite.ziademo.com/about/\""
+            buildConfigField "String", "CONTACT_US_URL", "\"https://dswdwebsite.ziademo.com/contact/\""
+            buildConfigField "String", "FAQ_URL", "\"https://dswdwebsite.ziademo.com/faq/\""
             buildConfigField "String", "PSGC_AUTH", "\"HkCrJxGa5M8udwHYbDyMF2kscmzhSVtDwBxjXNPxLETScLAFf5P87zLUxqWTKQ3bRcvLCNd4e9n3xpNCwGxsrfgj6fMRtCsUuxWr6gRAj2kRcVwxKfH5TDx8YWF4r2cP\""
         }
         alpha {
             manifestPlaceholders = [appName: 'Alpha - ' + rootProject.name]
             buildConfigField "String", "BASE_URL", "\"https://dswd-food-stamp.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziapay.ph/\""
+            buildConfigField "String", "TERMS_URL", "\"https://dswdwebsite.ziademo.com/terms/\""
+            buildConfigField "String", "PRIVACY_POLICY_URL", "\"https://dswdwebsite.ziademo.com/privacy-policy/\""
+            buildConfigField "String", "ABOUT_US_URL", "\"https://dswdwebsite.ziademo.com/about/\""
+            buildConfigField "String", "CONTACT_US_URL", "\"https://dswdwebsite.ziademo.com/contact/\""
+            buildConfigField "String", "FAQ_URL", "\"https://dswdwebsite.ziademo.com/faq/\""
             buildConfigField "String", "PSGC_AUTH", "\"HkCrJxGa5M8udwHYbDyMF2kscmzhSVtDwBxjXNPxLETScLAFf5P87zLUxqWTKQ3bRcvLCNd4e9n3xpNCwGxsrfgj6fMRtCsUuxWr6gRAj2kRcVwxKfH5TDx8YWF4r2cP\""
         }
         prod {
             manifestPlaceholders = [appName: rootProject.name + '-v' + versionName]
             buildConfigField "String", "BASE_URL", "\"https://dswd-food-stamp.ziademo.com/\""
             buildConfigField "String", "PSGC_URL", "\"https://psgc.ziademo.com/\""
+            buildConfigField "String", "TERMS_URL", "\"https://dswdwebsite.ziademo.com/terms/\""
+            buildConfigField "String", "PRIVACY_POLICY_URL", "\"https://dswdwebsite.ziademo.com/privacy-policy/\""
+            buildConfigField "String", "ABOUT_US_URL", "\"https://dswdwebsite.ziademo.com/about/\""
+            buildConfigField "String", "CONTACT_US_URL", "\"https://dswdwebsite.ziademo.com/contact/\""
+            buildConfigField "String", "FAQ_URL", "\"https://dswdwebsite.ziademo.com/faq/\""
             buildConfigField "String", "PSGC_AUTH", "\"HkCrJxGa5M8udwHYbDyMF2kscmzhSVtDwBxjXNPxLETScLAFf5P87zLUxqWTKQ3bRcvLCNd4e9n3xpNCwGxsrfgj6fMRtCsUuxWr6gRAj2kRcVwxKfH5TDx8YWF4r2cP\""
         }
     }
