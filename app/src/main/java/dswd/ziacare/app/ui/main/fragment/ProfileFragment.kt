@@ -34,6 +34,7 @@ import dswd.ziacare.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import dswd.ziacare.app.BuildConfig
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -174,19 +175,19 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         privacyPolicyLinearLayout.setOnClickListener{
-            openWebViewDialog("https://www.lionscare.ph/privacy-policy")
+            openWebViewDialog(BuildConfig.PRIVACY_POLICY_URL)
         }
         faqLinearLayout.setOnClickListener{
-            openWebViewDialog("https://www.lionscare.ph/faq")
+            openWebViewDialog(BuildConfig.FAQ_URL)
         }
         termsLinearLayout.setOnClickListener{
-            openWebViewDialog("https://www.lionscare.ph/terms")
+            openWebViewDialog(BuildConfig.TERMS_URL)
         }
         contactLinearLayout.setOnClickListener{
-            openWebViewDialog("https://www.lionscare.ph/contact")
+            openWebViewDialog(BuildConfig.CONTACT_US_URL)
         }
         aboutLinearLayout.setOnClickListener{
-            openWebViewDialog("https://www.lionscare.ph/about")
+            openWebViewDialog(BuildConfig.ABOUT_US_URL)
         }
     }
 
