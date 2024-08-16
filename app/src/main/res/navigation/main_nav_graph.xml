@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="dswd.ziacare.app.ui.main.fragment.HomeFragment"
+        android:name="da.farmer.app.ui.main.fragment.HomeFragment"
         android:label=""
         tools:layout="@layout/fragment_home">
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/navigation_wallet"
-        android:name="dswd.ziacare.app.ui.main.fragment.WalletFragment"
+        android:name="da.farmer.app.ui.main.fragment.WalletFragment"
         android:label=""
         tools:layout="@layout/fragment_wallet" >
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/navigation_groups"
-        android:name="dswd.ziacare.app.ui.main.fragment.GroupsFragment"
+        android:name="da.farmer.app.ui.main.fragment.GroupsFragment"
         android:label=""
         tools:layout="@layout/fragment_groups" >
         <action
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="dswd.ziacare.app.ui.main.fragment.ProfileFragment"
+        android:name="da.farmer.app.ui.main.fragment.ProfileFragment"
         android:label=""
         tools:layout="@layout/fragment_settings" />
 

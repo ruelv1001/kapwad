@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_profile_preview"
-        android:name="dswd.ziacare.app.ui.profile.fragment.ProfilePreviewFragment"
+        android:name="da.farmer.app.ui.profile.fragment.ProfilePreviewFragment"
         tools:layout="@layout/fragment_profile_preview"
         android:label="">
         <action
@@ -23,13 +23,13 @@
 
     <fragment
         android:id="@+id/navigation_profile_update"
-        android:name="dswd.ziacare.app.ui.profile.fragment.ProfileUpdateFragment"
+        android:name="da.farmer.app.ui.profile.fragment.ProfileUpdateFragment"
         tools:layout="@layout/fragment_profile_update"
         android:label=""/>
     <fragment
         android:id="@+id/profileOTPFragment"
         tools:layout="@layout/fragment_registration_otp"
-        android:name="dswd.ziacare.app.ui.profile.fragment.ProfileOTPFragment"
+        android:name="da.farmer.app.ui.profile.fragment.ProfileOTPFragment"
         android:label="ProfileOTPFragment" >
         <action
             android:id="@+id/action_profileOTPFragment_to_navigation_profile_preview"
@@ -40,7 +40,7 @@
     <fragment
         tools:layout="@layout/fragment_profile_edit_number"
         android:id="@+id/profileEditNumberFragment"
-        android:name="dswd.ziacare.app.ui.profile.fragment.ProfileEditNumberFragment"
+        android:name="da.farmer.app.ui.profile.fragment.ProfileEditNumberFragment"
         android:label="ProfileEditNumberFragment" >
         <action
             android:id="@+id/action_profileEditNumberFragment_to_profileOTPFragment"
@@ -50,6 +50,6 @@
     </fragment>
     <fragment
         android:id="@+id/profileEditEmailaddress"
-        android:name="dswd.ziacare.app.ui.profile.fragment.ProfileEditEmailaddress"
+        android:name="da.farmer.app.ui.profile.fragment.ProfileEditEmailaddress"
         android:label="ProfileEditEmailaddress" />
 </navigation>

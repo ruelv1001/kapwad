@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_primary_info"
-        android:name="dswd.ziacare.app.ui.register.fragment.RegisterPrimaryInfoFragment"
+        android:name="da.farmer.app.ui.register.fragment.RegisterPrimaryInfoFragment"
         android:label=""
         tools:layout="@layout/fragment_registration_primary_info">
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/navigation_otp"
-        android:name="dswd.ziacare.app.ui.register.fragment.RegisterOTPFragment"
+        android:name="da.farmer.app.ui.register.fragment.RegisterOTPFragment"
         android:label=""
         tools:layout="@layout/fragment_registration_otp">
         <action
@@ -32,14 +32,14 @@
 
     <fragment
         android:id="@+id/navigation_complete_profile"
-        android:name="dswd.ziacare.app.ui.register.fragment.RegisterCompleteProfileFragment"
+        android:name="da.farmer.app.ui.register.fragment.RegisterCompleteProfileFragment"
         android:label=""
         tools:layout="@layout/fragment_registration_complete_profile"/>
 
 
     <fragment
         android:id="@+id/navigation_onboarding_primary_info"
-        android:name="dswd.ziacare.app.ui.register.fragment.OnboardingPrimaryInfoFragment"
+        android:name="da.farmer.app.ui.register.fragment.OnboardingPrimaryInfoFragment"
         android:label=""
         tools:layout="@layout/fragment_registration_primary_info">
         <action
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/navigation_onboarding_otp"
-        android:name="dswd.ziacare.app.ui.register.fragment.OnboardingOTPFragment"
+        android:name="da.farmer.app.ui.register.fragment.OnboardingOTPFragment"
         android:label=""
         tools:layout="@layout/fragment_registration_otp">
         <action
@@ -59,7 +59,7 @@
 
     <fragment
         android:id="@+id/navigation_onboarding_complete_profile"
-        android:name="dswd.ziacare.app.ui.register.fragment.OnboardingCompleteProfileFragment"
+        android:name="da.farmer.app.ui.register.fragment.OnboardingCompleteProfileFragment"
         android:label=""
         tools:layout="@layout/fragment_registration_complete_profile"/>
 

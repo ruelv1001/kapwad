@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_top_up"
-        android:name="dswd.ziacare.app.ui.wallet.fragment.TopUpFragment"
+        android:name="da.farmer.app.ui.wallet.fragment.TopUpFragment"
         tools:layout="@layout/fragment_top_up"
         android:label="">
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/navigation_payment_method"
-        android:name="dswd.ziacare.app.ui.wallet.fragment.PaymentMethodFragment"
+        android:name="da.farmer.app.ui.wallet.fragment.PaymentMethodFragment"
         tools:layout="@layout/fragment_payment_method"
         android:label="">
 

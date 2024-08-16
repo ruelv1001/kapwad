@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="dswd.ziacare.app">
+    package="da.farmer.app">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -44,7 +44,7 @@
             android:name=".ui.wallet.activity.WalletActivity"
             android:exported="false" />
         <activity
-            android:name="dswd.ziacare.app.ui.onboarding.activity.SplashScreenActivity"
+            android:name=".ui.onboarding.activity.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="userPortrait"
             android:windowSoftInputMode="adjustResize">

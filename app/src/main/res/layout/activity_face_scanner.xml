@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <dswd.ziacare.app.utils.facedetect.facedetectionutil.common.CameraSourcePreview
+    <da.farmer.app.utils.facedetect.facedetectionutil.common.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <dswd.ziacare.app.utils.facedetect.facedetectionutil.common.GraphicOverlay
+        <da.farmer.app.utils.facedetect.facedetectionutil.common.GraphicOverlay
             android:id="@+id/barcodeOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </dswd.ziacare.app.utils.facedetect.facedetectionutil.common.CameraSourcePreview>
+    </da.farmer.app.utils.facedetect.facedetectionutil.common.CameraSourcePreview>
 
     <LinearLayout
         android:layout_width="match_parent"
