@@ -495,5 +495,7 @@
     <string name="local_db_error_message">There\'s an error in saving/deleting local data</string>
     <string name="confirm_otp">Confirm OTP</string>
     <string name="please_enter_the_otp_we_just_sent_to">Please enter the OTP we just sent to</string>
+    <string name="lbl_marketplace">MARKETPLACE</string>
+    <string name="lbl_phmarket">PHMARKET</string>
 
 </resources>
