@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen_30"
+    android:layout_marginTop="@dimen/dimen_20"
+    android:layout_marginEnd="@dimen/dimen_30"
+    android:background="@drawable/bg_rounded">
+
+    <LinearLayout
+        android:id="@+id/approveLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_10">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:text="Upload Video"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/closeImageView"
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_alignTop="@id/approveLinearLayout"
+                android:layout_alignEnd="@id/approveLinearLayout"
+                android:clickable="true"
+                android:padding="@dimen/dimen_5"
+                android:src="@drawable/ic_close"
+                app:tint="@color/black" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10">
+
+
+            <TextView
+                android:id="@+id/videoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:backgroundTint="@color/black"
+                android:drawableTint="@color/black"
+                android:background="@drawable/bg_take_picture"
+                android:drawableLeft="@drawable/ic_play_video"
+                android:fontFamily="@font/inter_medium"
+                android:padding="@dimen/dimen_10"
+                android:text="@string/left_co"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/cancelTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:background="@drawable/bg_rounded"
+            android:elevation="@dimen/dimen_3"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_5"
+            android:text="@string/action_cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>

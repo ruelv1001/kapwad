@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/crops_nav_graph"
+    app:startDestination="@id/navigation_crops">
+
+    <fragment
+        android:id="@+id/navigation_crops"
+        android:name="da.farmer.app.ui.crops.fragment.CropsMenuFragment"
+        tools:layout="@layout/fragment_crops_menu"
+        android:label="">
+        <action
+            android:id="@+id/action_picture_crops"
+            app:destination="@id/navigation_picture_crops" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_picture_crops"
+        android:name="da.farmer.app.ui.crops.fragment.CropsPictureFragment"
+        tools:layout="@layout/fragment_crops_picture"
+        android:label="">
+        <action
+            android:id="@+id/action_submitted_crops"
+            app:destination="@id/navigation_submitted_crops" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_submitted_crops"
+        android:name="da.farmer.app.ui.crops.fragment.SubmittedFragment"
+        tools:layout="@layout/fragment_crops_submitted"
+        android:label="">
+
+    </fragment>
+
+
+
+</navigation>
