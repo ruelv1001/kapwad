@@ -32,6 +32,6 @@ interface TempDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTempOffline(temp: List<TempListModelData>)
 
-    @Query("SELECT * FROM tbl_tempo_bill WHERE id = :meternumber")
+    @Query("SELECT * FROM tbl_tempo_bill WHERE account_number = :meternumber")
     suspend fun getTempDetailsById(meternumber: String): TempListModelData?
 }

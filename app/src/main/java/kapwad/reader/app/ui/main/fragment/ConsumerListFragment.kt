@@ -79,7 +79,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
     private lateinit var printer: XP380PTPrinter
     private var printerDialog: PrinterDialog? = null
 
-
+    private var isReset: String?=null
     // Permissions needed for Android 11+ and ColorOS 14
     private val requiredPermissions = arrayOf(
         Manifest.permission.BLUETOOTH,
@@ -110,6 +110,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
 //        printer.connectPrinter(requireActivity())
        // checkBluetooth()
         checkBluetoothAndPermissions()
+        isReset="false"
     }
 
     override fun onResume() {
@@ -243,13 +244,16 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
 
     private fun setClickListeners() = binding.run {
         uploadButton.setOnSingleClickListener {
+            isReset="false"
             setLogin()
+
         }
         searchButton.setOnSingleClickListener {
             viewModel.searchConsumer(refEditText.text.toString())
         }
         resetButton.setOnSingleClickListener {
-            viewModel.deleteAllOrder()
+          setLogin()
+            isReset="true"
         }
     }
 
@@ -257,7 +261,11 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
         LoginDialog.newInstance(object :
             LoginDialog.SuccessCallBack {
             override fun onSuccess() {
-                viewModel.getUploadJson(prettyJson)
+                if(isReset=="false"){
+                viewModel.getUploadJson(prettyJson)}
+                if(isReset=="true"){
+                    viewModel.deleteAllOrder()
+                }
             }
 
             override fun onCancel(dialog: LoginDialog) {
