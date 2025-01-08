@@ -1,7 +1,7 @@
 package kapwad.reader.app.data.repositories.bill.response
 
+import androidx.annotation.Keep
 
-import android.support.annotation.Keep
 
 @Keep
 data class BillUploadedResponse(

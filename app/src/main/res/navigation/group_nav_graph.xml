@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_group_create"
-        android:name="da.farmer.app.ui.group.fragment.GroupCreateFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.GroupCreateFragment"
         android:label=""
         tools:layout="@layout/fragment_group_create">
         <action
@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_group_invite"
-        android:name="da.farmer.app.ui.group.fragment.GroupInviteFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.GroupInviteFragment"
         android:label=""
         tools:layout="@layout/fragment_group_invite"/>
       <fragment
         android:id="@+id/navigation_group_manage"
-        android:name="da.farmer.app.ui.group.fragment.GroupManageFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.GroupManageFragment"
         android:label=""
         tools:layout="@layout/fragment_group_manage">
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_group_assistance"
-        android:name="da.farmer.app.ui.group.fragment.AssistanceFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.AssistanceFragment"
         android:label=""
         tools:layout="@layout/fragment_group_assistance">
         <action
@@ -58,7 +58,7 @@
 
     <fragment
         android:id="@+id/navigation_group_assistance_create"
-        android:name="da.farmer.app.ui.group.fragment.AssistanceCreateFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.AssistanceCreateFragment"
         android:label=""
         tools:layout="@layout/fragment_assistance_create">
 
@@ -66,13 +66,13 @@
 
     <fragment
         android:id="@+id/navigation_group_assistance_req_details"
-        android:name="da.farmer.app.ui.group.fragment.AssistanceRequestDetailsFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.AssistanceRequestDetailsFragment"
         android:label=""
         tools:layout="@layout/fragment_group_assistance_req_details"/>
 
     <fragment
         android:id="@+id/navigation_group_membership"
-        android:name="da.farmer.app.ui.group.fragment.MembersFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.MembersFragment"
         android:label=""
         tools:layout="@layout/fragment_members">
         <action
@@ -82,19 +82,19 @@
 
     <fragment
         android:id="@+id/navigation_group_statistics"
-        android:name="da.farmer.app.ui.group.fragment.StatisticsFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.StatisticsFragment"
         android:label=""
         tools:layout="@layout/fragment_group_statistics"/>
 
     <fragment
         android:id="@+id/navigation_group_transaction"
-        android:name="da.farmer.app.ui.group.fragment.HistoryTransactionFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.HistoryTransactionFragment"
         android:label=""
         tools:layout="@layout/fragment_history_transaction"/>
 
     <fragment
         android:id="@+id/navigation_group_roles"
-        android:name="da.farmer.app.ui.group.fragment.CommunityRolesFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.CommunityRolesFragment"
         android:label=""
         tools:layout="@layout/fragment_group_community_roles">
         <action
@@ -104,7 +104,7 @@
 
     <fragment
         android:id="@+id/navigation_group_roles_update"
-        android:name="da.farmer.app.ui.group.fragment.CommunityRolesUpdateFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.CommunityRolesUpdateFragment"
         android:label=""
         tools:layout="@layout/fragment_group_community_roles_update">
         <action
@@ -114,19 +114,19 @@
 
     <fragment
         android:id="@+id/navigation_group_roles_promote"
-        android:name="da.farmer.app.ui.group.fragment.GroupPromoteFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.GroupPromoteFragment"
         android:label=""
         tools:layout="@layout/fragment_group_invite"/>
 
     <fragment
         android:id="@+id/navigation_group_update"
-        android:name="da.farmer.app.ui.group.fragment.GroupUpdateFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.GroupUpdateFragment"
         android:label=""
         tools:layout="@layout/fragment_group_create"/>
 
     <fragment
         android:id="@+id/navigation_group_admin_list"
-        android:name="da.farmer.app.ui.group.fragment.AdminListFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.AdminListFragment"
         android:label=""
         tools:layout="@layout/fragment_group_membership_req">
         <action
@@ -136,7 +136,7 @@
 
     <fragment
         android:id="@+id/navigation_group_search"
-        android:name="da.farmer.app.ui.group.fragment.GroupSearchFragment"
+        android:name="kapwad.reader.app.ui.group.fragment.GroupSearchFragment"
         android:label=""
         tools:layout="@layout/fragment_group_search"/>
 

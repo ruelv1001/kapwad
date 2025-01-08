@@ -84,11 +84,7 @@ class WalletSearchFragment : Fragment(),
                 activity.hideLoadingDialog()
                 activity.isGroupId = false
                 activity.qrData = viewState.scanQRData?: QRData()
-                if(viewState.scanQRData?.id != viewModel.user.id){
-                    findNavController().navigate(WalletSearchFragmentDirections.actionNavigationWalletSearchToNavigationWalletInput())
-                }else{
-                    requireActivity().toastWarning("You cannot scan your own QR",CpmToast.LONG_DURATION)
-                }
+
             }
             is WalletViewState.SuccessScanGroup -> {
                 activity.hideLoadingDialog()

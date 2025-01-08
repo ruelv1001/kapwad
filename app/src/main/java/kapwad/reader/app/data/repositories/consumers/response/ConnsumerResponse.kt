@@ -1,4 +1,4 @@
-package kapwad.reader.app.data.consumers.response
+package kapwad.reader.app.data.repositories.consumers.response
 
 import androidx.annotation.Keep
 

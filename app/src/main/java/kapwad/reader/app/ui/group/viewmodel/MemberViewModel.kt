@@ -39,9 +39,6 @@ class MemberViewModel @Inject constructor(
     val memberSharedFlow: SharedFlow<MemberViewState> =
         _memberSharedFlow.asSharedFlow()
 
-    fun getUserKYCStatus() : String{
-        return encryptedDataManager.getKYCStatus()
-    }
     private suspend fun loadPendingMemberRequest(groupId: String, type : String) {
         memberRepository.doGetAllPendingRequest(groupId = groupId, type = type)
             .cachedIn(viewModelScope)

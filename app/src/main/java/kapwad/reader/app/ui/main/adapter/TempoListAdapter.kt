@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.TempListModelData
 import kapwad.reader.app.databinding.AdapterAllConsumerBinding
 
 
@@ -15,22 +15,22 @@ import kapwad.reader.app.databinding.AdapterDateBinding
 import kapwad.reader.app.databinding.AdapterSyncBinding
 
 
-class AllConsumerListAdapter (val context: Context, val clickListener: ConsumerCallback) :
-    RecyclerView.Adapter<AllConsumerListAdapter.AdapterViewHolder>() {
+class TempoListAdapter (val context: Context, val clickListener: ConsumerCallback) :
+    RecyclerView.Adapter<TempoListAdapter.AdapterViewHolder>() {
 
-    private val adapterData = mutableListOf<ConsumerListModelData>()
+    private val adapterData = mutableListOf<TempListModelData>()
     fun clear(){
         adapterData.clear()
         notifyDataSetChanged()
     }
 
-    fun appendData(newData: List<ConsumerListModelData>) {
+    fun appendData(newData: List<TempListModelData>) {
         val startAt = adapterData.size
         adapterData.addAll(newData)
         notifyItemRangeInserted(startAt, newData.size)
     }
 
-    fun getData(): MutableList<ConsumerListModelData> = adapterData
+    fun getData(): MutableList<TempListModelData> = adapterData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
         val binding = AdapterAllConsumerBinding
@@ -44,11 +44,11 @@ class AllConsumerListAdapter (val context: Context, val clickListener: ConsumerC
 
     inner class AdapterViewHolder(val binding: AdapterAllConsumerBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun displayData(data: ConsumerListModelData, position: Int) = with(itemView) {
+        fun displayData(data: TempListModelData, position: Int) = with(itemView) {
 
-            binding.accountTextView.text=data.accountnumber
-            binding.nameTextView.text=data.firstname +" "+ data.middlename+" "+ data.lastname
-            binding.meterTextView.text=data.meternumber
+            binding.accountTextView.text=data.account_number
+            binding.nameTextView.text=data.Prev
+            binding.meterTextView.text=data.Meternumber
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data, position)
             }
@@ -56,7 +56,7 @@ class AllConsumerListAdapter (val context: Context, val clickListener: ConsumerC
     }
 
     interface ConsumerCallback{
-        fun onItemClicked(data: ConsumerListModelData, position: Int)
+        fun onItemClicked(data: TempListModelData, position: Int)
     }
 
     override fun getItemCount(): Int = adapterData.size

@@ -60,25 +60,7 @@ class ProfileEditEmailaddress: Fragment(){
         confirmButton.setOnSingleClickListener {
             if (emailEditText.text?.isEmpty() == true){
                 requireActivity().toastError(getString(R.string.fields_cannot_be_empty), CpmToast.LONG_DURATION)
-            }else{
-                    val request = UpdateInfoRequest(
-                        province_sku =  viewModel.userModel?.province_sku.orEmpty(),
-                        province_name = viewModel.userModel?.province_name.orEmpty(),
-                        city_sku =viewModel.userModel?.city_code.orEmpty(),
-                        city_name = viewModel.userModel?.city_name.orEmpty(),
-                        brgy_sku = viewModel.userModel?.brgy_code.orEmpty(),
-                        brgy_name = viewModel.userModel?.brgy_name.orEmpty(),
-                        street_name = viewModel.userModel?.street_name.orEmpty(),
-                        zipcode = viewModel.userModel?.zipcode.orEmpty(),
-                        firstname = viewModel.userModel?.firstname.orEmpty(),
-                        lastname = viewModel.userModel?.lastname.orEmpty(),
-                        middlename =viewModel.userModel?.middlename.orEmpty(),
-                        email = emailEditText.text.toString(), //THIS IS CHANGED HERE IN THIS FRAGMENT, REST IS FROM INITIAL GET PROFILE
-                        birthdate = viewModel.userModel?.birthdate?.date_only_ph.orEmpty()
-                    )
-
-                    viewModel.doUpdateProfile(request) //the way to get email address is to pass email address in update profile
-             }
+            }
         }
     }
 

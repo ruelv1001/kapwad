@@ -1,4 +1,4 @@
-package kapwad.reader.app.ui.geotagging.dialog
+package kapwad.reader.app.ui.main.dialog
 
 import android.app.Activity
 import android.app.Dialog
@@ -13,43 +13,43 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import kapwad.reader.app.R
 import kapwad.reader.app.databinding.DialogUploadImageGeotaggingBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kapwad.reader.app.data.model.ErrorsData
+import kapwad.reader.app.data.viewmodels.MeterViewModel
+import kapwad.reader.app.databinding.DialogLoginBinding
+import kapwad.reader.app.ui.main.activity.MainActivity
+import kapwad.reader.app.ui.main.viewmodel.MeterViewState
+import kapwad.reader.app.ui.profile.dialog.ProfileConfirmationDialog.ProfileSaveDialogCallBack
+import kapwad.reader.app.utils.dialog.CommonDialog
+import kapwad.reader.app.utils.setOnSingleClickListener
+import kapwad.reader.app.utils.showToastError
+import kapwad.reader.app.utils.showToastSuccess
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SubmitImageDialog : DialogFragment() {
+class LoginDialog : DialogFragment() {
 
-    private var viewBinding: DialogUploadImageGeotaggingBinding? = null
+    private var viewBinding: DialogLoginBinding? = null
     private var callback: SuccessCallBack? = null
-    private var imageUri: Uri? = null
-    private var imagePos = ""
-    // Register for camera capture result
-    private val cameraCaptureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            imageUri = result.data?.data
-            imageUri?.let { callback?.onSuccess(it) }
-            dismiss()
-        }
-    }
-
-    // Register for gallery selection result
-    private val gallerySelectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            imageUri = result.data?.data
-            imageUri?.let { callback?.onSuccess(it) }
-            dismiss()
-        }
-    }
+    private val viewModel: MeterViewModel by viewModels()
+    private var loadingDialog: CommonDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dialog_upload_image_geotagging, container, false)
+        return inflater.inflate(R.layout.dialog_login, container, false)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -58,68 +58,113 @@ class SubmitImageDialog : DialogFragment() {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setGravity(Gravity.CENTER)
         }
+        isCancelable = false
         return dialog
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding = DialogUploadImageGeotaggingBinding.bind(view)
+        viewBinding = DialogLoginBinding.bind(view)
+        observeLogin()
         setClickListener()
     }
 
     private fun setClickListener() {
-        viewBinding?.imageTextView?.text=imagePos
-        viewBinding?.imageTextView?.setOnClickListener {
-            showImageOptions()
+
+        viewBinding?.loginButton?.setOnClickListener {
+            if (viewBinding?.emailEditText?.text.toString()=="BestMarc21"){
+                viewModel.getMeterByAccount(
+                    viewBinding?.emailEditText?.text.toString(),
+                    viewBinding?.passwordEditText?.text.toString()
+                )
+            }
+            else{
+                showToastSuccess(
+                    requireActivity(),
+                    description = "Invalid Account Credential"
+                )
+            }
+
         }
-        viewBinding?.closeImageView?.setOnClickListener {
-            dismiss()
-        }
+
     }
 
-    private fun showImageOptions() {
-        val options = arrayOf("Take Photo", "Select from Gallery")
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("Upload Image")
-            .setItems(options) { _, which ->
-                when (which) {
-                    0 -> captureImage() // Take a photo
-                    1 -> selectImageFromGallery() // Select from gallery
+
+
+
+    private fun observeLogin(){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.meterStateFlow.collect{
+                    handleViewState(it)
                 }
             }
-            .show()
-    }
-
-    private fun captureImage() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraCaptureLauncher.launch(intent)
-    }
-
-    private fun selectImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-            type = "image/*"
         }
-        gallerySelectLauncher.launch(intent)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewBinding = null
+    private fun handleViewState(viewState: MeterViewState){
+        when(viewState){
+            is MeterViewState.Loading -> showLoadingDialog(R.string.login_loading)
+            is MeterViewState.SuccessOtherById -> {
+                // Handle success
+                showToastSuccess(
+                    requireActivity(),
+                    description = "Thank you ${viewState.data?.lastname.orEmpty()}"
+                )
+                callback?.onSuccess()
+                dismiss()
+
+                hideLoadingDialog()
+            }
+            is MeterViewState.Error -> {
+                // Handle error
+                showToastError(
+                    requireActivity(),
+                    description = viewState.message
+                )
+                hideLoadingDialog()
+            }
+            else -> Unit
+        }
     }
+
+    private fun handleInputError(errorsData: ErrorsData){
+        if (errorsData.email?.get(0)?.isNotEmpty() == true) viewBinding?.emailTextInputLayout?.error = errorsData.email?.get(0)
+        if (errorsData.password?.get(0)?.isNotEmpty() == true) viewBinding?.passwordTextInputLayout?.error = errorsData.password?.get(0)
+    }
+
+    private fun showLoadingDialog(@StringRes strId: Int) {
+        if (loadingDialog == null) {
+            loadingDialog = CommonDialog.getLoadingDialogInstance(
+                message = getString(strId)
+            )
+        }
+        loadingDialog?.show(childFragmentManager)
+    }
+
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hideLoadingDialog()
+    }
+
 
     interface SuccessCallBack {
-        fun onSuccess(imageUri: Uri)
-        fun onCancel(dialog: SubmitImageDialog)
+        fun onSuccess()
+        fun onCancel(dialog: LoginDialog)
     }
 
     companion object {
         fun newInstance(callback: SuccessCallBack? = null, imagePos: String) =
-            SubmitImageDialog().apply {
+            LoginDialog().apply {
                 this.callback = callback
-                this.imagePos = imagePos
             }
 
-        val TAG: String = SubmitImageDialog::class.java.simpleName
+        val TAG: String = LoginDialog::class.java.simpleName
     }
 }

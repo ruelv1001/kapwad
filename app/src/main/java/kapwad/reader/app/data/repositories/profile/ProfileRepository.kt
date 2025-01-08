@@ -38,7 +38,7 @@ class ProfileRepository @Inject constructor(
         return channelFlow {
             profileRemoteDataSource.getProfileInfo().collectLatest { response ->
                 val userInfo = response.data ?: UserModel()
-                encryptedDataManager.setUserBasicInfo(userInfo)
+            //    encryptedDataManager.setUserBasicInfo(userInfo)
                 send(response)
             }
         }.flowOn(ioDispatcher)
@@ -52,7 +52,7 @@ class ProfileRepository @Inject constructor(
               request
             ).collectLatest { response ->
                 val userInfo = response.data ?: UserModel()
-                encryptedDataManager.setUserBasicInfo(userInfo)
+               // encryptedDataManager.setUserBasicInfo(userInfo)
                 send(response)
             }
         }.flowOn(ioDispatcher)

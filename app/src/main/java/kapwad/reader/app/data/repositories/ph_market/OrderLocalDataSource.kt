@@ -25,8 +25,8 @@ class OrderLocalDataSource @Inject constructor(private val orderDao: OrderDao) {
     suspend fun getOrder() =
         orderDao.getOrders()
 
-    suspend fun getTotal() =
-        orderDao.getOverallTotal()
+//    suspend fun getTotal() =
+//        orderDao.getOverallTotal()
 
 
     suspend fun deleteAll() =

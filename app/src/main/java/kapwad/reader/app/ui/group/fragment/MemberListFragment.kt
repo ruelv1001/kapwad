@@ -69,41 +69,11 @@ class MemberListFragment : Fragment(),
         observeMemberList()
         viewModel.ownerInfo = activity.groupDetails?.owner?: UserModel()
         viewModel.refreshListOfMembers(activity.groupDetails?.id.toString(), true)
-        isOwner = activity.groupDetails?.owner_user_id == viewModel.user.id
+       // isOwner = activity.groupDetails?.owner_user_id == viewModel.user.id
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(requireContext(),this@MemberListFragment, viewModel.user.id, isInMemberList = true)
-        swipeRefreshLayout.setOnRefreshListener(this@MemberListFragment)
-        linearLayoutManager = LinearLayoutManager(requireActivity())
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
 
-        shimmerLayout.isVisible = true
-        shimmerLayout.startShimmer()
-
-        ownerLinearLayout.isGone = true
-
-        adapter?.addLoadStateListener { loadState ->
-            when {
-                loadState.source.refresh is LoadState.Loading -> {
-                    placeHolderTextView.isVisible = false
-                    shimmerLayout.isVisible = true
-                    recyclerView.isVisible = false
-                }
-                loadState.source.refresh is LoadState.Error -> {
-                    placeHolderTextView.isVisible = true
-                    shimmerLayout.isVisible = false
-                    recyclerView.isVisible = false
-                }
-                loadState.source.refresh is LoadState.NotLoading && adapter?.hasData() == true -> {
-                    placeHolderTextView.isVisible = false
-                    shimmerLayout.isVisible = false
-                    shimmerLayout.stopShimmer()
-                    recyclerView.isVisible = true
-                }
-            }
-        }
     }
 
     private fun setClickListeners() = binding.run {
@@ -189,24 +159,6 @@ class MemberListFragment : Fragment(),
                 }
 
                 override fun onSendPoint(memberListData: MemberListData) {
-                    if(viewModel.getUserKYCStatus() != "completed"){
-                        requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
-                    }else{
-                        val intent = WalletActivity.getIntent(
-                            requireActivity(),
-                            "Send Points",
-                            true,
-                            groupSenderId = activity.groupDetails?.id.orEmpty(),
-                            qrData = QRData(
-                                data.user?.id,
-                                data.user?.name,
-                                avatar = data.user?.avatar
-                            ),
-                            start = "START_INPUT"
-                        )
-
-                        startActivity(intent)
-                    }
 
                 }
 

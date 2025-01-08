@@ -1,7 +1,8 @@
-package kapwad.reader.app.data.repositories.waterrate
+package kapwad.reader.app.data.repositories.others
 
 
 import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.OtherListModelData
 import kapwad.reader.app.data.model.RateAListModelData
 import kapwad.reader.app.data.model.RateBListModelData
 import kapwad.reader.app.data.model.RateCListModelData
@@ -14,21 +15,11 @@ import retrofit2.HttpException
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
-class RateRemoteDataSource @Inject constructor(private val rateService: RateService) {
+class OthersRemoteDataSource @Inject constructor(private val otherService: OtherService) {
 
-    suspend fun getRateList(): List<RateListModelData> {
+    suspend fun getRateList(): List<OtherListModelData> {
 
-        val response = rateService.doGetAllRateList()
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
-
-
-    suspend fun getRateAList(): List<RateAListModelData> {
-
-        val response = rateService.doGetAllRateAList()
+        val response = otherService.doGetAllOtherList()
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }
@@ -37,21 +28,4 @@ class RateRemoteDataSource @Inject constructor(private val rateService: RateServ
 
 
 
-    suspend fun getRateBList(): List<RateBListModelData> {
-
-        val response = rateService.doGetAllRateBList()
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
-
-    suspend fun getRateCList(): List<RateCListModelData> {
-
-        val response = rateService.doGetAllRateCList()
-        if (response.code() != HttpURLConnection.HTTP_OK) {
-            throw HttpException(response)
-        }
-        return response.body() ?: throw NullPointerException("Response data is empty")
-    }
 }

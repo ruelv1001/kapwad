@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen_15"
     android:background="@drawable/bg_rounded_crops"
-
     android:orientation="vertical">
 
 
@@ -14,30 +13,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/dimen_15">
+        android:padding="@dimen/dimen_10">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_5"
             android:orientation="horizontal">
             <TextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/start_date_lbl"
+                android:text="Account Number"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_13"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/dateTextView"
+                android:id="@+id/accountTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="viewEnd"
-                android:text="November  21,2024"
+                android:text="Ruel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_13"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:orientation="horizontal">
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Consumer Name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_13"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/billingMonthTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="viewEnd"
+                android:text="January 1, 2025"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_13"
                 android:textStyle="bold" />
@@ -47,7 +75,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_5"
             android:orientation="horizontal">
             <TextView
 
@@ -60,35 +88,20 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/statusTextView"
+                android:id="@+id/meterTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="viewEnd"
-                android:text="Pending"
+                android:text="Not Created"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_13"
                 android:textStyle="bold" />
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1"
-            android:background="@color/super_light_gray" />
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:orientation="horizontal">
-
-
-
-
-        </LinearLayout>
 
 
 

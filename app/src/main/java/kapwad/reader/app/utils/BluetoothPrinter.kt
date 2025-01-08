@@ -1,118 +1,188 @@
-package kapwad.reader.app.utils
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.pm.PackageManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import java.io.IOException
-import java.io.OutputStream
-import java.util.*
+import java.util.UUID
 
-class XP380PTPrinter(activity: Activity) {
-
-    private var bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+class BluetoothPrinter(
+    private val context: Context,
+    private val macAddress: String
+) {
+    private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     private var bluetoothSocket: BluetoothSocket? = null
-    private var outputStream: OutputStream? = null
-    private val deviceAddress = "86:67:7A:E6:54:76" // Replace with your printer's Bluetooth address
 
-    init {
+    // Standard SPP UUID for Bluetooth Serial Port Profile
+    private val SPP_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+
+    fun connect(): Boolean {
+        // Check if Bluetooth is available and enabled
         if (bluetoothAdapter == null) {
-            // Device doesn't support Bluetooth
-            activity.finish()
+            println("Bluetooth not supported")
+            return false
+        }
+
+        // Check if Bluetooth is enabled
+        if (!bluetoothAdapter.isEnabled) {
+            println("Bluetooth is not enabled")
+            return false
+        }
+
+        // Check Bluetooth permissions
+        if (!hasBluetoothPermissions()) {
+            println("Bluetooth permissions not granted")
+            return false
+        }
+
+        try {
+            // Get the Bluetooth device by MAC address
+            val device: BluetoothDevice = bluetoothAdapter.getRemoteDevice(macAddress)
+
+            // Create a socket connection with permission checks
+            bluetoothSocket = if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) == PackageManager.PERMISSION_GRANTED) {
+                device.createRfcommSocketToServiceRecord(SPP_UUID)
+            } else {
+                println("Bluetooth Connect permission not granted")
+                return false
+            }
+
+            // Connect with permission check
+            bluetoothSocket?.connect()
+            return true
+        } catch (e: SecurityException) {
+            println("Security exception during Bluetooth connection: ${e.message}")
+            return false
+        } catch (e: IOException) {
+            println("Connection failed: ${e.message}")
+            return false
         }
     }
 
+    private fun hasBluetoothPermissions(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.BLUETOOTH_CONNECT
+        ) == PackageManager.PERMISSION_GRANTED
+    }
 
-    fun connectPrinter(context: Context) {
-        val device: BluetoothDevice? = bluetoothAdapter?.getRemoteDevice(deviceAddress)
+    fun printText(text: String): Boolean {
+        if (bluetoothSocket == null || !bluetoothSocket!!.isConnected) {
+            println("Not connected to printer")
+            return false
+        }
+
         try {
+            // Verify permission before printing
             if (ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.BLUETOOTH_CONNECT
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return
-            }
-            bluetoothSocket = device?.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
-            bluetoothSocket?.connect()
-            outputStream = bluetoothSocket?.outputStream
-        } catch (e: IOException) {
-            e.printStackTrace()
-            closePrinterConnection()
-        }
-    }
-
-    fun printText(text: String) {
-        try {
-            outputStream?.write(text.toByteArray())
-            outputStream?.write("\n".toByteArray()) // Print new line after text
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun printTextHeader(text: String, bold: Boolean = false, textSize: Int = 18) {
-        try {
-            // Print bold text if specified
-            if (bold) {
-                outputStream?.write(byteArrayOf(27, 69, 1)) // Enable bold
+                ) != PackageManager.PERMISSION_GRANTED) {
+                println("Bluetooth Connect permission not granted")
+                return false
             }
 
-            // Set text size
-            outputStream?.write(byteArrayOf(27, 33, textSize.toByte()))
-
-            // Print the text
+            // Get the output stream and write the text
+            val outputStream = bluetoothSocket?.outputStream
             outputStream?.write(text.toByteArray())
-            outputStream?.write("\n".toByteArray()) // Print new line after text
-
-            // Reset text attributes
-            outputStream?.write(byteArrayOf(27, 33, 0)) // Reset text size
-            outputStream?.write(byteArrayOf(27, 69, 0)) // Disable bold
+            outputStream?.flush()
+            println("Print job sent successfully")
+            return true
+        } catch (e: SecurityException) {
+            println("Security exception during printing: ${e.message}")
+            return false
         } catch (e: IOException) {
-            e.printStackTrace()
+            println("Error printing: ${e.message}")
+            return false
         }
     }
 
-    fun printTextNormalHeader(text: String, bold: Boolean = false, textSize: Int = 15) {
+    fun disconnect(): Boolean {
         try {
-            // Print bold text if specified
-            if (bold) {
-                outputStream?.write(byteArrayOf(27, 69, 1)) // Enable bold
-                outputStream?.write("\n".toByteArray())
+            // Verify permission before disconnecting
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED) {
+                println("Bluetooth Connect permission not granted")
+                return false
             }
 
-            // Set text size
-            outputStream?.write(byteArrayOf(27, 33, textSize.toByte()))
-
-            // Print the text
-            outputStream?.write(text.toByteArray())
-
-            // Reset text attributes
-            outputStream?.write(byteArrayOf(27, 33, 0)) // Reset text size
-            outputStream?.write(byteArrayOf(27, 69, 0)) // Disable bold
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-
-    fun closePrinterConnection() {
-        try {
-            outputStream?.close()
             bluetoothSocket?.close()
+            println("Bluetooth connection closed")
+            return true
+        } catch (e: SecurityException) {
+            println("Security exception during disconnection: ${e.message}")
+            return false
         } catch (e: IOException) {
-            e.printStackTrace()
+            println("Error closing connection: ${e.message}")
+            return false
         }
+    }
+
+    // Example usage function
+    fun printExample() {
+        if (connect()) {
+            // Example print commands (may need to be adjusted for XP-380PT)
+            printText("\nHELLO WORLD\n")
+            printText("Bluetooth Printing Test\n")
+            printText("------------------------\n")
+
+            // Don't forget to disconnect
+            disconnect()
+        }
+    }
+}
+
+// Usage in an Android activity or service
+class MainActivity : AppCompatActivity() {
+    private val BLUETOOTH_PERMISSION_REQUEST_CODE = 1
+
+    private fun requestBluetoothPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+            BLUETOOTH_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == BLUETOOTH_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, you can proceed with Bluetooth operations
+                val printer = BluetoothPrinter(this, "86:67:7A:E6:54:76")
+                printer.printExample()
+            } else {
+                // Permission denied, handle accordingly
+                println("Bluetooth permission was denied")
+            }
+        }
+    }
+
+    private fun printToXP380PT() {
+        // Check and request permission if not granted
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED) {
+            requestBluetoothPermission()
+            return
+        }
+
+        // If permission is already granted
+        val printer = BluetoothPrinter(this, "86:67:7A:E6:54:76")
+        printer.printExample()
     }
 }

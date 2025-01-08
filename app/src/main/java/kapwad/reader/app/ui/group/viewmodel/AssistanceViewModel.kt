@@ -36,7 +36,7 @@ class AssistanceViewModel @Inject constructor(
         _assistanceSharedFlow.asSharedFlow()
 
     fun getUserKYC() : String{
-        return encryptedDataManager.getKYCStatus()
+        return encryptedDataManager.getAccessToken()
     }
 
     fun createAssistance(request: CreateAssistanceRequest){

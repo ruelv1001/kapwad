@@ -58,12 +58,12 @@ class AdminListFragment : Fragment(),
         setClickListeners()
         setupAdapter()
         observeMemberList()
-        setOwner()
+
         onRefresh()
     }
 
     private fun setupAdapter() = binding.run {
-        adapter = GroupMembersAdapter(requireContext(),this@AdminListFragment, viewModel.user.id, isInMemberList = false)
+       // adapter = GroupMembersAdapter(requireContext(),this@AdminListFragment, viewModel.user.id, isInMemberList = false)
         swipeRefreshLayout.setOnRefreshListener(this@AdminListFragment)
         linearLayoutManager = LinearLayoutManager(requireActivity())
         recyclerView.layoutManager = linearLayoutManager
@@ -97,14 +97,6 @@ class AdminListFragment : Fragment(),
        }
     }
 
-    private fun setOwner() = binding.run{
-        ownerLinearLayout.isVisible = true
-        groupOwnerLayout.nameTextView.text = activity.groupDetails?.owner?.name
-        groupOwnerLayout.idNoTextView.text = activity.groupDetails?.owner?.qrcode
-        groupOwnerLayout.profileImageView.loadAvatar(activity.groupDetails?.owner?.avatar?.thumb_path,requireActivity())
-
-        groupOwnerLayout.youTextView.isVisible = viewModel.user.id == activity.groupDetails?.owner_user_id
-    }
 
     override fun onResume() {
         super.onResume()

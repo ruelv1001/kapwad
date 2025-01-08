@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/chooseDeactivateOrDeleteFragment"
-        android:name="da.farmer.app.ui.accountcontrol.fragment.ChooseDeactivateOrDeleteFragment"
+        android:name="kapwad.reader.app.ui.accountcontrol.fragment.ChooseDeactivateOrDeleteFragment"
         android:label="ChooseDeactivateOrDeleteFragment"
         tools:layout="@layout/fragment_choose_deactivate_or_delete">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/deactivateOrDeleteFormFragment"
-        android:name="da.farmer.app.ui.accountcontrol.fragment.DeactivateOrDeleteFormFragment"
+        android:name="kapwad.reader.app.ui.accountcontrol.fragment.DeactivateOrDeleteFormFragment"
         android:label="DeactivateOrDeleteFormFragment"
         tools:layout="@layout/fragment_deactivate_or_delete_form">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/deactivateFragment"
-        android:name="da.farmer.app.ui.accountcontrol.fragment.DeactivateFragment"
+        android:name="kapwad.reader.app.ui.accountcontrol.fragment.DeactivateFragment"
         android:label="DeactivateFragment"
         tools:layout="@layout/fragment_deactivate">
         <action
@@ -37,12 +37,12 @@
     </fragment>
     <fragment
         android:id="@+id/accountControlOTPFragment"
-        android:name="da.farmer.app.ui.accountcontrol.fragment.AccountControlOTPFragment"
+        android:name="kapwad.reader.app.ui.accountcontrol.fragment.AccountControlOTPFragment"
         android:label="AccountControlOTPFragment"
         tools:layout="@layout/fragment_account_control_otp"/>
     <fragment
         android:id="@+id/deleteAccountFragment"
-        android:name="da.farmer.app.ui.accountcontrol.fragment.DeleteAccountFragment"
+        android:name="kapwad.reader.app.ui.accountcontrol.fragment.DeleteAccountFragment"
         android:label="DeleteAccountFragment"
         tools:layout="@layout/fragment_delete_account">
         <action

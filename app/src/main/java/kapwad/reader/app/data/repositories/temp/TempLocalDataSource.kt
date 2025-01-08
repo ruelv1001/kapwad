@@ -1,44 +1,38 @@
-package kapwad.reader.app.data.repositories.consumers
+package kapwad.reader.app.data.repositories.temp
 
 
 import android.util.Log
 import kapwad.reader.app.data.local.BillingDao
 import kapwad.reader.app.data.local.ConsumerDao
+import kapwad.reader.app.data.local.TempDao
 import kapwad.reader.app.data.model.ConsumerListModelData
 
 import kapwad.reader.app.data.model.CreatedBillListModelData
 import kapwad.reader.app.data.model.ProductOrderListModelData
+import kapwad.reader.app.data.model.TempListModelData
 import javax.inject.Inject
 
-class ConsumerLocalDataSource @Inject constructor(private val consumerDao: ConsumerDao) {
+class TempLocalDataSource @Inject constructor(private val tempDao: TempDao) {
 
 
-    suspend fun insertConsumerOffline(consumerListModelData: ConsumerListModelData) {
-        consumerDao.insertConsumer(consumerListModelData)
+    suspend fun insertTemp(tempListModelData: List<TempListModelData>) {
+        tempDao.insertTempOffline(tempListModelData)
     }
 
 
-    suspend fun createConsumer(consumerListModelData: ConsumerListModelData) {
-        consumerDao.createConsumer(consumerListModelData)
-    }
 
-    suspend fun insertConsumer(consumerListModelData: ConsumerListModelData) {
 
-        consumerDao.insertConsumer(consumerListModelData)
-    }
 
-//    suspend fun getAllUsers(): List<ProductOrderListModelData>{
-//        return billingDao.getAllUsers()
-//    }
+    suspend fun getTemp() =
+        tempDao.getTemp()
 
-    suspend fun getConsumer() =
-        consumerDao.getConsumer()
 
-//    suspend fun getTotal() =
-//        billingDao.getOverallTotal()
 
 
     suspend fun deleteAll() =
-        consumerDao.deleteAllConsumer()
+        tempDao.deleteAllTemp()
 
+
+    suspend fun getTempDetailsById(id: String): TempListModelData? =
+        tempDao.getTempDetailsById(id)
 }

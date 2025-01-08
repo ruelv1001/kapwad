@@ -1,7 +1,8 @@
-package kapwad.reader.app.data.repositories.others
+package kapwad.reader.app.data.repositories.meter
 
 import kapwad.reader.app.data.model.ConsumerListModelData
 import kapwad.reader.app.data.model.CreatedBillListModelData
+import kapwad.reader.app.data.model.MeterReaderListModelData
 import kapwad.reader.app.data.model.OtherListModelData
 import kapwad.reader.app.data.model.RateAListModelData
 import kapwad.reader.app.data.model.RateBListModelData
@@ -19,14 +20,13 @@ import retrofit2.http.POST
 import retrofit2.Call
 
 
-interface OtherService {
-
-    @GET("fetch_consumers.php")
-    fun fetchConsumers(): Call<List<TempListModelData>>
+interface MeterService {
 
 
 
-    @GET("http://192.168.0.105/kapatagan/other_charges.php")
-    suspend fun doGetAllOtherList(): Response<List<OtherListModelData>>
+
+
+    @GET("https://kapwd.com/API/meterreaderaccountb.php")
+    suspend fun doGetAllMeterList(): Response<List<MeterReaderListModelData>>
 
 }

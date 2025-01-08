@@ -10,26 +10,28 @@ import kapwad.reader.app.data.model.ConsumerListModelData
 import kapwad.reader.app.data.model.CreatedBillListModelData
 
 import kapwad.reader.app.data.model.ProductOrderListModelData
+import kapwad.reader.app.data.model.TempListModelData
 
 @Dao
-interface ConsumerDao {
+interface TempDao {
 
-    @Insert
-    suspend fun createConsumer(billing: ConsumerListModelData)
 
-    @Insert
-    suspend fun insertConsumer(billing: ConsumerListModelData)
 
 
 
     @Query("SELECT * FROM tbl_consumersaccounttb")
-    suspend fun getConsumer(): List<ConsumerListModelData>
+    suspend fun getTemp(): List<TempListModelData>
 
 
     @Transaction
-    @Query("DELETE FROM tbl_consumersaccounttb")
-    suspend fun deleteAllConsumer()
+    @Query("DELETE FROM tbl_tempo_bill")
+    suspend fun deleteAllTemp()
 
-    @Insert
-    suspend fun insertConsumerOffline(billing: ConsumerListModelData)
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTempOffline(temp: List<TempListModelData>)
+
+    @Query("SELECT * FROM tbl_tempo_bill WHERE id = :meternumber")
+    suspend fun getTempDetailsById(meternumber: String): TempListModelData?
 }

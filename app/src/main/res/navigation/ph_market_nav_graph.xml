@@ -2,37 +2,106 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/crops_nav_graph"
-    app:startDestination="@id/navigation_crops">
+    android:id="@+id/ph_market_nav_graph"
+    app:startDestination="@id/navigation_ph_market">
 
     <fragment
-        android:id="@+id/navigation_crops"
-        android:name="da.farmer.app.ui.crops.fragment.CropsMenuFragment"
-        tools:layout="@layout/fragment_crops_menu"
+        android:id="@+id/navigation_ph_market"
+        android:name="kapwad.reader.app.ui.phmarket.fragment.PHMarketFragment"
+        tools:layout="@layout/fragment_ph_market"
         android:label="">
         <action
-            android:id="@+id/action_picture_crops"
-            app:destination="@id/navigation_picture_crops" />
+            android:id="@+id/action_ph_market_wallet"
+            app:destination="@id/navigation_ph_market_wallet" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_ph_market_wallet"
+        android:name="kapwad.reader.app.ui.phmarket.fragment.PHMarketWalletFragment"
+        tools:layout="@layout/fragment_ph_market_wallet"
+        android:label="">
+
+        <action
+            android:id="@+id/action_ph_market_pre_order"
+            app:destination="@id/navigation_ph_market_pre_order" />
+
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_picture_crops"
-        android:name="da.farmer.app.ui.crops.fragment.CropsPictureFragment"
-        tools:layout="@layout/fragment_crops_picture"
+        android:id="@+id/navigation_ph_market_pre_order"
+        android:name="kapwad.reader.app.ui.phmarket.fragment.MarketPlaceFragment"
+        tools:layout="@layout/fragment_market_pre_order"
         android:label="">
         <action
-            android:id="@+id/action_submitted_crops"
-            app:destination="@id/navigation_submitted_crops" />
+            android:id="@+id/action_ph_market_view_basket"
+            app:destination="@id/navigation_ph_market_view_cart" />
+        <action
+            android:id="@+id/action_ph_market_add_to_cart"
+            app:destination="@id/navigation_ph_market_add_to_cart" >
+            <argument
+                android:name="id"
+                app:argType="string"
+           />
+            <argument
+                android:name="avatar"
+                app:argType="string"
+                 />
+            <argument
+                android:name="amount"
+                app:argType="string"
+                />
+
+            <argument
+                android:name="name"
+                app:argType="string"
+               />
+        </action>
+
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_submitted_crops"
-        android:name="da.farmer.app.ui.crops.fragment.SubmittedFragment"
-        tools:layout="@layout/fragment_crops_submitted"
+        android:id="@+id/navigation_ph_market_add_to_cart"
+        android:name="kapwad.reader.app.ui.phmarket.fragment.AddToCartragment"
+        tools:layout="@layout/fragment_add_to_cart"
+        android:label="">
+
+        <argument
+            android:name="id"
+            app:argType="string"
+             />
+        <argument
+            android:name="avatar"
+            app:argType="string"
+         />
+
+        <argument
+            android:name="amount"
+            app:argType="string"
+           />
+
+        <argument
+            android:name="name"
+            app:argType="string"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_ph_market_view_cart"
+        android:name="kapwad.reader.app.ui.phmarket.fragment.ViewBasketFragment"
+        tools:layout="@layout/fragment_view_baseket"
+        android:label="">
+        <action
+            android:id="@+id/action_success_order"
+            app:destination="@id/navigation_ph_market_success_order" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_ph_market_success_order"
+        android:name="kapwad.reader.app.ui.phmarket.fragment.PlaceOrderSuccessFragment"
+        tools:layout="@layout/fragment_place_order_success"
         android:label="">
 
     </fragment>
-
-
-
 </navigation>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_wallet_search"
-        android:name="da.farmer.app.ui.wallet.fragment.WalletSearchFragment"
+        android:name="kapwad.reader.app.ui.wallet.fragment.WalletSearchFragment"
         tools:layout="@layout/fragment_wallet_search"
         android:label="">
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/navigation_wallet_input"
-        android:name="da.farmer.app.ui.wallet.fragment.WalletInputFragment"
+        android:name="kapwad.reader.app.ui.wallet.fragment.WalletInputFragment"
         tools:layout="@layout/fragment_wallet_input"
         android:label="">
 
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_wallet_summary"
-        android:name="da.farmer.app.ui.wallet.fragment.WalletSummaryFragment"
+        android:name="kapwad.reader.app.ui.wallet.fragment.WalletSummaryFragment"
         tools:layout="@layout/fragment_wallet_summary"
         android:label="">
 
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/navigation_wallet_details"
-        android:name="da.farmer.app.ui.wallet.fragment.WalletDetailsFragment"
+        android:name="kapwad.reader.app.ui.wallet.fragment.WalletDetailsFragment"
         tools:layout="@layout/fragment_wallet_details"
         android:label="">
 

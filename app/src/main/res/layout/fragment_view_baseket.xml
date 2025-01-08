@@ -1,180 +1,256 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/crops_bg"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-
+        android:layout_height="match_parent"
         android:orientation="vertical">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <TextView
                     android:layout_width="match_parent"
-
-                    android:layout_height="@dimen/dimen_200">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop" />
-
-
-                    <LinearLayout
-                        android:id="@+id/pointsLinearLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dimen_15"
-                        android:background="@drawable/bg_take_picture"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="@dimen/dimen_10">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_6"
-                            android:fontFamily="@font/inter_semibold"
-                            android:text="@string/loan_credit_limit"
-                            android:textColor="@color/purple_700"
-                            android:textSize="@dimen/font_18" />
-
-                        <TextView
-                            android:id="@+id/creditTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_10"
-                            android:fontFamily="@font/inter_bold"
-                            android:text="28,000.00"
-                            android:textColor="@color/purple_700"
-                            android:textSize="@dimen/font_30" />
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dimen_1"
-                            android:layout_marginLeft="@dimen/dimen_50"
-                            android:layout_marginRight="@dimen/dimen_50"
-                            android:background="@color/light_gray" />
-
-
-                        <TextView
-                            android:id="@+id/daCreditTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_10"
-                            android:fontFamily="@font/inter_bold"
-                            android:text="12,900.00"
-                            android:textColor="@color/color_primaryDark"
-                            android:textSize="@dimen/font_30" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_6"
-                            android:fontFamily="@font/inter_semibold"
-                            android:text="DA Credit Balance"
-                            android:textColor="@color/color_primaryDark"
-                            android:textSize="@dimen/font_18" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_1"
-                    android:background="@color/line" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/delivery_pickup_poin"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_primaryDark"
+                    android:textSize="@dimen/font_20" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_16"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_160"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:layout_marginRight="@dimen/dimen_30">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:background="@drawable/bg_take_picture"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dimen_10">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="@dimen/dimen_30"
+                                android:layout_height="@dimen/dimen_30"
+                                android:background="@drawable/bg_circle_menu_white"
+                                android:src="@drawable/location_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_15"
+                                android:fontFamily="@font/inter_medium"
+                                android:text="123 NIAUPRIS NUEVA ECIJA"
+                                android:textColor="@color/color_primaryDark"
+                                android:textSize="@dimen/font_18" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dateLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/LinearLayout"
+                            android:layout_marginTop="@dimen/dimen_15"
+                            android:background="@drawable/bg_take_picture"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dimen_10">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="@dimen/dimen_30"
+                                android:layout_height="@dimen/dimen_30"
+                                android:layout_gravity="center"
+                                android:src="@drawable/baseline_calendar_month_24" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_20"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/inter_semibold"
+                                    android:text="October  21, 2024(Monday)"
+                                    android:textColor="@color/color_primaryDark"
+                                    android:textSize="@dimen/font_14" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/inter_semibold"
+                                    android:text="8am –5pm"
+                                    android:textColor="@color/color_primaryDark"
+                                    android:textSize="@dimen/font_14" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_1"
+                        android:background="@color/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dimen_16"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="Order Summary"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/font_16" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dimen_5"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginBottom="@dimen/dimen_16"
+                        tools:listitem="@layout/adapter_order_summary" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="Order History"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/font_16" />
-
-                    <TextView
-                        android:id="@+id/viewAllTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_semibold"
-                        android:text="@string/wallet_view_all_text"
-                        android:textColor="@color/color_primary"
-                        android:textSize="@dimen/font_14" />
+                        android:id="@+id/placeHolderTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:text="@string/lbl_nothing_to_show_txt"
+                        android:textSize="@dimen/font_14"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_5"
-                    android:layout_marginTop="@dimen/dimen_8"
-                    android:layout_marginBottom="@dimen/dimen_16"
-                    tools:listitem="@layout/adapter_order_history" />
-
-                <TextView
-                    android:id="@+id/placeHolderTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/inter_regular"
-                    android:gravity="center"
-                    android:text="@string/lbl_nothing_to_show_txt"
-                    android:textSize="@dimen/font_14"
-                    android:visibility="gone" />
-
             </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="bottom">
-            <TextView
-                android:id="@+id/nextTextView"
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+
+            android:gravity="bottom"
+            android:padding="@dimen/dimen_10">
+
+            <LinearLayout
+                android:id="@+id/daLayout"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_50"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="@string/da_credit"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18" />
+
+                <TextView
+                    android:id="@+id/daCreditTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="P 4,000.00"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/loanLayout"
+                android:layout_below="@id/daLayout"
+                android:layout_width="match_parent"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Loan Credit"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18" />
+
+                <TextView
+                    android:id="@+id/loanCreditTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="----------"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/nextTextView"
+                android:layout_below="@id/loanLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10"
-                android:layout_marginRight="@dimen/dimen_50"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_20"
                 android:background="@drawable/bg_rounded_crops"
                 android:fontFamily="@font/inter_medium"
                 android:padding="@dimen/dimen_13"
-                android:text="Start Pre Order"
+                android:text="Place Order"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_18" />
-            </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
-    </ScrollView>
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

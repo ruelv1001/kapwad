@@ -57,6 +57,9 @@ data class UserLocalData(
     val badge_type_iso_format: String? = null,
     val badge_type_month_year: String? = null,
     var kyc_status : String? = null,
+    var username : String? = null,
+    var password : String? = null,
+    var isLogin : String? = null,
 
     val access_token: String? = null
 ){

@@ -7,149 +7,129 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/dimen_30"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_15">
 
+        <TextView
 
-        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/submit_geotagging_lbl"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_30"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:padding="@dimen/dimen_15">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_bold"
-                android:text="@string/upload_videos_that_are_at_least_n_10_to_30_second_long"
-                android:textAlignment="textStart"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_16" />
+            android:fontFamily="@font/inter_medium"
+            android:padding="@dimen/dimen_5"
+            android:text="Upload Picture"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
 
 
-            <TextView
-                android:id="@+id/leftTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/bg_take_picture"
-                android:drawableLeft="@drawable/ic_play_video"
-                android:fontFamily="@font/inter_medium"
-                android:padding="@dimen/dimen_10"
-                android:text="@string/left_co"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14" />
+        <TextView
+            android:id="@+id/imageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:background="@drawable/bg_take_picture"
+            android:drawableLeft="@drawable/ic_play_video"
+            android:fontFamily="@font/inter_medium"
+            android:padding="@dimen/dimen_10"
+            android:text="@string/select_image"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_14" />
 
-            <TextView
-                android:id="@+id/middleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/bg_take_picture"
-                android:drawableLeft="@drawable/ic_play_video"
-                android:fontFamily="@font/inter_medium"
-                android:padding="@dimen/dimen_10"
-                android:text="@string/middle_co"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:fontFamily="@font/inter_medium"
+            android:padding="@dimen/dimen_5"
+            android:text="@string/area"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
 
-            <TextView
-                android:id="@+id/rightTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/bg_take_picture"
-                android:drawableLeft="@drawable/ic_play_video"
-                android:fontFamily="@font/inter_medium"
-                android:padding="@dimen/dimen_10"
-                android:text="@string/right_co"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14" />
+        <TextView
+            android:id="@+id/areaTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:background="@drawable/bg_take_picture"
+            android:enabled="false"
+            android:fontFamily="@font/inter_medium"
+            android:padding="@dimen/dimen_10"
+            android:text="@string/area"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_14" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_50"
-                android:fontFamily="@font/inter_bold"
-                android:text="@string/upload_picture_of_farm"
-                android:textAlignment="textStart"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_16" />
+        <TextView
 
-            <TextView
-                android:id="@+id/firstPictureTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/bg_take_picture"
-                android:drawableLeft="@drawable/ic_camera"
-                android:fontFamily="@font/inter_medium"
-                android:padding="@dimen/dimen_10"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/secondPictureTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/bg_take_picture"
-                android:drawableLeft="@drawable/ic_camera"
-                android:fontFamily="@font/inter_medium"
-                android:padding="@dimen/dimen_10"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14" />
-
-            <TextView
-                android:id="@+id/thirdPictureTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/bg_take_picture"
-                android:drawableLeft="@drawable/ic_camera"
-                android:fontFamily="@font/inter_medium"
-                android:padding="@dimen/dimen_10"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:fontFamily="@font/inter_medium"
+            android:padding="@dimen/dimen_5"
+            android:text="@string/description"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
 
 
+
+        <EditText
+            android:id="@+id/remarksTextView"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_take_picture"
+            android:maxLines="5"
+            android:padding="@dimen/dimen_20"
+            android:textColor="@color/white"
+            android:layout_height="@dimen/dimen_150"
+            android:textAlignment="textStart"
+            android:fontFamily="@font/inter_medium"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_weight="1"
+            android:gravity="bottom">
 
             <TextView
                 android:id="@+id/nextTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_100"
                 android:layout_marginRight="@dimen/dimen_15"
                 android:background="@drawable/bg_rounded_crops"
                 android:fontFamily="@font/inter_medium"
                 android:padding="@dimen/dimen_13"
-                android:text="@string/next"
+                android:text="@string/submit"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_18" />
-        </LinearLayout>
 
-
+        </RelativeLayout>
     </LinearLayout>
-</ScrollView>
+
 
 </LinearLayout>

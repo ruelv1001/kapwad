@@ -16,6 +16,7 @@ import kapwad.reader.app.R
 import kapwad.reader.app.utils.CommonLogger
 import kapwad.reader.app.utils.PermissionChecker
 import kapwad.reader.app.utils.setOnSingleClickListener
+import kapwad.reader.app.utils.showToastError
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class ScannerDialog: DialogFragment(), ZXingScannerView.ResultHandler {
@@ -42,7 +43,7 @@ class ScannerDialog: DialogFragment(), ZXingScannerView.ResultHandler {
             WindowManager.LayoutParams.MATCH_PARENT
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.setCancelable(true)
+        dialog?.setCancelable(false)
 
     }
 
@@ -55,6 +56,18 @@ class ScannerDialog: DialogFragment(), ZXingScannerView.ResultHandler {
     private fun setClickListener(){
         viewBinding?.dismissImageView?.setOnSingleClickListener {
             dismiss()
+        }
+        viewBinding?.nextTextView?.setOnSingleClickListener {
+            if (viewBinding?.refEditText?.text.toString()==""){
+                showToastError(
+                    requireActivity(),
+                    description = "Invalid Input"
+                )
+                viewBinding?.refEditText?.error = "Invalid Input"
+            }else {
+                callback?.onScannerSuccess(viewBinding?.refEditText?.text?.toString().orEmpty())
+                dismiss()
+            }
         }
     }
 

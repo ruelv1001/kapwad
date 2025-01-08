@@ -1,5 +1,6 @@
 package kapwad.reader.app.data.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -8,12 +9,21 @@ import kapwad.reader.app.data.model.ErrorModel
 import kapwad.reader.app.data.model.ProductOrderListModelData
 
 
-import kapwad.reader.app.data.repositories.ph_market.OrderRepository
+
 import kapwad.reader.app.security.AuthEncryptedDataManager
-import kapwad.reader.app.ui.phmarket.viewmodel.OrderViewState
+
 import kapwad.reader.app.utils.AppConstant
 import kapwad.reader.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kapwad.reader.app.data.model.CreatedBillListModelData
+import kapwad.reader.app.data.repositories.bill.BillingRepository
+import kapwad.reader.app.data.repositories.bill.BillingService
+import kapwad.reader.app.data.repositories.crops.request.CropDetailsRequest
+import kapwad.reader.app.ui.crops.viemodel.CropsViewState
+import kapwad.reader.app.ui.main.viewmodel.BillingViewState
+import kapwad.reader.app.ui.main.viewmodel.ConsumerViewState
+import kapwad.reader.app.ui.main.viewmodel.MeterViewState
+import kapwad.reader.app.utils.CommonLogger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,88 +36,132 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class OrderViewModel @Inject constructor(
-    private val orderRepository: OrderRepository,
-    authEncryptedDataManager: AuthEncryptedDataManager
+class BillingViewModel @Inject constructor(
+    private val billingRepository: BillingRepository,
+    authEncryptedDataManager: AuthEncryptedDataManager,
+    private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
-
-    private val _orderStateFlow = MutableStateFlow<OrderViewState>(OrderViewState.Idle)
-    val orderStateFlow: StateFlow<OrderViewState> = _orderStateFlow.asStateFlow()
+    val user = encryptedDataManager.getUserBasicInfo()
+    private val _billingStateFlow = MutableStateFlow<BillingViewState>(BillingViewState.Idle)
+    val billingStateFlow: StateFlow<BillingViewState> = _billingStateFlow.asStateFlow()
 
 
     // Add or update a cart item
 
-
-
-    fun insertOrder(order: ProductOrderListModelData) {
+    fun getUploadJson(upload: String) {
         viewModelScope.launch {
-            orderRepository.createOrder(order)
+            billingRepository.uploadJson(upload)
                 .onStart {
-                    _orderStateFlow.emit(OrderViewState.Loading)
+                    _billingStateFlow.emit(BillingViewState.Loading)
+                }
+                .catch { exception ->
+                    CommonLogger.instance.sysLogE("BillingViewModel Error ", exception.localizedMessage, exception)
+                    val errorMessage = exception.localizedMessage ?: exception.toString()
+                    _billingStateFlow.emit(BillingViewState.Error(errorMessage))
+                }
+                .collect { response ->
+                    _billingStateFlow.emit(BillingViewState.SuccessUpload(response))
+                }
+        }
+    }
+
+    fun insertBilling(order: CreatedBillListModelData) {
+        viewModelScope.launch {
+            billingRepository.createBilling(order)
+                .onStart {
+                    _billingStateFlow.emit(BillingViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _orderStateFlow.emit(OrderViewState.SuccessOfflineCreateOrder(it))
+                    _billingStateFlow.emit(BillingViewState.SuccessOfflineCreateOrder(it))
                 }
         }
     }
 
-    fun getOrder() {
+    fun getBilling() {
         viewModelScope.launch {
-            orderRepository.getOrder()
+            billingRepository.getBilling()
                 .onStart {
-                    _orderStateFlow.emit(OrderViewState.Loading)
+                    _billingStateFlow.emit(BillingViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _orderStateFlow.emit(OrderViewState.SuccessOfflineGetOrder(it))
+                    _billingStateFlow.emit(BillingViewState.SuccessOfflineGetOrder(it))
                 }
         }
     }
 
 
-//    fun getTotal() {
-//        viewModelScope.launch {
-//            orderRepository.getTotals()
-//                .onStart {
-//                    _orderStateFlow.emit(OrderViewState.Loading)
-//                }
-//                .catch { exception ->
-//                    onError(exception)
-//                }
-//                .collect {
-//                    _orderStateFlow.emit(OrderViewState.SuccessTotal(it.toString()))
-//                }
-//        }
-//    }
+
 
     fun deleteAllOrder() {
         viewModelScope.launch {
-            orderRepository.deleteAllOrder()
+            billingRepository.deleteAllBilling()
                 .onStart {
-                    _orderStateFlow.emit(OrderViewState.Loading)
+                    _billingStateFlow.emit(BillingViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _orderStateFlow.emit(OrderViewState.SuccessDelete(it.toString()))
+                    _billingStateFlow.emit(BillingViewState.SuccessDelete(it.toString()))
                 }
         }
     }
 
+
+
+    fun getValidatedOnData(month: String, owners_id: String) {
+        viewModelScope.launch {
+            billingRepository.getMeterByCredential(month, owners_id)
+                .onStart {
+                    _billingStateFlow.emit(BillingViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception) // Handle exceptions
+                }
+                .collect { response ->
+                    if (response != null) {
+                        Log.d("GetConsumerById", "Response: $response")
+                        _billingStateFlow.emit(BillingViewState.SuccessExisted(response))
+
+
+                    } else {
+                        Log.d("GetConsumerById", "Response is null")
+                        _billingStateFlow.emit(BillingViewState.Error("No Data"))
+                    }
+                }
+        }
+    }
+
+
+    fun searchConsumer(searchQuery: String) {
+        viewModelScope.launch {
+            billingRepository.searchConsumer(searchQuery)
+                .onStart {
+                    _billingStateFlow.emit(BillingViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("SearchConsumer", "Response: $response")
+                    _billingStateFlow.emit(BillingViewState.SuccessOfflineGetSearch   (response))
+                }
+        }
+    }
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
             is TimeoutException,
             -> {
-                _orderStateFlow.emit(
-                    OrderViewState.PopupError(
+                _billingStateFlow.emit(
+                    BillingViewState.PopupError(
                         PopupErrorState.NetworkError
                     )
                 )
@@ -118,8 +172,8 @@ class OrderViewModel @Inject constructor(
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
-                _orderStateFlow.emit(
-                    OrderViewState.PopupError(
+                _billingStateFlow.emit(
+                    BillingViewState.PopupError(
                         if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())) {
                             PopupErrorState.SessionError
                         } else {
@@ -129,8 +183,8 @@ class OrderViewModel @Inject constructor(
                 )
             }
 
-            else -> _orderStateFlow.emit(
-                OrderViewState.PopupError(
+            else -> _billingStateFlow.emit(
+                BillingViewState.PopupError(
                     PopupErrorState.UnknownError
                 )
             )

@@ -36,7 +36,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class WalletDAFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback, SwipeRefreshLayout.OnRefreshListener {
+class SyncListFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallback, SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentDaWalletBinding? = null
     private val binding get() = _binding!!
@@ -109,8 +109,8 @@ class WalletDAFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallb
     }
 
     private fun setUpAdapter() = binding.run {
-        swipeRefreshLayout.setOnRefreshListener(this@WalletDAFragment)
-        adapter = InboundOutboundAdapter(this@WalletDAFragment)
+        swipeRefreshLayout.setOnRefreshListener(this@SyncListFragment)
+        adapter = InboundOutboundAdapter(this@SyncListFragment)
         linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
@@ -223,7 +223,7 @@ class WalletDAFragment : Fragment(), InboundOutboundAdapter.InboundOutboundCallb
     }
 
     companion object{
-        fun newInstance() = WalletDAFragment()
+        fun newInstance() = SyncListFragment()
         private const val PARTICIPANT = "participant"
     }
 

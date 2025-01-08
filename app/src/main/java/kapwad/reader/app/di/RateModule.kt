@@ -16,6 +16,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kapwad.reader.app.data.local.BillingDao
 import kapwad.reader.app.data.local.ConsumerDao
+import kapwad.reader.app.data.local.RateADao
+import kapwad.reader.app.data.local.RateBDao
+import kapwad.reader.app.data.local.RateCDao
+import kapwad.reader.app.data.local.RateDao
+import kapwad.reader.app.data.local.RateReDao
 import kapwad.reader.app.data.local.TempDao
 import kapwad.reader.app.data.repositories.bill.BillingLocalDataSource
 import kapwad.reader.app.data.repositories.bill.BillingRemoteDataSource
@@ -30,39 +35,66 @@ import kapwad.reader.app.data.repositories.temp.TempLocalDataSource
 import kapwad.reader.app.data.repositories.temp.TempRemoteDataSource
 import kapwad.reader.app.data.repositories.temp.TempRepository
 import kapwad.reader.app.data.repositories.temp.TempService
+import kapwad.reader.app.data.repositories.waterrate.RateLocalDataSource
+import kapwad.reader.app.data.repositories.waterrate.RateRemoteDataSource
+import kapwad.reader.app.data.repositories.waterrate.RateRepository
+import kapwad.reader.app.data.repositories.waterrate.RateService
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class TempModule {
+class RateModule {
     
     @Provides
-    fun providesTempService(): TempService {
+    fun providesRateService(): RateService {
         return AppRetrofitService.Builder().build(
             SharedPref().getLocalUrl().orEmpty().ifEmpty { BuildConfig.BASE_URL },
-            TempService::class.java
+            RateService::class.java
         )
     }
 
     @Provides
-    fun providesTempDao(db: BoilerPlateDatabase): TempDao {
-        return db.tempDao
+    fun providesRateDao(db: BoilerPlateDatabase): RateDao {
+        return db.rateDao
     }
 
     @Provides
-    fun providesTempLocalDataSource(tempDao: TempDao): TempLocalDataSource {
-        return TempLocalDataSource(tempDao)
+    fun providesRateADao(db: BoilerPlateDatabase): RateADao {
+        return db.rateADao
     }
+
+    @Provides
+    fun providesRateBDao(db: BoilerPlateDatabase): RateBDao {
+        return db.rateBDao
+    }
+
+    @Provides
+    fun providesRateCDao(db: BoilerPlateDatabase): RateCDao {
+        return db.rateCDao
+    }
+    @Provides
+    fun providesRateReDao(db: BoilerPlateDatabase): RateReDao {
+        return db.rateReDao
+    }
+
+
+
+    @Provides
+    fun providesRateLocalDataSource(rateDao: RateDao,rateADao: RateADao,rateBDao: RateBDao,rateCDao: RateCDao,rateReDao: RateReDao): RateLocalDataSource {
+        return RateLocalDataSource(rateDao,rateADao,rateBDao,rateCDao,rateReDao)
+    }
+
+
     
     @Provides
-    fun providesTempRemoteDataSource(tempService: TempService): TempRemoteDataSource {
-        return TempRemoteDataSource(tempService)
+    fun providesRateRemoteDataSource(rateService: RateService): RateRemoteDataSource {
+        return RateRemoteDataSource(rateService)
     }
 
     @Provides
-    fun providesTempRepository(
-        authRemoteDataSource: TempRemoteDataSource,
-        tempLocalDataSource:TempLocalDataSource,
-    ): TempRepository {
-        return TempRepository(authRemoteDataSource, tempLocalDataSource)
+    fun providesRat3Repository(
+        authRemoteDataSource: RateRemoteDataSource,
+        rateLocalDataSource: RateLocalDataSource,
+    ): RateRepository {
+        return RateRepository(authRemoteDataSource, rateLocalDataSource)
     }
 }

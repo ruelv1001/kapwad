@@ -41,9 +41,7 @@ class SubmittedFragment : Fragment(), DateListAdapter.DateCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setClickListeners()
-
     }
 
 

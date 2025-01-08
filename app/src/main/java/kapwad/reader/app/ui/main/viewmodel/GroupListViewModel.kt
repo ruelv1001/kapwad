@@ -44,7 +44,7 @@ class GroupListViewModel @Inject constructor(
 
 
     fun getUserKYC() : String {
-        return encryptedDataManager.getKYCStatus()
+        return encryptedDataManager.getAccessToken()
     }
 
     private suspend fun loadGroups() {

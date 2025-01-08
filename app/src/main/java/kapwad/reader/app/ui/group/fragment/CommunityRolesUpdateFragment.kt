@@ -82,9 +82,7 @@ class CommunityRolesUpdateFragment: Fragment(), GroupPromoteMembersAdapter.Membe
     }
 
     private fun setView() = binding.run{
-        groupOwnerLayout.nameTextView.text = activity.groupDetails?.owner?.name
-        groupOwnerLayout.idNoTextView.text = activity.groupDetails?.owner?.qrcode
-        groupOwnerLayout.profileImageView.loadAvatar(activity.groupDetails?.owner?.avatar?.thumb_path, requireActivity())
+
 
     }
 

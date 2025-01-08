@@ -51,7 +51,7 @@ class ViewBasketFragment : Fragment(), ViewBasketAdapter.ViewBasketCallback {
         setupList()
         observeOrder()
         viewModel.getOrder()
-        viewModel.getTotal()
+      //  viewModel.getTotal()
     }
 
     private fun observeOrder() {

@@ -1,9 +1,9 @@
-package kapwad.reader.app.data.repositories
+package kapwad.reader.app.data.repositories.temp.response
+
+import androidx.annotation.Keep
 
 
-import android.support.annotation.Keep
-
-class TempList : ArrayList<TempListItem>(){
+class TempList : ArrayList<TempList.TempListItem>(){
     @Keep
     data class TempListItem(
         val Address: String,

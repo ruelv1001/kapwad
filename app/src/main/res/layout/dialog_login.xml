@@ -1,252 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@drawable/bg_round_white"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:paddingHorizontal="@dimen/dimen_16"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dimen_20"
+
+        android:orientation="vertical">
+
 
         <ImageView
-            android:id="@+id/backImageView"
-            android:contentDescription="@string/go_back"
-            android:layout_width="@dimen/dimen_30"
-            android:layout_height="@dimen/dimen_30"
-            android:padding="@dimen/dimen_5"
-            android:src="@drawable/ic_back_arrow" />
+            android:layout_width="@dimen/dimen_150"
+            android:layout_height="@dimen/dimen_150"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_kapwad"
+            android:layout_marginTop="@dimen/dimen_50" />
 
         <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:paddingStart="@dimen/dimen_25"
-            android:paddingEnd="@dimen/dimen_0"
-            android:text="@string/lbl_donate"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/login_to_your_account_lbl"
+            android:textAlignment="center"
             android:textColor="@color/black_text"
             android:textSize="@dimen/font_22" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/dimen_12"
-        android:layout_marginHorizontal="@dimen/dimen_20">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_5"
-            android:ellipsize="end"
-            android:fontFamily="@font/inter_semibold"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:text="@string/lbl_amount"
-            android:textSize="@dimen/font_16" />
+            android:layout_marginTop="@dimen/dimen_30"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:text="BestMarc21"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_selector"
+                android:drawableStart="@drawable/baseline_person_24"
+                android:drawablePadding="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/lbl_username"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false"
+            app:passwordToggleDrawable="@drawable/ic_show_pass"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/commons_text_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_selector"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="@dimen/dimen_10"
+                android:text="pass"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="@string/login_password_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/dimen_20"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/lbl_forgot_pass"
+                android:textAlignment="center"
+                android:textColor="@color/commons_lbl"
+                android:textSize="@dimen/font_14" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/dimen_20"
-                    android:paddingVertical="@dimen/dimen_6"
-                    android:layout_marginVertical="@dimen/dimen_16"
-                    android:background="@drawable/bg_outline_selector"
-                    android:orientation="horizontal">
+            <View
+                android:layout_width="@dimen/dimen_10"
+                android:layout_height="@dimen/dimen_1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dimen_5"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/inter_regular"
-                        android:maxLines="1"
-                        android:drawableStart="@drawable/ic_personal_wallet"
-                        android:drawablePadding="@dimen/dimen_6"
-                        android:text="@string/lbl_personal_wallet"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14" />
-
-                    <TextView
-                        android:id="@+id/personalWalletTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="@dimen/dimen_14"
-                        android:autoSizeMinTextSize="@dimen/font_4"
-                        android:autoSizeStepGranularity="@dimen/font_1"
-                        android:autoSizeTextType="uniform"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_bold"
-                        android:layout_marginStart="@dimen/dimen_6"
-                        android:gravity="center_vertical"
-                        android:text="100,000.00"
-                        android:textColor="@color/black" />
-
-                    <RadioButton
-                        android:id="@+id/personalRadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:buttonTint="@color/color_primary"
-                        android:textColor="@color/light_gray"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/dimen_20"
-                    android:paddingVertical="@dimen/dimen_6"
-                    android:layout_marginBottom="@dimen/dimen_16"
-                    android:background="@drawable/bg_outline_selector"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dimen_5"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/inter_regular"
-                        android:maxLines="1"
-                        android:drawableStart="@drawable/ic_group_wallet"
-                        android:drawablePadding="@dimen/dimen_6"
-                        android:text="@string/lbl_group_wallet"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14" />
-
-                    <TextView
-                        android:id="@+id/groupWalletTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="@dimen/dimen_14"
-                        android:autoSizeMinTextSize="@dimen/font_4"
-                        android:autoSizeStepGranularity="@dimen/font_1"
-                        android:autoSizeTextType="uniform"
-                        android:layout_marginStart="@dimen/dimen_6"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/inter_bold"
-                        android:gravity="center_vertical"
-                        android:text="100,000.00"
-                        android:textColor="@color/black" />
-
-                    <RadioButton
-                        android:id="@+id/groupRadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/color_primary"
-                        android:fontFamily="@font/inter_regular"
-                        android:textColor="@color/light_gray"/>
-
-                </LinearLayout>
-
-            </RadioGroup>
-
+            <TextView
+                android:id="@+id/resetPassTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/lbl_password_reset"
+                android:textAlignment="center"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_14" />
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/amountTextInputLayout"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_regular"
-            app:boxBackgroundColor="@color/white"
-            app:hintAnimationEnabled="true"
-            app:hintEnabled="false">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/amountEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_edittext_selector"
-                android:fontFamily="@font/inter_semibold"
-                android:hint="@string/lbl_0"
-                android:imeOptions="actionNext"
-                android:inputType="numberDecimal"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/commons_text_hint"
-                android:textSize="@dimen/font_14" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_5"
-            android:ellipsize="end"
-            android:fontFamily="@font/inter_semibold"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:text="@string/wallet_message_title"
-            android:textSize="@dimen/font_16" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/messageTextInputLayout"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_150"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:fontFamily="@font/inter_regular"
-            app:boxBackgroundColor="@color/white"
-            app:hintAnimationEnabled="true"
-            app:hintEnabled="false">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/messageEditText"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_150"
-                android:background="@drawable/bg_edittext_selector"
-                android:fontFamily="@font/inter_semibold"
-                android:gravity="start"
-                android:hint="@string/wallet_enter_your_message_hint"
-                android:imeOptions="actionDone"
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLines="5"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/commons_text_hint"
-                android:textSize="@dimen/font_14" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/sendButton"
+            android:id="@+id/loginButton"
             style="@style/MyButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_20"
             android:fontFamily="@font/inter_semibold"
             android:paddingTop="@dimen/dimen_15"
             android:paddingBottom="@dimen/dimen_15"
-            android:text="@string/lbl_send"
+            android:text="@string/login_txt"
             android:textAllCaps="false"
             android:textSize="@dimen/font_14" />
 
-    </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/registerButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_50"
+            android:backgroundTint="@color/color_accent"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="@string/lbl_register"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/font_14" />
 
-</LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

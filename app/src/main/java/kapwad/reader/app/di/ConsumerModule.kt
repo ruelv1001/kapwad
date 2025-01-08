@@ -15,44 +15,49 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kapwad.reader.app.data.local.BillingDao
+import kapwad.reader.app.data.local.ConsumerDao
 import kapwad.reader.app.data.repositories.bill.BillingLocalDataSource
 import kapwad.reader.app.data.repositories.bill.BillingRemoteDataSource
 
 import kapwad.reader.app.data.repositories.bill.BillingRepository
 import kapwad.reader.app.data.repositories.bill.BillingService
+import kapwad.reader.app.data.repositories.consumers.ConsumerLocalDataSource
+import kapwad.reader.app.data.repositories.consumers.ConsumerRemoteDataSource
+import kapwad.reader.app.data.repositories.consumers.ConsumerRepository
+import kapwad.reader.app.data.repositories.consumers.ConsumerService
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class BillingModule {
+class ConsumerModule {
     
     @Provides
-    fun providesBillingService(): BillingService {
+    fun providesConsumerService(): ConsumerService {
         return AppRetrofitService.Builder().build(
             SharedPref().getLocalUrl().orEmpty().ifEmpty { BuildConfig.BASE_URL },
-            BillingService::class.java
+            ConsumerService::class.java
         )
     }
 
     @Provides
-    fun providesBillingDao(db: BoilerPlateDatabase): BillingDao {
-        return db.billingDao
+    fun providesConsumerDao(db: BoilerPlateDatabase): ConsumerDao {
+        return db.consumerDao
     }
 
     @Provides
-    fun providesBillingLocalDataSource(billingDao: BillingDao): BillingLocalDataSource {
-        return BillingLocalDataSource(billingDao)
+    fun providesConsumerLocalDataSource(consumerDao: ConsumerDao): ConsumerLocalDataSource {
+        return ConsumerLocalDataSource(consumerDao)
     }
     
     @Provides
-    fun providesBillingsRemoteDataSource(billingService: BillingService): BillingRemoteDataSource {
-        return BillingRemoteDataSource(billingService)
+    fun providesConsumerRemoteDataSource(consumerService: ConsumerService): ConsumerRemoteDataSource {
+        return ConsumerRemoteDataSource(consumerService)
     }
 
     @Provides
-    fun providesBillingRepository(
-        authRemoteDataSource: BillingRemoteDataSource,
-        billingLocalDataSource: BillingLocalDataSource,
-    ): BillingRepository {
-        return BillingRepository(authRemoteDataSource, billingLocalDataSource)
+    fun providesConsumerRepository(
+        authRemoteDataSource:  ConsumerRemoteDataSource,
+        consumerLocalDataSource: ConsumerLocalDataSource,
+    ): ConsumerRepository {
+        return ConsumerRepository(authRemoteDataSource, consumerLocalDataSource)
     }
 }

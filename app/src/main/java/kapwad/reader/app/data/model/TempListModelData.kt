@@ -10,53 +10,34 @@ import kotlinx.parcelize.Parcelize
 @Keep
 @Parcelize
 
-@Entity(tableName = "tbl_consumersaccounttb")
-data class ConsumerListModelData(
+@Entity(tableName = "tbl_tempo_bill")
+data class TempListModelData(
     @PrimaryKey
-    var id: Int? = 0,
+    var id: Int? = null,
+    val Address: String? = null,
+    val Amount_Balance: String? = null,
     val Arrears_Deduct: String? = null,
     val Arrears_Description: String? = null,
+    val Brand: String? = null,
+    val Concessionaire: String? = null,
     val Date_Arrears: String? = null,
     val Date_Others: String? = null,
+    val Meternumber: String? = null,
+    val Num_of_Months: String? = null,
     val Others_Deduct: String? = null,
     val Others_Description: String? = null,
+    val Prev: String? = null,
+    val Service_Status: String? = null,
     val Stag_Arrears_Prev: String? = null,
     val Stag_Others_Prev: String? = null,
-    val accountnumber: String? = null,
-    val address: String? = null,
-    val amount: Int? = null,
-    val amount_balance: String? = null,
-    val barangay: String? = null,
-    val brand: String? = null,
-    @Json(name = "class")
-    val class_type: String? = null,
-    val consumersid: Int? = null,
-    val convenience_fee: String? = null,
-    val cpnumber: String? = null,
-    val date: String? = null,
-    val dateorientation: String? = null,
-    val email: String? = null,
-    val end_date: String? = null,
-    val firstname: String? = null,
-    val firstreading: String? = null,
-    val lastname: String? = null,
-    val meternumber: String? = null,
-    val middlename: String? = null,
-    val month: String? = null,
-    val num_of_months: String? = null,
-    val ornumber: String? = null,
-    val password: String? = null,
-    val senior_citizen_rate: String? = null,
-    val start_date: String? = null,
-    val status: String? = null,
-    val teller: String? = null,
-    val tin_number: String? = null,
-    val valid_id_number: String? = null,
-    val waterrate: Int? = null,
+    val account_number: String? = null,
+    val account_series: String? = null,
+    val date_read_pay: String? = null,
+    val status_type: String? = null,
     val zone: String? = null,
 ): Parcelable
 
 
-data class ConsumerListResponse(
-    val consumers: List<ConsumerListModelData>
+data class TempListResponse(
+    val temp: List<TempListModelData>
 )

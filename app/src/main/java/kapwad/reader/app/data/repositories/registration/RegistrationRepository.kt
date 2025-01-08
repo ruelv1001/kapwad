@@ -40,7 +40,7 @@ class RegistrationRepository @Inject constructor(
             val token = response.token.orEmpty()
             val userInfo = response.data ?: UserModel()
             encryptedDataManager.setAccessToken(token)
-            encryptedDataManager.setUserBasicInfo(userInfo)
+           // encryptedDataManager.setUserBasicInfo(userInfo)
             emit(response)
         }.flowOn(ioDispatcher)
     }
@@ -88,7 +88,7 @@ class RegistrationRepository @Inject constructor(
             val token = response.token.orEmpty()
             val userInfo = response.data ?: UserModel()
             encryptedDataManager.setAccessToken(token)
-            encryptedDataManager.setUserBasicInfo(userInfo)
+        //    encryptedDataManager.setUserBasicInfo(userInfo)
             emit(response)
         }.flowOn(ioDispatcher)
     }

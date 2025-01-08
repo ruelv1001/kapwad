@@ -107,7 +107,7 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             is SettingsViewState.SuccessGetUserInfo -> {
                 hideLoadingDialog()
                 binding.swipeRefreshLayout.isRefreshing = false
-                viewModel.userKycStatus = viewState.userModel?.kyc_status.toString()
+               // viewModel.userKycStatus = viewState.userModel?.kyc_status.toString()
                 setView(viewState.userModel)
             }
             else -> Unit
@@ -115,23 +115,12 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun setView(userModel: UserModel?)=binding.run {
-        profileImageView.loadAvatar(userModel?.avatar?.thumb_path, requireContext())
-        nameTextView.text = userModel?.name
-        badgeTextView.isVisible = false
-        idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
+     //   profileImageView.loadAvatar(userModel?.avatar?.thumb_path, requireContext())
+       // nameTextView.text = userModel?.name
+        //badgeTextView.isVisible = false
+        //idNoTextView.text = userModel?.qrcode?.replace("....".toRegex(), "$0 ")
 
-        isBadgeVerified = userModel?.badge_type?.isNotEmpty() == true
-        when(userModel?.kyc_status){
-            "ongoing" -> {
-                isAccountVerified = false
-            }
-            "completed" -> {
-                isAccountVerified = true
-            }
-            "pending" -> {
-                isAccountVerified = false
-            }
-        }
+
 
         setDetails(userModel)
     }
@@ -196,23 +185,8 @@ class ProfileFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             binding.badgeIdStatus.visibility = View.VISIBLE
             binding.badgeImageView.visibility = View.VISIBLE
             //change icon of avatar badge
-            when(data?.badge_type){
-                "non_government_organization" -> {
-                    binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_npo))
-                    binding.badgeIdStatus.text = getString(R.string.account_type_npo_text)
-                    binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_npo)
-                }
-                "influencer" -> {
-                    binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_thumbs_up))
-                    binding.badgeIdStatus.text = getString(R.string.account_type_influencer_text)
-                    binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_influencer)
-                }
-                "public_servant" -> {
-                    binding.badgeImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_public_servant))
-                    binding.badgeIdStatus.text = getString(R.string.account_type_public_servant_text)
-                    binding.badgeIdStatus.setBackgroundResource(R.drawable.bg_rounded_public_servant)
-                }
-            }
+
+
         }else{
             binding.badgeIdStatus.visibility = View.GONE
             binding.badgeImageView.visibility = View.GONE

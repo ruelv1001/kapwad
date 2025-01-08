@@ -8,28 +8,32 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kapwad.reader.app.data.model.ConsumerListModelData
 import kapwad.reader.app.data.model.CreatedBillListModelData
+import kapwad.reader.app.data.model.OtherListModelData
 
 import kapwad.reader.app.data.model.ProductOrderListModelData
 import kapwad.reader.app.data.model.RateListModelData
 import kapwad.reader.app.data.model.TempListModelData
 
 @Dao
-interface RateDao {
+interface OtherChargesDao {
 
 
 
 
 
-    @Query("SELECT * FROM tbl_wr_commercial")
-    suspend fun get(): List<RateListModelData>
+    @Query("SELECT * FROM tbl_other_charges")
+    suspend fun get(): List<OtherListModelData>
 
 
     @Transaction
-    @Query("DELETE FROM tbl_wr_commercial")
+    @Query("DELETE FROM tbl_other_charges")
     suspend fun deleteAll()
 
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(temp: List<RateListModelData>)
+    suspend fun insert(temp: List<OtherListModelData>)
+
+    @Query("SELECT * FROM tbl_other_charges WHERE id = :id")
+    suspend fun getOtherDetailsById(id: String): OtherListModelData?
 }

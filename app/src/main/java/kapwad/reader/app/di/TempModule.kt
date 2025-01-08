@@ -16,6 +16,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kapwad.reader.app.data.local.BillingDao
 import kapwad.reader.app.data.local.ConsumerDao
+import kapwad.reader.app.data.local.TempDao
 import kapwad.reader.app.data.repositories.bill.BillingLocalDataSource
 import kapwad.reader.app.data.repositories.bill.BillingRemoteDataSource
 
@@ -25,39 +26,43 @@ import kapwad.reader.app.data.repositories.consumers.ConsumerLocalDataSource
 import kapwad.reader.app.data.repositories.consumers.ConsumerRemoteDataSource
 import kapwad.reader.app.data.repositories.consumers.ConsumerRepository
 import kapwad.reader.app.data.repositories.consumers.ConsumerService
+import kapwad.reader.app.data.repositories.temp.TempLocalDataSource
+import kapwad.reader.app.data.repositories.temp.TempRemoteDataSource
+import kapwad.reader.app.data.repositories.temp.TempRepository
+import kapwad.reader.app.data.repositories.temp.TempService
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class ConsumerModule {
+class TempModule {
     
     @Provides
-    fun providesConsumerService(): ConsumerService {
+    fun providesTempService(): TempService {
         return AppRetrofitService.Builder().build(
             SharedPref().getLocalUrl().orEmpty().ifEmpty { BuildConfig.BASE_URL },
-            ConsumerService::class.java
+            TempService::class.java
         )
     }
 
     @Provides
-    fun providesConsumerDao(db: BoilerPlateDatabase): ConsumerDao {
-        return db.consumerDao
+    fun providesTempDao(db: BoilerPlateDatabase): TempDao {
+        return db.tempDao
     }
 
     @Provides
-    fun providesConsumerLocalDataSource(consumerDao: ConsumerDao): ConsumerLocalDataSource {
-        return ConsumerLocalDataSource(consumerDao)
+    fun providesTempLocalDataSource(tempDao: TempDao): TempLocalDataSource {
+        return TempLocalDataSource(tempDao)
     }
     
     @Provides
-    fun providesConsumerRemoteDataSource(consumerService: ConsumerService): ConsumerRemoteDataSource {
-        return ConsumerRemoteDataSource(consumerService)
+    fun providesTempRemoteDataSource(tempService: TempService): TempRemoteDataSource {
+        return TempRemoteDataSource(tempService)
     }
 
     @Provides
-    fun providesConsumerRepository(
-        authRemoteDataSource:  ConsumerRemoteDataSource,
-        consumerLocalDataSource: ConsumerLocalDataSource,
-    ): ConsumerRepository {
-        return ConsumerRepository(authRemoteDataSource, consumerLocalDataSource)
+    fun providesTempRepository(
+        authRemoteDataSource: TempRemoteDataSource,
+        tempLocalDataSource:TempLocalDataSource,
+    ): TempRepository {
+        return TempRepository(authRemoteDataSource, tempLocalDataSource)
     }
 }

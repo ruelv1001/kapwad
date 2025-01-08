@@ -7,32 +7,68 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="da.farmer.app.ui.main.fragment.HomeFragment"
+        android:name="kapwad.reader.app.ui.main.fragment.HomeFragment"
         android:label=""
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_navigation_home_to_navigation_wallet"
-            app:destination="@id/navigation_wallet" />
+            android:id="@+id/action_navigation_all_consumer"
+            app:destination="@id/navigation_all_consumer" />
         <action
             android:id="@+id/action_navigation_home_to_navigation_groups"
             app:destination="@id/navigation_groups"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true"/>
+
+    </fragment>
+
+     <fragment
+    android:id="@+id/navigation_crops"
+    android:name="kapwad.reader.app.ui.main.fragment.CropsFragment"
+    android:label=""
+    tools:layout="@layout/fragment_crops" >
+    <action
+        android:id="@+id/action_navigation_wallet_to_navigation_groups"
+        app:destination="@id/navigation_groups" />
+</fragment>
+
+    <fragment
+        android:id="@+id/navigation_sync"
+        android:name="kapwad.reader.app.ui.main.fragment.SyncMenuFragment"
+        android:label=""
+        tools:layout="@layout/fragment_sync" >
+
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_wallet"
-        android:name="da.farmer.app.ui.main.fragment.WalletFragment"
+        android:id="@+id/navigation_scan"
+        android:name="kapwad.reader.app.ui.main.fragment.CreateBillingFragment"
         android:label=""
-        tools:layout="@layout/fragment_wallet" >
-        <action
-            android:id="@+id/action_navigation_wallet_to_navigation_groups"
-            app:destination="@id/navigation_groups" />
+        tools:layout="@layout/fragment_create_bill" >
+
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_all_consumer"
+        android:name="kapwad.reader.app.ui.main.fragment.AllConsumerListFragment"
+        android:label=""
+        tools:layout="@layout/fragment_all_consumer" >
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_consumers"
+        android:name="kapwad.reader.app.ui.main.fragment.ConsumerListFragment"
+        android:label=""
+        tools:layout="@layout/fragment_consumer_list" >
+
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/navigation_groups"
-        android:name="da.farmer.app.ui.main.fragment.GroupsFragment"
+        android:name="kapwad.reader.app.ui.main.fragment.GroupsFragment"
         android:label=""
         tools:layout="@layout/fragment_groups" >
         <action
@@ -42,7 +78,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="da.farmer.app.ui.main.fragment.ProfileFragment"
+        android:name="kapwad.reader.app.ui.main.fragment.ProfileFragment"
         android:label=""
         tools:layout="@layout/fragment_settings" />
 

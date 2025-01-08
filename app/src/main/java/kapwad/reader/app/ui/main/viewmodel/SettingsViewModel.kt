@@ -27,16 +27,14 @@ class SettingsViewModel @Inject constructor (
     private val profileRepository: ProfileRepository,
     private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
-
+    val user = encryptedDataManager.getUserBasicInfo()
     private val _loginSharedFlow = MutableSharedFlow<SettingsViewState>()
 
     val loginSharedFlow = _loginSharedFlow.asSharedFlow()
 
     var userQrCode = ""
     var userKycStatus = ""
-    fun updateKYCStatus(value: String){
-        encryptedDataManager.setUserKYCStatus(value)
-    }
+
     fun doLogoutAccount() {
         viewModelScope.launch {
             authRepository.doLogout()

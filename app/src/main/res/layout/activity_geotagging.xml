@@ -44,6 +44,6 @@
         android:layout_height="@dimen/dimen_0"
         android:layout_weight="1"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/crops_nav_graph" />
+        app:navGraph="@navigation/geo_tagging_nav_graph" />
 
 </LinearLayout>

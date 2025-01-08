@@ -42,8 +42,8 @@ class ViewBasketAdapter (val context: Context, val clickListener: ViewBasketCall
         RecyclerView.ViewHolder(binding.root) {
         fun displayData(data: ProductOrderListModelData, position: Int) = with(itemView) {
             binding.noTextView.text = (position + 1).toString()
-            binding.nameTextView.text=data.name
-            binding.amountTextView.text=data.amount
+//            binding.nameTextView.text=data.name
+//            binding.amountTextView.text=data.amount
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data, position)
             }

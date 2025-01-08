@@ -1,7 +1,8 @@
-package kapwad.reader.app.data.repositories.others
+package kapwad.reader.app.data.repositories.meter
 
 
 import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.MeterReaderListModelData
 import kapwad.reader.app.data.model.OtherListModelData
 import kapwad.reader.app.data.model.RateAListModelData
 import kapwad.reader.app.data.model.RateBListModelData
@@ -15,11 +16,11 @@ import retrofit2.HttpException
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
-class OthersRemoteDataSource @Inject constructor(private val otherService: OtherService) {
+class MeterRemoteDataSource @Inject constructor(private val meterService: MeterService) {
 
-    suspend fun getRateList(): List<OtherListModelData> {
+    suspend fun getMeterList(): List<MeterReaderListModelData> {
 
-        val response = otherService.doGetAllOtherList()
+        val response = meterService.doGetAllMeterList()
         if (response.code() != HttpURLConnection.HTTP_OK) {
             throw HttpException(response)
         }

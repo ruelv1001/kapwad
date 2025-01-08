@@ -1,4 +1,4 @@
-package com.android.boilerplate.utils
+package kapwad.reader.app.utils
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -12,12 +12,12 @@ import java.io.IOException
 import java.io.OutputStream
 import java.util.*
 
-class XP380PTPrinter(activity: Activity) {
+class XP380PTPrinter(activity: Activity,devmac:String) {
 
     private var bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     private var bluetoothSocket: BluetoothSocket? = null
     private var outputStream: OutputStream? = null
-    private val deviceAddress = "86:67:7A:E6:54:76" // Replace with your printer's Bluetooth address
+    private val deviceAddress = devmac // Replace with your printer's Bluetooth address
 
     init {
         if (bluetoothAdapter == null) {
@@ -25,7 +25,6 @@ class XP380PTPrinter(activity: Activity) {
             activity.finish()
         }
     }
-
 
     fun connectPrinter(context: Context) {
         val device: BluetoothDevice? = bluetoothAdapter?.getRemoteDevice(deviceAddress)
@@ -53,8 +52,19 @@ class XP380PTPrinter(activity: Activity) {
         }
     }
 
+    /**
+     * Checks if the printer is currently connected.
+     * @return Boolean indicating whether the printer is connected
+     */
+    fun isPrinterConnected(): Boolean {
+        return bluetoothSocket?.isConnected == true && outputStream != null
+    }
+
     fun printText(text: String) {
         try {
+            if (!isPrinterConnected()) {
+                throw IOException("Printer is not connected")
+            }
             outputStream?.write(text.toByteArray())
             outputStream?.write("\n".toByteArray()) // Print new line after text
         } catch (e: IOException) {
@@ -64,6 +74,10 @@ class XP380PTPrinter(activity: Activity) {
 
     fun printTextHeader(text: String, bold: Boolean = false, textSize: Int = 18) {
         try {
+            if (!isPrinterConnected()) {
+                throw IOException("Printer is not connected")
+            }
+
             // Print bold text if specified
             if (bold) {
                 outputStream?.write(byteArrayOf(27, 69, 1)) // Enable bold
@@ -86,6 +100,10 @@ class XP380PTPrinter(activity: Activity) {
 
     fun printTextNormalHeader(text: String, bold: Boolean = false, textSize: Int = 15) {
         try {
+            if (!isPrinterConnected()) {
+                throw IOException("Printer is not connected")
+            }
+
             // Print bold text if specified
             if (bold) {
                 outputStream?.write(byteArrayOf(27, 69, 1)) // Enable bold
@@ -106,11 +124,12 @@ class XP380PTPrinter(activity: Activity) {
         }
     }
 
-
     fun closePrinterConnection() {
         try {
             outputStream?.close()
             bluetoothSocket?.close()
+            outputStream = null
+            bluetoothSocket = null
         } catch (e: IOException) {
             e.printStackTrace()
         }

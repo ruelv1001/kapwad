@@ -12,8 +12,18 @@ import kotlinx.parcelize.Parcelize
 data class ProductOrderListModelData(
     @PrimaryKey(autoGenerate = true) var id: Int? = null,
 
-    val product_id: String,
-    val name: String,
-    val amount: String?,
-    val quantity: String?
+    var consumer_name: String? = null,
+    var consumer_address: String? = null,
+    val biller_month: String? = null,
+    val previous_reading: String? = null,
+    val present_reading: String? = null,
+
+    val status : String? = null,
+    val uploaded : String? = null,
+    val submitted : String? = null,
+    val meter_reader: String? = null,
+    val zone: String? = null,
+    var username : String? = null,
+    var password : String? = null,
+    var isLogin : String? = null,
 ): Parcelable

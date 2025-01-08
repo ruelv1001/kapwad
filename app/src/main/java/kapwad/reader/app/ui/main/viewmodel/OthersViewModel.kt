@@ -14,11 +14,13 @@ import kapwad.reader.app.utils.AppConstant
 import kapwad.reader.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kapwad.reader.app.data.model.ConsumerListModelData
-import kapwad.reader.app.data.model.TempListModelData
+import kapwad.reader.app.data.model.OtherListModelData
+import kapwad.reader.app.data.repositories.others.OthersRepository
 
-import kapwad.reader.app.data.repositories.temp.TempRepository
+
 import kapwad.reader.app.ui.main.viewmodel.ConsumerViewState
-import kapwad.reader.app.ui.main.viewmodel.TempViewState
+import kapwad.reader.app.ui.main.viewmodel.OthersViewState
+
 
 
 import kapwad.reader.app.utils.CommonLogger
@@ -39,37 +41,37 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class TempViewModel @Inject constructor(
-    private val tempRepository: TempRepository,
+class OthersViewModel @Inject constructor(
+    private val othersRepository: OthersRepository,
     authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
-    private val _tempStateFlow = MutableStateFlow<TempViewState>(TempViewState.Idle)
-    val tempStateFlow: StateFlow<TempViewState> = _tempStateFlow.asStateFlow()
+    private val _otherStateFlow = MutableStateFlow<OthersViewState>(OthersViewState.Idle)
+    val otherStateFlow: StateFlow<OthersViewState> = _otherStateFlow.asStateFlow()
 
 
-    fun insertTemp(data: List<TempListModelData>) {
+    fun insertOther(data: List<OtherListModelData>) {
         viewModelScope.launch {
-            tempRepository.create(data)
-                .onStart { _tempStateFlow.emit(TempViewState.Loading) }
+            othersRepository.create(data)
+                .onStart { _otherStateFlow.emit(OthersViewState.Loading) }
                 .catch { exception -> onError(exception) }
-                .collect { _tempStateFlow.emit(TempViewState.SuccessOfflineCreate(it)) }
+                .collect { _otherStateFlow.emit(OthersViewState.SuccessOfflineCreate(it)) }
         }
     }
 
 
 
-    fun getTemp() {
+    fun getOther() {
         viewModelScope.launch {
-            tempRepository.getTemp()
+            othersRepository.getOther()
                 .onStart {
-                    _tempStateFlow.emit(TempViewState.Loading)
+                    _otherStateFlow.emit(OthersViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _tempStateFlow.emit(TempViewState.SuccessOfflineGetOrder(it))
+                    _otherStateFlow.emit(OthersViewState.SuccessOfflineGetOrder(it))
                 }
         }
     }
@@ -79,24 +81,24 @@ class TempViewModel @Inject constructor(
 
     fun deleteAllTemp() {
         viewModelScope.launch {
-            tempRepository.deleteAllTemp()
+            othersRepository.deleteAllOther()
                 .onStart {
-                    _tempStateFlow.emit(TempViewState.Loading)
+                    _otherStateFlow.emit(OthersViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _tempStateFlow.emit(TempViewState.SuccessDelete(it.toString()))
+                    _otherStateFlow.emit(OthersViewState.SuccessDelete(it.toString()))
                 }
         }
     }
 
-    fun getTempOnlineList() {
+    fun getOtherOnlineList() {
         viewModelScope.launch {
-            tempRepository.getAllTemp()
+            othersRepository.getAllOther()
                 .onStart {
-                    _tempStateFlow.emit(TempViewState.Loading)
+                    _otherStateFlow.emit(OthersViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
@@ -108,8 +110,8 @@ class TempViewModel @Inject constructor(
                     val jsonData = gson.toJson(consumerList)
 
                     // Emit success with JSON data and the object list
-                    _tempStateFlow.emit(
-                        TempViewState.SuccessOnlineTemp(jsonData, consumerList)
+                    _otherStateFlow.emit(
+                        OthersViewState.SuccessOnlineOther(jsonData, consumerList)
                     )
                 }
                 .flowOn(Dispatchers.IO)
@@ -120,16 +122,16 @@ class TempViewModel @Inject constructor(
 
     fun getTempById(id: String) {
         viewModelScope.launch {
-            tempRepository.getTempById(id)
+            othersRepository.getOtherById(id)
                 .onStart {
-                    _tempStateFlow.emit(TempViewState.Loading)
+                    _otherStateFlow.emit(OthersViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect { response ->
                     Log.d("GetConsumerById", "Response: $response")
-                    _tempStateFlow.emit(TempViewState.SuccessTempById(response))
+                    _otherStateFlow.emit(OthersViewState.SuccessOtherById(response))
                 }
         }
     }
@@ -139,8 +141,8 @@ class TempViewModel @Inject constructor(
             is IOException,
             is TimeoutException,
             -> {
-                _tempStateFlow.emit(
-                    TempViewState.PopupError(
+                _otherStateFlow.emit(
+                    OthersViewState.PopupError(
                         PopupErrorState.NetworkError
                     )
                 )
@@ -151,8 +153,8 @@ class TempViewModel @Inject constructor(
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
-                _tempStateFlow.emit(
-                    TempViewState.PopupError(
+                _otherStateFlow.emit(
+                    OthersViewState.PopupError(
                         if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())) {
                             PopupErrorState.SessionError
                         } else {
@@ -162,8 +164,8 @@ class TempViewModel @Inject constructor(
                 )
             }
 
-            else -> _tempStateFlow.emit(
-                TempViewState.PopupError(
+            else -> _otherStateFlow.emit(
+                OthersViewState.PopupError(
                     PopupErrorState.UnknownError
                 )
             )

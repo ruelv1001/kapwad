@@ -1,7 +1,7 @@
 package kapwad.reader.app.data.model
 
-data class ArticleModel(
+data class PrinterModel(
     val title : String? = null,
-    val description : String? = null,
-    val imageUrl : String? = null,
+    val mac : String? = null,
+    val status : String? = null,
 )

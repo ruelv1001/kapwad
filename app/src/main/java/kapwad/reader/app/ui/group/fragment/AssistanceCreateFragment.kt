@@ -74,22 +74,7 @@ class AssistanceCreateFragment : Fragment() {
             amountTextInputLayout.error = ""
         }
         proceedButton.setOnSingleClickListener {
-                if(viewModel.user.kyc_status != "completed"){
-                    requireActivity().toastWarning(getString(R.string.kyc_status_must_be_verified))
-                }else{
-                    if (amountEditText.text.toString().isEmpty()){
-                        amountTextInputLayout.error = "This field is required."
-                    } else {
-                        val request = CreateAssistanceRequest(
-                            group_id = activity.groupDetails?.id,
-                            amount = amountEditText.text.toString().replace(",",""),
-                            reason = reason,
-                            remarks = messageEditText.text.toString()
-                        )
-                        viewModel.createAssistance(request)
-                    }
-                }
-            }
+        }
         }
 
 

@@ -57,8 +57,8 @@ class DeleteAccountFragment : Fragment()  {
         activity.setToolbarTitle(getString(R.string.delete_account_permanently))
     }
     private fun setOnClickListeners() = binding.run {
-        val username = AuthEncryptedDataManager().getUserBasicInfo().name
-        titleTextView.text = "$username deactivate this account?"
+      //  val username = AuthEncryptedDataManager().getUserBasicInfo().name
+      //  titleTextView.text = "$username deactivate this account?"
         deactivateButton.setOnSingleClickListener {
             viewModel.deleteOrDeactivateAccount(reasonId = activity.reasonId.toString(), other = activity.reason.toString(), type = activity.selectedChoice.orEmpty())
         }

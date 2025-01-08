@@ -14,10 +14,17 @@ import kapwad.reader.app.utils.AppConstant
 import kapwad.reader.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.RateAListModelData
+import kapwad.reader.app.data.model.RateBListModelData
+import kapwad.reader.app.data.model.RateCListModelData
+import kapwad.reader.app.data.model.RateListModelData
+import kapwad.reader.app.data.model.RateReListModelData
 import kapwad.reader.app.data.model.TempListModelData
 
-import kapwad.reader.app.data.repositories.temp.TempRepository
+
+import kapwad.reader.app.data.repositories.waterrate.RateRepository
 import kapwad.reader.app.ui.main.viewmodel.ConsumerViewState
+import kapwad.reader.app.ui.main.viewmodel.RateViewState
 import kapwad.reader.app.ui.main.viewmodel.TempViewState
 
 
@@ -39,64 +46,284 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class TempViewModel @Inject constructor(
-    private val tempRepository: TempRepository,
+class RateViewModel @Inject constructor(
+    private val rateRepository: RateRepository,
     authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
-    private val _tempStateFlow = MutableStateFlow<TempViewState>(TempViewState.Idle)
-    val tempStateFlow: StateFlow<TempViewState> = _tempStateFlow.asStateFlow()
+    private val _rateStateFlow = MutableStateFlow<RateViewState>(RateViewState.Idle)
+    val rateStateFlow: StateFlow<RateViewState> = _rateStateFlow.asStateFlow()
 
+    //get by id
 
-    fun insertTemp(data: List<TempListModelData>) {
+    fun getRateReById(id: String) {
         viewModelScope.launch {
-            tempRepository.create(data)
-                .onStart { _tempStateFlow.emit(TempViewState.Loading) }
+            rateRepository.getRateReById(id)
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("GetConsumerById", "Response: $response")
+                    _rateStateFlow.emit(RateViewState.SuccessRateReById(response))
+                }
+        }
+    }
+    fun getRateCById(id: String) {
+        viewModelScope.launch {
+            rateRepository.getRateCById(id)
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("GetConsumerById", "Response: $response")
+                    _rateStateFlow.emit(RateViewState.SuccessRateCById(response))
+                }
+        }
+    }
+
+    fun getRateBById(id: String) {
+        viewModelScope.launch {
+            rateRepository.getRateBById(id)
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("GetConsumerById", "Response: $response")
+                    _rateStateFlow.emit(RateViewState.SuccessRateBById(response))
+                }
+        }
+    }
+
+    fun getRateAById(id: String) {
+        viewModelScope.launch {
+            rateRepository.getRateAById(id)
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("GetConsumerById", "Response: $response")
+                    _rateStateFlow.emit(RateViewState.SuccessRateAById(response))
+                }
+        }
+    }
+
+    fun getRateById(id: String) {
+        viewModelScope.launch {
+            rateRepository.getRateById(id)
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("GetConsumerById", "Response: $response")
+                    _rateStateFlow.emit(RateViewState.SuccessRateById(response))
+                }
+        }
+    }
+
+
+    //-----------------------------
+
+
+
+
+    fun insertWR(data: List<RateListModelData>) {
+        viewModelScope.launch {
+            rateRepository.create(data)
+                .onStart { _rateStateFlow.emit(RateViewState.Loading) }
                 .catch { exception -> onError(exception) }
-                .collect { _tempStateFlow.emit(TempViewState.SuccessOfflineCreate(it)) }
+                .collect { _rateStateFlow.emit(RateViewState.SuccessOfflineCreate(it)) }
+        }
+    }
+
+    fun insertWRA(data: List<RateAListModelData>) {
+        viewModelScope.launch {
+            rateRepository.createA(data)
+                .onStart { _rateStateFlow.emit(RateViewState.Loading) }
+                .catch { exception -> onError(exception) }
+                .collect { _rateStateFlow.emit(RateViewState.SuccessOfflineCreateA(it)) }
+        }
+    }
+
+    fun insertWRB(data: List<RateBListModelData>) {
+        viewModelScope.launch {
+            rateRepository.createB(data)
+                .onStart { _rateStateFlow.emit(RateViewState.Loading) }
+                .catch { exception -> onError(exception) }
+                .collect { _rateStateFlow.emit(RateViewState.SuccessOfflineCreateB(it)) }
+        }
+    }
+
+    fun insertWRC(data: List<RateCListModelData>) {
+        viewModelScope.launch {
+            rateRepository.createC(data)
+                .onStart { _rateStateFlow.emit(RateViewState.Loading) }
+                .catch { exception -> onError(exception) }
+                .collect { _rateStateFlow.emit(RateViewState.SuccessOfflineCreateC(it)) }
+        }
+    }
+
+    fun insertWRRe(data: List<RateReListModelData>) {
+        viewModelScope.launch {
+            rateRepository.createRe(data)
+                .onStart { _rateStateFlow.emit(RateViewState.Loading) }
+                .catch { exception -> onError(exception) }
+                .collect { _rateStateFlow.emit(RateViewState.SuccessOfflineCreateRe(it)) }
         }
     }
 
 
+//------------------------------------------
 
-    fun getTemp() {
+
+    fun getRate() {
         viewModelScope.launch {
-            tempRepository.getTemp()
+            rateRepository.getRate()
                 .onStart {
-                    _tempStateFlow.emit(TempViewState.Loading)
+                    _rateStateFlow.emit(RateViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _tempStateFlow.emit(TempViewState.SuccessOfflineGetOrder(it))
+                    _rateStateFlow.emit(RateViewState.SuccessOfflineGetOrder(it))
                 }
         }
     }
 
-
-
-
-    fun deleteAllTemp() {
+    fun getRateA() {
         viewModelScope.launch {
-            tempRepository.deleteAllTemp()
+            rateRepository.getRateA()
                 .onStart {
-                    _tempStateFlow.emit(TempViewState.Loading)
+                    _rateStateFlow.emit(RateViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _tempStateFlow.emit(TempViewState.SuccessDelete(it.toString()))
+                    _rateStateFlow.emit(RateViewState.SuccessOfflineGetOrderA(it))
                 }
         }
     }
 
-    fun getTempOnlineList() {
+    fun getRateB() {
         viewModelScope.launch {
-            tempRepository.getAllTemp()
+            rateRepository.getRateB()
                 .onStart {
-                    _tempStateFlow.emit(TempViewState.Loading)
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _rateStateFlow.emit(RateViewState.SuccessOfflineGetOrderB(it))
+                }
+        }
+    }
+
+    fun getRateC() {
+        viewModelScope.launch {
+            rateRepository.getRateC()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _rateStateFlow.emit(RateViewState.SuccessOfflineGetOrderC(it))
+                }
+        }
+    }
+
+
+
+//---------------------------
+
+
+    fun deleteAllTWR() {
+        viewModelScope.launch {
+            rateRepository.deleteAllTWR()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _rateStateFlow.emit(RateViewState.SuccessDelete(it.toString()))
+                }
+        }
+    }
+
+    fun deleteAllTWRA() {
+        viewModelScope.launch {
+            rateRepository.deleteAllTWRA()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _rateStateFlow.emit(RateViewState.SuccessDelete(it.toString()))
+                }
+        }
+    }
+
+    fun deleteAllTWRB() {
+        viewModelScope.launch {
+            rateRepository.deleteAllTWRB()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _rateStateFlow.emit(RateViewState.SuccessDelete(it.toString()))
+                }
+        }
+    }
+
+
+    fun deleteAllTWRC() {
+        viewModelScope.launch {
+            rateRepository.deleteAllTWRC()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect {
+                    _rateStateFlow.emit(RateViewState.SuccessDelete(it.toString()))
+                }
+        }
+    }
+
+
+
+//---------------------------------
+    fun getWROnlineList() {
+        viewModelScope.launch {
+            rateRepository.getAllWR()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
@@ -108,8 +335,8 @@ class TempViewModel @Inject constructor(
                     val jsonData = gson.toJson(consumerList)
 
                     // Emit success with JSON data and the object list
-                    _tempStateFlow.emit(
-                        TempViewState.SuccessOnlineTemp(jsonData, consumerList)
+                    _rateStateFlow.emit(
+                        RateViewState.SuccessOnlineRate(jsonData, consumerList)
                     )
                 }
                 .flowOn(Dispatchers.IO)
@@ -118,15 +345,113 @@ class TempViewModel @Inject constructor(
     }
 
 
+    fun getWRAOnlineList() {
+        viewModelScope.launch {
+            rateRepository.getAllWRA()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                    CommonLogger.sysLogE("LOGzERROR", exception.localizedMessage, exception)
+                }
+                .onEach { consumerList ->
+                    // Convert the list to JSON
+                    val gson = Gson()
+                    val jsonData = gson.toJson(consumerList)
+
+                    // Emit success with JSON data and the object list
+                    _rateStateFlow.emit(
+                        RateViewState.SuccessOnlineRateA(jsonData, consumerList)
+                    )
+                }
+                .flowOn(Dispatchers.IO)
+                .launchIn(viewModelScope)
+        }
+    }
+
+    fun getWRBOnlineList() {
+        viewModelScope.launch {
+            rateRepository.getAllWRB()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                    CommonLogger.sysLogE("LOGzERROR", exception.localizedMessage, exception)
+                }
+                .onEach { consumerList ->
+                    // Convert the list to JSON
+                    val gson = Gson()
+                    val jsonData = gson.toJson(consumerList)
+
+                    // Emit success with JSON data and the object list
+                    _rateStateFlow.emit(
+                        RateViewState.SuccessOnlineRateB(jsonData, consumerList)
+                    )
+                }
+                .flowOn(Dispatchers.IO)
+                .launchIn(viewModelScope)
+        }
+    }
 
 
+    fun getWRCOnlineList() {
+        viewModelScope.launch {
+            rateRepository.getAllWRC()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                    CommonLogger.sysLogE("LOGzERROR", exception.localizedMessage, exception)
+                }
+                .onEach { consumerList ->
+                    // Convert the list to JSON
+                    val gson = Gson()
+                    val jsonData = gson.toJson(consumerList)
+
+                    // Emit success with JSON data and the object list
+                    _rateStateFlow.emit(
+                        RateViewState.SuccessOnlineRateC(jsonData, consumerList)
+                    )
+                }
+                .flowOn(Dispatchers.IO)
+                .launchIn(viewModelScope)
+        }
+    }
+
+    fun getWRReOnlineList() {
+        viewModelScope.launch {
+            rateRepository.getAllWRRe()
+                .onStart {
+                    _rateStateFlow.emit(RateViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                    CommonLogger.sysLogE("LOGzERROR", exception.localizedMessage, exception)
+                }
+                .onEach { consumerList ->
+                    // Convert the list to JSON
+                    val gson = Gson()
+                    val jsonData = gson.toJson(consumerList)
+
+                    // Emit success with JSON data and the object list
+                    _rateStateFlow.emit(
+                        RateViewState.SuccessOnlineRateRe(jsonData, consumerList)
+                    )
+                }
+                .flowOn(Dispatchers.IO)
+                .launchIn(viewModelScope)
+        }
+    }
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
             is TimeoutException,
             -> {
-                _tempStateFlow.emit(
-                    TempViewState.PopupError(
+                _rateStateFlow.emit(
+                    RateViewState.PopupError(
                         PopupErrorState.NetworkError
                     )
                 )
@@ -137,8 +462,8 @@ class TempViewModel @Inject constructor(
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
-                _tempStateFlow.emit(
-                    TempViewState.PopupError(
+                _rateStateFlow.emit(
+                    RateViewState.PopupError(
                         if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())) {
                             PopupErrorState.SessionError
                         } else {
@@ -148,8 +473,8 @@ class TempViewModel @Inject constructor(
                 )
             }
 
-            else -> _tempStateFlow.emit(
-                TempViewState.PopupError(
+            else -> _rateStateFlow.emit(
+                RateViewState.PopupError(
                     PopupErrorState.UnknownError
                 )
             )

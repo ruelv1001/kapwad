@@ -36,7 +36,7 @@ class AdminViewModel @Inject constructor(
         _adminSharedFlow.asSharedFlow()
 
     fun getUserKYC(): String {
-        return encryptedDataManager.getKYCStatus()
+        return encryptedDataManager.getAccessToken()
     }
     private suspend fun loadAdminList(groupId: String) {
         adminRepository.doGetListOfAdmin(groupId = groupId)

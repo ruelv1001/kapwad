@@ -23,6 +23,9 @@ import kapwad.reader.app.utils.dialog.CommonDialog
 import kapwad.reader.app.utils.setOnSingleClickListener
 import kapwad.reader.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
+import kapwad.reader.app.data.viewmodels.MeterViewModel
+import kapwad.reader.app.ui.main.viewmodel.MeterViewState
+import kapwad.reader.app.utils.showToastError
 import kapwad.reader.app.utils.showToastSuccess
 import kotlinx.coroutines.launch
 
@@ -31,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private var loadingDialog: CommonDialog? = null
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: MeterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,56 +47,45 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupClickListener() = binding.run{
         loginButton.setOnSingleClickListener {
-            viewModel.doLoginAccount(
+            viewModel.getMeterByAccount(
                 emailEditText.text.toString(),
                 passwordEditText.text.toString()
             )
         }
-        registerButton.setOnSingleClickListener {
-            val intent = RegisterActivity.getIntent(this@LoginActivity)
-            startActivity(intent)
-        }
-        resetPassTextView.setOnSingleClickListener {
-            val intent = ForgotPasswordActivity.getIntent(this@LoginActivity)
-            startActivity(intent)
-        }
+
+
     }
 
     private fun observeLogin(){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.loginSharedFlow.collect{
+                viewModel.meterStateFlow.collect{
                     handleViewState(it)
                 }
             }
         }
     }
 
-    private fun handleViewState(viewState: LoginViewState){
+    private fun handleViewState(viewState: MeterViewState){
         when(viewState){
-            is LoginViewState.Loading -> showLoadingDialog(R.string.login_loading)
-            is LoginViewState.Success -> {
+            is MeterViewState.Loading -> showLoadingDialog(R.string.login_loading)
+            is MeterViewState.SuccessOtherById -> {
+                // Handle success
+                showToastSuccess(
+                    this@LoginActivity,
+                    description = "Welcome ${viewState.data?.lastname.orEmpty()}"
+                )
+                val intent = MainActivity.getIntent(this@LoginActivity)
+                startActivity(intent)
                 hideLoadingDialog()
-                toastSuccess(viewState.message, CpmToast.SHORT_DURATION)
-                showToastSuccess(this, description = viewState.message)
-
-                if(viewState.isCompleteProfile){
-                    val intent = MainActivity.getIntent(this)
-                    startActivity(intent)
-                    finishAffinity()
-                }else{
-                    val intent = ProfileActivity.getIntent(this, true)
-                    startActivity(intent)
-                    finishAffinity()
-                }
             }
-            is LoginViewState.PopupError -> {
-                hideLoadingDialog()
-                showPopupError(this@LoginActivity, supportFragmentManager, viewState.errorCode, viewState.message)
-            }
-            is LoginViewState.InputError -> {
-                hideLoadingDialog()
-                handleInputError(viewState.errorData?: ErrorsData())
+            is MeterViewState.Error -> {
+                // Handle error
+                showToastError(
+                    this@LoginActivity,
+                    description = viewState.message
+                )
+            hideLoadingDialog()
             }
             else -> Unit
         }

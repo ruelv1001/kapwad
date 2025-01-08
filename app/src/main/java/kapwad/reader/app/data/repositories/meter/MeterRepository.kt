@@ -1,8 +1,9 @@
-package kapwad.reader.app.data.repositories.others
+package kapwad.reader.app.data.repositories.meter
 
 import kapwad.reader.app.data.model.ConsumerListModelData
 import kapwad.reader.app.data.model.TempListModelData
 import kapwad.reader.app.data.model.CreatedBillListModelData
+import kapwad.reader.app.data.model.MeterReaderListModelData
 import kapwad.reader.app.data.model.OtherListModelData
 import kapwad.reader.app.data.model.RateAListModelData
 import kapwad.reader.app.data.model.RateBListModelData
@@ -20,16 +21,23 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class OthersRepository @Inject constructor(
-    private val othersRemoteDataSource: OthersRemoteDataSource,
-    private val otherLocalDataSource: OtherLocalDataSource,
+class MeterRepository @Inject constructor(
+    private val meterRemoteDataSource: MeterRemoteDataSource,
+    private val meterLocalDataSource: MeterLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
 
-    fun getAllOther(): Flow<List<OtherListModelData>> {
+    fun getAllMeter(): Flow<List<MeterReaderListModelData>> {
         return flow {
-            val response = othersRemoteDataSource.getRateList()
+            val response = meterLocalDataSource.getMeterReader()
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getAllMeterOnline(): Flow<List<MeterReaderListModelData>> {
+        return flow {
+            val response = meterRemoteDataSource.getMeterList()
             emit(response)
         }.flowOn(ioDispatcher)
     }
@@ -38,17 +46,17 @@ class OthersRepository @Inject constructor(
     //---------------------------------------
 
 
-    fun create(rate: List<OtherListModelData>): Flow<List<OtherListModelData>> {
+    fun create(rate: List<MeterReaderListModelData>): Flow<List<MeterReaderListModelData>> {
         return flow {
-            otherLocalDataSource.insertOther(rate)
+            meterLocalDataSource.insertMeter(rate)
             emit(rate)
         }.flowOn(ioDispatcher)
     }
 
 
-    fun getOther(): Flow<List<OtherListModelData>> {
+    fun getOther(): Flow<List<MeterReaderListModelData>> {
         return flow {
-            val response = otherLocalDataSource.getOtherCharges()
+            val response = meterLocalDataSource.getMeterReader()
             emit(response)
         }.flowOn(ioDispatcher)
     }
@@ -59,15 +67,22 @@ class OthersRepository @Inject constructor(
     //-----------------------------------
 
 
-    fun deleteAllOther(): Flow<Unit> {
+    fun deleteAllMeter(): Flow<Unit> {
         return flow {
-            otherLocalDataSource.deleteAlOther() // Call the delete function
+            meterLocalDataSource.deleteAlMeterReader() // Call the delete function
             emit(Unit) // Emit a Unit value to indicate completion
         }.flowOn(ioDispatcher) // Switch to the IO dispatcher for the operation
     }
-    fun getOtherById(id: String): Flow<OtherListModelData?> {
+    fun getMeterById(id: String): Flow<MeterReaderListModelData?> {
         return flow {
-            val response = otherLocalDataSource.getOtherDetailsById(id)
+            val response = meterLocalDataSource.getMeterDetailsById(id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+    fun getMeterByCredential(username:String,password:String): Flow<MeterReaderListModelData?> {
+        return flow {
+            val response = meterLocalDataSource.getMeterDetailsByAccount(username,password)
             emit(response)
         }.flowOn(ioDispatcher)
     }

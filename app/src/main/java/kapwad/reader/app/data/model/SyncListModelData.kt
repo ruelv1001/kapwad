@@ -6,12 +6,10 @@ import kotlinx.parcelize.Parcelize
 
 @Keep
 @Parcelize
-data class ProductListModelData(
+data class SyncListModelData(
     var id: String?=null,
-    var title: String?=null,
-    var name : String? =null,
-    var avatar : String? =null,
-    var amount : String? =null,
-    var status : String? =null,
-    var quantity : String? =null
+    val biller_month : String? = null,
+    val status : String? = null,
+    val uploaded : String? = null,
+    val submitted : String? = null,
 ): Parcelable

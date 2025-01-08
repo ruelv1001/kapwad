@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="da.farmer.app">
+    package="kapwad.reader.app">
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="true" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.PRINT" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+     />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    />
 
     <application
-        android:name=".base.BaseApplication"
+        android:name="kapwad.reader.app.base.BaseApplication"
         android:allowBackup="false"
+        tools:replace="android:theme"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="false"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/app_logo"
+        android:icon="@drawable/bg_kapwad"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@drawable/app_logo"
+        android:usesCleartextTraffic="true"
+        android:roundIcon="@drawable/bg_kapwad"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ui.onboarding.activity.ForgotPasswordActivity"
+            android:name="kapwad.reader.app.ui.onboarding.activity.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.profile.activity.UpdatePasswordActivity"
+            android:name="kapwad.reader.app.ui.profile.activity.UpdatePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.verify.activity.AccountVerificationActivity"
+            android:name="kapwad.reader.app.ui.verify.activity.AccountVerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.wallet.activity.WalletActivity"
+            android:name="kapwad.reader.app.ui.wallet.activity.WalletActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.onboarding.activity.SplashScreenActivity"
+            android:name="kapwad.reader.app.ui.onboarding.activity.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="userPortrait"
             android:windowSoftInputMode="adjustResize">
@@ -55,72 +65,101 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <activity
-            android:name=".ui.onboarding.activity.LoginActivity"
+            android:name="kapwad.reader.app.ui.onboarding.activity.LoginActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.register.activity.RegisterActivity"
+            android:name="kapwad.reader.app.ui.register.activity.RegisterActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.wallet.activity.RequestPostedActivity"
+            android:name="kapwad.reader.app.ui.wallet.activity.RequestPostedActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.wallet.activity.TopUpPointsActivity"
+            android:name="kapwad.reader.app.ui.wallet.activity.TopUpPointsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.wallet.activity.TransactionsActivity"
+            android:name="kapwad.reader.app.ui.wallet.activity.TransactionsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.activity.MainActivity"
+            android:name="kapwad.reader.app.ui.main.activity.MainActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.group.activity.GroupActivity"
+            android:name="kapwad.reader.app.ui.group.activity.GroupActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.group.activity.GroupDetailsActivity"
+            android:name="kapwad.reader.app.ui.group.activity.GroupDetailsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.profile.activity.ProfileActivity"
+            android:name="kapwad.reader.app.ui.profile.activity.ProfileActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.profile.activity.NotificationsActivity"
+            android:name="kapwad.reader.app.ui.profile.activity.NotificationsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.profile.activity.GroupNotificationsActivity"
+            android:name="kapwad.reader.app.ui.profile.activity.GroupNotificationsActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:replace="android:theme" />
         <activity
-            android:name=".ui.verify.activity.FaceScannerActivity"
+            android:name="kapwad.reader.app.ui.verify.activity.FaceScannerActivity"
             android:label=""
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.accountcontrol.activity.AccountControlActivity"
+            android:name="kapwad.reader.app.ui.accountcontrol.activity.AccountControlActivity"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="kapwad.reader.app.ui.crops.activity.CropsActivity"
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="kapwad.reader.app.ui.phmarket.activity.PHMarketActivity"
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="kapwad.reader.app.ui.geotagging.activity.GeoTaggingActivity"
+            android:screenOrientation="userPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -120,16 +120,7 @@ class OnboardingCompleteProfileFragment: Fragment() {
 
     private fun setView() = binding.run {
 
-        reference = activity.onBoardingUserModel.province_sku.toString()
-        cityCode = activity.onBoardingUserModel.city_code.toString()
-        brgyCode = activity.onBoardingUserModel.brgy_code.toString()
 
-        birthdateEditText.setText(activity.onBoardingUserModel.birthdate?.date_only)
-        provinceEditText.setText(activity.onBoardingUserModel.province_name)
-        cityEditText.setText(activity.onBoardingUserModel.city_name)
-        barangayEditText.setText(activity.onBoardingUserModel.brgy_name)
-        zipcodeEditText.setText(activity.onBoardingUserModel.zipcode)
-        streetEditText.setText(activity.onBoardingUserModel.street_name)
 
         emailEditText.doOnTextChanged { text, start, before, count ->
             emailTextInputLayout.isErrorEnabled = false //to not take up space after removing error
@@ -256,25 +247,7 @@ class OnboardingCompleteProfileFragment: Fragment() {
             }
         }
 
-        continueButton.setOnSingleClickListener {
-            val request = UpdateInfoRequest(
-                province_sku = reference,
-                province_name = provinceEditText.text.toString(),
-                city_sku = cityCode,
-                city_name = cityEditText.text.toString(),
-                brgy_sku = brgyCode,
-                brgy_name = barangayEditText.text.toString(),
-                street_name = streetEditText.text.toString(),
-                zipcode = zipcodeEditText.text.toString(),
-                firstname = activity.onBoardingUserModel.firstname.orEmpty(),
-                lastname = activity.onBoardingUserModel.lastname.orEmpty(),
-                middlename = activity.onBoardingUserModel.middlename.orEmpty(),
-                email = emailEditText.text.toString(),
-                birthdate = birthdateEditText.text.toString()
-            )
 
-            viewModel.doUpdateProfile(request)
-        }
     }
 
 

@@ -1,6 +1,7 @@
 package kapwad.reader.app.ui.main.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,28 +27,33 @@ import kapwad.reader.app.data.model.ProductListModelData
 import kapwad.reader.app.data.model.ProductOrderListModelData
 import kapwad.reader.app.data.model.SyncListModelData
 import kapwad.reader.app.data.viewmodels.BillingViewModel
+import kapwad.reader.app.data.viewmodels.ConsumerViewModel
+import kapwad.reader.app.databinding.FragmentAllConsumerBinding
 import kapwad.reader.app.databinding.FragmentConsumerListBinding
 import kapwad.reader.app.databinding.FragmentSyncListBinding
 import kapwad.reader.app.databinding.FragmentSyncMenuBinding
+import kapwad.reader.app.ui.main.adapter.AllConsumerListAdapter
 import kapwad.reader.app.ui.main.adapter.ConsumerListAdapter
 import kapwad.reader.app.ui.main.adapter.SyncListAdapter
 import kapwad.reader.app.ui.main.viewmodel.BillingViewState
+import kapwad.reader.app.ui.main.viewmodel.ConsumerViewState
 import kapwad.reader.app.ui.phmarket.activity.PHMarketActivity
 import kapwad.reader.app.ui.phmarket.adapter.PreOrderListAdapter
 import kapwad.reader.app.ui.phmarket.fragment.ViewBasketFragmentDirections
+import kapwad.reader.app.utils.setOnSingleClickListener
 
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
+class AllConsumerListFragment : Fragment(), AllConsumerListAdapter.ConsumerCallback {
 
-    private var _binding: FragmentConsumerListBinding? = null
+    private var _binding: FragmentAllConsumerBinding? = null
     private val binding get() = _binding!!
 
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var adapter: ConsumerListAdapter? = null
+    private var adapter: AllConsumerListAdapter? = null
     private val activity by lazy { requireActivity() as MainActivity }
-    private val viewModel: BillingViewModel by viewModels()
+    private val viewModel: ConsumerViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -55,7 +61,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentConsumerListBinding.inflate(
+        _binding = FragmentAllConsumerBinding.inflate(
             inflater,
             container,
             false
@@ -75,29 +81,35 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
     override fun onResume() {
         super.onResume()
         observeBilling()
-        viewModel.getBilling()
+        viewModel.getConsumer()
     }
 
     private fun observeBilling() {
         lifecycleScope.launch {
-            viewModel.billingStateFlow.collect { viewState ->
+            viewModel.consumerStateFlow.collect { viewState ->
                 handleViewState(viewState)
             }
         }
     }
 
-    private fun handleViewState(viewState: BillingViewState) = binding.run {
+    private fun handleViewState(viewState: ConsumerViewState) = binding.run {
         when (viewState) {
-            is BillingViewState.Loading -> showLoadingDialog(R.string.loading)
-            is BillingViewState.SuccessOfflineGetOrder -> {
+            is ConsumerViewState.Loading -> showLoadingDialog(R.string.loading)
+            is ConsumerViewState.SuccessOfflineGetOrder -> {
                 hideLoadingDialog()
                 adapter?.clear()
-                adapter?.appendData(viewState.data?.orEmpty() as List<CreatedBillListModelData>)
+                adapter?.appendData(viewState.data?.orEmpty() as List<ConsumerListModelData>)
+                Log.d("AdapterData", "Appending data: ${viewState.data}")
+            }
+            is ConsumerViewState.SuccessOfflineGetSearch -> {
+                hideLoadingDialog()
+                adapter?.clear()
+                adapter?.appendData(viewState.data?.orEmpty() as List<ConsumerListModelData>)
+                Log.d("AdapterData", "Appending data: ${viewState.data}")
             }
 
 
-
-            is BillingViewState.SuccessDelete -> {
+            is ConsumerViewState.SuccessDelete -> {
                 hideLoadingDialog()
 
             }
@@ -116,7 +128,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
 
     private fun setupList() {
         binding?.apply {
-            adapter = ConsumerListAdapter(requireActivity(), this@ConsumerListFragment)
+            adapter = AllConsumerListAdapter(requireActivity(), this@AllConsumerListFragment)
             linearLayoutManager = LinearLayoutManager(context)
             recyclerView.layoutManager = linearLayoutManager
             recyclerView.adapter = adapter
@@ -126,7 +138,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
 
 
     private fun setClickListeners() = binding.run {
-
+        searchButton.setOnSingleClickListener { viewModel.searchConsumer(refEditText.text.toString()) }
     }
 
 
@@ -135,7 +147,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
     }
 
 
-    override fun onItemClicked(data: CreatedBillListModelData, position: Int) {
+    override fun onItemClicked(data: ConsumerListModelData, position: Int) {
 
     }
 

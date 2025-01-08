@@ -11,26 +11,31 @@ import kapwad.reader.app.data.model.CreatedBillListModelData
 
 import kapwad.reader.app.data.model.ProductOrderListModelData
 import kapwad.reader.app.data.model.RateAListModelData
+import kapwad.reader.app.data.model.RateBListModelData
+import kapwad.reader.app.data.model.RateCListModelData
 import kapwad.reader.app.data.model.RateListModelData
 import kapwad.reader.app.data.model.TempListModelData
 
 @Dao
-interface RateADao {
+interface RateBDao {
 
 
 
 
 
-    @Query("SELECT * FROM tbl_wr_commercial_a")
-    suspend fun get(): List<RateAListModelData>
+    @Query("SELECT * FROM tbl_wr_commercial_b")
+    suspend fun get(): List<RateBListModelData>
 
 
     @Transaction
-    @Query("DELETE FROM tbl_wr_commercial_a")
+    @Query("DELETE FROM tbl_wr_commercial_b")
     suspend fun deleteAll()
 
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(temp: List<RateAListModelData>)
+    suspend fun insert(temp: List<RateBListModelData>)
+
+    @Query("SELECT * FROM tbl_wr_commercial_b WHERE id = :id")
+    suspend fun getRateBDetailsById(id: String): RateBListModelData?
 }

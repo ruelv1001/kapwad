@@ -42,7 +42,7 @@ class VerifyViewModel @Inject constructor(
     var rightImageFile: File? = null
 
     fun updateKYCStatus(value: String){
-        authEncryptedDataManager.setUserKYCStatus(value)
+        authEncryptedDataManager.getAccessToken()
     }
 
     fun doUploadId(kycRequest: KYCRequest) {

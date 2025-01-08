@@ -1,7 +1,8 @@
-package kapwad.reader.app.data.repositories.waterrate
+package kapwad.reader.app.data.repositories.others
 
 import kapwad.reader.app.data.model.ConsumerListModelData
 import kapwad.reader.app.data.model.CreatedBillListModelData
+import kapwad.reader.app.data.model.OtherListModelData
 import kapwad.reader.app.data.model.RateAListModelData
 import kapwad.reader.app.data.model.RateBListModelData
 import kapwad.reader.app.data.model.RateCListModelData
@@ -18,24 +19,14 @@ import retrofit2.http.POST
 import retrofit2.Call
 
 
-interface RateService {
+interface OtherService {
 
     @GET("fetch_consumers.php")
     fun fetchConsumers(): Call<List<TempListModelData>>
 
 
 
-    @GET("http://192.168.0.105/kapatagan/wr_commercial.php")
-    suspend fun doGetAllRateList(): Response<List<RateListModelData>>
+    @GET("https://kapwd.com/API/other_charges.php")
+    suspend fun doGetAllOtherList(): Response<List<OtherListModelData>>
 
-    @GET("http://192.168.0.105/kapatagan/wr_commercial_a.php")
-    suspend fun doGetAllRateAList(): Response<List<RateAListModelData>>
-
-
-    @GET("http://192.168.0.105/kapatagan/wr_commercial_b.php")
-    suspend fun doGetAllRateBList(): Response<List<RateBListModelData>>
-
-
-    @GET("http://192.168.0.105/kapatagan/wr_commercial_c.php")
-    suspend fun doGetAllRateCList(): Response<List<RateCListModelData>>
 }

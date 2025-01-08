@@ -26,7 +26,7 @@ class SplashViewModel @Inject constructor(
 
     val splashStateFlow: StateFlow<SplashViewState> = _splashStateFlow.asStateFlow()
 
-    val isCompleteProfile = encryptedDataManager.getUserBasicInfo().is_complete_profile
+   // val isCompleteProfile = encryptedDataManager.getUserBasicInfo().is_complete_profile
 
     fun doRefreshToken() {
         viewModelScope.launch {
@@ -38,9 +38,7 @@ class SplashViewModel @Inject constructor(
                     onError(exception)
                 }
                 .collect {
-                    _splashStateFlow.emit(
-                        SplashViewState.SuccessRefreshToken(it.status ?: false, it.data?.is_complete_profile ?: false)
-                    )
+
                 }
         }
     }

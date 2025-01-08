@@ -1,36 +1,45 @@
-package kapwad.reader.app.data.repositories.bill
+package kapwad.reader.app.data.repositories.consumers
 
 
 import android.util.Log
 import kapwad.reader.app.data.local.BillingDao
+import kapwad.reader.app.data.local.ConsumerDao
+import kapwad.reader.app.data.model.ConsumerListModelData
 
 import kapwad.reader.app.data.model.CreatedBillListModelData
 import kapwad.reader.app.data.model.ProductOrderListModelData
 import javax.inject.Inject
 
-class BillingLocalDataSource @Inject constructor(private val billingDao: BillingDao) {
+class ConsumerLocalDataSource @Inject constructor(private val consumerDao: ConsumerDao) {
 
-    suspend fun createBilling(billing: CreatedBillListModelData) {
-        billingDao.createBilling(billing)
+    suspend fun insertConsumers(consumers: List<ConsumerListModelData>) {
+        consumerDao.insertConsumers(consumers)
     }
 
-    suspend fun insertBilling(billing: CreatedBillListModelData) {
 
-        billingDao.insertBilling(billing)
-    }
+
+
+    suspend fun getConsumerDetailsById(id: String): ConsumerListModelData? =
+        consumerDao.getConsumerDetailsById(id)
+
 
 //    suspend fun getAllUsers(): List<ProductOrderListModelData>{
 //        return billingDao.getAllUsers()
 //    }
 
-    suspend fun getBilling() =
-        billingDao.getBilling()
+    suspend fun getConsumer() =
+        consumerDao.getConsumer()
 
 //    suspend fun getTotal() =
 //        billingDao.getOverallTotal()
 
 
     suspend fun deleteAll() =
-        billingDao.deleteAllBilling()
+        consumerDao.deleteAllConsumer()
+
+
+
+    suspend fun searchConsumer(searchQuery: String) =
+        consumerDao.searchConsumer("%$searchQuery%")
 
 }

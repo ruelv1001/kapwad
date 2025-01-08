@@ -22,12 +22,12 @@ interface OrderDao {
     @Query("SELECT * FROM tbl_order")
     suspend fun getOrders(): List<ProductOrderListModelData>
 
-    @Query("""
-        SELECT SUM(CAST(amount AS REAL) * CAST(quantity AS REAL)) 
-        FROM tbl_order 
-        WHERE amount IS NOT NULL AND quantity IS NOT NULL
-    """)
-    suspend fun getOverallTotal(): Double?
+//    @Query("""
+//        SELECT SUM(CAST(amount AS REAL) * CAST(quantity AS REAL))
+//        FROM tbl_order
+//        WHERE amount IS NOT NULL AND quantity IS NOT NULL
+//    """)
+//    suspend fun getOverallTotal(): Double?
 
     @Transaction
     @Query("DELETE FROM tbl_order")

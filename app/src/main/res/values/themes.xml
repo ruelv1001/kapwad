@@ -83,4 +83,10 @@
         <item name="titleTextColor">@android:color/black</item>
     </style>
 
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">center</item>
+
+        <item name="android:fontFamily">@font/inter_regular</item>
+    </style>
 </resources>

@@ -200,7 +200,7 @@
                 android:hint="Search "
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:layout_marginBottom="@dimen/dimen_30"
+                android:layout_marginBottom="@dimen/dimen_10"
                 android:singleLine="true"
                 android:textAlignment="textStart"
                 android:textAllCaps="true"
@@ -209,6 +209,23 @@
                 android:textSize="@dimen/font_14" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/searchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingTop="@dimen/dimen_15"
+            android:textColor="@color/color_primaryDark"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:background="@drawable/bg_take_picture"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="Search"
+
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_14" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

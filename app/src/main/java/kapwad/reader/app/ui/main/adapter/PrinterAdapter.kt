@@ -4,7 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.PrinterModel
+
 import kapwad.reader.app.databinding.AdapterAllConsumerBinding
 
 
@@ -12,28 +13,29 @@ import kapwad.reader.app.databinding.AdapterConsumerListBinding
 
 
 import kapwad.reader.app.databinding.AdapterDateBinding
+import kapwad.reader.app.databinding.AdapterPrinterBinding
 import kapwad.reader.app.databinding.AdapterSyncBinding
 
 
-class AllConsumerListAdapter (val context: Context, val clickListener: ConsumerCallback) :
-    RecyclerView.Adapter<AllConsumerListAdapter.AdapterViewHolder>() {
+class PrinterAdapter (val context: Context, val clickListener: ConsumerCallback) :
+    RecyclerView.Adapter<PrinterAdapter.AdapterViewHolder>() {
 
-    private val adapterData = mutableListOf<ConsumerListModelData>()
+    private val adapterData = mutableListOf<PrinterModel>()
     fun clear(){
         adapterData.clear()
         notifyDataSetChanged()
     }
 
-    fun appendData(newData: List<ConsumerListModelData>) {
+    fun appendData(newData: List<PrinterModel>) {
         val startAt = adapterData.size
         adapterData.addAll(newData)
         notifyItemRangeInserted(startAt, newData.size)
     }
 
-    fun getData(): MutableList<ConsumerListModelData> = adapterData
+    fun getData(): MutableList<PrinterModel> = adapterData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
-        val binding = AdapterAllConsumerBinding
+        val binding = AdapterPrinterBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return AdapterViewHolder(binding)
     }
@@ -42,13 +44,13 @@ class AllConsumerListAdapter (val context: Context, val clickListener: ConsumerC
         holder.displayData(adapterData[position], position)
     }
 
-    inner class AdapterViewHolder(val binding: AdapterAllConsumerBinding) :
+    inner class AdapterViewHolder(val binding: AdapterPrinterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun displayData(data: ConsumerListModelData, position: Int) = with(itemView) {
+        fun displayData(data: PrinterModel, position: Int) = with(itemView) {
 
-            binding.accountTextView.text=data.accountnumber
-            binding.nameTextView.text=data.firstname +" "+ data.middlename+" "+ data.lastname
-            binding.meterTextView.text=data.meternumber
+            binding.nameTextView.text=data.title
+            binding.macTextView.text=data.mac
+            binding.statusTextView.text=data.status
             binding.adapterLinearLayout.setOnClickListener {
                 clickListener.onItemClicked(data, position)
             }
@@ -56,7 +58,7 @@ class AllConsumerListAdapter (val context: Context, val clickListener: ConsumerC
     }
 
     interface ConsumerCallback{
-        fun onItemClicked(data: ConsumerListModelData, position: Int)
+        fun onItemClicked(data: PrinterModel, position: Int)
     }
 
     override fun getItemCount(): Int = adapterData.size

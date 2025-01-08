@@ -13,13 +13,19 @@ import kapwad.reader.app.security.AuthEncryptedDataManager
 import kapwad.reader.app.utils.AppConstant
 import kapwad.reader.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kapwad.reader.app.data.local.UserLocalData
 import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.MeterReaderListModelData
 import kapwad.reader.app.data.model.OtherListModelData
-import kapwad.reader.app.data.repositories.others.OthersRepository
+import kapwad.reader.app.data.repositories.auth.AuthLocalDataSource
+import kapwad.reader.app.data.repositories.baseresponse.UserModel
+import kapwad.reader.app.data.repositories.meter.MeterRepository
+
 
 
 import kapwad.reader.app.ui.main.viewmodel.ConsumerViewState
-import kapwad.reader.app.ui.main.viewmodel.OthersViewState
+import kapwad.reader.app.ui.main.viewmodel.MeterViewState
+
 
 
 
@@ -41,37 +47,39 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class OthersViewModel @Inject constructor(
-    private val othersRepository: OthersRepository,
-    authEncryptedDataManager: AuthEncryptedDataManager
+class MeterViewModel @Inject constructor(
+    private val meterRepository: MeterRepository,
+    authEncryptedDataManager: AuthEncryptedDataManager,
+    private val encryptedDataManager: AuthEncryptedDataManager,
+    private val authLocalDataSource: AuthLocalDataSource,
 ) : ViewModel() {
 
-    private val _otherStateFlow = MutableStateFlow<OthersViewState>(OthersViewState.Idle)
-    val otherStateFlow: StateFlow<OthersViewState> = _otherStateFlow.asStateFlow()
+    private val _meterStateFlow = MutableStateFlow<MeterViewState>(MeterViewState.Idle)
+    val meterStateFlow: StateFlow<MeterViewState> = _meterStateFlow.asStateFlow()
 
 
-    fun insertOther(data: List<OtherListModelData>) {
+    fun insertMeter(data: List<MeterReaderListModelData>) {
         viewModelScope.launch {
-            othersRepository.create(data)
-                .onStart { _otherStateFlow.emit(OthersViewState.Loading) }
+            meterRepository.create(data)
+                .onStart { _meterStateFlow.emit(MeterViewState.Loading) }
                 .catch { exception -> onError(exception) }
-                .collect { _otherStateFlow.emit(OthersViewState.SuccessOfflineCreate(it)) }
+                .collect { _meterStateFlow.emit(MeterViewState.SuccessOfflineCreate(it)) }
         }
     }
 
 
 
-    fun getOther() {
+    fun getMeter() {
         viewModelScope.launch {
-            othersRepository.getOther()
+            meterRepository.getOther()
                 .onStart {
-                    _otherStateFlow.emit(OthersViewState.Loading)
+                    _meterStateFlow.emit(MeterViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _otherStateFlow.emit(OthersViewState.SuccessOfflineGetOrder(it))
+                    _meterStateFlow.emit(MeterViewState.SuccessOfflineGetOrder(it))
                 }
         }
     }
@@ -79,26 +87,26 @@ class OthersViewModel @Inject constructor(
 
 
 
-    fun deleteAllTemp() {
+    fun deleteAlMeter() {
         viewModelScope.launch {
-            othersRepository.deleteAllOther()
+            meterRepository.deleteAllMeter()
                 .onStart {
-                    _otherStateFlow.emit(OthersViewState.Loading)
+                    _meterStateFlow.emit(MeterViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _otherStateFlow.emit(OthersViewState.SuccessDelete(it.toString()))
+                    _meterStateFlow.emit(MeterViewState.SuccessDelete(it.toString()))
                 }
         }
     }
 
-    fun getOtherOnlineList() {
+    fun getMeterOnlineList() {
         viewModelScope.launch {
-            othersRepository.getAllOther()
+            meterRepository.getAllMeterOnline()
                 .onStart {
-                    _otherStateFlow.emit(OthersViewState.Loading)
+                    _meterStateFlow.emit(MeterViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
@@ -110,8 +118,8 @@ class OthersViewModel @Inject constructor(
                     val jsonData = gson.toJson(consumerList)
 
                     // Emit success with JSON data and the object list
-                    _otherStateFlow.emit(
-                        OthersViewState.SuccessOnlineOther(jsonData, consumerList)
+                    _meterStateFlow.emit(
+                        MeterViewState.SuccessOnlineMeter(jsonData, consumerList)
                     )
                 }
                 .flowOn(Dispatchers.IO)
@@ -120,29 +128,54 @@ class OthersViewModel @Inject constructor(
     }
 
 
-    fun getTempById(id: String) {
+    fun getMeterById(id: String) {
         viewModelScope.launch {
-            othersRepository.getOtherById(id)
+            meterRepository.getMeterById(id)
                 .onStart {
-                    _otherStateFlow.emit(OthersViewState.Loading)
+                    _meterStateFlow.emit(MeterViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect { response ->
                     Log.d("GetConsumerById", "Response: $response")
-                    _otherStateFlow.emit(OthersViewState.SuccessOtherById(response))
+                    _meterStateFlow.emit(MeterViewState.SuccessOtherById(response))
                 }
         }
     }
+
+    fun getMeterByAccount(username: String, password: String) {
+        viewModelScope.launch {
+            meterRepository.getMeterByCredential(username, password)
+                .onStart {
+                    _meterStateFlow.emit(MeterViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception) // Handle exceptions
+                }
+                .collect { response ->
+                    if (response != null) {
+                        Log.d("GetConsumerById", "Response: $response")
+                        _meterStateFlow.emit(MeterViewState.SuccessOtherById(response))
+                        encryptedDataManager.setUserBasicInfo(response)
+
+                    } else {
+                        Log.d("GetConsumerById", "Response is null")
+                        _meterStateFlow.emit(MeterViewState.Error("Invalid credentials."))
+                    }
+                }
+        }
+    }
+
+
 
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
             is TimeoutException,
             -> {
-                _otherStateFlow.emit(
-                    OthersViewState.PopupError(
+                _meterStateFlow.emit(
+                    MeterViewState.PopupError(
                         PopupErrorState.NetworkError
                     )
                 )
@@ -153,8 +186,8 @@ class OthersViewModel @Inject constructor(
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
-                _otherStateFlow.emit(
-                    OthersViewState.PopupError(
+                _meterStateFlow.emit(
+                    MeterViewState.PopupError(
                         if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())) {
                             PopupErrorState.SessionError
                         } else {
@@ -164,8 +197,8 @@ class OthersViewModel @Inject constructor(
                 )
             }
 
-            else -> _otherStateFlow.emit(
-                OthersViewState.PopupError(
+            else -> _meterStateFlow.emit(
+                MeterViewState.PopupError(
                     PopupErrorState.UnknownError
                 )
             )

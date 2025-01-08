@@ -1,5 +1,6 @@
 package kapwad.reader.app.data.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -13,9 +14,13 @@ import kapwad.reader.app.utils.AppConstant
 import kapwad.reader.app.utils.PopupErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.TempListModelData
 
-import kapwad.reader.app.data.repositories.consumers.ConsumerRepository
+import kapwad.reader.app.data.repositories.temp.TempRepository
 import kapwad.reader.app.ui.main.viewmodel.ConsumerViewState
+import kapwad.reader.app.ui.main.viewmodel.TempViewState
+
+
 import kapwad.reader.app.utils.CommonLogger
 import kotlinx.coroutines.Dispatchers
 
@@ -34,59 +39,37 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class ConsumerViewModel @Inject constructor(
-    private val consumerRepository: ConsumerRepository,
+class TempViewModel @Inject constructor(
+    private val tempRepository: TempRepository,
     authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
 
-    private val _consumerStateFlow = MutableStateFlow<ConsumerViewState>(ConsumerViewState.Idle)
-    val consumerStateFlow: StateFlow<ConsumerViewState> = _consumerStateFlow.asStateFlow()
+    private val _tempStateFlow = MutableStateFlow<TempViewState>(TempViewState.Idle)
+    val tempStateFlow: StateFlow<TempViewState> = _tempStateFlow.asStateFlow()
 
 
-    // Add or update a cart item
-    fun insertConsumerOffline(consumerListModelData: ConsumerListModelData) {
+    fun insertTemp(data: List<TempListModelData>) {
         viewModelScope.launch {
-            consumerRepository.createConsumer(consumerListModelData)
-                .onStart {
-                    _consumerStateFlow.emit(ConsumerViewState.Loading)
-                }
-                .catch { exception ->
-                    // Handle the error
-                    onError(exception)
-                }
-                .collect {
-                    _consumerStateFlow.emit(ConsumerViewState.SuccessOfflineCreateOrder(it))
-                }
+            tempRepository.create(data)
+                .onStart { _tempStateFlow.emit(TempViewState.Loading) }
+                .catch { exception -> onError(exception) }
+                .collect { _tempStateFlow.emit(TempViewState.SuccessOfflineCreate(it)) }
         }
     }
 
 
-    fun insertConsumer(consumerListModelData: ConsumerListModelData) {
-        viewModelScope.launch {
-            consumerRepository.createConsumer(consumerListModelData)
-                .onStart {
-                    _consumerStateFlow.emit(ConsumerViewState.Loading)
-                }
-                .catch { exception ->
-                    onError(exception)
-                }
-                .collect {
-                    _consumerStateFlow.emit(ConsumerViewState.SuccessOfflineCreateOrder(it))
-                }
-        }
-    }
 
-    fun getConsumer() {
+    fun getTemp() {
         viewModelScope.launch {
-            consumerRepository.getConsumer()
+            tempRepository.getTemp()
                 .onStart {
-                    _consumerStateFlow.emit(ConsumerViewState.Loading)
+                    _tempStateFlow.emit(TempViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _consumerStateFlow.emit(ConsumerViewState.SuccessOfflineGetOrder(it))
+                    _tempStateFlow.emit(TempViewState.SuccessOfflineGetOrder(it))
                 }
         }
     }
@@ -94,35 +77,39 @@ class ConsumerViewModel @Inject constructor(
 
 
 
-    fun deleteAllConsumer() {
+    fun deleteAllTemp() {
         viewModelScope.launch {
-            consumerRepository.deleteAllConsumer()
+            tempRepository.deleteAllTemp()
                 .onStart {
-                    _consumerStateFlow.emit(ConsumerViewState.Loading)
+                    _tempStateFlow.emit(TempViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                 }
                 .collect {
-                    _consumerStateFlow.emit(ConsumerViewState.SuccessDelete(it.toString()))
+                    _tempStateFlow.emit(TempViewState.SuccessDelete(it.toString()))
                 }
         }
     }
 
-    fun getConsumerOnlineList() {
+    fun getTempOnlineList() {
         viewModelScope.launch {
-            consumerRepository.getAllConsumer()
+            tempRepository.getAllTemp()
                 .onStart {
-                    _consumerStateFlow.emit(ConsumerViewState.Loading)
+                    _tempStateFlow.emit(TempViewState.Loading)
                 }
                 .catch { exception ->
                     onError(exception)
                     CommonLogger.sysLogE("LOGzERROR", exception.localizedMessage, exception)
                 }
-                .onEach {
+                .onEach { consumerList ->
+                    // Convert the list to JSON
+                    val gson = Gson()
+                    val jsonData = gson.toJson(consumerList)
 
-                    _consumerStateFlow.emit(
-                        ConsumerViewState.SuccessOnlineConsumer(it.toString(), it)
+                    // Emit success with JSON data and the object list
+                    _tempStateFlow.emit(
+                        TempViewState.SuccessOnlineTemp(jsonData, consumerList)
                     )
                 }
                 .flowOn(Dispatchers.IO)
@@ -131,13 +118,29 @@ class ConsumerViewModel @Inject constructor(
     }
 
 
+    fun getTempById(id: String) {
+        viewModelScope.launch {
+            tempRepository.getTempById(id)
+                .onStart {
+                    _tempStateFlow.emit(TempViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("GetConsumerById", "Response: $response")
+                    _tempStateFlow.emit(TempViewState.SuccessTempById(response))
+                }
+        }
+    }
+
     private suspend fun onError(exception: Throwable) {
         when (exception) {
             is IOException,
             is TimeoutException,
             -> {
-                _consumerStateFlow.emit(
-                    ConsumerViewState.PopupError(
+                _tempStateFlow.emit(
+                    TempViewState.PopupError(
                         PopupErrorState.NetworkError
                     )
                 )
@@ -148,8 +151,8 @@ class ConsumerViewModel @Inject constructor(
                 val gson = Gson()
                 val type = object : TypeToken<ErrorModel>() {}.type
                 var errorResponse: ErrorModel? = gson.fromJson(errorBody?.charStream(), type)
-                _consumerStateFlow.emit(
-                    ConsumerViewState.PopupError(
+                _tempStateFlow.emit(
+                    TempViewState.PopupError(
                         if (AppConstant.isSessionStatusCode(errorResponse?.status_code.orEmpty())) {
                             PopupErrorState.SessionError
                         } else {
@@ -159,8 +162,8 @@ class ConsumerViewModel @Inject constructor(
                 )
             }
 
-            else -> _consumerStateFlow.emit(
-                ConsumerViewState.PopupError(
+            else -> _tempStateFlow.emit(
+                TempViewState.PopupError(
                     PopupErrorState.UnknownError
                 )
             )

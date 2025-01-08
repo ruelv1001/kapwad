@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
@@ -13,13 +14,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_200"
+            android:layout_height="@dimen/dimen_100"
             android:background="@color/color_primaryDark">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop" />
+
 
             <LinearLayout
                 android:id="@+id/title"
@@ -40,12 +38,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:fontFamily="@font/inter_bold"
-                    android:text="@string/offline_sync_list_data"
+
+                    android:text="Bill List "
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_36" />
 
@@ -174,6 +172,82 @@
             android:layout_height="@dimen/dimen_1"
             android:background="@color/line" />
 
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/idTextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:fontFamily="@font/inter_regular"
+            app:boxBackgroundColor="@color/white"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="false">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/searchButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Search"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/uploadButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Upload Bill"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/resetButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Reset Data"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/refEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:background="@drawable/bg_edittext_selector"
+                android:drawableRight="@drawable/ic_search"
+                android:drawablePadding="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:hint="Search "
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/commons_text_hint"
+                android:textSize="@dimen/font_14" />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -187,21 +261,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/inter_semibold"
-                android:text="Sync History"
+                android:text="Bill History"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/font_16" />
 
-            <TextView
-                android:id="@+id/viewAllTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="@string/wallet_view_all_text"
-                android:textColor="@color/color_primary"
-                android:textSize="@dimen/font_14" />
+
 
         </LinearLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -209,7 +275,7 @@
             android:layout_marginHorizontal="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_8"
             android:layout_marginBottom="@dimen/dimen_16"
-            tools:listitem="@layout/adapter_sync" />
+            tools:listitem="@layout/adapter_consumer_list" />
 
         <TextView
             android:id="@+id/placeHolderTextView"

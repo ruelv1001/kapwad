@@ -36,9 +36,7 @@ class LoginViewModel @Inject constructor(
                     onError(exception)
                 }
                 .collect {
-                    _loginSharedFlow.emit(
-                        LoginViewState.Success(it.msg.orEmpty(), it.data?.is_complete_profile?:false)
-                    )
+
                 }
         }
     }

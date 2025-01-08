@@ -86,11 +86,11 @@ abstract class BaseRepository constructor(
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .connectionSpecs(Collections.singletonList(createConnectionSpec()))
-                .dns(object : Dns {
-                    override fun lookup(hostname: String) =
-                            InetAddress.getAllByName(hostname).toList()
-                })
+              //  .connectionSpecs(Collections.singletonList(createConnectionSpec()))
+              //  .dns(object : Dns {
+               //     override fun lookup(hostname: String) =
+               //             InetAddress.getAllByName(hostname).toList()
+               // })
     }
 
     /**
@@ -153,7 +153,7 @@ abstract class BaseRepository constructor(
     }
 
     companion object {
-        private const val TIME_OUT = 30L
+        private const val TIME_OUT = 100L
 
         private fun defaultHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)

@@ -28,7 +28,7 @@ class GroupsViewModel @Inject constructor (
     private val authEncryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel()  {
     fun getKycStatus() :String{
-        return authEncryptedDataManager.getKYCStatus()
+        return authEncryptedDataManager.getAccessToken()
     }
 
     var currentGroupCount = 0

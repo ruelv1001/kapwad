@@ -70,20 +70,20 @@ class OrderViewModel @Inject constructor(
     }
 
 
-    fun getTotal() {
-        viewModelScope.launch {
-            orderRepository.getTotals()
-                .onStart {
-                    _orderStateFlow.emit(OrderViewState.Loading)
-                }
-                .catch { exception ->
-                    onError(exception)
-                }
-                .collect {
-                    _orderStateFlow.emit(OrderViewState.SuccessTotal(it.toString()))
-                }
-        }
-    }
+//    fun getTotal() {
+//        viewModelScope.launch {
+//            orderRepository.getTotals()
+//                .onStart {
+//                    _orderStateFlow.emit(OrderViewState.Loading)
+//                }
+//                .catch { exception ->
+//                    onError(exception)
+//                }
+//                .collect {
+//                    _orderStateFlow.emit(OrderViewState.SuccessTotal(it.toString()))
+//                }
+//        }
+//    }
 
     fun deleteAllOrder() {
         viewModelScope.launch {

@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="@color/color_primaryDark"
+            android:background="@color/blue_text"
             android:layout_height="@dimen/dimen_200">
 
             <ImageView
@@ -90,24 +90,24 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/dimen_30"
-                    android:layout_height="@dimen/dimen_30"
+                    android:layout_width="@dimen/dimen_20"
+                    android:layout_height="@dimen/dimen_20"
+                    android:foregroundGravity="center"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:src="@drawable/bg_circle_menu_white"/>
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_20"
+                    android:layout_height="@dimen/dimen_20"
                     android:foregroundGravity="center"
                     android:layout_marginRight="@dimen/dimen_10"
                     android:src="@drawable/bg_circle_menu_green"/>
 
                 <ImageView
-                    android:layout_width="@dimen/dimen_30"
-                    android:layout_height="@dimen/dimen_30"
+                    android:layout_width="@dimen/dimen_20"
+                    android:layout_height="@dimen/dimen_20"
                     android:foregroundGravity="center"
-                    android:layout_marginRight="@dimen/dimen_10"
-                    android:src="@drawable/bg_circle"/>
-
-                <ImageView
-                    android:layout_width="@dimen/dimen_30"
-                    android:layout_height="@dimen/dimen_30"
-                    android:foregroundGravity="center"
-                    android:src="@drawable/bg_circle"/>
+                    android:src="@drawable/bg_circle_menu_white"/>
             </LinearLayout>
 
         </RelativeLayout>

@@ -59,7 +59,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class CreateBillingFragment : Fragment(), SyncListAdapter.DateCallback {
+class CreateBillingTemp : Fragment(), SyncListAdapter.DateCallback {
 
     private var _binding: FragmentCreateBillBinding? = null
     private val binding get() = _binding!!
@@ -163,26 +163,26 @@ class CreateBillingFragment : Fragment(), SyncListAdapter.DateCallback {
 
             }
 
-            is BillingViewState.SuccessOrderList -> {
-                Log.d("All consumer online", viewState.rateListModelData.toString())
-
-                val json = viewState.jsonData
-                Log.d("JSON Data online", json)
-
-
-
-                    val gson = Gson()
-                val listType = object : TypeToken<List<RateAListModelData>>() {}.type
-                val consumerList: List<RateAListModelData> = gson.fromJson(json, listType)
-                showToastSuccess(requireActivity(), description = consumerList.toString())
-                consumerViewModel.insertWRA(consumerList)
-                hideLoadingDialog()
-            }
-            is BillingViewState.SuccessOfflineGetOrderA -> {
-
-                showToastSuccess(requireActivity(), description = viewState.data.toString())
-                hideLoadingDialog()
-            }
+//            is BillingViewState.SuccessOrderList -> {
+//                Log.d("All consumer online", viewState.rateListModelData.toString())
+//
+//                val json = viewState.jsonData
+//                Log.d("JSON Data online", json)
+//
+//
+//
+//                    val gson = Gson()
+//                val listType = object : TypeToken<List<RateAListModelData>>() {}.type
+//                val consumerList: List<RateAListModelData> = gson.fromJson(json, listType)
+//                showToastSuccess(requireActivity(), description = consumerList.toString())
+//                consumerViewModel.insertWRA(consumerList)
+//                hideLoadingDialog()
+//            }
+//            is BillingViewState.SuccessOfflineGetOrderA -> {
+//
+//                showToastSuccess(requireActivity(), description = viewState.data.toString())
+//                hideLoadingDialog()
+//            }
 
 
             else -> Unit
@@ -203,8 +203,8 @@ class CreateBillingFragment : Fragment(), SyncListAdapter.DateCallback {
 
 
     private fun setClickListeners() = binding.run {
-        printButton.setOnClickListener {
-
+        reprintButton.setOnClickListener {
+viewModel.deleteAllOrder()
 
         }
 

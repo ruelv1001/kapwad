@@ -46,9 +46,6 @@ class CropsViewModel @Inject constructor(
     var video: File? = null
     var image: File? = null
 
-    fun getKycStatus(): String {
-        return encryptedDataManager.getKYCStatus()
-    }
 
 
     fun getCropsList() {

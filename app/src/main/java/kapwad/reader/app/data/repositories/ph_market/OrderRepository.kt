@@ -43,12 +43,12 @@ class OrderRepository @Inject constructor(
 
 
 
-    fun getTotals(): Flow<Double> {
-        return flow {
-            val response = orderLocalDataSource.getTotal() ?: 0.0 // Handle null case
-            emit(response)
-        }.flowOn(ioDispatcher)
-    }
+//    fun getTotals(): Flow<Double> {
+//        return flow {
+//            val response = orderLocalDataSource.getTotal() ?: 0.0 // Handle null case
+//            emit(response)
+//        }.flowOn(ioDispatcher)
+//    }
 
     fun deleteAllOrder(): Flow<Unit> {
         return flow {

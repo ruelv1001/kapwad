@@ -3,34 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/crops_nav_graph"
-    app:startDestination="@id/navigation_crops">
+    app:startDestination="@id/navigation_geo_tagging">
 
     <fragment
-        android:id="@+id/navigation_crops"
-        android:name="da.farmer.app.ui.crops.fragment.CropsMenuFragment"
-        tools:layout="@layout/fragment_crops_menu"
+        android:id="@+id/navigation_geo_tagging"
+        android:name="kapwad.reader.app.ui.geotagging.fragment.GeoTaggingFragment"
+        tools:layout="@layout/fragment_geo_tagging"
         android:label="">
         <action
-            android:id="@+id/action_picture_crops"
-            app:destination="@id/navigation_picture_crops" />
+            android:id="@+id/action_geo_map"
+            app:destination="@id/navigation_map" >
+
+        </action>
+    </fragment>
+
+
+
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="kapwad.reader.app.ui.geotagging.fragment.MapPinFragment"
+        tools:layout="@layout/fragment_geo_map"
+        android:label="">
+        <action
+            android:id="@+id/action_geo_submit"
+            app:destination="@id/navigation_submit_area" >
+            <argument
+                android:name="area"
+                app:argType="string"
+                />
+        </action>
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_picture_crops"
-        android:name="da.farmer.app.ui.crops.fragment.CropsPictureFragment"
-        tools:layout="@layout/fragment_crops_picture"
+        android:id="@+id/navigation_submit_area"
+        android:name="kapwad.reader.app.ui.geotagging.fragment.SubbmitAreaFragment"
+        tools:layout="@layout/fragment_submit_area"
         android:label="">
-        <action
-            android:id="@+id/action_submitted_crops"
-            app:destination="@id/navigation_submitted_crops" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_submitted_crops"
-        android:name="da.farmer.app.ui.crops.fragment.SubmittedFragment"
-        tools:layout="@layout/fragment_crops_submitted"
-        android:label="">
-
+        <argument
+            android:name="area"
+            app:argType="string"
+            />
     </fragment>
 
 

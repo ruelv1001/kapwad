@@ -1,35 +1,44 @@
-package kapwad.reader.app.data.repositories.ph_market
+package kapwad.reader.app.data.repositories.bill
 
 
 import android.util.Log
-import kapwad.reader.app.data.local.OrderDao
+import kapwad.reader.app.data.local.BillingDao
+
+import kapwad.reader.app.data.model.CreatedBillListModelData
+import kapwad.reader.app.data.model.MeterReaderListModelData
 import kapwad.reader.app.data.model.ProductOrderListModelData
 import javax.inject.Inject
 
-class OrderLocalDataSource @Inject constructor(private val orderDao: OrderDao) {
+class BillingLocalDataSource @Inject constructor(private val billingDao: BillingDao) {
 
-    suspend fun createOrder(order: ProductOrderListModelData) {
-        Log.d("OrderLocalDataSource", "Order to be inserted: $order")
-        orderDao.createOrder(order)
+    suspend fun createBilling(billing: CreatedBillListModelData) {
+        billingDao.createBilling(billing)
     }
 
-    suspend fun insertOrder(order: ProductOrderListModelData) {
+    suspend fun insertBilling(billing: CreatedBillListModelData) {
 
-        orderDao.insertOrder(order)
+        billingDao.insertBilling(billing)
     }
 
 //    suspend fun getAllUsers(): List<ProductOrderListModelData>{
-//        return orderDao.getAllUsers()
+//        return billingDao.getAllUsers()
 //    }
 
-    suspend fun getOrder() =
-        orderDao.getOrders()
+    suspend fun getBilling() =
+        billingDao.getBilling()
 
 //    suspend fun getTotal() =
-//        orderDao.getOverallTotal()
+//        billingDao.getOverallTotal()
 
 
     suspend fun deleteAll() =
-        orderDao.deleteAllOrders()
+        billingDao.deleteAllBilling()
+
+    suspend fun getValidatedExistingBill(month: String, owners_id: String): CreatedBillListModelData? =
+        billingDao.getValidatedExistingBill(month,owners_id)
+
+
+    suspend fun searchConsumer(searchQuery: String) =
+        billingDao.searchConsumer("%$searchQuery%")
 
 }

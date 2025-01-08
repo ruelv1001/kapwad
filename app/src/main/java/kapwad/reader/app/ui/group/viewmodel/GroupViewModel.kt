@@ -43,7 +43,7 @@ class GroupViewModel @Inject constructor(
 
 
     fun getUserKYC() : String{
-        return authEncryptedDataManager.getKYCStatus()
+        return authEncryptedDataManager.getAccessToken()
     }
     fun doGetGroupListCount() {
         viewModelScope.launch {

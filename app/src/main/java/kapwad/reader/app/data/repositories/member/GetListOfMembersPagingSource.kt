@@ -69,10 +69,7 @@ class GetListOfMembersPagingSource constructor(
     private fun ownerInfo() : MemberListData{
         val userInfo = ownerInfo
         val userModel = User(
-            avatar = ownerInfo?.avatar,
-            name = userInfo?.name,
-            qrcode = userInfo?.qrcode,
-            id = userInfo?.id
+
         )
         return MemberListData(
             user = userModel,

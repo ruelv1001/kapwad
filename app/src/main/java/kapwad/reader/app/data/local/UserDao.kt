@@ -16,4 +16,7 @@ interface UserDao {
 
     @Query("DELETE FROM users WHERE access_token = :access_token")
     suspend fun logout(access_token: String)
+
+    @Query("SELECT * FROM users WHERE username = :username AND password = :password")
+    suspend fun getOfflineLogin(username: String, password: String): UserLocalData
 }

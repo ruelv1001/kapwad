@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="black_text">#212121</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="dark_gray_fade">#77BABABA</color>
     <color name="color_primary">#81A263</color>
     <color name="color_primaryDark">#365E32</color>
     <color name="color_accent">#E7D37F</color>
@@ -49,7 +49,7 @@
     <color name="color_primary_alpha10">#1A1D8A5F</color>
 
     <color name="ongoing">#E4BB29</color>
-
+    <color name="crops_button">#00572D</color>
     <color name="blue_icon_variation_alpha20">#1A3275FE</color>
     <color name="blue_icon_variation">#3275FE</color>
 </resources>

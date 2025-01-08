@@ -17,7 +17,7 @@
             android:layout_width="@dimen/dimen_150"
             android:layout_height="@dimen/dimen_150"
             android:layout_gravity="center"
-            android:src="@drawable/app_logo"
+            android:src="@drawable/bg_kapwad"
             android:layout_marginTop="@dimen/dimen_50" />
 
         <TextView
@@ -44,12 +44,13 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
+                android:text="BestMarc21"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext_selector"
-                android:drawableStart="@drawable/ic_email"
+                android:drawableStart="@drawable/baseline_person_24"
                 android:drawablePadding="@dimen/dimen_10"
                 android:fontFamily="@font/inter_semibold"
-                android:hint="@string/login_email_hint"
+                android:hint="@string/lbl_username"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
@@ -81,6 +82,7 @@
                 android:background="@drawable/bg_edittext_selector"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="@dimen/dimen_10"
+                android:text="pass"
                 android:fontFamily="@font/inter_semibold"
                 android:hint="@string/login_password_hint"
                 android:imeOptions="actionDone"

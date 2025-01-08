@@ -1,9 +1,10 @@
-package kapwad.reader.app.data.repositories.waterrate
+package kapwad.reader.app.data.repositories.others
 
 
 import android.util.Log
 import kapwad.reader.app.data.local.BillingDao
 import kapwad.reader.app.data.local.ConsumerDao
+import kapwad.reader.app.data.local.OtherChargesDao
 import kapwad.reader.app.data.local.RateADao
 import kapwad.reader.app.data.local.RateBDao
 import kapwad.reader.app.data.local.RateCDao
@@ -12,6 +13,7 @@ import kapwad.reader.app.data.local.TempDao
 import kapwad.reader.app.data.model.ConsumerListModelData
 
 import kapwad.reader.app.data.model.CreatedBillListModelData
+import kapwad.reader.app.data.model.OtherListModelData
 import kapwad.reader.app.data.model.ProductOrderListModelData
 import kapwad.reader.app.data.model.RateAListModelData
 import kapwad.reader.app.data.model.RateBListModelData
@@ -20,61 +22,26 @@ import kapwad.reader.app.data.model.RateListModelData
 import kapwad.reader.app.data.model.TempListModelData
 import javax.inject.Inject
 
-class RateLocalDataSource @Inject constructor(private val rateDao: RateDao,private val rateADao: RateADao,
-                                              private val rateBDao: RateBDao,private val rateCDao: RateCDao
+class OtherLocalDataSource @Inject constructor(private val otherChargesDao: OtherChargesDao
 ) {
 
 
-    suspend fun insertWR(rateListModelData: List<RateListModelData>) {
-        rateDao.insert(rateListModelData)
+    suspend fun insertOther(otherListModelData: List<OtherListModelData>) {
+        otherChargesDao.insert(otherListModelData)
     }
 
-    suspend fun getWR() =
-        rateDao.get()
-
-    suspend fun deleteAllWR() =
-        rateDao.deleteAll()
-
-    ////on top is default water rani
-
-
-    suspend fun insertWRA(rateAListModelData: List<RateAListModelData>) {
-        rateADao.insert(rateAListModelData)
-    }
-
-    suspend fun getWRA() =
-        rateADao.get()
-
-    suspend fun deleteAllWRA() =
-        rateADao.deleteAll()
-
-    ////on top is Water A rate rana
 
 
 
 
-    suspend fun insertWRB(rateBListModelData: List<RateBListModelData>) {
-        rateBDao.insert(rateBListModelData)
-    }
 
-    suspend fun getWRB() =
-        rateBDao.get()
+    suspend fun getOtherCharges() =
+        otherChargesDao.get()
 
-    suspend fun deleteAllWRB() =
-        rateBDao.deleteAll()
+    suspend fun deleteAlOther() =
+        otherChargesDao.deleteAll()
 
-    ////on top is Water B rate rana
-
-    suspend fun insertWRC(rateCListModelData: List<RateCListModelData>) {
-        rateCDao.insert(rateCListModelData)
-    }
-
-    suspend fun getWRC() =
-        rateCDao.get()
-
-    suspend fun deleteAllWRC() =
-        rateCDao.deleteAll()
-
-    ////on top is Water C rate rana
+    suspend fun getOtherDetailsById(id: String): OtherListModelData? =
+        otherChargesDao.getOtherDetailsById(id)
 
 }

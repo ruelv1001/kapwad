@@ -16,6 +16,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kapwad.reader.app.data.local.BillingDao
 import kapwad.reader.app.data.local.ConsumerDao
+import kapwad.reader.app.data.local.OtherChargesDao
 import kapwad.reader.app.data.local.TempDao
 import kapwad.reader.app.data.repositories.bill.BillingLocalDataSource
 import kapwad.reader.app.data.repositories.bill.BillingRemoteDataSource
@@ -26,6 +27,10 @@ import kapwad.reader.app.data.repositories.consumers.ConsumerLocalDataSource
 import kapwad.reader.app.data.repositories.consumers.ConsumerRemoteDataSource
 import kapwad.reader.app.data.repositories.consumers.ConsumerRepository
 import kapwad.reader.app.data.repositories.consumers.ConsumerService
+import kapwad.reader.app.data.repositories.others.OtherLocalDataSource
+import kapwad.reader.app.data.repositories.others.OtherService
+import kapwad.reader.app.data.repositories.others.OthersRemoteDataSource
+import kapwad.reader.app.data.repositories.others.OthersRepository
 import kapwad.reader.app.data.repositories.temp.TempLocalDataSource
 import kapwad.reader.app.data.repositories.temp.TempRemoteDataSource
 import kapwad.reader.app.data.repositories.temp.TempRepository
@@ -33,36 +38,36 @@ import kapwad.reader.app.data.repositories.temp.TempService
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class TempModule {
+class OtherModule {
     
     @Provides
-    fun providesTempService(): TempService {
+    fun providesOtherService(): OtherService {
         return AppRetrofitService.Builder().build(
             SharedPref().getLocalUrl().orEmpty().ifEmpty { BuildConfig.BASE_URL },
-            TempService::class.java
+            OtherService::class.java
         )
     }
 
     @Provides
-    fun providesTempDao(db: BoilerPlateDatabase): TempDao {
-        return db.tempDao
+    fun providesTempDao(db: BoilerPlateDatabase): OtherChargesDao {
+        return db.otherChargesDao
     }
 
     @Provides
-    fun providesTempLocalDataSource(tempDao: TempDao): TempLocalDataSource {
-        return TempLocalDataSource(tempDao)
+    fun providesOtherLocalDataSource(otherChargesDao: OtherChargesDao): OtherLocalDataSource {
+        return OtherLocalDataSource(otherChargesDao)
     }
     
     @Provides
-    fun providesTempRemoteDataSource(tempService: TempService): TempRemoteDataSource {
-        return TempRemoteDataSource(tempService)
+    fun providesOtherRemoteDataSource(otherService: OtherService): OthersRemoteDataSource {
+        return OthersRemoteDataSource(otherService)
     }
 
     @Provides
-    fun providesTempRepository(
-        authRemoteDataSource: TempRemoteDataSource,
-        tempLocalDataSource:TempLocalDataSource,
-    ): TempRepository {
-        return TempRepository(authRemoteDataSource, tempLocalDataSource)
+    fun providesOtherRepository(
+        authRemoteDataSource: OthersRemoteDataSource,
+        otherLocalDataSource: OtherLocalDataSource,
+    ): OthersRepository {
+        return OthersRepository(authRemoteDataSource, otherLocalDataSource)
     }
 }

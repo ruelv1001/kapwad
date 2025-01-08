@@ -10,8 +10,8 @@ import kotlinx.parcelize.Parcelize
 @Keep
 @Parcelize
 
-@Entity(tableName = "tbl_wr_commercial_c")
-data class RateCListModelData(
+@Entity(tableName = "tbl_wr_residential")
+data class RateReListModelData(
     @PrimaryKey
     var id: Int? = null,
     val wr_0_10: String? = null,
@@ -23,6 +23,6 @@ data class RateCListModelData(
 ): Parcelable
 
 
-data class RateCListResponse(
-    val temp: List<RateCListModelData>
+data class RateReListResponse(
+    val temp: List<RateReListModelData>
 )

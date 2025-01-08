@@ -38,7 +38,7 @@ class CommunityRolesFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners()
-        setView()
+
         onResume()
     }
 
@@ -47,9 +47,7 @@ class CommunityRolesFragment: Fragment() {
         activity.setTitlee(getString(R.string.lbl_group_community_roles))
     }
 
-    private fun setView() = binding.run{
-        activity.getRolesView().isVisible = activity.groupDetails?.owner_user_id == viewModel.user.id
-    }
+
 
     private fun setClickListeners() = binding.run {
         activity.getRolesView().setOnSingleClickListener {

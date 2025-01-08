@@ -135,33 +135,12 @@ class ProfilePreviewFragment : Fragment() {
         if (viewModel.avatarURIHolder != null){
             profileImageView.loadAvatar(viewModel.avatarURIHolder.toString(), requireContext())
         }else{
-            profileImageView.loadAvatar(userModel?.avatar?.thumb_path,requireContext())
+           // profileImageView.loadAvatar(userModel?.avatar?.thumb_path,requireContext())
         }
 
         nameTextView.text = userModel?.getFullName()
-        dateOfBirthTextView.text = userModel?.birthdate?.date_only_ph?.ifEmpty { "Not set "}
-        ageTextView.text = userModel?.birthdate?.date_only_ph
-            ?.takeIf { it.isNotEmpty() }
-            ?.calculateAge()
-            ?.toString() ?: "Not set"
 
-        if (userModel?.province_name?.isNotEmpty() == true){
-            addressTextView.text =
-                "${userModel.street_name}, ${userModel.brgy_name},\n${userModel.city_name}, ${userModel.province_name}"
-        }else{
-            addressTextView.text = "Address Unavailable"
-        }
 
-        emailEditText.setText(userModel?.email.orEmpty().ifEmpty {  getString(R.string.no_email_has_been_set_yet)})
-        if (userModel?.email_verified == true){
-            emailIsVerifiedTextView.text = getString(R.string.lbl_verified)
-            emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_verified)
-        }else{
-            emailIsVerifiedTextView.text = getString(R.string.unverified)
-            emailIsVerifiedTextView.setBackgroundResource(R.drawable.bg_rounded_pending)
-        }
-
-        phoneEditText.setText(userModel?.phone_number)
     }
 
     private fun setClickListeners() = binding.run  {

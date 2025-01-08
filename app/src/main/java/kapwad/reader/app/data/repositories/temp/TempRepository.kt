@@ -1,7 +1,9 @@
-package kapwad.reader.app.data.repositories.consumers
+package kapwad.reader.app.data.repositories.temp
 
 import kapwad.reader.app.data.model.ConsumerListModelData
+import kapwad.reader.app.data.model.TempListModelData
 import kapwad.reader.app.data.model.CreatedBillListModelData
+
 import kapwad.reader.app.data.repositories.bill.BillingLocalDataSource
 import kapwad.reader.app.data.repositories.bill.BillingRemoteDataSource
 import kapwad.reader.app.data.repositories.crops.response.CropsResponse
@@ -13,56 +15,52 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ConsumerRepository @Inject constructor(
-    private val consumerRemoteDataSource: ConsumerRemoteDataSource,
-    private val consumerLocalDataSource: ConsumerLocalDataSource,
+class TempRepository @Inject constructor(
+    private val tempRemoteDataSource: TempRemoteDataSource,
+    private val tempLocalDataSource: TempLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
-    fun createConsumerOffline(order: ConsumerListModelData): Flow<ConsumerListModelData> {
+
+
+    fun getAllTemp(): Flow<List<TempListModelData>> {
         return flow {
-            consumerLocalDataSource.insertConsumer(order)
-            emit(order)
-        }.flowOn(ioDispatcher) // Make sure you have ioDispatcher defined
-    }
-
-    fun getAllConsumer(): Flow<List<ConsumerListModelData>> {
-        return flow {
-            val response = consumerRemoteDataSource.getConsumerList()
-            emit(response)
-        }.flowOn(ioDispatcher)
-    }
-
-    fun createConsumer(order: ConsumerListModelData): Flow<ConsumerListModelData> {
-        return flow {
-            consumerLocalDataSource.createConsumer(order)
-            emit(order)
-        }.flowOn(ioDispatcher)
-    }
-
-    fun insertConsumer(order: ConsumerListModelData): Flow<ConsumerListModelData> {
-        return flow {
-            consumerLocalDataSource.insertConsumer(order)
-            emit(order)
-        }.flowOn(ioDispatcher)
-    }
-
-
-
-    fun getConsumer(): Flow<List<ConsumerListModelData>> {
-        return flow {
-            val response = consumerLocalDataSource.getConsumer() // This returns List<ProductOrderListModelData>
+            val response = tempRemoteDataSource.getTempList()
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
 
-
-
-
-    fun deleteAllConsumer(): Flow<Unit> {
+    fun create(consumers: List<TempListModelData>): Flow<List<TempListModelData>> {
         return flow {
-            consumerLocalDataSource.deleteAll() // Call the delete function
+            tempLocalDataSource.insertTemp(consumers)
+            emit(consumers)
+        }.flowOn(ioDispatcher)
+    }
+
+
+    fun getTempById(id: String): Flow<TempListModelData?> {
+        return flow {
+            val response = tempLocalDataSource.getTempDetailsById(id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+
+    fun getTemp(): Flow<List<TempListModelData>> {
+        return flow {
+            val response = tempLocalDataSource.getTemp() // This returns List<ProductOrderListModelData>
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+
+
+
+
+    fun deleteAllTemp(): Flow<Unit> {
+        return flow {
+            tempLocalDataSource.deleteAll() // Call the delete function
             emit(Unit) // Emit a Unit value to indicate completion
         }.flowOn(ioDispatcher) // Switch to the IO dispatcher for the operation
     }

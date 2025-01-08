@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         setupNavigationComponent()
         setClickListener()
+
     }
 
     private fun setupNavigationComponent() {
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
                 val navGraph =
                     navController.navInflater.inflate(R.navigation.main_nav_graph)
                 val bundle = Bundle()
-                navGraph.setStartDestination(R.id.navigation_wallet)
                 navController.setGraph(navGraph, bundle)
             }
             // code for adding badge

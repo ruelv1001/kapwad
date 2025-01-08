@@ -38,7 +38,7 @@ class WalletViewModel @Inject constructor(
         _walletSharedFlow.asSharedFlow()
 
     fun getKycStatus() :String{
-        return encryptedDataManager.getKYCStatus()
+        return encryptedDataManager.getAccessToken()
     }
 
     fun getWalletBalance() {

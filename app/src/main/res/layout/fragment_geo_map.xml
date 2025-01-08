@@ -1,60 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:backgroundTint="@color/color_primaryDark"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/crops_bg"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_marginStart="@dimen/dimen_90"
+        android:background="@drawable/bg_login_overlay"
+        android:backgroundTint="@color/white" />
 
-            <ImageView
-                android:layout_width="@dimen/dimen_150"
-                android:layout_height="@dimen/dimen_150"
-                android:scaleType="fitCenter"
-                android:background="@drawable/bg_circle_menu_white"
-                android:layout_marginTop="@dimen/dimen_150"
-                android:src="@drawable/location_icon" />
+    <View
+        android:id="@+id/ongoingBgView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-10dp"
+        android:background="@color/white"
+        android:visibility="gone" />
+
+    <!-- Map Fragment for displaying the map -->
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/getLocationTextView"
+       />
+
+    <View
+        android:id="@+id/mapWhiteCoverView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@id/map"
+        android:layout_alignBottom="@id/map"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+
+
+
+
+    <ImageView
+        android:id="@+id/resetImageView"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_alignParentEnd="true"
+        android:layout_marginVertical="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:src="@drawable/baseline_settings_backup_restore_24"
+        android:visibility="invisible"
+        app:tint="@color/color_primaryDark" />
+
+    <!-- TextView to display area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/map"
+        android:layout_alignTop="@id/map"
+        android:layout_alignEnd="@id/map"
+        android:layout_alignBottom="@id/map"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_20">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_50">
 
             <TextView
-                android:id="@+id/pointsTextView"
+                android:id="@+id/areaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_marginTop="@dimen/dimen_20"
                 android:fontFamily="@font/inter_bold"
-                android:text="GEO-TAGGING STATUS"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_30" />
+                android:text="@string/lbl__0"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_30"
+                android:visibility="invisible" />
 
             <TextView
+                android:id="@+id/subAreaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/inter_medium"
-                android:text=" NOT VERIFIED"
-                android:textColor="@color/red"
-                android:textSize="@dimen/font_14" />
+                android:text="/ha"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/font_20"
+                android:visibility="gone" />
 
-        <TextView
-            android:layout_width="@dimen/dimen_200"
+        </LinearLayout>
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_100"
-            android:id="@+id/nextTextView"
-            android:fontFamily="@font/inter_medium"
-            android:background="@drawable/bg_rounded_crops"
-            android:text="@string/verify_now"
+            android:layout_marginVertical="@dimen/dimen_20"
+            android:fontFamily="@font/inter_bold"
             android:textAlignment="center"
-            android:padding="@dimen/dimen_13"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18" />
-
+            android:textColor="@color/color_primary"
+            android:textSize="48sp"
+            android:visibility="gone" />
 
     </LinearLayout>
+    <!-- Button to get current location -->
+    <TextView
+        android:id="@+id/getLocationTextView"
+        android:layout_width="@dimen/dimen_75"
+        android:layout_height="@dimen/dimen_75"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginVertical="@dimen/dimen_10"
+        android:background="@drawable/bg_circle_primary"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/lbl_start"
+        android:textColor="@color/white"
+        android:visibility="visible" />
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <View
+        android:id="@+id/greenLineView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_10"
+        android:layout_above="@id/getLocationTextView"
+        android:background="@color/color_primaryDark"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ongoingGroupLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginVertical="@dimen/dimen_10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <!-- Button to finalize the polygon and compute the area -->
+        <TextView
+            android:id="@+id/finishTextView"
+            android:layout_width="@dimen/dimen_75"
+            android:layout_height="@dimen/dimen_75"
+            android:background="@drawable/bg_circle_yellow"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:text="@string/lbl_finish"
+            android:textAllCaps="true"
+            android:textColor="@color/color_primaryDark"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/pauseImageView"
+            android:layout_width="@dimen/dimen_75"
+            android:layout_height="@dimen/dimen_75"
+            android:layout_marginHorizontal="@dimen/dimen_10"
+            android:background="@drawable/bg_circle_primary"
+            android:fontFamily="@font/inter_bold"
+            android:padding="@dimen/dimen_20"
+            android:src="@drawable/bg_box_primary"
+            android:text="@string/lbl_start"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/getLocationImageView"
+            android:layout_width="@dimen/dimen_75"
+            android:layout_height="@dimen/dimen_75"
+            android:layout_marginHorizontal="@dimen/dimen_10"
+            android:background="@drawable/bg_circle_primary"
+            android:fontFamily="@font/inter_bold"
+            android:padding="@dimen/dimen_20"
+            android:visibility="visible"
+            android:src="@drawable/baseline_pause_24"
+            android:text="@string/lbl_start"
+            android:textColor="@color/white"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/changeMapTypeImageView"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_circle_primary_stroke"
+            android:fontFamily="@font/inter_bold"
+            android:padding="@dimen/dimen_10"
+            android:src="@drawable/baseline_location_on_24"
+            android:text="@string/lbl_start"
+            android:textColor="@color/white"
+            app:tint="@color/color_primary" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/mapTransparentCoverView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@id/map"
+        android:layout_alignBottom="@id/map"
+        android:background="@color/dark_gray_fade"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:visibility="visible" />
+
+</RelativeLayout>

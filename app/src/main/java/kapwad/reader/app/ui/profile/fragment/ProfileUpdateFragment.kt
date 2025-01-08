@@ -182,15 +182,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
         }
 
 
-        firstNameEditText.setText(userModel?.firstname)
-        middleNameEditText.setText(userModel?.middlename)
-        lastNameEditText.setText(userModel?.lastname)
-        provinceEditText.setText(userModel?.province_name)
-        cityEditText.setText(userModel?.city_name)
-        barangayEditText.setText(userModel?.brgy_name)
-        streetEditText.setText(userModel?.street_name)
-        zipcodeEditText.setText(userModel?.zipcode)
-        birthdateEditText.setText(userModel?.birthdate?.date_only_ph)
     }
 
     private fun setClickListeners() = binding.run {
@@ -227,60 +218,8 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
             datePicker.show(childFragmentManager, "ProfileUpdateFragment")
         }
 
-        provinceEditText.setOnSingleClickListener {
 
-            ProvinceDialog.newInstance(object : ProvinceDialog.AddressCallBack {
-                override fun onAddressClicked(
-                    provinceName: String,
-                    provinceSku: String,
-                    reference: String,
-                ) {
-                    provinceEditText.setText(provinceName)
-                    viewModel.userModel?.province_sku = reference
-                    cityEditText.setText("")
-                    barangayEditText.setText("")
-                    zipcodeEditText.setText("")
-                }
-            }).show(childFragmentManager, ProvinceDialog.TAG)
-        }
 
-        cityEditText.setOnSingleClickListener{
-            if(provinceEditText.text.toString().isNotEmpty()) {
-                CityDialog.newInstance(object : CityDialog.AddressCallBack {
-                    override fun onAddressClicked(
-                        cityName: String,
-                        citySku: String,
-                        zipcode: String
-                    ) {
-                        cityEditText.setText(cityName)
-                        viewModel.userModel?.city_code = citySku
-
-                        barangayEditText.setText("")
-                        zipcodeEditText.setText("")
-                    }
-                },  reference = viewModel.userModel?.province_sku.toString()).show(childFragmentManager, CityDialog.TAG)
-            }
-        }
-
-        barangayEditText.setOnSingleClickListener {
-            if(cityEditText.text.toString().isNotEmpty()){
-                BrgyDialog.newInstance(object : BrgyDialog.AddressCallBack {
-                    override fun onAddressClicked(
-                        brgyName: String,
-                        brgySku: String,
-                        zipCode: String
-                    ) {
-
-//                    brgyCode = citySku
-                        viewModel.userModel?.brgy_code = brgySku
-                        viewModel.userModel?.zipcode = zipCode
-//                    zipCode = zipCodes
-                        barangayEditText.setText(brgyName)
-                        zipcodeEditText.setText(zipCode)
-                    }
-                }, viewModel.userModel?.city_code.toString()).show(childFragmentManager, BrgyDialog.TAG)
-            }
-        }
 
         saveButton.setOnSingleClickListener {
                 ProfileConfirmationDialog.newInstance(this@ProfileUpdateFragment)
@@ -295,21 +234,6 @@ class ProfileUpdateFragment: Fragment(), ProfileConfirmationDialog.ProfileSaveDi
 
     override fun onMyAccountClicked(dialog: ProfileConfirmationDialog)=binding.run {
         dialog.dismiss()
-        val request = UpdateInfoRequest (
-            province_sku =  viewModel.userModel?.province_sku.orEmpty(),
-            province_name = provinceEditText.text.toString(),
-            city_sku =viewModel.userModel?.city_code.orEmpty(),
-            city_name = cityEditText.text.toString(),
-            brgy_sku = viewModel.userModel?.brgy_code.orEmpty(),
-            brgy_name = barangayEditText.text.toString(),
-            street_name =  streetEditText.text.toString(),
-            zipcode = zipcodeEditText.text.toString(),
-            firstname = firstNameEditText.text.toString(),
-            lastname = lastNameEditText.text.toString(),
-            middlename = middleNameEditText.text.toString(),
-            email = null,
-            birthdate = birthdateEditText.text.toString()
-        )
-        viewModel.doUpdateProfile(request)
+
     }
 }

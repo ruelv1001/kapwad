@@ -126,11 +126,7 @@ class AssistanceRequestDetailsFragment : Fragment() {
                 declinedTextView.visibility = View.GONE
                 cancelledTextView.visibility = View.GONE
                 dateProcessedTextView.visibility = View.GONE
-                if (data.user?.id == viewModel.user.id) {
-                    cancelButton.isVisible = true
-                } else {
-                    requestLinearLayout.isVisible = activity.groupDetails?.is_admin == true
-                }
+
             }
         }
 

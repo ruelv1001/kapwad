@@ -56,118 +56,7 @@
         </RelativeLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/dimen_16"
-            android:paddingVertical="@dimen/dimen_20"
-            android:visibility="gone">
 
-            <LinearLayout
-                android:id="@+id/topUpPointsLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cash_in" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_6"
-                    android:fontFamily="@font/inter_semibold"
-                    android:text="@string/wallet_cash_in_text"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/font_14" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/sendPointsLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_send_points" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_6"
-                    android:fontFamily="@font/inter_semibold"
-                    android:text="@string/wallet_send_text"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/font_14" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/scan2PayLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_scan_2_pay" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_6"
-                    android:fontFamily="@font/inter_semibold"
-                    android:text="@string/wallet_scan_2_text"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/font_14" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/postRequestLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_post_request" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_6"
-                    android:fontFamily="@font/inter_semibold"
-                    android:text="@string/wallet_post_text"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/font_14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_semibold"
-                    android:text="@string/wallet_request_text"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/font_14" />
-            </LinearLayout>
-
-        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -188,6 +77,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/inter_semibold"
                 android:text="Sync History"
+                android:visibility="gone"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/font_16" />
 
@@ -197,20 +87,138 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/wallet_view_all_text"
+                android:visibility="gone"
                 android:textColor="@color/color_primary"
                 android:textSize="@dimen/font_14" />
 
         </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:layout_marginBottom="@dimen/dimen_16"
-            tools:listitem="@layout/adapter_sync" />
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:orientation="vertical"
+>
 
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/consumerButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download Consumers"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tempButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download Tempo Bill"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/otherButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download Other Charges"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/waterRateButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download COMMERCIAL "
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/wateraRateButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download COMMERCIAL A"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/waterBRateButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download COMMERCIAL B"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/waterCRateButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download COMMERCIAL C"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/waterReRateButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Download Residential"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+        </ScrollView>
         <TextView
             android:id="@+id/placeHolderTextView"
             android:layout_width="match_parent"

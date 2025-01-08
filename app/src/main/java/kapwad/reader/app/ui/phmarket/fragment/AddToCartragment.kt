@@ -76,15 +76,17 @@ class AddToCartragment : Fragment() {
             // Check if quantity is greater than 0 before adding to cart
             if (quantity >= 1) {
                 // Add item to cart using ViewModel
-                viewModel.insertOrder(
-                    ProductOrderListModelData(
-                        id = null,
-                        product_id = args.id,
-                        name = args.name,
-                        amount = args.amount,
-                        quantity = countTextView.text.toString()
-                    )
-                )
+
+
+//                viewModel.insertOrder(
+//                    ProductOrderListModelData(
+//                        id = null,
+//                        product_id = args.id,
+//                        name = args.name,
+//                        amount = args.amount,
+//                        quantity = countTextView.text.toString()
+//                    )
+//                )
 
 
             } else {

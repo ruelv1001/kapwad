@@ -1,8 +1,6 @@
-package kapwad.reader.app.data.repositories.bill
+package kapwad.reader.app.data.repositories.consumers
 
-import kapwad.reader.app.data.local.BillingDao
-import kapwad.reader.app.data.model.CreatedBillListModelData
-import kapwad.reader.app.data.model.ProductOrderListModelData
+import kapwad.reader.app.data.model.ConsumerListModelData
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -11,57 +9,77 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class BillingRepository @Inject constructor(
-    private val billingRemoteDataSource: BillingRemoteDataSource,
-    private val billingLocalDataSource: BillingLocalDataSource,
+class ConsumerRepository @Inject constructor(
+    private val consumerRemoteDataSource: ConsumerRemoteDataSource,
+    private val consumerLocalDataSource: ConsumerLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
 
-
-    fun createBilling(order: CreatedBillListModelData): Flow<CreatedBillListModelData> {
+    fun insertConsumers(consumers: List<ConsumerListModelData>): Flow<List<ConsumerListModelData>> {
         return flow {
-            billingLocalDataSource.createBilling(order)
-            emit(order)
-        }.flowOn(ioDispatcher)
-    }
-
-    fun insertBilling(order: CreatedBillListModelData): Flow<CreatedBillListModelData> {
-        return flow {
-            billingLocalDataSource.insertBilling(order)
-            emit(order)
+            consumerLocalDataSource.insertConsumers(consumers)
+            emit(consumers)
         }.flowOn(ioDispatcher)
     }
 
 
 
-    fun getBilling(): Flow<List<CreatedBillListModelData>> {
+
+
+
+    fun getAllConsumer(): Flow<List<ConsumerListModelData>> {
         return flow {
-            val response = billingLocalDataSource.getBilling() // This returns List<ProductOrderListModelData>
+            val response = consumerRemoteDataSource.getConsumerList()
             emit(response)
         }.flowOn(ioDispatcher)
     }
 
 
 
-//    fun getTotals(): Flow<Double> {
+//    fun insertConsumer(order: ConsumerListModelData): Flow<ConsumerListModelData> {
 //        return flow {
-//            val response = billingLocalDataSource.getTotal() ?: 0.0 // Handle null case
-//            emit(response)
+//            consumerLocalDataSource.insertConsumer(order)
+//            emit(order)
 //        }.flowOn(ioDispatcher)
 //    }
 
-    fun deleteAllBilling(): Flow<Unit> {
+
+
+    fun getConsumer(): Flow<List<ConsumerListModelData>> {
         return flow {
-            billingLocalDataSource.deleteAll() // Call the delete function
+            val response = consumerLocalDataSource.getConsumer() // This returns List<ProductOrderListModelData>
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+
+
+
+
+    fun deleteAllConsumer(): Flow<Unit> {
+        return flow {
+            consumerLocalDataSource.deleteAll() // Call the delete function
             emit(Unit) // Emit a Unit value to indicate completion
         }.flowOn(ioDispatcher) // Switch to the IO dispatcher for the operation
     }
 
 
 
-//    suspend fun getAllUsers(): List<ProductOrderListModelData>{
-//        return billingLocalDataSource.getAllUsers()
-//    }
+    //Filter ni dre by consumer ID
 
+    fun getConsumerById(id: String): Flow<ConsumerListModelData?> {
+        return flow {
+            val response = consumerLocalDataSource.getConsumerDetailsById(id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
+
+    fun searchConsumer(searchQuery: String): Flow<List<ConsumerListModelData>> {
+        return flow {
+            val response = consumerLocalDataSource.searchConsumer(searchQuery)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
 }
