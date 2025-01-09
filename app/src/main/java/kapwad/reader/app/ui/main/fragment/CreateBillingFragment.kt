@@ -773,13 +773,13 @@ class CreateBillingFragment : Fragment() {
                     printer.printTextNormalHeader("\nWater Usage:  " + data?.consume.toString())
                     printer.printTextNormalHeader(
                         "\nWater Sales:  ${
-                            data?.bill_amount?.toDouble()?.minus(data?.wmmf?.toDouble() ?: 0.0)
+                            data?.bill_amount?.toDouble()
                         }"
                     )
                     printer.printTextNormalHeader(
-                        "\nArrears:  ${
-                            data?.bill_amount?.toDouble()
-                                ?.minus(data?.deduct_arrears?.toDouble() ?: 0.0)
+                        "\nArrears: ${
+                            (data?.amount_balance?.toDouble() ?: 0.0) +
+                                    (data?.deduct_arrears?.toDouble() ?: 0.0)
                         }"
                     )
                     printer.printTextNormalHeader("\nOthers:  " + data?.deduct_others.toString())
@@ -879,7 +879,7 @@ class CreateBillingFragment : Fragment() {
                     franchise_tax = otherListModelData?.franchise_tax,
                     Ftax_total = ((otherListModelData?.franchise_tax?.toDoubleOrNull()
                         ?: 0.0) * (bill_amount_final)).toString(),
-                    pocatotal = ((tempListModelData?.Prev?.toDoubleOrNull()
+                    pocatotal = ((otherListModelData?.poca?.toDoubleOrNull()
                         ?: 0.0) * consumeTemp!!).toString(),
                     image = "2",
 
