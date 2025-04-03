@@ -111,6 +111,7 @@ class CreateBillingFragment : Fragment() {
         Manifest.permission.ACCESS_FINE_LOCATION, // Required for Bluetooth scanning
         Manifest.permission.BLUETOOTH_CONNECT // Android 12+
     )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -146,7 +147,11 @@ class CreateBillingFragment : Fragment() {
     private fun checkBluetoothAndPermissions() {
         val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter == null) {
-            Toast.makeText(requireContext(), "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Bluetooth is not supported on this device",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -156,13 +161,16 @@ class CreateBillingFragment : Fragment() {
         }
 
         if (!hasPermissions(requiredPermissions)) {
-            requestPermissions(requiredPermissions,REQUEST_ENABLE_BT)
+            requestPermissions(requiredPermissions, REQUEST_ENABLE_BT)
         }
     }
 
     private fun hasPermissions(permissions: Array<String>): Boolean {
         return permissions.all { permission ->
-            ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
         }
     }
 
@@ -177,7 +185,11 @@ class CreateBillingFragment : Fragment() {
                 Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_SHORT).show()
                 printer.connectPrinter(requireActivity())
             } else {
-                Toast.makeText(requireContext(), "Permissions are required for printing", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Permissions are required for printing",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -190,37 +202,37 @@ class CreateBillingFragment : Fragment() {
         }
     }
 
-        override fun onResume() {
-            super.onResume()
-            observePrinter()
+    override fun onResume() {
+        super.onResume()
+        observePrinter()
 
-        }
+    }
 
-        private fun observePrinter() {
-            PrinterDialog.newInstance(object :
-                PrinterDialog.SuccessCallBack {
+    private fun observePrinter() {
+        PrinterDialog.newInstance(object :
+            PrinterDialog.SuccessCallBack {
 
-                override fun onSuccess(mymac: String,dialog: PrinterDialog?) {
-                    macAdd=mymac
-                    printer = XP380PTPrinter(requireActivity(), mymac)
-                    printer.connectPrinter(requireActivity())
+            override fun onSuccess(mymac: String, dialog: PrinterDialog?) {
+                macAdd = mymac
+                printer = XP380PTPrinter(requireActivity(), mymac)
+                printer.connectPrinter(requireActivity())
 
-                    if (printer.isPrinterConnected()) {
-                        showToastSuccess(requireActivity(), description = "Printer Connected")
+                if (printer.isPrinterConnected()) {
+                    showToastSuccess(requireActivity(), description = "Printer Connected")
 
-                        dialog?.dismiss()
+                    dialog?.dismiss()
 
-                    } else {
-                        showToastError(requireActivity(), description = "Printer Disconnected")
-                        observePrinter()
-                    }
+                } else {
+                    showToastError(requireActivity(), description = "Printer Disconnected")
+                    observePrinter()
                 }
+            }
 
-                override fun onCancel(dialog: PrinterDialog) {
+            override fun onCancel(dialog: PrinterDialog) {
 
-                }
-            }, "Select Image").show(childFragmentManager, PrinterDialog.TAG)
-        }
+            }
+        }, "Select Image").show(childFragmentManager, PrinterDialog.TAG)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -390,7 +402,10 @@ class CreateBillingFragment : Fragment() {
         when (viewState) {
             is ConsumerViewState.Loading -> showLoadingDialog(R.string.loading)
             is ConsumerViewState.SuccessConsumerById -> {
-                showToastSuccess(requireActivity(), description = viewState.data?.is_employee.toString())
+                showToastSuccess(
+                    requireActivity(),
+                    description = viewState.data?.is_employee.toString()
+                )
                 Log.d("All consumer offline", "Data: ${viewState.data.toString()}")
 
                 if (viewState.data?.consumersid?.equals(null) == false) {
@@ -408,7 +423,7 @@ class CreateBillingFragment : Fragment() {
                                     consumerViewModel.getConsumerById(qrValue)
                                     tempViewModel.getTempById(qrValue)
                                 } else {
-                                    printer = XP380PTPrinter(requireActivity(),macAdd.toString())
+                                    printer = XP380PTPrinter(requireActivity(), macAdd.toString())
                                     printer.connectPrinter(requireActivity())
                                 }
 
@@ -495,10 +510,9 @@ class CreateBillingFragment : Fragment() {
             } else {
                 val result = currentValue - previousValue
 
-                if(consumerListModelData?.is_employee.toString().equals("1")){
-                    calculateRe(result-15)
-                }
-                else{
+                if (consumerListModelData?.is_employee.toString().equals("1")) {
+                    calculateRe(result - 15)
+                } else {
                     calculateRe(result)
                 }
 
@@ -511,7 +525,7 @@ class CreateBillingFragment : Fragment() {
 
             } else {
                 // Handle connection error
-                printer = XP380PTPrinter(requireActivity(),macAdd.toString())
+                printer = XP380PTPrinter(requireActivity(), macAdd.toString())
                 printer.connectPrinter(requireActivity())
             }
 
