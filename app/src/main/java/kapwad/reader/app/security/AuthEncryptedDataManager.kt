@@ -49,10 +49,44 @@ class AuthEncryptedDataManager {
         }
     }
 
+/*SETTER FOR READING DATE*/
+
+    fun setMonthYear(monthyear: String) {
+        sharedPreferences.edit(true) {
+            putString(MONTH_YEAR, monthyear)
+        }
+    }
+    fun setReadingDate(readingdate: String) {
+        sharedPreferences.edit(true) {
+            putString(READING_DATE, readingdate)
+        }
+    }
+    fun setDueDate(duedate: String) {
+        sharedPreferences.edit(true) {
+            putString(DUE_DATE, duedate)
+        }
+    }
+    fun setDiscoDate(discodate: String) {
+        sharedPreferences.edit(true) {
+            putString(DISCO_DATE, discodate)
+        }
+    }
+    fun setBackDate(backdate: String) {
+        sharedPreferences.edit(true) {
+            putString(BACK_DATE, backdate)
+        }
+    }
+
     /**
      * Function used to get the user access token in this sharedPref
      */
     fun getAccessToken() = sharedPreferences.getString(ACCESS_TOKEN, "") ?: ""
+
+    fun getMonthYear() = sharedPreferences.getString(MONTH_YEAR, "") ?: ""
+    fun getReadingDate() = sharedPreferences.getString(READING_DATE, "") ?: ""
+    fun getDueDate() = sharedPreferences.getString(DUE_DATE, "") ?: ""
+    fun getDiscoDate() = sharedPreferences.getString(DISCO_DATE, "") ?: ""
+    fun getBackDate() = sharedPreferences.getString(BACK_DATE, "") ?: ""
 
     private var inMemoryUserData: MeterReaderListModelData? = null
     private var inMemoryDateRegisteredData: DateModel? = null
@@ -173,6 +207,13 @@ class AuthEncryptedDataManager {
         private const val USERNAME = "USERNAME"
         private const val PASSWORD = "password"
 
+
+        /*FOR READING DATE CODE QUICK DATABASE*/
+        private const val MONTH_YEAR = "MONTHYEAR"
+        private const val READING_DATE = "READING_DATE"
+        private const val DUE_DATE = "DUE_DATE"
+        private const val DISCO_DATE = "DISCO_DATE"
+        private const val BACK_DATE = "BACK_DATE"
 
 
     }

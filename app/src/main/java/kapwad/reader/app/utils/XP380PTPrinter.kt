@@ -72,7 +72,7 @@ class XP380PTPrinter(activity: Activity,devmac:String) {
         }
     }
 
-    fun printTextHeader(text: String, bold: Boolean = false, textSize: Int = 18) {
+    fun printTextHeader(text: String, bold: Boolean = false, textSize: Int = 14) {
         try {
             if (!isPrinterConnected()) {
                 throw IOException("Printer is not connected")
@@ -98,31 +98,32 @@ class XP380PTPrinter(activity: Activity,devmac:String) {
         }
     }
 
-    fun printTextNormalHeader(text: String, bold: Boolean = false, textSize: Int = 15) {
-        try {
-            if (!isPrinterConnected()) {
-                throw IOException("Printer is not connected")
-            }
 
-            // Print bold text if specified
+
+    fun printTextNormalHeader(label: String, value: String, bold: Boolean = false, textSize: Int = 14) {
+        try {
+            if (!isPrinterConnected()) throw IOException("Printer is not connected")
+
             if (bold) {
                 outputStream?.write(byteArrayOf(27, 69, 1)) // Enable bold
                 outputStream?.write("\n".toByteArray())
             }
 
-            // Set text size
-            outputStream?.write(byteArrayOf(27, 33, textSize.toByte()))
+            outputStream?.write(byteArrayOf(27, 33, textSize.toByte())) // Set text size
 
-            // Print the text
-            outputStream?.write(text.toByteArray())
+            val maxWidth = 32 // Adjust based on your printer's character limit
+            val paddedLabel = label.padEnd(maxWidth / 2, ' ')
+            val paddedValue = value.padStart(maxWidth / 2, ' ')
+            outputStream?.write("$paddedLabel$paddedValue\n".toByteArray())
 
-            // Reset text attributes
             outputStream?.write(byteArrayOf(27, 33, 0)) // Reset text size
             outputStream?.write(byteArrayOf(27, 69, 0)) // Disable bold
         } catch (e: IOException) {
             e.printStackTrace()
         }
     }
+
+
 
     fun closePrinterConnection() {
         try {

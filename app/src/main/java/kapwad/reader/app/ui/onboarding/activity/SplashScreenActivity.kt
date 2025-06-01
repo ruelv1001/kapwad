@@ -42,6 +42,7 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashscreenBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
         observeAccount()
         observeConnection()
 
@@ -69,7 +70,6 @@ class SplashScreenActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun observeAccount() {
         lifecycleScope.launch {

@@ -35,8 +35,8 @@ interface ConsumerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertConsumers(consumers: List<ConsumerListModelData>)
 
-    @Query("SELECT * FROM tbl_consumersaccounttb WHERE accountnumber = :meternumber")
-    suspend fun getConsumerDetailsById(meternumber: String): ConsumerListModelData?
+    @Query("SELECT * FROM tbl_consumersaccounttb WHERE accountnumber = :accountNo")
+    suspend fun getConsumerDetailsById(accountNo: String): ConsumerListModelData?
 
     @Query("SELECT * FROM tbl_consumersaccounttb WHERE " +
             "LOWER(lastName) LIKE LOWER(:searchQuery) OR " +

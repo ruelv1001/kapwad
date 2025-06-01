@@ -1,6 +1,7 @@
 package kapwad.reader.app.utils.dialog
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.zxing.Result
 import kapwad.reader.app.databinding.DialogScannerViewBinding
 import kapwad.reader.app.R
+import kapwad.reader.app.ui.main.activity.MainActivity
 import kapwad.reader.app.utils.CommonLogger
 import kapwad.reader.app.utils.PermissionChecker
 import kapwad.reader.app.utils.setOnSingleClickListener
@@ -43,7 +45,7 @@ class ScannerDialog: DialogFragment(), ZXingScannerView.ResultHandler {
             WindowManager.LayoutParams.MATCH_PARENT
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.setCancelable(false)
+        dialog?.setCancelable(true)
 
     }
 
@@ -68,6 +70,11 @@ class ScannerDialog: DialogFragment(), ZXingScannerView.ResultHandler {
                 callback?.onScannerSuccess(viewBinding?.refEditText?.text?.toString().orEmpty())
                 dismiss()
             }
+        }
+
+        viewBinding?.retunTextView?.setOnSingleClickListener {
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
         }
     }
 

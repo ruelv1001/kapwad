@@ -70,6 +70,10 @@ class LoginDialog : DialogFragment() {
     }
 
     private fun setClickListener() {
+        viewBinding?.returnButton?.setOnClickListener {
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+        }
 
         viewBinding?.loginButton?.setOnClickListener {
             if (viewBinding?.emailEditText?.text.toString()=="BestMarc21"){

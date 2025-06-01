@@ -76,6 +76,274 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/dateLayout"
+                android:layout_height="wrap_content">
+
+            <!--MONTH YEAR-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Month Year"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/font_16" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/monthYearInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/monthYearEdtTxt"
+                    android:layout_width="match_parent"
+                    android:enabled="true"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="Month Year"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:editable="false"
+                    android:imeOptions="actionNext"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--READING DATE-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Reading Date"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/font_16" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reading_dateInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/readingDateEdtTxt"
+                    android:layout_width="match_parent"
+                    android:enabled="true"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="Reading Date"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:editable="false"
+                    android:imeOptions="actionNext"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!--DUE DATE-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Due Date"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/font_16" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/due_dateInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dueDateEdtTxt"
+                    android:layout_width="match_parent"
+                    android:enabled="true"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="Due Date"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!--DISCONNECTION DATE-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Disconnection Date"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/font_16" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/disconnectionDateInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/disconnectionDateEdtTxt"
+                    android:layout_width="match_parent"
+                    android:enabled="true"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="Disconnection Date"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Previous DATE-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Previous Date"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/font_16" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/previous_dateInputLayout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/previousDateEdtTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:enabled="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="Previous Date"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+<!--BUTTON-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/showDateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/color_primaryDark"
+                android:background="@drawable/bg_take_picture"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="SHOW DATE"
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hideDateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/color_primaryDark"
+                android:background="@drawable/bg_take_picture"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="HIDE DATE"
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveDateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/color_primaryDark"
+                android:background="@drawable/bg_take_picture"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="SAVE DATE"
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,6 +434,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/dimen_15"
+                android:visibility="gone"
                 android:fontFamily="@font/inter_semibold"
                 android:text="Barangay"
                 android:textColor="@color/text_color"
@@ -185,6 +454,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/barangayEditText"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:enabled="false"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_edittext_selector"
@@ -329,6 +599,21 @@
                 android:background="@drawable/bg_take_picture"
                 android:paddingBottom="@dimen/dimen_15"
                 android:text="Reprint"
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_14" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/backButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:paddingTop="@dimen/dimen_15"
+                android:textColor="@color/color_primaryDark"
+                android:background="@drawable/bg_take_picture"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="Return"
                 android:layout_marginBottom="@dimen/dimen_30"
                 android:textAllCaps="false"
                 android:textSize="@dimen/font_14" />
