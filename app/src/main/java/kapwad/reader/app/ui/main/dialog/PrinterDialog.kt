@@ -66,12 +66,27 @@ class PrinterDialog : DialogFragment(),PrinterAdapter.ConsumerCallback {
             val printerModel = listOf(
                 PrinterModel(
                     "Printer 1",
-                    "86:67:7A:E6:54:76" ,
+                    "86:67:7A:48:E2:95",
                     "Active",
                     ),
                 PrinterModel(
                     "Printer 2",
-                    "86:67:7A:E6:54:76" ,
+                    "86:67:7A:B4:A2:67",
+                    "Active",
+                    ),
+                PrinterModel(
+                    "Printer 3",
+                    "86:67:7A:22:B3:7A",
+                    "Active",
+                ),
+                PrinterModel(
+                    "Printer 4",
+                    "86:67:7A:00:D4:55",
+                    "Active",
+                ),
+                PrinterModel(
+                    "Printer 5",
+                    "86:67:7A:9A:8B:66",
                     "Active",
                 ),
 
@@ -82,12 +97,6 @@ class PrinterDialog : DialogFragment(),PrinterAdapter.ConsumerCallback {
 
     private fun setClickListener() {
     }
-
-
-
-
-
-
 
 
 

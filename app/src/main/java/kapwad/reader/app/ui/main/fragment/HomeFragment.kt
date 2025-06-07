@@ -99,8 +99,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
 
 
 
-
-
     private fun showLoadingDialog(@StringRes strId: Int) {
         (requireActivity() as MainActivity).showLoadingDialog(strId)
     }
@@ -135,5 +133,5 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
 
     override fun onRefresh() {
         viewModel.getProfileDetails()
-    }
+    }  
 }

@@ -13,8 +13,8 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "tbl_consumersaccounttb")
 data class ConsumerListModelData(
-
-    val  is_employee: String? = null,
+    val id: String,
+    val is_employee: String? = null,
     val Arrears_Deduct: String? = null,
     val Arrears_Description: String? = null,
     val Date_Arrears: String? = null,

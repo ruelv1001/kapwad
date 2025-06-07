@@ -109,15 +109,15 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
 //        printer = XP380PTPrinter(requireActivity(), macAdd.toString())
 //        printer.connectPrinter(requireActivity())
        // checkBluetooth()
-        checkBluetoothAndPermissions()
+        //checkBluetoothAndPermissions()
         isReset="false"
     }
 
     override fun onResume() {
         super.onResume()
         observeBilling()
-
-        observePrinter()
+        viewModel.getBilling()
+       // observePrinter()
     }
 
     private fun observePrinter() {
@@ -201,6 +201,13 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
             is BillingViewState.SuccessDelete -> {
                 hideLoadingDialog()
 
+                showToastSuccess(
+                    requireActivity(),
+                    description = "Data Deleted"
+                )
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                startActivity(intent)
+
             }
 
             is BillingViewState.SuccessUpload -> {
@@ -244,7 +251,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
 
     private fun setClickListeners() = binding.run {
         uploadButton.setOnSingleClickListener {
-            isReset="false"
+            isReset="upload"
             setLogin()
 
         }
@@ -252,8 +259,9 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
             viewModel.searchConsumer(refEditText.text.toString())
         }
         resetButton.setOnSingleClickListener {
-          setLogin()
             isReset="true"
+          setLogin()
+
         }
     }
 
@@ -261,9 +269,10 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
         LoginDialog.newInstance(object :
             LoginDialog.SuccessCallBack {
             override fun onSuccess() {
-                if(isReset=="false"){
+                if(isReset=="upload"){
                 viewModel.getUploadJson(prettyJson)}
                 if(isReset=="true"){
+                    isReset="true"
                     viewModel.deleteAllOrder()
                 }
             }
@@ -298,44 +307,44 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
 
     private fun bluprint(data: CreatedBillListModelData) {
 
-            val alertDialogBuilder = AlertDialog.Builder(context)
-            alertDialogBuilder.apply {
-                setTitle("Print")
-                setMessage("Do you want to Reprint")
-                setPositiveButton("Yes") { _, _ ->
+        /* val alertDialogBuilder = AlertDialog.Builder(context)
+         alertDialogBuilder.apply {
+             setTitle("Print")
+             setMessage("Do you want to Reprint")
+             setPositiveButton("Yes") { _, _ ->
 
-                    printer.printTextHeader("Republic of the Philippines\\nKAPATAGAN WATER DISTRICT\\nKapatagan Lanao Del Norte \\n\\n\\n  BILLING STATEMENT\n")
-                    printer.printTextNormalHeader("\n\n\nAccount number: " + data?.accountnumber.toString())
-                    printer.printTextNormalHeader("\nClassification:  " + data?.clas.toString())
-                    printer.printTextNormalHeader("\nClient Name::  " + data?.name.toString())
-                    printer.printTextNormalHeader("\nAddress:  " + data?.address.toString())
-                    printer.printTextNormalHeader("\nMonth:  " + data?.month.toString())
-                    printer.printTextNormalHeader("\n\nPeriod Covered:  " )
-                    printer.printTextNormalHeader("\nFrom:  " + data?.backdate.toString())
-                    printer.printTextNormalHeader("\nTo:  "+ data?.date.toString())
-                    printer.printTextNormalHeader("\n\nReading:  " )
-                    printer.printTextNormalHeader("\nPres:  " + data?.pres.toString())
-                    printer.printTextNormalHeader("\nPrev:  " + data?.prev.toString())
-                    printer.printTextNormalHeader("\nWater Usage:  " + data?.consume.toString())
-                    printer.printTextNormalHeader("\nWater Sales:  ${data?.bill_amount?.toDouble()?.minus(data?.wmmf?.toDouble() ?: 0.0)}")
-                    printer.printTextNormalHeader("\nArrears:  ${data?.bill_amount?.toDouble()?.minus(data?.deduct_arrears?.toDouble() ?: 0.0)}")
-                    printer.printTextNormalHeader("\nOthers:  " + data?.deduct_others.toString())
-                    printer.printTextNormalHeader("\nF-TAX:  " + data?.Ftax_total.toString())
-                    printer.printTextNormalHeader("\nPCA:  " + data?.pocatotal.toString())
-                    printer.printTextNormalHeader("\n\n\nIMPORTANT NOTICE")
-                    printer.printTextNormalHeader("\nREADING :"+ data?.date.toString())
-                    printer.printTextNormalHeader("\nAll payments are applied first against prior unpaid Water Bills. Failure to receive a Bill does not relieve the concessionaire of his liability.")
-                    printer.printTextNormalHeader("\nDUE DATE :"+ data?.duedate.toString())
-                    printer.printTextNormalHeader("\nA surcharge of 10% shall be added after Due Date.")
-                    printer.printTextNormalHeader("\nDISCONNECTION DATE :"+ data?.disdate.toString())
-                    printer.printTextNormalHeader("\n\nThis serves as a Final Notice.  Disconnection shall be implemented on the specified date."+ data?.disdate.toString())
-                    printer.printTextNormalHeader("\nKapatagan Water District || Copyright 2021 - 2030 || All Rights Reserved.")
-                    printer.printTextNormalHeader("\nCreated by: Ruel Velasquez Senior Full Stack Developer", bold = true)
-
-
+                 printer.printTextHeader("Republic of the Philippines\\nKAPATAGAN WATER DISTRICT\\nKapatagan Lanao Del Norte \\n\\n\\n  BILLING STATEMENT\n")
+                 printer.printTextNormalHeader("\n\n\nAccount number: " + data?.accountnumber.toString())
+                 printer.printTextNormalHeader("\nClassification:  " + data?.clas.toString())
+                 printer.printTextNormalHeader("\nClient Name::  " + data?.name.toString())
+                 printer.printTextNormalHeader("\nAddress:  " + data?.address.toString())
+                 printer.printTextNormalHeader("\nMonth:  " + data?.month.toString())
+                 printer.printTextNormalHeader("\n\nPeriod Covered:  " )
+                 printer.printTextNormalHeader("\nFrom:  " + data?.backdate.toString())
+                 printer.printTextNormalHeader("\nTo:  "+ data?.date.toString())
+                 printer.printTextNormalHeader("\n\nReading:  " )
+                 printer.printTextNormalHeader("\nPres:  " + data?.pres.toString())
+                 printer.printTextNormalHeader("\nPrev:  " + data?.prev.toString())
+                 printer.printTextNormalHeader("\nWater Usage:  " + data?.consume.toString())
+                 printer.printTextNormalHeader("\nWater Sales:  ${data?.bill_amount?.toDouble()?.minus(data?.wmmf?.toDouble() ?: 0.0)}")
+                 printer.printTextNormalHeader("\nArrears:  ${data?.bill_amount?.toDouble()?.minus(data?.deduct_arrears?.toDouble() ?: 0.0)}")
+                 printer.printTextNormalHeader("\nOthers:  " + data?.deduct_others.toString())
+                 printer.printTextNormalHeader("\nF-TAX:  " + data?.Ftax_total.toString())
+                 printer.printTextNormalHeader("\nPCA:  " + data?.pocatotal.toString())
+                 printer.printTextNormalHeader("\n\n\nIMPORTANT NOTICE")
+                 printer.printTextNormalHeader("\nREADING :"+ data?.date.toString())
+                 printer.printTextNormalHeader("\nAll payments are applied first against prior unpaid Water Bills. Failure to receive a Bill does not relieve the concessionaire of his liability.")
+                 printer.printTextNormalHeader("\nDUE DATE :"+ data?.duedate.toString())
+                 printer.printTextNormalHeader("\nA surcharge of 10% shall be added after Due Date.")
+                 printer.printTextNormalHeader("\nDISCONNECTION DATE :"+ data?.disdate.toString())
+                 printer.printTextNormalHeader("\n\nThis serves as a Final Notice.  Disconnection shall be implemented on the specified date."+ data?.disdate.toString())
+                 printer.printTextNormalHeader("\nKapatagan Water District || Copyright 2021 - 2030 || All Rights Reserved.")
+                 printer.printTextNormalHeader("\nCreated by: Ruel Velasquez Senior Full Stack Developer", bold = true)
 
 
-                    printer.printTextNormalHeader("\nThank you for choosing us\n\n\n\n" )
+
+
+                 printer.printTextNormalHeader("\nThank you for choosing us\n\n\n\n" )
 
                 }
                 setNegativeButton("Cancel") { dialog, _ ->
@@ -343,7 +352,7 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
                 }
             }
             val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
+            alertDialog.show() */
     }
 
     private fun checkBluetoothAndPermissions() {

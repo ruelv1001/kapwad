@@ -46,7 +46,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
-                android:text="BestMarc21"
+
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext_selector"
                 android:drawableStart="@drawable/baseline_person_24"
@@ -84,7 +84,7 @@
                 android:background="@drawable/bg_edittext_selector"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="@dimen/dimen_10"
-                android:text="pass"
+
                 android:fontFamily="@font/inter_semibold"
                 android:hint="@string/login_password_hint"
                 android:imeOptions="actionDone"
@@ -138,6 +138,19 @@
             android:paddingTop="@dimen/dimen_15"
             android:paddingBottom="@dimen/dimen_15"
             android:text="@string/login_txt"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_14" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/returnButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="Cancel"
             android:textAllCaps="false"
             android:textSize="@dimen/font_14" />
 

@@ -59,14 +59,69 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/idTextInputLayout"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_40"
-                android:gravity="center"
-                android:text="@string/scanner_desc"
+                android:layout_marginRight="@dimen/dimen_15"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:fontFamily="@font/inter_regular"
+                app:boxBackgroundColor="@color/white"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/refEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_selector"
+
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:fontFamily="@font/inter_semibold"
+                    android:hint="Enter Account Number"
+                    android:imeOptions="actionNext"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/commons_text_hint"
+                    android:textSize="@dimen/font_14" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/nextTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_15"
+                android:background="@drawable/bg_rounded_crops"
+                android:fontFamily="@font/inter_medium"
+                android:padding="@dimen/dimen_13"
+                android:text="SEARCH"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_18" />
+
+            <TextView
+                android:id="@+id/retunTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_15"
+                android:background="@drawable/bg_rounded_crops"
+                android:fontFamily="@font/inter_medium"
+                android:padding="@dimen/dimen_13"
+                android:text="CANCEL"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -76,52 +131,6 @@
                 android:layout_marginBottom="@dimen/dimen_20"
                 android:layout_weight="1"
                 android:gravity="bottom">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/idTextInputLayout"
-                    style="@style/TextInputLayoutStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dimen_15"
-                    android:layout_marginLeft="@dimen/dimen_15"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:fontFamily="@font/inter_regular"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintAnimationEnabled="true"
-                    app:hintEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/refEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_edittext_selector"
-
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:fontFamily="@font/inter_semibold"
-                        android:hint="Enter Account Number"
-                        android:imeOptions="actionNext"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/commons_text_hint"
-                        android:textSize="@dimen/font_14" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <TextView
-                    android:id="@+id/nextTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_15"
-                    android:layout_marginTop="@dimen/dimen_100"
-                    android:layout_marginRight="@dimen/dimen_15"
-                    android:background="@drawable/bg_rounded_crops"
-                    android:fontFamily="@font/inter_medium"
-                    android:padding="@dimen/dimen_13"
-                    android:text="SUBMIT"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_18" />
 
             </RelativeLayout>
         </LinearLayout>

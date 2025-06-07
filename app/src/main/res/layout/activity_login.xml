@@ -44,7 +44,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
-                android:text="BestMarc21"
+                android:text=""
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext_selector"
                 android:drawableStart="@drawable/baseline_person_24"
@@ -82,7 +82,7 @@
                 android:background="@drawable/bg_edittext_selector"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="@dimen/dimen_10"
-                android:text="pass"
+                android:text=""
                 android:fontFamily="@font/inter_semibold"
                 android:hint="@string/login_password_hint"
                 android:imeOptions="actionDone"
