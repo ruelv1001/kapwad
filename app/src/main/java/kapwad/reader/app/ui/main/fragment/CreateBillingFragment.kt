@@ -112,6 +112,7 @@ class CreateBillingFragment : Fragment() {
     private var macAdd: String? = null
     private var printData: CreatedBillListModelData =
         CreatedBillListModelData()
+    private var currentID: String? = null
 
     private var bill_amount_final = 0.0
     private lateinit var printer: XP380PTPrinter
@@ -151,8 +152,8 @@ class CreateBillingFragment : Fragment() {
         observeTemp()
         observeOthers()
         observeRate()
-//        printer = XP380PTPrinter(requireActivity(),macAdd.toString())
-//        printer.connectPrinter(requireActivity())
+        printer = XP380PTPrinter(requireActivity(),macAdd.toString())
+        printer.connectPrinter(requireActivity())
         checkBluetoothAndPermissions()
         encryptedDataManager = AuthEncryptedDataManager()
 
@@ -290,6 +291,23 @@ class CreateBillingFragment : Fragment() {
                 nowprint = true
                 bluprint(printData)
                 showToastSuccess(requireActivity(), description = "Billing Created")
+
+
+                val alertDialogBuilder = AlertDialog.Builder(context)
+                alertDialogBuilder.apply {
+                    setTitle("Print")
+                    setMessage("Do you want to Go next Data")
+                    setPositiveButton("Yes") { _, _ ->
+
+                        consumerViewModel.getConsumerByEachId((currentID?.toInt()?.plus(1)).toString())
+
+                    }
+                    setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                }
+                val alertDialog = alertDialogBuilder.create()
+                alertDialog.show()
                 totalEditText.setText("")
                 hideLoadingDialog()
 
@@ -442,6 +460,7 @@ class CreateBillingFragment : Fragment() {
 
                 if (viewState.data?.consumersid?.equals(null) == false) {
                     consumerListModelData = viewState.data
+                    currentID=viewState?.data.id
                     setUpData(viewState.data)
                     hideLoadingDialog()
                 } else {

@@ -75,6 +75,13 @@ class ConsumerRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    fun getConsumerByEachId(id: String): Flow<ConsumerListModelData?> {
+        return flow {
+            val response = consumerLocalDataSource.getConsumerDetailsByEachId(id)
+            emit(response)
+        }.flowOn(ioDispatcher)
+    }
+
 
     fun searchConsumer(searchQuery: String): Flow<List<ConsumerListModelData>> {
         return flow {

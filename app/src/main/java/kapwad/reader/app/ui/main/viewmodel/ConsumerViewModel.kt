@@ -77,6 +77,22 @@ class ConsumerViewModel @Inject constructor(
         }
     }
 
+    fun getConsumerByEachId(id: String) {
+        viewModelScope.launch {
+            consumerRepository.getConsumerByEachId(id)
+                .onStart {
+                    _consumerStateFlow.emit(ConsumerViewState.Loading)
+                }
+                .catch { exception ->
+                    onError(exception)
+                }
+                .collect { response ->
+                    Log.d("GetConsumerById", "Response: $response")
+                    _consumerStateFlow.emit(ConsumerViewState.SuccessConsumerById(response))
+                }
+        }
+    }
+
     fun getConsumerById(id: String) {
         viewModelScope.launch {
             consumerRepository.getConsumerById(id)
@@ -92,6 +108,9 @@ class ConsumerViewModel @Inject constructor(
                 }
         }
     }
+
+
+
 
 
     fun deleteAllConsumer() {

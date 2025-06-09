@@ -38,6 +38,9 @@ interface ConsumerDao {
     @Query("SELECT * FROM tbl_consumersaccounttb WHERE accountnumber = :accountNo")
     suspend fun getConsumerDetailsById(accountNo: String): ConsumerListModelData?
 
+    @Query("SELECT * FROM tbl_consumersaccounttb WHERE id = :accountNo")
+    suspend fun getConsumerDetailsByEachId(accountNo: String): ConsumerListModelData?
+
     @Query("SELECT * FROM tbl_consumersaccounttb WHERE " +
             "LOWER(lastName) LIKE LOWER(:searchQuery) OR " +
             "LOWER(firstName) LIKE LOWER(:searchQuery) OR " +

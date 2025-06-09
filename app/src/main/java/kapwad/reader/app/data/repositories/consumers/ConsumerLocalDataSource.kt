@@ -22,6 +22,9 @@ class ConsumerLocalDataSource @Inject constructor(private val consumerDao: Consu
     suspend fun getConsumerDetailsById(id: String): ConsumerListModelData? =
         consumerDao.getConsumerDetailsById(id)
 
+    suspend fun getConsumerDetailsByEachId(id: String): ConsumerListModelData? =
+        consumerDao.getConsumerDetailsByEachId(id)
+
 
 //    suspend fun getAllUsers(): List<ProductOrderListModelData>{
 //        return billingDao.getAllUsers()
