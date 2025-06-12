@@ -3,11 +3,13 @@ package kapwad.reader.app.ui.main.fragment
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -39,6 +41,7 @@ import kapwad.reader.app.utils.setQRv2
 import kapwad.reader.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kapwad.reader.app.security.AuthEncryptedDataManager
+import kapwad.reader.app.ui.onboarding.activity.SplashScreenActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -47,7 +50,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
     SwipeRefreshLayout.OnRefreshListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var encryptedDataManager: AuthEncryptedDataManager
     var frontAnim: AnimatorSet? = null
     var backAnim: AnimatorSet? = null
 
@@ -76,7 +79,7 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
         setClickListeners()
 
         binding.swipeRefreshLayout.setOnRefreshListener(this@HomeFragment)
-
+        encryptedDataManager = AuthEncryptedDataManager()
         //immediately make this view gone
         //not done in xml as this is a reused layout
         //Reason: so it wont show for a second after finishin api call
@@ -97,8 +100,6 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
     }
 
 
-
-
     private fun showLoadingDialog(@StringRes strId: Int) {
         (requireActivity() as MainActivity).showLoadingDialog(strId)
     }
@@ -108,12 +109,23 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
     }
 
 
-
     private fun setClickListeners() = binding.run {
         allConsumerHButton.setOnSingleClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavigationAllConsumer())
         }
-
+        logoutButton.setOnSingleClickListener {
+            val builder = AlertDialog.Builder(requireActivity())
+            builder.setTitle(getString(R.string.logout_title_lbl))
+            builder.setMessage(getString(R.string.logout_desc_lbl))
+            builder.setPositiveButton(getString(R.string.logout_btn)) { _, _ ->
+                val intent = SplashScreenActivity.getIntent(requireActivity())
+                encryptedDataManager.setLogin("")
+                startActivity(intent)
+                requireActivity().finishAffinity()
+            }
+            builder.setNegativeButton(getString(R.string.logout_cancel_btn), null)
+            builder.show()
+        }
     }
 
 
@@ -133,5 +145,5 @@ class HomeFragment : Fragment(), GroupsYourGroupAdapter.GroupCallback,
 
     override fun onRefresh() {
         viewModel.getProfileDetails()
-    }  
+    }
 }

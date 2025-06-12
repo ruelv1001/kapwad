@@ -28,6 +28,7 @@ class SettingsViewModel @Inject constructor (
     private val encryptedDataManager: AuthEncryptedDataManager
 ) : ViewModel() {
     val user = encryptedDataManager.getUserBasicInfo()
+
     private val _loginSharedFlow = MutableSharedFlow<SettingsViewState>()
 
     val loginSharedFlow = _loginSharedFlow.asSharedFlow()

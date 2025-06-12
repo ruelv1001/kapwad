@@ -24,6 +24,7 @@ import kapwad.reader.app.utils.setOnSingleClickListener
 import kapwad.reader.app.utils.showPopupError
 import dagger.hilt.android.AndroidEntryPoint
 import kapwad.reader.app.data.viewmodels.MeterViewModel
+import kapwad.reader.app.security.AuthEncryptedDataManager
 import kapwad.reader.app.ui.main.viewmodel.MeterViewState
 import kapwad.reader.app.utils.showToastError
 import kapwad.reader.app.utils.showToastSuccess
@@ -35,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var loadingDialog: CommonDialog? = null
     private val viewModel: MeterViewModel by viewModels()
-
+    private lateinit var encryptedDataManager: AuthEncryptedDataManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(view)
         setupClickListener()
         observeLogin()
+        encryptedDataManager = AuthEncryptedDataManager()
     }
 
     private fun setupClickListener() = binding.run{
@@ -71,10 +73,12 @@ class LoginActivity : AppCompatActivity() {
             is MeterViewState.Loading -> showLoadingDialog(R.string.login_loading)
             is MeterViewState.SuccessOtherById -> {
                 // Handle success
+                encryptedDataManager.setLogin("isLogin")
                 showToastSuccess(
                     this@LoginActivity,
                     description = "Welcome ${viewState.data?.lastname.orEmpty()}"
                 )
+
                 val intent = MainActivity.getIntent(this@LoginActivity)
                 startActivity(intent)
                 hideLoadingDialog()

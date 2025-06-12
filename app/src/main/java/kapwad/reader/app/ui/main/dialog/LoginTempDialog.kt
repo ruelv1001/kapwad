@@ -1,101 +1,73 @@
 package kapwad.reader.app.ui.main.dialog
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kapwad.reader.app.R
-import kapwad.reader.app.databinding.DialogUploadImageGeotaggingBinding
+import kapwad.reader.app.databinding.DialogProfileConfirmationBinding
+import kapwad.reader.app.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import kapwad.reader.app.data.model.ErrorsData
 import kapwad.reader.app.data.viewmodels.MeterViewModel
 import kapwad.reader.app.databinding.DialogLoginBinding
 import kapwad.reader.app.ui.main.activity.MainActivity
 import kapwad.reader.app.ui.main.viewmodel.MeterViewState
-import kapwad.reader.app.ui.profile.dialog.ProfileConfirmationDialog.ProfileSaveDialogCallBack
 import kapwad.reader.app.utils.dialog.CommonDialog
-import kapwad.reader.app.utils.setOnSingleClickListener
 import kapwad.reader.app.utils.showToastError
 import kapwad.reader.app.utils.showToastSuccess
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginDialog : DialogFragment() {
+class LoginTempDialog : BottomSheetDialogFragment(){
 
     private var viewBinding: DialogLoginBinding? = null
     private var callback: SuccessCallBack? = null
     private val viewModel: MeterViewModel by viewModels()
     private var loadingDialog: CommonDialog? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dialog_login, container, false)
+        return inflater.inflate(
+            R.layout.dialog_login,
+            container,
+            false
+        )
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.window?.apply {
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setGravity(Gravity.CENTER)
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetStyle)
         isCancelable = false
-        return dialog
     }
-
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return object : BottomSheetDialog(requireContext(), theme) {
+            override fun onBackPressed() {
+                super.onBackPressed()
+                // Do nothing to disable back press
+            }
+        }.apply {
+            setCanceledOnTouchOutside(false) // disables outside touch
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding = DialogLoginBinding.bind(view)
-        observeLogin()
         setClickListener()
+        setView()
+        observeLogin()
     }
-
-    private fun setClickListener() {
-        viewBinding?.returnButton?.setOnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        viewBinding?.loginButton?.setOnClickListener {
-            if (viewBinding?.emailEditText?.text.toString()=="BestMarc21"){
-                viewModel.getMeterByAccount(
-                    viewBinding?.emailEditText?.text.toString(),
-                    viewBinding?.passwordEditText?.text.toString()
-                )
-            }
-            else{
-                showToastSuccess(
-                    requireActivity(),
-                    description = "Invalid Account Credential"
-                )
-            }
-
-        }
-
-    }
-
-
-
-
 
     private fun observeLogin(){
         lifecycleScope.launch {
@@ -132,12 +104,6 @@ class LoginDialog : DialogFragment() {
             else -> Unit
         }
     }
-
-    private fun handleInputError(errorsData: ErrorsData){
-        if (errorsData.email?.get(0)?.isNotEmpty() == true) viewBinding?.emailTextInputLayout?.error = errorsData.email?.get(0)
-        if (errorsData.password?.get(0)?.isNotEmpty() == true) viewBinding?.passwordTextInputLayout?.error = errorsData.password?.get(0)
-    }
-
     private fun showLoadingDialog(@StringRes strId: Int) {
         if (loadingDialog == null) {
             loadingDialog = CommonDialog.getLoadingDialogInstance(
@@ -152,23 +118,49 @@ class LoginDialog : DialogFragment() {
         loadingDialog = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        hideLoadingDialog()
+    private fun setView() = viewBinding?.run {
+
     }
 
+    private fun setClickListener() {
+        viewBinding?.returnButton?.setOnClickListener {
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        viewBinding?.loginButton?.setOnClickListener {
+            if (viewBinding?.emailEditText?.text.toString()=="BestMarc21"){
+                viewModel.getMeterByAccount(
+                    viewBinding?.emailEditText?.text.toString(),
+                    viewBinding?.passwordEditText?.text.toString()
+                )
+            }
+            else{
+                showToastSuccess(
+                    requireActivity(),
+                    description = "Invalid Account Credential"
+                )
+            }
+
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
+    }
 
     interface SuccessCallBack {
         fun onSuccess()
-        fun onCancel(dialog: LoginDialog)
+        fun onCancel(dialog: LoginTempDialog)
     }
 
     companion object {
-        fun newInstance(callback: SuccessCallBack? = null, imagePos: String) =
-            LoginDialog().apply {
+        fun newInstance(callback: SuccessCallBack? = null) = LoginTempDialog()
+            .apply {
                 this.callback = callback
             }
 
-        val TAG: String = LoginDialog::class.java.simpleName
+        val TAG: String = LoginTempDialog::class.java.simpleName
     }
 }

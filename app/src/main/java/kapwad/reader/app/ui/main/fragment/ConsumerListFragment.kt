@@ -46,7 +46,7 @@ import kapwad.reader.app.databinding.FragmentSyncMenuBinding
 import kapwad.reader.app.ui.geotagging.dialog.SubmitImageDialog
 import kapwad.reader.app.ui.main.adapter.ConsumerListAdapter
 import kapwad.reader.app.ui.main.adapter.SyncListAdapter
-import kapwad.reader.app.ui.main.dialog.LoginDialog
+import kapwad.reader.app.ui.main.dialog.LoginTempDialog
 import kapwad.reader.app.ui.main.dialog.PrinterDialog
 
 import kapwad.reader.app.ui.main.viewmodel.BillingViewState
@@ -266,8 +266,8 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
     }
 
     private fun setLogin()=binding.run{
-        LoginDialog.newInstance(object :
-            LoginDialog.SuccessCallBack {
+        LoginTempDialog.newInstance(object :
+            LoginTempDialog.SuccessCallBack {
             override fun onSuccess() {
                 if(isReset=="upload"){
                 viewModel.getUploadJson(prettyJson)}
@@ -277,10 +277,10 @@ class ConsumerListFragment : Fragment(), ConsumerListAdapter.ConsumerCallback {
                 }
             }
 
-            override fun onCancel(dialog: LoginDialog) {
+            override fun onCancel(dialog: LoginTempDialog) {
 
             }
-        }, "Select Image").show(childFragmentManager, LoginDialog.TAG)
+        }).show(childFragmentManager, LoginTempDialog.TAG)
     }
 
 

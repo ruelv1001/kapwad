@@ -43,7 +43,7 @@ import kapwad.reader.app.databinding.FragmentSyncListBinding
 import kapwad.reader.app.databinding.FragmentSyncMenuBinding
 import kapwad.reader.app.ui.geotagging.dialog.SubmitImageDialog
 import kapwad.reader.app.ui.main.adapter.SyncListAdapter
-import kapwad.reader.app.ui.main.dialog.LoginDialog
+import kapwad.reader.app.ui.main.dialog.LoginTempDialog
 import kapwad.reader.app.ui.main.viewmodel.BillingViewState
 import kapwad.reader.app.ui.main.viewmodel.ConsumerViewState
 import kapwad.reader.app.ui.main.viewmodel.OthersViewState
@@ -96,16 +96,16 @@ class SyncMenuFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        LoginDialog.newInstance(object :
-            LoginDialog.SuccessCallBack {
+        LoginTempDialog.newInstance(object :
+            LoginTempDialog.SuccessCallBack {
             override fun onSuccess() {
 
             }
 
-            override fun onCancel(dialog: LoginDialog) {
+            override fun onCancel(dialog: LoginTempDialog) {
 
             }
-        }, "Select Image").show(childFragmentManager, SubmitImageDialog.TAG)
+        }).show(childFragmentManager, SubmitImageDialog.TAG)
     }
 
     private fun observeSyncConsumer() {

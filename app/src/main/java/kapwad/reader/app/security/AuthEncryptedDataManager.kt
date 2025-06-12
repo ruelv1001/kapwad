@@ -56,6 +56,12 @@ class AuthEncryptedDataManager {
             putString(MONTH_YEAR, monthyear)
         }
     }
+
+    fun setLogin(isLogin: String) {
+        sharedPreferences.edit(true) {
+            putString(IS_LOGIN, isLogin)
+        }
+    }
     fun setReadingDate(readingdate: String) {
         sharedPreferences.edit(true) {
             putString(READING_DATE, readingdate)
@@ -83,6 +89,7 @@ class AuthEncryptedDataManager {
     fun getAccessToken() = sharedPreferences.getString(ACCESS_TOKEN, "") ?: ""
 
     fun getMonthYear() = sharedPreferences.getString(MONTH_YEAR, "") ?: ""
+    fun getIsLogin() = sharedPreferences.getString(IS_LOGIN, "") ?: ""
     fun getReadingDate() = sharedPreferences.getString(READING_DATE, "") ?: ""
     fun getDueDate() = sharedPreferences.getString(DUE_DATE, "") ?: ""
     fun getDiscoDate() = sharedPreferences.getString(DISCO_DATE, "") ?: ""
@@ -214,7 +221,7 @@ class AuthEncryptedDataManager {
         private const val DUE_DATE = "DUE_DATE"
         private const val DISCO_DATE = "DISCO_DATE"
         private const val BACK_DATE = "BACK_DATE"
-
+        private const val IS_LOGIN = "MONTHYEAR"
 
     }
 

@@ -55,7 +55,6 @@ import kapwad.reader.app.databinding.FragmentCreateBillBinding
 import kapwad.reader.app.security.AuthEncryptedDataManager
 import kapwad.reader.app.ui.geotagging.dialog.SubmitImageDialog
 import kapwad.reader.app.ui.main.adapter.SyncListAdapter
-import kapwad.reader.app.ui.main.dialog.LoginDialog
 import kapwad.reader.app.ui.main.dialog.PrinterDialog
 import kapwad.reader.app.ui.main.fragment.ConsumerListFragment.Companion
 import kapwad.reader.app.ui.main.viewmodel.BillingViewState
@@ -295,8 +294,8 @@ class CreateBillingFragment : Fragment() {
 
                 val alertDialogBuilder = AlertDialog.Builder(context)
                 alertDialogBuilder.apply {
-                    setTitle("Print")
-                    setMessage("Do you want to Go next Data")
+                    setTitle("Proceed")
+                    setMessage("Do you want to Go next meter")
                     setPositiveButton("Yes") { _, _ ->
 
                         consumerViewModel.getConsumerByEachId((currentID?.toInt()?.plus(1)).toString())

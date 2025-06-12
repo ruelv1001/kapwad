@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,27 +24,32 @@ import kapwad.reader.app.R
 import kapwad.reader.app.data.model.MeterReaderListModelData
 import kapwad.reader.app.data.model.TempListModelData
 import kapwad.reader.app.data.viewmodels.MeterViewModel
+import kapwad.reader.app.security.AuthEncryptedDataManager
 import kapwad.reader.app.ui.main.viewmodel.BillingViewState
 import kapwad.reader.app.ui.main.viewmodel.MeterViewState
+import kapwad.reader.app.ui.main.viewmodel.SettingsViewModel
 import kapwad.reader.app.ui.main.viewmodel.TempViewState
 import kapwad.reader.app.utils.dialog.CommonDialog
 import kapwad.reader.app.utils.isInternetAvailable
 import kapwad.reader.app.utils.showToastError
 import kapwad.reader.app.utils.showToastSuccess
 import kotlinx.coroutines.launch
+
 private var loadingDialog: CommonDialog? = null
+
 @AndroidEntryPoint
 class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashscreenBinding
     private val viewModel: MeterViewModel by viewModels()
-
+    private val viewModelNew: SettingsViewModel by viewModels()
+    private lateinit var encryptedDataManager: AuthEncryptedDataManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashscreenBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        encryptedDataManager = AuthEncryptedDataManager()
         observeAccount()
         observeConnection()
 
@@ -123,11 +130,17 @@ class SplashScreenActivity : AppCompatActivity() {
                     )
                     observeConnection()
                     hideLoadingDialog()
-                } else{
+                } else {
+                    if (encryptedDataManager.getIsLogin().equals("isLogin")) {
+                        val intent = MainActivity.getIntent(this@SplashScreenActivity)
+                        startActivity(intent)
+                        hideLoadingDialog()
+                    } else {
+                        val intent = LoginActivity.getIntent(this@SplashScreenActivity)
+                        startActivity(intent)
+                        hideLoadingDialog()
+                    }
 
-                    val intent = LoginActivity.getIntent(this@SplashScreenActivity)
-                    startActivity(intent)
-                    hideLoadingDialog()
                 }
 
 
