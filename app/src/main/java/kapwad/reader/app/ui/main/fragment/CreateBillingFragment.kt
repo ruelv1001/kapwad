@@ -151,7 +151,7 @@ class CreateBillingFragment : Fragment() {
         observeTemp()
         observeOthers()
         observeRate()
-        printer = XP380PTPrinter(requireActivity(),macAdd.toString())
+        printer = XP380PTPrinter(requireActivity(),"86:67:7A:E6:54:76")
         printer.connectPrinter(requireActivity())
         checkBluetoothAndPermissions()
         encryptedDataManager = AuthEncryptedDataManager()
